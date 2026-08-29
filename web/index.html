@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caliper — trial pre-screening</title>
+<meta name="description" content="Criteria review, screening queue and screening packets for one clinical trial site.">
+
+<!--
+  Plain HTML, one stylesheet and ES modules. No bundler, no package manager, no CDN, no web font,
+  no framework, and nothing to compile before this page runs.
+
+  That is a decision rather than an omission. Every dependency is a thing that can fail in front of
+  the person you are showing the work to: a lockfile that will not resolve, a CDN that is blocked on
+  the hospital network, a build that needs a Node version nobody has. This page is served by
+  `python -m http.server` from this directory and reads JSON that `caliper ui demo` wrote next to
+  it, so the only way it can fail is if the data is wrong — which is the failure worth seeing.
+-->
+
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="chrome" id="chrome"></header>
+
+<main id="main" tabindex="-1">
+  <noscript>
+    <div class="notice">
+      <h1>This page needs JavaScript</h1>
+      <p>
+        Caliper's interface reads the exported run out of <code>data/</code> and renders it in the
+        browser. The printed packet, which needs nothing at all, is produced by
+        <code>caliper screen --packet</code>.
+      </p>
+    </div>
+  </noscript>
+</main>
+
+<div id="live" role="status" aria-live="polite" class="visually-hidden"></div>
+</body>
+</html>

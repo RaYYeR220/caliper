@@ -142,18 +142,38 @@ class TestVitalStatus:
         assert index.died_before(date(2026, 6, 1))
         assert not index.died_before(date(2026, 4, 1))
 
-    def test_a_living_patient_records_no_death(self):
-        assert load_patient_index(a_bundle(a_patient())).deceased is None
+    def test_a_chart_recording_neither_field_leaves_both_untouched(self):
+        index = load_patient_index(a_bundle(a_patient()))
+        assert index.deceased is None
+        assert index.deceased_undated is False
+        assert index.is_deceased() is False
 
-    def test_a_malformed_death_date_is_dropped_like_any_other(self):
+    def test_a_malformed_death_date_alone_is_dropped_like_any_other(self):
         index = load_patient_index(a_bundle(a_patient(deceasedDateTime="sometime in May")))
         assert index.deceased is None
+        assert index.deceased_undated is False
 
-    def test_a_death_recorded_without_a_date_invents_none(self):
+    def test_a_death_recorded_without_a_date_sets_the_flag_and_no_date(self):
         """`deceasedBoolean` is legal FHIR; a fabricated date would be printed as fact."""
         with pytest.warns(UserWarning, match="deceasedDateTime"):
             index = load_patient_index(a_bundle(a_patient(deceasedBoolean=True)))
         assert index.deceased is None
+        assert index.deceased_undated is True
+
+    def test_an_undated_death_still_reads_as_a_death(self):
+        with pytest.warns(UserWarning):
+            index = load_patient_index(a_bundle(a_patient(deceasedBoolean=True)))
+        assert index.is_deceased()
+        # Nothing can be said about when, so the date-bounded question stays answerable only by a
+        # date, and this chart has none.
+        assert not index.died_before(date(2026, 6, 1))
+
+    def test_an_unparseable_death_date_falls_back_to_the_flag(self):
+        resource = a_patient(deceasedBoolean=True, deceasedDateTime="sometime in May")
+        with pytest.warns(UserWarning, match="deceasedDateTime"):
+            index = load_patient_index(a_bundle(resource))
+        assert index.deceased is None
+        assert index.deceased_undated is True
 
     def test_a_death_recorded_without_a_date_is_not_passed_over_in_silence(self):
         with pytest.warns(UserWarning, match="3f1a-patient"):
@@ -164,13 +184,15 @@ class TestVitalStatus:
             warnings.simplefilter("error")
             index = load_patient_index(a_bundle(a_patient(deceasedBoolean=False)))
         assert index.deceased is None
+        assert index.deceased_undated is False
 
-    def test_a_dated_death_alongside_the_boolean_needs_no_warning(self):
+    def test_a_dated_death_alongside_the_boolean_keeps_the_date_and_clears_the_flag(self):
         resource = a_patient(deceasedBoolean=True, deceasedDateTime="2026-05-03T13:57:29+00:00")
         with warnings.catch_warnings():
             warnings.simplefilter("error")
             index = load_patient_index(a_bundle(resource))
         assert index.deceased == date(2026, 5, 3)
+        assert index.deceased_undated is False
 
 
 class TestObservations:
@@ -685,6 +707,8 @@ class TestTheRealCorpus:
             else:
                 assert index.deceased is not None, path
                 assert recorded.startswith(index.deceased.isoformat()), path
+            # Every death in this corpus is dated, so nothing should fall back to the flag.
+            assert index.deceased_undated is False, path
 
     def test_the_corpus_contains_a_death_that_precedes_the_screening_date(self, corpus):
         """Five of these charts end in a death; one of them four weeks before screening."""

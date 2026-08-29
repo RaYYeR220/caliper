@@ -1,0 +1,171 @@
+{
+  "note": "Every criterion where pass 1 and pass 2 differed, with the decision and why. scripts/build_answer_key.py refuses to build unless this file decides exactly the set of criteria that differ — no more and no fewer. Adjudicated by the maintainer. Prose discussion is in disagreements.md.",
+  "adjudicated_by": "maintainer",
+  "decisions": [
+    {
+      "case_id": "AK-001", "criterion_id": "NCT01131676-I7",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "The registry writes the criterion as the three words 'High cardiovascular risk' and gives no risk-factor list and no threshold. This patient has obesity, metabolic syndrome, type 2 diabetes and a systolic pressure of 147 mmHg but no established cardiovascular disease, and whether that combination is high risk depends entirely on which definition is used. An unoperationalised criterion is the textbook unknown."
+    },
+    {
+      "case_id": "AK-002", "criterion_id": "NCT01131676-I2",
+      "pass1": "not_met", "pass2": "met", "verdict": "met", "upheld": "pass2",
+      "reason": "Pass 1 read the criterion as presupposing a diabetes diagnosis, which double-counts inclusion 1. The operative content of the bullet is that the patient is drug naive or on background therapy and that antidiabetic therapy has been unchanged for 12 weeks; a patient with no antidiabetic order in a chart current to 2026-05-30 satisfies both. The diet-and-exercise clause is not separately checkable from any record in this corpus and is read as describing the trial population."
+    },
+    {
+      "case_id": "AK-003", "criterion_id": "NCT01131676-I2",
+      "pass1": "not_met", "pass2": "met", "verdict": "met", "upheld": "pass2",
+      "reason": "Same decision as AK-002 on the same criterion: drug naive with no antidiabetic order in a chart current to 2025-10-08, so therapy has been unchanged for the 12 weeks."
+    },
+    {
+      "case_id": "AK-003", "criterion_id": "NCT01131676-E4",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "The chart records an MDRD eGFR of 84.289 mL/min and a serum creatinine of 2.578 mg/dL on the same date, 2025-09-25. A creatinine that high in a 56-year-old man gives an MDRD eGFR near 30, so the two results cannot both be right and taking the reported eGFR at face value would be picking one arbitrarily. Where two results recorded on the same date are mutually inconsistent under the equation the criterion names, the criterion is unknown. Neither reading changes this case, which is ineligible on inclusions 1 and 3."
+    },
+    {
+      "case_id": "AK-012", "criterion_id": "NCT03036124-E10",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Pass 1 applied the measured-quantity rule and demanded an electrocardiogram. The criterion is about a diagnosis — symptomatic bradycardia, or second- or third-degree heart block — not about a measurement, so the condition rule applies: no such diagnosis in a chart current to 2026-05-30 resolves it."
+    },
+    {
+      "case_id": "AK-013", "criterion_id": "NCT03036124-E10",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Same decision as AK-012 on the same criterion: a conduction diagnosis, absent from a chart current to 2025-12-09."
+    },
+    {
+      "case_id": "AK-014", "criterion_id": "NCT03315143-I3",
+      "pass1": "unknown", "pass2": "met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "The criterion counts major and minor cardiovascular risk factors and the registry text enumerates neither. Pass 2 counted obesity and metabolic syndrome as a major risk factor; different published schemes classify obesity as a major risk factor, a minor one, or a risk marker rather than a factor, and the patient at 46 does not reach the age-55 branch. Where the patient has no established cardiovascular disease, this criterion cannot be resolved."
+    },
+    {
+      "case_id": "AK-015", "criterion_id": "NCT03315143-I3",
+      "pass1": "unknown", "pass2": "met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "Same decision as AK-014: obesity and hypertriglyceridaemia without established cardiovascular disease, against an undefined major-or-minor distinction, at 41."
+    },
+    {
+      "case_id": "AK-016", "criterion_id": "NCT03315143-I2",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "The same same-day contradiction as AK-003 exclusion 4: an MDRD eGFR of 84.289 mL/min beside a creatinine of 2.578 mg/dL on 2025-09-25. Neither reading changes this case, which is ineligible on inclusion 1."
+    },
+    {
+      "case_id": "AK-016", "criterion_id": "NCT03315143-I3",
+      "pass1": "unknown", "pass2": "met", "verdict": "met", "upheld": "pass2",
+      "reason": "This patient is the one case where the undefined major-or-minor distinction does not matter: ischemic heart disease has been active since 2013-09-04, and established cardiovascular disease counts as a major cardiovascular risk factor under every published scheme. Resolving it here and leaving AK-014, AK-015, AK-017 and AK-018 unknown is the same principle applied twice, not two principles."
+    },
+    {
+      "case_id": "AK-017", "criterion_id": "NCT03315143-I3",
+      "pass1": "unknown", "pass2": "met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "Same decision as AK-014: severe obesity without established cardiovascular disease, at 40."
+    },
+    {
+      "case_id": "AK-018", "criterion_id": "NCT03315143-I3",
+      "pass1": "unknown", "pass2": "met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "Same decision as AK-014: obesity without established cardiovascular disease, at 52."
+    },
+    {
+      "case_id": "AK-020", "criterion_id": "NCT03819153-E7",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "The criterion is explicit that the finding must be verified by a fundus examination performed within the 90 days before screening. The only ophthalmic data on file are intraocular pressures and LogMAR acuity from 2025-06-24, which is both outside the window and not a retinal examination. A retina nobody has looked at is not a retina that is normal."
+    },
+    {
+      "case_id": "AK-024", "criterion_id": "NCT05748834-I6",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Pass 1 abstained because no RECIST assessment exists. But measurable disease presupposes disease, and the absence of any neoplasm is itself resolved not_met on a chart with 38 encounters through 2026-05-12. A criterion whose subject matter is entailed by a condition the chart resolves as absent resolves too."
+    },
+    {
+      "case_id": "AK-024", "criterion_id": "NCT05748834-E2",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Same principle as inclusion 6 above: every limb of this exclusion is about brain metastases from the cancer under study, and the chart resolves the absence of any cancer. The paired inclusion 13 stays unknown because it demands a positive classification from a screening contrast brain MRI that does not exist; an exclusion is not triggered by a lesion the patient cannot have, but an inclusion is not satisfied by an imaging study nobody performed."
+    },
+    {
+      "case_id": "AK-025", "criterion_id": "NCT05748834-I6",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Same decision as AK-024 on the same criterion, on a chart with 44 encounters through 2026-01-06."
+    },
+    {
+      "case_id": "AK-025", "criterion_id": "NCT05748834-E2",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Same decision as AK-024 on the same criterion."
+    },
+    {
+      "case_id": "AK-026", "criterion_id": "NCT05748834-E7",
+      "pass1": "unknown", "pass2": "met", "verdict": "met", "upheld": "pass2",
+      "reason": "Pass 1 abstained on chart-currency grounds, but the currency rule governs how absence is read, not how presence is read, and this is presence. Cystic fibrosis is an active condition from 1984-10-15 and pancreatin 600 mg was ordered on 2016-02-15, which documents exocrine pancreatic insufficiency — a malabsorption syndrome, the example the criterion itself names. An active chronic diagnosis does not expire and does not need the last decade to be documented. This is the only adjudication in the key that changes a case outcome: AK-026 moves from needs_review to ineligible, and it becomes the only case decided solely by an exclusion."
+    },
+    {
+      "case_id": "AK-027", "criterion_id": "NCT06717698-E7",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "Same decision as AK-020: the criterion requires verification by an eye examination within the 90 days before screening, and the intraocular pressures and acuity from 2025-06-24 are neither within the window nor a retinal examination."
+    },
+    {
+      "case_id": "AK-029", "criterion_id": "NCT06717698-I7",
+      "pass1": "unknown", "pass2": "met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "Pass 2 established that an ACE inhibitor is in place and stable, which is true, but the criterion asks for the maximum labelled or tolerated dose. Lisinopril 10 mg is a quarter of the 40 mg labelled maximum and the record carries no titration note, no intolerance and no investigator opinion, so neither the maximum-labelled branch nor the maximum-tolerated branch can be established. Both passes reached the same conclusion on the same drug and dose for AK-007, so this decision makes the two consistent."
+    },
+    {
+      "case_id": "AK-031", "criterion_id": "NCT06717698-I1",
+      "pass1": "unknown", "pass2": "met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "Pass 2 inferred non-childbearing potential from an age of 58. That inference is probably right and it is not in the record: no menopausal status, no hysterectomy, no sterilisation, and no encounter since 1991-06-08. Inferring an eligibility fact from a demographic plausibility is precisely the behaviour this key exists to detect, so it cannot be built into the key."
+    },
+    {
+      "case_id": "AK-031", "criterion_id": "NCT06717698-E1",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "unknown", "upheld": "pass1",
+      "reason": "The exclusion fires on pregnancy, breast-feeding, or childbearing potential without highly effective contraception. Childbearing potential is undetermined by the decision on inclusion 1 above, so the exclusion is undetermined with it."
+    },
+    {
+      "case_id": "AK-032", "criterion_id": "NCT07252908-I11",
+      "pass1": "unknown", "pass2": "met", "verdict": "met", "upheld": "pass2",
+      "reason": "This is one of ten criteria on this pair where pass 1 required an encounter dated inside the criterion's window and pass 2 required only that the chart be current. Pass 1's own labels apply the looser reading on nine other charts, so the disagreement exposed an inconsistency inside pass 1 rather than a difference of principle, and it is resolved in the direction of pass 1's dominant practice: a chart whose last encounter is within twelve months of screening is current, and absence of a condition, medication or event is read as absence for any window. Here no exacerbation, no respiratory hospitalisation and no change of inhaled therapy is recorded since the 2025-12-23 orders."
+    },
+    {
+      "case_id": "AK-032", "criterion_id": "NCT07252908-E2",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Chart-currency rule as decided for inclusion 11 above: no systemic corticosteroid has ever been ordered and no exacerbation is recorded, on a chart current to 2026-01-06."
+    },
+    {
+      "case_id": "AK-032", "criterion_id": "NCT07252908-E4",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Chart-currency rule: the last antibiotic order is amoxicillin on 2019-03-18, far outside the six weeks before screening."
+    },
+    {
+      "case_id": "AK-032", "criterion_id": "NCT07252908-E8",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Chart-currency rule: no pulmonary rehabilitation appears in 44 encounters through 2026-01-06."
+    },
+    {
+      "case_id": "AK-032", "criterion_id": "NCT07252908-E9",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Chart-currency rule: no oral corticosteroid, roflumilast or theophylline appears among the ten medication orders; the COPD therapy on file is inhaled."
+    },
+    {
+      "case_id": "AK-032", "criterion_id": "NCT07252908-E12",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Chart-currency rule: no azathioprine, cyclophosphamide or other immunotherapy appears at any date."
+    },
+    {
+      "case_id": "AK-032", "criterion_id": "NCT07252908-E15",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Chart-currency rule: no myocardial infarction, unstable angina, stroke or arrhythmia appears in the active or resolved condition lists, and the NYHA limb is inapplicable because no heart failure is diagnosed."
+    },
+    {
+      "case_id": "AK-032", "criterion_id": "NCT07252908-E18",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Chart-currency rule: the only surgery on file is a tubal ligation recorded 2024-06-24, far outside the eight weeks before screening."
+    },
+    {
+      "case_id": "AK-032", "criterion_id": "NCT07252908-E25",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Chart-currency rule: no immunisation of any kind appears in 44 encounters through 2026-01-06."
+    },
+    {
+      "case_id": "AK-032", "criterion_id": "NCT07252908-E27",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "Chart-currency rule: no research participation appears in the record."
+    },
+    {
+      "case_id": "AK-033", "criterion_id": "NCT07252908-E17",
+      "pass1": "unknown", "pass2": "not_met", "verdict": "not_met", "upheld": "pass2",
+      "reason": "The exclusion has two limbs and both can be closed. A random blood glucose of 93.45 mg/dL on 2025-06-03 is 5.19 mmol/L, which bounds any fasting value on that day below the 10 mmol/L limit rather than leaving it open, and an HbA1c of 7.58% on the same date is above target but is not poorly controlled diabetes under any usual reading."
+    }
+  ]
+}

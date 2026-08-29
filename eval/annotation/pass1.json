@@ -1,0 +1,2619 @@
+{
+  "pass": "llm-pass-1",
+  "annotator": "llm-pass-1",
+  "note": "First independent pass. Criterion-level verdicts only; case outcomes are derived by scripts/build_answer_key.py from caliper.logic.roll_up.",
+  "screening_date": "2026-06-01",
+  "pairs": [
+    {
+      "case_id": "AK-001",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "nct_id": "NCT01131676",
+      "labels": [
+        {
+          "criterion_id": "NCT01131676-I1",
+          "verdict": "met",
+          "reason": "Diabetes mellitus type 2 (disorder) is active from 2025-06-03."
+        },
+        {
+          "criterion_id": "NCT01131676-I2",
+          "verdict": "met",
+          "reason": "Metformin ER 500 mg ordered 2025-06-03 is the only antidiabetic on file and no change is recorded; encounters on 2025-06-24 and 2026-05-12 cover the 12 weeks before screening."
+        },
+        {
+          "criterion_id": "NCT01131676-I3",
+          "verdict": "met",
+          "reason": "HbA1c 7.58% on 2025-06-03, inside 7.0-10% for a patient on background therapy and within the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT01131676-I4",
+          "verdict": "met",
+          "reason": "Born 1979-11-06; age 46 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT01131676-I5",
+          "verdict": "met",
+          "reason": "BMI 30.3 kg/m2 on 2025-06-03, below the 45 ceiling."
+        },
+        {
+          "criterion_id": "NCT01131676-I7",
+          "verdict": "unknown",
+          "reason": "The registry text gives no operational definition of high cardiovascular risk and the chart records no established cardiovascular disease, so the criterion cannot be resolved either way."
+        },
+        {
+          "criterion_id": "NCT01131676-E1",
+          "verdict": "not_met",
+          "reason": "Blood glucose 93.45 mg/dL on 2025-06-03, far below the 240 mg/dL bound."
+        },
+        {
+          "criterion_id": "NCT01131676-E2",
+          "verdict": "unknown",
+          "reason": "No ALT, AST or alkaline phosphatase result appears anywhere in this chart; a test not done is not a normal result."
+        },
+        {
+          "criterion_id": "NCT01131676-E4",
+          "verdict": "not_met",
+          "reason": "MDRD eGFR 141.3 mL/min/1.73 m2 on 2025-06-03, well above the 30 mL/min bound."
+        },
+        {
+          "criterion_id": "NCT01131676-E5",
+          "verdict": "not_met",
+          "reason": "No bariatric or gastrointestinal surgery in the chart; encounters through 2026-05-12 cover the two-year window."
+        },
+        {
+          "criterion_id": "NCT01131676-E6",
+          "verdict": "unknown",
+          "reason": "Anemia (disorder) is active from 2023-05-23 but its type is not recorded, so whether it is a haemolytic anaemia cannot be told."
+        },
+        {
+          "criterion_id": "NCT01131676-E7",
+          "verdict": "not_met",
+          "reason": "No neoplasm and no oncological treatment; encounters in 2021-2026 cover the five-year window."
+        },
+        {
+          "criterion_id": "NCT01131676-E9",
+          "verdict": "not_met",
+          "reason": "No anti-obesity agent among the eight medication orders; the most recent are 2025-06-03 and 2025-06-24."
+        },
+        {
+          "criterion_id": "NCT01131676-E10",
+          "verdict": "not_met",
+          "reason": "The only corticosteroid is inhaled budesonide (2025-06-03), no thyroid hormone is ordered, and the only endocrine diagnosis is type 2 diabetes, which the criterion exempts."
+        },
+        {
+          "criterion_id": "NCT01131676-E11",
+          "verdict": "not_met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT01131676-E12",
+          "verdict": "not_met",
+          "reason": "Unhealthy alcohol drinking behavior is recorded as resolved on 2020-05-05, six years before screening; AUDIT-C 2 on 2024-05-28 and DAST-10 2 on 2025-06-03."
+        },
+        {
+          "criterion_id": "NCT01131676-E13",
+          "verdict": "not_met",
+          "reason": "No research participation and no investigational agent among the medication orders; the encounter on 2026-05-12 falls inside the 30-day window."
+        },
+        {
+          "criterion_id": "NCT01131676-E15",
+          "verdict": "not_met",
+          "reason": "No acute coronary syndrome, stroke or TIA in the chart; the encounter on 2026-05-12 falls inside the two-month window."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-002",
+      "patient_id": "23da8e71-dfb9-9773-1bc1-7b5e31d085b5",
+      "nct_id": "NCT01131676",
+      "labels": [
+        {
+          "criterion_id": "NCT01131676-I1",
+          "verdict": "not_met",
+          "reason": "Prediabetes (finding) active from 1985-05-18 and no type 2 diabetes diagnosis anywhere, in a chart with encounters through 2026-05-30."
+        },
+        {
+          "criterion_id": "NCT01131676-I2",
+          "verdict": "not_met",
+          "reason": "No antidiabetic medication has ever been ordered and no diabetes diet-and-exercise regimen is documented."
+        },
+        {
+          "criterion_id": "NCT01131676-I3",
+          "verdict": "not_met",
+          "reason": "HbA1c 5.86% on 2026-05-30, below the 7.0% floor."
+        },
+        {
+          "criterion_id": "NCT01131676-I4",
+          "verdict": "met",
+          "reason": "Born 1963-03-16; age 63 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT01131676-I5",
+          "verdict": "met",
+          "reason": "BMI 28.82 kg/m2 on 2026-05-30."
+        },
+        {
+          "criterion_id": "NCT01131676-I7",
+          "verdict": "met",
+          "reason": "Ischemic heart disease active from 2011-04-09 with a history of coronary artery bypass grafting (2011-05-27) is established cardiovascular disease."
+        },
+        {
+          "criterion_id": "NCT01131676-E1",
+          "verdict": "not_met",
+          "reason": "Blood glucose 96.84 mg/dL on 2026-05-30."
+        },
+        {
+          "criterion_id": "NCT01131676-E2",
+          "verdict": "unknown",
+          "reason": "No ALT, AST or alkaline phosphatase result appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT01131676-E4",
+          "verdict": "unknown",
+          "reason": "No glomerular filtration rate has ever been recorded; the chart carries only creatinine 0.95 mg/dL on 2026-05-30, and the criterion names an MDRD eGFR."
+        },
+        {
+          "criterion_id": "NCT01131676-E5",
+          "verdict": "not_met",
+          "reason": "The only surgical history is an appendectomy (1966), which is not malabsorptive; encounters through 2026-05-30 cover the two-year window."
+        },
+        {
+          "criterion_id": "NCT01131676-E6",
+          "verdict": "unknown",
+          "reason": "Anemia (disorder) active from 2003-03-22 with its type unrecorded."
+        },
+        {
+          "criterion_id": "NCT01131676-E7",
+          "verdict": "not_met",
+          "reason": "No neoplasm and no oncological treatment; encounters in 2021-2026 cover the five-year window."
+        },
+        {
+          "criterion_id": "NCT01131676-E9",
+          "verdict": "not_met",
+          "reason": "No anti-obesity agent among the six medication orders on file."
+        },
+        {
+          "criterion_id": "NCT01131676-E10",
+          "verdict": "not_met",
+          "reason": "No systemic steroid and no thyroid hormone on the medication list, and no endocrine disorder other than prediabetes is recorded."
+        },
+        {
+          "criterion_id": "NCT01131676-E11",
+          "verdict": "not_met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT01131676-E12",
+          "verdict": "not_met",
+          "reason": "No alcohol- or drug-misuse finding; AUDIT-C 1 on 2026-05-30 and DAST-10 2 on 2025-05-24."
+        },
+        {
+          "criterion_id": "NCT01131676-E13",
+          "verdict": "not_met",
+          "reason": "No research participation or investigational agent on file; the encounter on 2026-05-30 falls inside the 30-day window."
+        },
+        {
+          "criterion_id": "NCT01131676-E15",
+          "verdict": "not_met",
+          "reason": "The last coronary event on file is the 2011 bypass graft; nothing in the two months before screening, with an encounter on 2026-05-30."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-003",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+      "nct_id": "NCT01131676",
+      "labels": [
+        {
+          "criterion_id": "NCT01131676-I1",
+          "verdict": "not_met",
+          "reason": "Prediabetes (finding) active from 1988-10-19 and no type 2 diabetes diagnosis, in a chart with encounters through 2025-10-08."
+        },
+        {
+          "criterion_id": "NCT01131676-I2",
+          "verdict": "not_met",
+          "reason": "No antidiabetic medication has ever been ordered and no diabetes regimen is documented."
+        },
+        {
+          "criterion_id": "NCT01131676-I3",
+          "verdict": "not_met",
+          "reason": "HbA1c 6.02% on 2025-09-24, below the 7.0% floor."
+        },
+        {
+          "criterion_id": "NCT01131676-I4",
+          "verdict": "met",
+          "reason": "Born 1969-08-20; age 56 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT01131676-I5",
+          "verdict": "met",
+          "reason": "BMI 27.32 kg/m2 on 2025-09-24."
+        },
+        {
+          "criterion_id": "NCT01131676-I7",
+          "verdict": "met",
+          "reason": "Ischemic heart disease active from 2013-09-04 with abnormal cardiac imaging (2013-09-13)."
+        },
+        {
+          "criterion_id": "NCT01131676-E1",
+          "verdict": "not_met",
+          "reason": "Blood glucose 80.24 mg/dL on 2025-09-25."
+        },
+        {
+          "criterion_id": "NCT01131676-E2",
+          "verdict": "not_met",
+          "reason": "ALT 21.638 U/L, AST 33.104 U/L and alkaline phosphatase 101.5 U/L on 2025-09-25, none of them near three times a usual upper limit of normal."
+        },
+        {
+          "criterion_id": "NCT01131676-E4",
+          "verdict": "unknown",
+          "reason": "The chart reports an MDRD eGFR of 84.289 mL/min on 2025-09-25 alongside a serum creatinine of 2.578 mg/dL on the same date; a creatinine that high implies an eGFR near 30, so the two cannot both be right and the criterion needs a repeat measurement."
+        },
+        {
+          "criterion_id": "NCT01131676-E5",
+          "verdict": "not_met",
+          "reason": "No bariatric or gastrointestinal surgery in the chart; encounters through 2025-10-08 cover the two-year window."
+        },
+        {
+          "criterion_id": "NCT01131676-E6",
+          "verdict": "unknown",
+          "reason": "Anemia (disorder) active from 1988-12-21 with its type unrecorded."
+        },
+        {
+          "criterion_id": "NCT01131676-E7",
+          "verdict": "not_met",
+          "reason": "No neoplasm and no oncological treatment; encounters in 2021-2025 cover the five-year window."
+        },
+        {
+          "criterion_id": "NCT01131676-E9",
+          "verdict": "not_met",
+          "reason": "No anti-obesity agent among the nine medication orders on file."
+        },
+        {
+          "criterion_id": "NCT01131676-E10",
+          "verdict": "not_met",
+          "reason": "No systemic steroid and no thyroid hormone on the medication list; no uncontrolled endocrine disorder is recorded."
+        },
+        {
+          "criterion_id": "NCT01131676-E11",
+          "verdict": "not_met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT01131676-E12",
+          "verdict": "not_met",
+          "reason": "Misuses drugs (finding) is recorded as resolved on 2021-08-25, four years and nine months before screening; DAST-10 1 on 2023-09-13 and AUDIT-C 3 on 2025-09-24."
+        },
+        {
+          "criterion_id": "NCT01131676-E13",
+          "verdict": "not_met",
+          "reason": "No research participation or investigational agent on file; the encounter on 2025-10-08 is the last of a continuous annual series."
+        },
+        {
+          "criterion_id": "NCT01131676-E15",
+          "verdict": "not_met",
+          "reason": "The ischaemic heart disease dates from 2013 and nothing acute is recorded in the two months before screening."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-004",
+      "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b",
+      "nct_id": "NCT01131676",
+      "labels": [
+        {
+          "criterion_id": "NCT01131676-I1",
+          "verdict": "met",
+          "reason": "Diabetes mellitus type 2 (disorder) is active from 1996-10-28; a diagnosis does not expire."
+        },
+        {
+          "criterion_id": "NCT01131676-I2",
+          "verdict": "unknown",
+          "reason": "The last antidiabetic orders are metformin ER and Humulin 70/30 on 2016-02-15 and there is no encounter after 2016-06-13, so therapy over the 12 weeks before screening is undocumented."
+        },
+        {
+          "criterion_id": "NCT01131676-I3",
+          "verdict": "unknown",
+          "reason": "The most recent HbA1c is 3.36% on 2016-02-15, ten years and three months before screening and outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT01131676-I4",
+          "verdict": "met",
+          "reason": "Born 1984-10-08; age 41 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT01131676-I5",
+          "verdict": "unknown",
+          "reason": "The most recent BMI is 31.44 kg/m2 on 2016-02-15, outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT01131676-I7",
+          "verdict": "unknown",
+          "reason": "The registry text gives no operational definition of high cardiovascular risk and the record stops on 2016-06-13."
+        },
+        {
+          "criterion_id": "NCT01131676-E1",
+          "verdict": "unknown",
+          "reason": "The most recent blood glucose is 79.68 mg/dL on 2016-02-15, outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT01131676-E2",
+          "verdict": "unknown",
+          "reason": "No serum ALT, AST or alkaline phosphatase result appears anywhere in this chart; the only bilirubin on file is a urine dipstick value."
+        },
+        {
+          "criterion_id": "NCT01131676-E4",
+          "verdict": "unknown",
+          "reason": "The most recent MDRD eGFR is 92.939 mL/min/1.73 m2 on 2016-02-15, ten years old."
+        },
+        {
+          "criterion_id": "NCT01131676-E5",
+          "verdict": "unknown",
+          "reason": "No encounter has been recorded since 2016-06-13, so the two years before screening are undocumented and absence of bariatric surgery cannot be relied on."
+        },
+        {
+          "criterion_id": "NCT01131676-E6",
+          "verdict": "unknown",
+          "reason": "Anemia (disorder) active from 1984-10-16 with its type unrecorded."
+        },
+        {
+          "criterion_id": "NCT01131676-E7",
+          "verdict": "unknown",
+          "reason": "The five years before screening contain no encounter, so absence of a cancer history cannot be relied on."
+        },
+        {
+          "criterion_id": "NCT01131676-E9",
+          "verdict": "unknown",
+          "reason": "Medication orders stop at 2016-02-15 and the three months before screening are undocumented."
+        },
+        {
+          "criterion_id": "NCT01131676-E10",
+          "verdict": "unknown",
+          "reason": "Medication orders stop at 2016-02-15, so current systemic steroid or thyroid treatment cannot be established."
+        },
+        {
+          "criterion_id": "NCT01131676-E11",
+          "verdict": "unknown",
+          "reason": "The patient is female and 41; Female infertility due to cystic fibrosis is recorded from 1984-10-15 and a norethindrone pack was ordered 2015-10-14, but no menstrual, pregnancy or contraception status within a year of screening is on file."
+        },
+        {
+          "criterion_id": "NCT01131676-E12",
+          "verdict": "unknown",
+          "reason": "AUDIT-C 0 on 2015-12-21 and DAST-10 0 on 2016-01-18 both predate the three-month window, which contains no encounter."
+        },
+        {
+          "criterion_id": "NCT01131676-E13",
+          "verdict": "unknown",
+          "reason": "No encounter since 2016-06-13, so the 30 days before screening are undocumented."
+        },
+        {
+          "criterion_id": "NCT01131676-E15",
+          "verdict": "unknown",
+          "reason": "No encounter since 2016-06-13, so the two months before screening are undocumented."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-005",
+      "patient_id": "30889246-5f7d-9305-542f-55cb89e1f4de",
+      "nct_id": "NCT01131676",
+      "labels": [
+        {
+          "criterion_id": "NCT01131676-I1",
+          "verdict": "unknown",
+          "reason": "No type 2 diabetes diagnosis is recorded, but the last encounter is 1961-08-25 and sixty-five years of this patient's life are undocumented, so absence cannot be relied on."
+        },
+        {
+          "criterion_id": "NCT01131676-I2",
+          "verdict": "unknown",
+          "reason": "The last medication orders are carbamazepine (1960-12-02) and clonazepam (1960-04-01); the 12 weeks before screening are undocumented."
+        },
+        {
+          "criterion_id": "NCT01131676-I3",
+          "verdict": "unknown",
+          "reason": "No HbA1c has ever been recorded for this patient."
+        },
+        {
+          "criterion_id": "NCT01131676-I4",
+          "verdict": "met",
+          "reason": "Born 1960-03-25; age 66 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT01131676-I5",
+          "verdict": "unknown",
+          "reason": "The only height and weight are 81.2 cm and 13.3 kg on 1961-06-02, recorded in infancy, and no BMI has ever been calculated."
+        },
+        {
+          "criterion_id": "NCT01131676-I7",
+          "verdict": "unknown",
+          "reason": "No cardiovascular history of any kind is recorded and the chart stops in 1961."
+        },
+        {
+          "criterion_id": "NCT01131676-E1",
+          "verdict": "unknown",
+          "reason": "No blood glucose result appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT01131676-E2",
+          "verdict": "unknown",
+          "reason": "No ALT, AST or alkaline phosphatase result appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT01131676-E4",
+          "verdict": "unknown",
+          "reason": "No creatinine and no glomerular filtration rate appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT01131676-E5",
+          "verdict": "unknown",
+          "reason": "The two years before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT01131676-E6",
+          "verdict": "unknown",
+          "reason": "The only haematology on file is a single complete blood count from 1960-03-25, with no haemolysis workup and no dyscrasia diagnosis."
+        },
+        {
+          "criterion_id": "NCT01131676-E7",
+          "verdict": "unknown",
+          "reason": "The five years before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT01131676-E9",
+          "verdict": "unknown",
+          "reason": "The last medication order is 1960-12-02 and the three months before screening are undocumented."
+        },
+        {
+          "criterion_id": "NCT01131676-E10",
+          "verdict": "unknown",
+          "reason": "No medication order after 1960-12-02, so current systemic steroid or thyroid treatment cannot be established."
+        },
+        {
+          "criterion_id": "NCT01131676-E11",
+          "verdict": "not_met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT01131676-E12",
+          "verdict": "unknown",
+          "reason": "No AUDIT-C, DAST-10 or substance-misuse finding on file and the three months before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT01131676-E13",
+          "verdict": "unknown",
+          "reason": "The 30 days before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT01131676-E15",
+          "verdict": "unknown",
+          "reason": "The two months before screening contain no encounter."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-006",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "nct_id": "NCT02545049",
+      "labels": [
+        {
+          "criterion_id": "NCT02545049-I1",
+          "verdict": "met",
+          "reason": "Born 1979-11-06; age 46 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT02545049-I2",
+          "verdict": "met",
+          "reason": "Diabetes mellitus type 2 (disorder) active from 2025-06-03."
+        },
+        {
+          "criterion_id": "NCT02545049-I3",
+          "verdict": "not_met",
+          "reason": "The only urine albumin-to-creatinine ratio on file is 13.37 mg/g on 2025-06-03, below even the 30 mg/g moderate-albuminuria threshold, and no diabetic kidney disease is diagnosed."
+        },
+        {
+          "criterion_id": "NCT02545049-I4",
+          "verdict": "not_met",
+          "reason": "No ACE inhibitor or angiotensin receptor blocker among the eight medication orders; encounters through 2026-05-12 cover the window."
+        },
+        {
+          "criterion_id": "NCT02545049-I5",
+          "verdict": "met",
+          "reason": "Serum potassium 4.07 mmol/L on 2025-06-03, at or below the 4.8 mmol/L bound."
+        },
+        {
+          "criterion_id": "NCT02545049-E1",
+          "verdict": "not_met",
+          "reason": "No renal diagnosis of any kind in the chart; encounters through 2026-05-12."
+        },
+        {
+          "criterion_id": "NCT02545049-E2",
+          "verdict": "not_met",
+          "reason": "Blood pressure 147/87 mmHg on 2025-06-03, below the 160/100 screening bounds."
+        },
+        {
+          "criterion_id": "NCT02545049-E3",
+          "verdict": "not_met",
+          "reason": "No heart failure diagnosis in the chart."
+        },
+        {
+          "criterion_id": "NCT02545049-E4",
+          "verdict": "not_met",
+          "reason": "No dialysis recorded; the encounter on 2026-05-12 falls inside the 12-week window."
+        },
+        {
+          "criterion_id": "NCT02545049-E5",
+          "verdict": "not_met",
+          "reason": "No renal allograft and no transplant history in the chart."
+        },
+        {
+          "criterion_id": "NCT02545049-E6",
+          "verdict": "not_met",
+          "reason": "HbA1c 7.58% on 2025-06-03, below 12%."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-007",
+      "patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1",
+      "nct_id": "NCT02545049",
+      "labels": [
+        {
+          "criterion_id": "NCT02545049-I1",
+          "verdict": "met",
+          "reason": "Born 1980-01-13; age 46 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT02545049-I2",
+          "verdict": "not_met",
+          "reason": "Prediabetes (finding) active from 2011-03-27 and HbA1c 6.11% on 2026-02-01; no type 2 diabetes diagnosis, with encounters through 2026-02-01."
+        },
+        {
+          "criterion_id": "NCT02545049-I3",
+          "verdict": "unknown",
+          "reason": "No urine albumin-to-creatinine ratio has ever been recorded; a single urine protein dipstick of 2.51 mg/dL on 2024-04-12 does not establish persistent albuminuria."
+        },
+        {
+          "criterion_id": "NCT02545049-I4",
+          "verdict": "unknown",
+          "reason": "Lisinopril 10 mg was ordered on 2026-02-01, which is an ACE inhibitor but not the maximum labelled dose of 40 mg, and nothing records whether 10 mg is the maximum this patient tolerates."
+        },
+        {
+          "criterion_id": "NCT02545049-I5",
+          "verdict": "met",
+          "reason": "Serum potassium 4.80 mmol/L on 2026-02-01, exactly at the inclusive 4.8 mmol/L bound."
+        },
+        {
+          "criterion_id": "NCT02545049-E1",
+          "verdict": "not_met",
+          "reason": "No renal diagnosis of any kind in the chart; encounters through 2026-02-01."
+        },
+        {
+          "criterion_id": "NCT02545049-E2",
+          "verdict": "not_met",
+          "reason": "Blood pressure 148/88 mmHg on 2026-02-01, below the 160/100 screening bounds."
+        },
+        {
+          "criterion_id": "NCT02545049-E3",
+          "verdict": "not_met",
+          "reason": "No heart failure diagnosis in the chart."
+        },
+        {
+          "criterion_id": "NCT02545049-E4",
+          "verdict": "not_met",
+          "reason": "No dialysis recorded; the encounter on 2026-02-01 falls inside the 12-week window."
+        },
+        {
+          "criterion_id": "NCT02545049-E5",
+          "verdict": "not_met",
+          "reason": "No renal allograft and no transplant history in the chart."
+        },
+        {
+          "criterion_id": "NCT02545049-E6",
+          "verdict": "not_met",
+          "reason": "HbA1c 6.11% on 2026-02-01, below 12%."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-008",
+      "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b",
+      "nct_id": "NCT02545049",
+      "labels": [
+        {
+          "criterion_id": "NCT02545049-I1",
+          "verdict": "met",
+          "reason": "Born 1984-10-08; age 41 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT02545049-I2",
+          "verdict": "met",
+          "reason": "Diabetes mellitus type 2 (disorder) active from 1996-10-28."
+        },
+        {
+          "criterion_id": "NCT02545049-I3",
+          "verdict": "unknown",
+          "reason": "Disorder of kidney due to diabetes mellitus is active from 2014-06-30, but the criterion requires persistent high albuminuria at the run-in and screening visits and the only UACR on file is 13.58 mg/g on 2016-02-15, ten years old and below the albuminuria threshold."
+        },
+        {
+          "criterion_id": "NCT02545049-I4",
+          "verdict": "unknown",
+          "reason": "No ACE inhibitor or ARB appears among the 32 medication orders, but the last order is 2016-02-15 and there is no encounter after 2016-06-13, so the current regimen is undocumented."
+        },
+        {
+          "criterion_id": "NCT02545049-I5",
+          "verdict": "unknown",
+          "reason": "The most recent serum potassium is 4.35 mmol/L on 2016-02-15, outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT02545049-E1",
+          "verdict": "unknown",
+          "reason": "Chronic kidney disease stage 1 and diabetic kidney disease are both recorded from 2014-06-30 alongside cystic fibrosis from 1984-10-15; whether a significant non-diabetic renal disease has been confirmed is not stated."
+        },
+        {
+          "criterion_id": "NCT02545049-E2",
+          "verdict": "unknown",
+          "reason": "The most recent blood pressure is 138/98 mmHg on 2016-02-15, outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT02545049-E3",
+          "verdict": "unknown",
+          "reason": "No heart failure diagnosis and no ejection fraction on file, over a record with no encounter after 2016-06-13."
+        },
+        {
+          "criterion_id": "NCT02545049-E4",
+          "verdict": "unknown",
+          "reason": "The 12 weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT02545049-E5",
+          "verdict": "unknown",
+          "reason": "The record stops on 2016-06-13, so a renal allograft placed since then would not appear."
+        },
+        {
+          "criterion_id": "NCT02545049-E6",
+          "verdict": "unknown",
+          "reason": "The most recent HbA1c is 3.36% on 2016-02-15, ten years old."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-009",
+      "patient_id": "cc3eac4a-34a7-9a15-1522-8087135631b7",
+      "nct_id": "NCT02545049",
+      "labels": [
+        {
+          "criterion_id": "NCT02545049-I1",
+          "verdict": "met",
+          "reason": "Born 1978-01-16; age 48 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT02545049-I2",
+          "verdict": "not_met",
+          "reason": "Prediabetes (finding) active from 2009-03-30 and HbA1c 6.08% on 2026-02-09; no type 2 diabetes diagnosis, with encounters through 2026-02-09."
+        },
+        {
+          "criterion_id": "NCT02545049-I3",
+          "verdict": "unknown",
+          "reason": "No urine albumin-to-creatinine ratio has ever been recorded for this patient."
+        },
+        {
+          "criterion_id": "NCT02545049-I4",
+          "verdict": "not_met",
+          "reason": "No ACE inhibitor or ARB among the four medication orders; encounters through 2026-02-09 cover the window."
+        },
+        {
+          "criterion_id": "NCT02545049-I5",
+          "verdict": "not_met",
+          "reason": "Serum potassium 4.97 mmol/L on 2026-02-09, above the 4.8 mmol/L bound."
+        },
+        {
+          "criterion_id": "NCT02545049-E1",
+          "verdict": "not_met",
+          "reason": "No renal diagnosis of any kind in the chart."
+        },
+        {
+          "criterion_id": "NCT02545049-E2",
+          "verdict": "not_met",
+          "reason": "Blood pressure 137/80 mmHg on 2026-02-09, below the 160/100 screening bounds."
+        },
+        {
+          "criterion_id": "NCT02545049-E3",
+          "verdict": "not_met",
+          "reason": "No heart failure diagnosis in the chart."
+        },
+        {
+          "criterion_id": "NCT02545049-E4",
+          "verdict": "not_met",
+          "reason": "No dialysis recorded; the encounter on 2026-02-09 falls inside the 12-week window."
+        },
+        {
+          "criterion_id": "NCT02545049-E5",
+          "verdict": "not_met",
+          "reason": "No renal allograft and no transplant history in the chart."
+        },
+        {
+          "criterion_id": "NCT02545049-E6",
+          "verdict": "not_met",
+          "reason": "HbA1c 6.08% on 2026-02-09, below 12%."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-010",
+      "patient_id": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd",
+      "nct_id": "NCT03036124",
+      "labels": [
+        {
+          "criterion_id": "NCT03036124-I2",
+          "verdict": "met",
+          "reason": "Born 1980-10-04; age 45 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT03036124-I3",
+          "verdict": "unknown",
+          "reason": "Chronic congestive heart failure is active from 2013-03-30, which satisfies the two-month duration, but no NYHA functional class has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT03036124-I4",
+          "verdict": "unknown",
+          "reason": "The most recent ejection fraction is 28.17% on 2015-06-06, ten years and eleven months before screening and outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT03036124-I5",
+          "verdict": "unknown",
+          "reason": "The most recent NT-proBNP is 543.42 pg/mL on 2014-11-28, eleven and a half years old."
+        },
+        {
+          "criterion_id": "NCT03036124-I6",
+          "verdict": "unknown",
+          "reason": "Carvedilol, furosemide, lisinopril, losartan and sacubitril/valsartan were ordered in May and June 2015, but there is no encounter after 2015-09-26, so current therapy is undocumented."
+        },
+        {
+          "criterion_id": "NCT03036124-I7",
+          "verdict": "unknown",
+          "reason": "The chart carries an MDRD eGFR of 122.31 reported in bare mL/min on 2014-11-28; the criterion names CKD-EPI in mL/min/1.73 m2, the formula differs, the value is not body-surface normalised, and it is eleven years old."
+        },
+        {
+          "criterion_id": "NCT03036124-E1",
+          "verdict": "unknown",
+          "reason": "Medication orders stop at 2015-06-06 and the eight weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03036124-E2",
+          "verdict": "unknown",
+          "reason": "No diabetes diagnosis of any type is recorded, but the record stops on 2015-09-26."
+        },
+        {
+          "criterion_id": "NCT03036124-E3",
+          "verdict": "unknown",
+          "reason": "The most recent systolic blood pressure is 111 mmHg on 2015-05-09, outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT03036124-E4",
+          "verdict": "unknown",
+          "reason": "The four weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03036124-E5",
+          "verdict": "unknown",
+          "reason": "The 12 weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03036124-E6",
+          "verdict": "unknown",
+          "reason": "The 12 weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03036124-E7",
+          "verdict": "unknown",
+          "reason": "The 12 weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03036124-E8",
+          "verdict": "unknown",
+          "reason": "No cardiac transplant or ventricular assist device is recorded, but the eleven years since 2015-09-26 are undocumented and the criterion is lifetime-scoped."
+        },
+        {
+          "criterion_id": "NCT03036124-E9",
+          "verdict": "unknown",
+          "reason": "The heart failure is coded without an aetiology, so whether it is due to restrictive cardiomyopathy, myocarditis, constrictive pericarditis, hypertrophic cardiomyopathy or valvular disease is not recorded."
+        },
+        {
+          "criterion_id": "NCT03036124-E10",
+          "verdict": "unknown",
+          "reason": "No electrocardiogram and no conduction diagnosis is on file; the heart rate of 62/min on 2015-05-09 is eleven years old and does not exclude heart block."
+        },
+        {
+          "criterion_id": "NCT03036124-E11",
+          "verdict": "unknown",
+          "reason": "The eGFR problem in I7 applies here too: MDRD in bare mL/min from 2014-11-28 against a CKD-EPI bound at randomisation."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-011",
+      "patient_id": "fb56f051-a2cd-ac10-dcb0-e0738295fc1f",
+      "nct_id": "NCT03036124",
+      "labels": [
+        {
+          "criterion_id": "NCT03036124-I2",
+          "verdict": "met",
+          "reason": "Born 1967-10-07; age 58 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT03036124-I3",
+          "verdict": "unknown",
+          "reason": "Chronic congestive heart failure is active from 1989-07-14, but no NYHA functional class has ever been recorded and no encounter is documented after 1991-06-08."
+        },
+        {
+          "criterion_id": "NCT03036124-I4",
+          "verdict": "unknown",
+          "reason": "The most recent ejection fraction is 41.83% on 1991-02-10, thirty-five years before screening; it sits just above the 40% bound but is far outside any usable window."
+        },
+        {
+          "criterion_id": "NCT03036124-I5",
+          "verdict": "unknown",
+          "reason": "The most recent NT-proBNP is 234.4 pg/mL on 1990-08-13, thirty-six years old."
+        },
+        {
+          "criterion_id": "NCT03036124-I6",
+          "verdict": "unknown",
+          "reason": "Carvedilol, furosemide, lisinopril and losartan were ordered on 1990-08-25 and nothing since, so current therapy is undocumented."
+        },
+        {
+          "criterion_id": "NCT03036124-I7",
+          "verdict": "unknown",
+          "reason": "The most recent eGFR is 134.69 by MDRD in bare mL/min on 1990-08-13; the criterion names CKD-EPI in mL/min/1.73 m2 and the value is thirty-six years old."
+        },
+        {
+          "criterion_id": "NCT03036124-E1",
+          "verdict": "unknown",
+          "reason": "Medication orders stop at 1990-08-25 and the eight weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03036124-E2",
+          "verdict": "unknown",
+          "reason": "No diabetes diagnosis of any type is recorded, but the record stops on 1991-06-08."
+        },
+        {
+          "criterion_id": "NCT03036124-E3",
+          "verdict": "unknown",
+          "reason": "The most recent systolic blood pressure is 106 mmHg on 1990-08-25, thirty-six years old."
+        },
+        {
+          "criterion_id": "NCT03036124-E4",
+          "verdict": "unknown",
+          "reason": "The four weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03036124-E5",
+          "verdict": "unknown",
+          "reason": "The 12 weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03036124-E6",
+          "verdict": "unknown",
+          "reason": "The 12 weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03036124-E7",
+          "verdict": "unknown",
+          "reason": "The 12 weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03036124-E8",
+          "verdict": "unknown",
+          "reason": "No cardiac transplant or ventricular assist device is recorded, but thirty-five years since 1991-06-08 are undocumented."
+        },
+        {
+          "criterion_id": "NCT03036124-E9",
+          "verdict": "unknown",
+          "reason": "The heart failure is coded without an aetiology."
+        },
+        {
+          "criterion_id": "NCT03036124-E10",
+          "verdict": "unknown",
+          "reason": "No electrocardiogram and no conduction diagnosis is on file; the heart rate of 98/min on 1990-08-25 is thirty-six years old."
+        },
+        {
+          "criterion_id": "NCT03036124-E11",
+          "verdict": "unknown",
+          "reason": "The eGFR problem in I7 applies here too: MDRD in bare mL/min from 1990-08-13 against a CKD-EPI bound at randomisation."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-012",
+      "patient_id": "23da8e71-dfb9-9773-1bc1-7b5e31d085b5",
+      "nct_id": "NCT03036124",
+      "labels": [
+        {
+          "criterion_id": "NCT03036124-I2",
+          "verdict": "met",
+          "reason": "Born 1963-03-16; age 63 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT03036124-I3",
+          "verdict": "not_met",
+          "reason": "No heart failure diagnosis in a chart with encounters through 2026-05-30; the cardiac history is ischemic heart disease (2011-04-09) and a coronary artery bypass graft (2011-05-27)."
+        },
+        {
+          "criterion_id": "NCT03036124-I4",
+          "verdict": "unknown",
+          "reason": "No ejection fraction has ever been measured for this patient."
+        },
+        {
+          "criterion_id": "NCT03036124-I5",
+          "verdict": "unknown",
+          "reason": "No NT-proBNP result appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT03036124-I6",
+          "verdict": "not_met",
+          "reason": "The regimen is metoprolol, clopidogrel, nitroglycerin and simvastatin for ischaemic heart disease; no heart-failure standard of care, because no heart failure is diagnosed."
+        },
+        {
+          "criterion_id": "NCT03036124-I7",
+          "verdict": "unknown",
+          "reason": "No glomerular filtration rate has ever been recorded; the chart carries only creatinine 0.95 mg/dL on 2026-05-30."
+        },
+        {
+          "criterion_id": "NCT03036124-E1",
+          "verdict": "not_met",
+          "reason": "No SGLT2 inhibitor among the six medication orders; encounters through 2026-05-30 cover the eight-week window."
+        },
+        {
+          "criterion_id": "NCT03036124-E2",
+          "verdict": "not_met",
+          "reason": "No diabetes diagnosis of any type; encounters through 2026-05-30."
+        },
+        {
+          "criterion_id": "NCT03036124-E3",
+          "verdict": "not_met",
+          "reason": "Systolic blood pressure 111 mmHg on 2026-05-30, above the 95 mmHg floor."
+        },
+        {
+          "criterion_id": "NCT03036124-E4",
+          "verdict": "not_met",
+          "reason": "No heart failure and no hospitalisation for decompensation; the encounter on 2026-05-30 falls inside the four-week window."
+        },
+        {
+          "criterion_id": "NCT03036124-E5",
+          "verdict": "not_met",
+          "reason": "No myocardial infarction, unstable angina, stroke or TIA in the 12 weeks before screening; encounter on 2026-05-30."
+        },
+        {
+          "criterion_id": "NCT03036124-E6",
+          "verdict": "not_met",
+          "reason": "The coronary artery bypass graft is dated 2011-05-27, fifteen years before screening and far outside the 12-week window."
+        },
+        {
+          "criterion_id": "NCT03036124-E7",
+          "verdict": "not_met",
+          "reason": "No cardiac resynchronisation device in the chart."
+        },
+        {
+          "criterion_id": "NCT03036124-E8",
+          "verdict": "not_met",
+          "reason": "No cardiac transplant and no ventricular assist device in the chart."
+        },
+        {
+          "criterion_id": "NCT03036124-E9",
+          "verdict": "not_met",
+          "reason": "No heart failure is diagnosed at all, so it cannot be due to any of the listed aetiologies."
+        },
+        {
+          "criterion_id": "NCT03036124-E10",
+          "verdict": "unknown",
+          "reason": "No electrocardiogram and no conduction diagnosis on file; a heart rate of 90/min on 2026-05-30 does not exclude second- or third-degree block."
+        },
+        {
+          "criterion_id": "NCT03036124-E11",
+          "verdict": "unknown",
+          "reason": "No glomerular filtration rate has ever been recorded, so the eGFR limb cannot be checked."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-013",
+      "patient_id": "a6d0791e-4c15-58e6-c30a-ec25e285ace9",
+      "nct_id": "NCT03036124",
+      "labels": [
+        {
+          "criterion_id": "NCT03036124-I2",
+          "verdict": "not_met",
+          "reason": "Born 2024-01-02; age 2 at 2026-06-01, below the 18-year floor."
+        },
+        {
+          "criterion_id": "NCT03036124-I3",
+          "verdict": "not_met",
+          "reason": "No heart failure diagnosis; the chart records no active conditions at all and encounters run through 2025-12-09."
+        },
+        {
+          "criterion_id": "NCT03036124-I4",
+          "verdict": "unknown",
+          "reason": "No ejection fraction has ever been measured for this patient."
+        },
+        {
+          "criterion_id": "NCT03036124-I5",
+          "verdict": "unknown",
+          "reason": "No NT-proBNP result appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT03036124-I6",
+          "verdict": "not_met",
+          "reason": "The only medication ever ordered is an acetaminophen/dextromethorphan/doxylamine oral solution on 2025-10-14; no heart-failure therapy of any kind."
+        },
+        {
+          "criterion_id": "NCT03036124-I7",
+          "verdict": "unknown",
+          "reason": "No creatinine and no glomerular filtration rate appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT03036124-E1",
+          "verdict": "not_met",
+          "reason": "No SGLT2 inhibitor has ever been ordered; encounters through 2025-12-09."
+        },
+        {
+          "criterion_id": "NCT03036124-E2",
+          "verdict": "not_met",
+          "reason": "No diabetes diagnosis of any type; encounters through 2025-12-09."
+        },
+        {
+          "criterion_id": "NCT03036124-E3",
+          "verdict": "not_met",
+          "reason": "Systolic blood pressure 131 mmHg on 2025-12-09, above the 95 mmHg floor."
+        },
+        {
+          "criterion_id": "NCT03036124-E4",
+          "verdict": "not_met",
+          "reason": "No heart failure and no hospitalisation for decompensation in the chart."
+        },
+        {
+          "criterion_id": "NCT03036124-E5",
+          "verdict": "not_met",
+          "reason": "No myocardial infarction, unstable angina, stroke or TIA in the chart."
+        },
+        {
+          "criterion_id": "NCT03036124-E6",
+          "verdict": "not_met",
+          "reason": "No coronary or valvular procedure in the chart."
+        },
+        {
+          "criterion_id": "NCT03036124-E7",
+          "verdict": "not_met",
+          "reason": "No cardiac resynchronisation device in the chart."
+        },
+        {
+          "criterion_id": "NCT03036124-E8",
+          "verdict": "not_met",
+          "reason": "No cardiac transplant and no ventricular assist device in the chart."
+        },
+        {
+          "criterion_id": "NCT03036124-E9",
+          "verdict": "not_met",
+          "reason": "No heart failure is diagnosed at all."
+        },
+        {
+          "criterion_id": "NCT03036124-E10",
+          "verdict": "unknown",
+          "reason": "No electrocardiogram and no conduction diagnosis on file; a heart rate of 99/min on 2025-12-09 does not exclude heart block."
+        },
+        {
+          "criterion_id": "NCT03036124-E11",
+          "verdict": "unknown",
+          "reason": "No creatinine and no glomerular filtration rate appears anywhere in this chart."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-014",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "met",
+          "reason": "Type 2 diabetes active from 2025-06-03 with HbA1c 7.58% on 2025-06-03, at or above 7%."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "not_met",
+          "reason": "MDRD eGFR 141.3 mL/min/1.73 m2 on 2025-06-03, far above the 60 upper bound."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "unknown",
+          "reason": "The registry text does not say which cardiovascular risk factors count as major or minor, and at 46 the patient does not reach the age-55 branch."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "not_met",
+          "reason": "Metformin ER 500 mg ordered 2025-06-03 is the only antidiabetic on file and no change is recorded; encounters on 2025-06-24 and 2026-05-12 cover the 12 weeks."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "not_met",
+          "reason": "No lower-extremity ulcer, infection, osteomyelitis or gangrene in the chart; encounters through 2026-05-12."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-015",
+      "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "unknown",
+          "reason": "Type 2 diabetes is active from 1996-10-28, but the criterion also requires HbA1c at or above 7% and the most recent HbA1c is 3.36% on 2016-02-15, ten years old."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "The most recent MDRD eGFR is 92.939 mL/min/1.73 m2 on 2016-02-15, outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "unknown",
+          "reason": "The registry text does not define major or minor cardiovascular risk factors, and at 41 the patient does not reach the age-55 branch."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "unknown",
+          "reason": "The last antidiabetic orders are 2016-02-15 and there is no encounter after 2016-06-13, so treatment stability over the 12 weeks before screening is undocumented."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "unknown",
+          "reason": "The record stops on 2016-06-13, so no lower-extremity examination covering screening exists."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-016",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "not_met",
+          "reason": "Prediabetes from 1988-10-19 and HbA1c 6.02% on 2025-09-24; no type 2 diabetes diagnosis, with encounters through 2025-10-08."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "The chart reports an MDRD eGFR of 84.289 mL/min on 2025-09-25 alongside a creatinine of 2.578 mg/dL on the same date; the two are mutually inconsistent and the reported value is neither CKD-EPI nor body-surface normalised."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "unknown",
+          "reason": "The registry text does not define major or minor cardiovascular risk factors; the patient is 56 with ischaemic heart disease, hyperlipidaemia, obesity and sleep apnoea, but no counting rule is given."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "not_met",
+          "reason": "No antihyperglycaemic medication has ever been ordered, so none has changed in the 12 weeks before screening."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "not_met",
+          "reason": "No lower-extremity ulcer, infection, osteomyelitis or gangrene in the chart; encounters through 2025-10-08."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-017",
+      "patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "not_met",
+          "reason": "Prediabetes from 2020-02-15 and HbA1c 6.21% on 2025-12-06; no type 2 diabetes diagnosis, with encounters through 2025-12-06."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "No glomerular filtration rate has ever been recorded; the chart carries creatinine 1.83 mg/dL on 2025-12-06 and nothing else renal."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "unknown",
+          "reason": "The registry text does not define major or minor cardiovascular risk factors, and at 40 the patient does not reach the age-55 branch."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "not_met",
+          "reason": "No antihyperglycaemic medication has ever been ordered; the only orders on file are ferrous sulfate and vitamin B12 from 2020-02-22."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "not_met",
+          "reason": "No lower-extremity ulcer, infection, osteomyelitis or gangrene in the chart; encounters through 2025-12-06."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-018",
+      "patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "not_met",
+          "reason": "Prediabetes from 1996-01-15 and HbA1c 6.27% on 2025-11-24; no type 2 diabetes diagnosis, with encounters through 2025-11-24."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "No glomerular filtration rate has ever been recorded; creatinine 1.2 mg/dL on 2025-11-24 is the only renal chemistry on file."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "unknown",
+          "reason": "The registry text does not define major or minor cardiovascular risk factors, and at 52 the patient does not reach the age-55 branch."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "not_met",
+          "reason": "The only two medication orders on file are unlabelled requests from 2019-12-16 and 2021-12-20, both far outside the 12-week window, so no antihyperglycaemic change falls inside it."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "not_met",
+          "reason": "No lower-extremity ulcer, infection, osteomyelitis or gangrene in the chart; encounters through 2025-11-24."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-019",
+      "patient_id": "30889246-5f7d-9305-542f-55cb89e1f4de",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "unknown",
+          "reason": "No HbA1c has ever been recorded and no diabetes diagnosis appears, over a record whose last encounter is 1961-08-25."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "No creatinine and no glomerular filtration rate appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "unknown",
+          "reason": "The registry text does not define major or minor cardiovascular risk factors, and no cardiovascular history is recorded for a patient whose chart stops in 1961."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "unknown",
+          "reason": "No antihyperglycaemic medication is on file, but the last medication order is 1960-12-02 and the 12 weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "unknown",
+          "reason": "The chart stops on 1961-08-25, so no lower-extremity examination covering screening exists."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-020",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "nct_id": "NCT03819153",
+      "labels": [
+        {
+          "criterion_id": "NCT03819153-I1",
+          "verdict": "met",
+          "reason": "Born 1979-11-06; age 46 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT03819153-I2",
+          "verdict": "met",
+          "reason": "Diabetes mellitus type 2 (disorder) active from 2025-06-03."
+        },
+        {
+          "criterion_id": "NCT03819153-I3",
+          "verdict": "met",
+          "reason": "HbA1c 7.58% on 2025-06-03, at or below 10%."
+        },
+        {
+          "criterion_id": "NCT03819153-I4",
+          "verdict": "not_met",
+          "reason": "MDRD eGFR 141.3 mL/min/1.73 m2 and UACR 13.37 mg/g, both on 2025-06-03: the eGFR is above both bands and the UACR is below both."
+        },
+        {
+          "criterion_id": "NCT03819153-I5",
+          "verdict": "not_met",
+          "reason": "No ACE inhibitor, ARB or other RAAS-blocking agent among the eight medication orders; encounters through 2026-05-12 cover the window."
+        },
+        {
+          "criterion_id": "NCT03819153-E1",
+          "verdict": "not_met",
+          "reason": "No kidney diagnosis of any kind in the chart; encounters through 2026-05-12."
+        },
+        {
+          "criterion_id": "NCT03819153-E2",
+          "verdict": "not_met",
+          "reason": "No GLP-1 receptor agonist on the medication list; the only antidiabetic is metformin (2025-06-03)."
+        },
+        {
+          "criterion_id": "NCT03819153-E3",
+          "verdict": "not_met",
+          "reason": "No myocardial infarction, stroke, unstable-angina hospitalisation or TIA in the chart; the encounter on 2026-05-12 falls inside the 60-day window."
+        },
+        {
+          "criterion_id": "NCT03819153-E4",
+          "verdict": "not_met",
+          "reason": "No heart failure diagnosis in the chart, so no NYHA Class IV classification."
+        },
+        {
+          "criterion_id": "NCT03819153-E6",
+          "verdict": "not_met",
+          "reason": "No dialysis recorded; the encounter on 2026-05-12 falls inside the 90-day window."
+        },
+        {
+          "criterion_id": "NCT03819153-E7",
+          "verdict": "unknown",
+          "reason": "The patient has type 2 diabetes so this criterion applies; the only ophthalmic data are intraocular pressures of 14 mmHg and LogMAR acuity 0 on 2025-06-24, and no fundus examination within the 90 days before screening exists."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-021",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+      "nct_id": "NCT03819153",
+      "labels": [
+        {
+          "criterion_id": "NCT03819153-I1",
+          "verdict": "met",
+          "reason": "Born 1969-08-20; age 56 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT03819153-I2",
+          "verdict": "not_met",
+          "reason": "Prediabetes from 1988-10-19 and HbA1c 6.02% on 2025-09-24; no type 2 diabetes diagnosis, with encounters through 2025-10-08."
+        },
+        {
+          "criterion_id": "NCT03819153-I3",
+          "verdict": "met",
+          "reason": "HbA1c 6.02% on 2025-09-24, at or below 10%."
+        },
+        {
+          "criterion_id": "NCT03819153-I4",
+          "verdict": "unknown",
+          "reason": "The criterion names a serum creatinine-based CKD-EPI eGFR; the chart reports an MDRD eGFR of 84.289 in bare mL/min on 2025-09-25 alongside a creatinine of 2.578 mg/dL the same day, which are mutually inconsistent, and no UACR has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT03819153-I5",
+          "verdict": "not_met",
+          "reason": "No ACE inhibitor or ARB among the nine medication orders; the cardiac regimen is metoprolol, clopidogrel, nitroglycerin and simvastatin."
+        },
+        {
+          "criterion_id": "NCT03819153-E1",
+          "verdict": "not_met",
+          "reason": "No kidney diagnosis of any kind in the chart; encounters through 2025-10-08."
+        },
+        {
+          "criterion_id": "NCT03819153-E2",
+          "verdict": "not_met",
+          "reason": "No GLP-1 receptor agonist among the nine medication orders."
+        },
+        {
+          "criterion_id": "NCT03819153-E3",
+          "verdict": "not_met",
+          "reason": "The ischaemic heart disease dates from 2013-09-04 and nothing acute is recorded in the 60 days before screening."
+        },
+        {
+          "criterion_id": "NCT03819153-E4",
+          "verdict": "not_met",
+          "reason": "No heart failure diagnosis in the chart."
+        },
+        {
+          "criterion_id": "NCT03819153-E6",
+          "verdict": "not_met",
+          "reason": "No dialysis recorded; encounters through 2025-10-08."
+        },
+        {
+          "criterion_id": "NCT03819153-E7",
+          "verdict": "not_met",
+          "reason": "The criterion applies only to diabetic retinopathy or maculopathy and this patient has no diabetes diagnosis and no retinal diagnosis."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-022",
+      "patient_id": "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4",
+      "nct_id": "NCT03819153",
+      "labels": [
+        {
+          "criterion_id": "NCT03819153-I1",
+          "verdict": "met",
+          "reason": "Born 1964-06-23; age 61 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT03819153-I2",
+          "verdict": "not_met",
+          "reason": "Prediabetes from 1998-09-08 and HbA1c 6.21% on 2025-08-26; no type 2 diabetes diagnosis, with encounters through 2025-09-09."
+        },
+        {
+          "criterion_id": "NCT03819153-I3",
+          "verdict": "met",
+          "reason": "HbA1c 6.21% on 2025-08-26, at or below 10%."
+        },
+        {
+          "criterion_id": "NCT03819153-I4",
+          "verdict": "unknown",
+          "reason": "No eGFR and no urine albumin-to-creatinine ratio has ever been recorded; the chart carries creatinine 1.03 mg/dL on 2025-08-26 and nothing else renal."
+        },
+        {
+          "criterion_id": "NCT03819153-I5",
+          "verdict": "not_met",
+          "reason": "No ACE inhibitor or ARB among the seven medication orders on file."
+        },
+        {
+          "criterion_id": "NCT03819153-E1",
+          "verdict": "not_met",
+          "reason": "No kidney diagnosis of any kind in the chart; encounters through 2025-09-09."
+        },
+        {
+          "criterion_id": "NCT03819153-E2",
+          "verdict": "not_met",
+          "reason": "No GLP-1 receptor agonist among the seven medication orders."
+        },
+        {
+          "criterion_id": "NCT03819153-E3",
+          "verdict": "not_met",
+          "reason": "No myocardial infarction, stroke, unstable-angina hospitalisation or TIA in the chart."
+        },
+        {
+          "criterion_id": "NCT03819153-E4",
+          "verdict": "not_met",
+          "reason": "No heart failure diagnosis in the chart."
+        },
+        {
+          "criterion_id": "NCT03819153-E6",
+          "verdict": "not_met",
+          "reason": "No dialysis recorded; encounters through 2025-09-09."
+        },
+        {
+          "criterion_id": "NCT03819153-E7",
+          "verdict": "not_met",
+          "reason": "The criterion applies only to diabetic retinopathy or maculopathy and this patient has no diabetes diagnosis and no retinal diagnosis."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-023",
+      "patient_id": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd",
+      "nct_id": "NCT03819153",
+      "labels": [
+        {
+          "criterion_id": "NCT03819153-I1",
+          "verdict": "met",
+          "reason": "Born 1980-10-04; age 45 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT03819153-I2",
+          "verdict": "unknown",
+          "reason": "No diabetes diagnosis is recorded and HbA1c was 5.65% on 2014-11-28, but there is no encounter after 2015-09-26 and eleven years are undocumented."
+        },
+        {
+          "criterion_id": "NCT03819153-I3",
+          "verdict": "unknown",
+          "reason": "The most recent HbA1c is 5.65% on 2014-11-28, outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT03819153-I4",
+          "verdict": "unknown",
+          "reason": "The most recent eGFR is 122.31 by MDRD in bare mL/min on 2014-11-28 where the criterion names creatinine-based CKD-EPI in mL/min/1.73 m2, and no UACR has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT03819153-I5",
+          "verdict": "unknown",
+          "reason": "Lisinopril 20 mg and losartan 50 mg were ordered 2015-05-09 and sacubitril/valsartan 2015-06-06, but with no encounter after 2015-09-26 neither current use nor four-week dose stability can be established."
+        },
+        {
+          "criterion_id": "NCT03819153-E1",
+          "verdict": "unknown",
+          "reason": "No kidney diagnosis is recorded, but the record stops on 2015-09-26."
+        },
+        {
+          "criterion_id": "NCT03819153-E2",
+          "verdict": "unknown",
+          "reason": "No GLP-1 receptor agonist is on file, but medication orders stop at 2015-06-06 and the 30 days before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03819153-E3",
+          "verdict": "unknown",
+          "reason": "The 60 days before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03819153-E4",
+          "verdict": "unknown",
+          "reason": "Chronic congestive heart failure is active from 2013-03-30 but no NYHA class has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT03819153-E6",
+          "verdict": "unknown",
+          "reason": "The 90 days before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT03819153-E7",
+          "verdict": "unknown",
+          "reason": "No eye examination of any kind is on file and the patient's diabetes status is itself undetermined."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-024",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "nct_id": "NCT05748834",
+      "labels": [
+        {
+          "criterion_id": "NCT05748834-I2",
+          "verdict": "met",
+          "reason": "Born 1979-11-06; age 46 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT05748834-I3",
+          "verdict": "unknown",
+          "reason": "No ECOG performance status has ever been recorded; the instrument does not appear in this record at all."
+        },
+        {
+          "criterion_id": "NCT05748834-I4",
+          "verdict": "not_met",
+          "reason": "No breast cancer and no neoplasm of any kind in a chart with 38 encounters running to 2026-05-12."
+        },
+        {
+          "criterion_id": "NCT05748834-I5",
+          "verdict": "not_met",
+          "reason": "No anti-HER2 or other oncological therapy among the eight medication orders on file."
+        },
+        {
+          "criterion_id": "NCT05748834-I6",
+          "verdict": "unknown",
+          "reason": "No tumour imaging and no RECIST assessment appears in the record."
+        },
+        {
+          "criterion_id": "NCT05748834-I9",
+          "verdict": "unknown",
+          "reason": "No absolute neutrophil count has ever been recorded, and the most recent haemoglobin (10.849 g/dL) and platelet count (225.91 x10^3/uL) are from 2023-06-06, outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT05748834-I10",
+          "verdict": "unknown",
+          "reason": "No total bilirubin, AST or ALT result appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT05748834-I11",
+          "verdict": "met",
+          "reason": "MDRD eGFR 141.3 mL/min/1.73 m2 on 2025-06-03, above the 50 mL/min/1.73 m2 floor."
+        },
+        {
+          "criterion_id": "NCT05748834-I12",
+          "verdict": "unknown",
+          "reason": "No ejection fraction has ever been measured for this patient."
+        },
+        {
+          "criterion_id": "NCT05748834-I13",
+          "verdict": "unknown",
+          "reason": "No brain imaging of any kind appears in the record."
+        },
+        {
+          "criterion_id": "NCT05748834-E1",
+          "verdict": "not_met",
+          "reason": "No oncological therapy, no major surgery and no radiotherapy in the chart; encounters through 2026-05-12 cover all four windows."
+        },
+        {
+          "criterion_id": "NCT05748834-E2",
+          "verdict": "unknown",
+          "reason": "No brain imaging of any kind appears in the record."
+        },
+        {
+          "criterion_id": "NCT05748834-E3",
+          "verdict": "not_met",
+          "reason": "The most recent medication order is 2025-06-24, eleven months before screening, so the five days before first dose contain no order at all."
+        },
+        {
+          "criterion_id": "NCT05748834-E4",
+          "verdict": "not_met",
+          "reason": "There is no prior anti-cancer therapy in the chart, so there are no unresolved toxicities from it."
+        },
+        {
+          "criterion_id": "NCT05748834-E5",
+          "verdict": "not_met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT05748834-E7",
+          "verdict": "not_met",
+          "reason": "No gastrointestinal diagnosis in the chart; encounters through 2026-05-12."
+        },
+        {
+          "criterion_id": "NCT05748834-E8",
+          "verdict": "unknown",
+          "reason": "No electrocardiogram and no ejection fraction has ever been recorded, so the QTcF and LVEF limbs of this criterion cannot be evaluated."
+        },
+        {
+          "criterion_id": "NCT05748834-E10",
+          "verdict": "not_met",
+          "reason": "No HIV diagnosis in the chart; encounters through 2026-05-12."
+        },
+        {
+          "criterion_id": "NCT05748834-E11",
+          "verdict": "not_met",
+          "reason": "No neoplasm of any kind in the chart; encounters cover the three-year window."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-025",
+      "patient_id": "cbd1dd48-89c3-3fdb-434e-3f0802738abf",
+      "nct_id": "NCT05748834",
+      "labels": [
+        {
+          "criterion_id": "NCT05748834-I2",
+          "verdict": "met",
+          "reason": "Born 1989-04-11; age 37 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT05748834-I3",
+          "verdict": "unknown",
+          "reason": "No ECOG performance status has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT05748834-I4",
+          "verdict": "not_met",
+          "reason": "No breast cancer and no neoplasm of any kind in a chart with 44 encounters running to 2026-01-06."
+        },
+        {
+          "criterion_id": "NCT05748834-I5",
+          "verdict": "not_met",
+          "reason": "No anti-HER2 or other oncological therapy among the ten medication orders on file."
+        },
+        {
+          "criterion_id": "NCT05748834-I6",
+          "verdict": "unknown",
+          "reason": "No tumour imaging and no RECIST assessment appears in the record."
+        },
+        {
+          "criterion_id": "NCT05748834-I9",
+          "verdict": "unknown",
+          "reason": "No absolute neutrophil count has ever been recorded; haemoglobin 13.638 g/dL and platelets 276.6 x10^3/uL date from 2022-12-06, outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT05748834-I10",
+          "verdict": "unknown",
+          "reason": "No total bilirubin, AST or ALT result appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT05748834-I11",
+          "verdict": "unknown",
+          "reason": "No creatinine and no glomerular filtration rate appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT05748834-I12",
+          "verdict": "unknown",
+          "reason": "No ejection fraction has ever been measured for this patient."
+        },
+        {
+          "criterion_id": "NCT05748834-I13",
+          "verdict": "unknown",
+          "reason": "No brain imaging of any kind appears in the record."
+        },
+        {
+          "criterion_id": "NCT05748834-E1",
+          "verdict": "not_met",
+          "reason": "No oncological therapy and no radiotherapy in the chart; the only surgical history is a tubal ligation recorded 2024-06-24, far outside the 28-day window."
+        },
+        {
+          "criterion_id": "NCT05748834-E2",
+          "verdict": "unknown",
+          "reason": "No brain imaging of any kind appears in the record."
+        },
+        {
+          "criterion_id": "NCT05748834-E3",
+          "verdict": "not_met",
+          "reason": "The most recent medication orders are 2025-12-23, so the five days before first dose contain no order."
+        },
+        {
+          "criterion_id": "NCT05748834-E4",
+          "verdict": "not_met",
+          "reason": "There is no prior anti-cancer therapy in the chart."
+        },
+        {
+          "criterion_id": "NCT05748834-E5",
+          "verdict": "not_met",
+          "reason": "History of tubal ligation recorded 2024-06-24 and no pregnancy since the 2019 miscarriage, in a chart with encounters through 2026-01-06."
+        },
+        {
+          "criterion_id": "NCT05748834-E7",
+          "verdict": "not_met",
+          "reason": "No gastrointestinal diagnosis in the chart; encounters through 2026-01-06."
+        },
+        {
+          "criterion_id": "NCT05748834-E8",
+          "verdict": "unknown",
+          "reason": "No electrocardiogram and no ejection fraction has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT05748834-E10",
+          "verdict": "not_met",
+          "reason": "No HIV diagnosis in the chart; encounters through 2026-01-06."
+        },
+        {
+          "criterion_id": "NCT05748834-E11",
+          "verdict": "not_met",
+          "reason": "No neoplasm of any kind in the chart; encounters cover the three-year window."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-026",
+      "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b",
+      "nct_id": "NCT05748834",
+      "labels": [
+        {
+          "criterion_id": "NCT05748834-I2",
+          "verdict": "met",
+          "reason": "Born 1984-10-08; age 41 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT05748834-I3",
+          "verdict": "unknown",
+          "reason": "No ECOG performance status has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT05748834-I4",
+          "verdict": "unknown",
+          "reason": "No breast cancer is recorded, but the last encounter is 2016-06-13 and the ten years before screening are undocumented, so absence cannot be relied on."
+        },
+        {
+          "criterion_id": "NCT05748834-I5",
+          "verdict": "unknown",
+          "reason": "No anti-HER2 therapy is on file, but medication orders stop at 2016-02-15 and the intervening decade is undocumented."
+        },
+        {
+          "criterion_id": "NCT05748834-I6",
+          "verdict": "unknown",
+          "reason": "No tumour imaging and no RECIST assessment appears in the record."
+        },
+        {
+          "criterion_id": "NCT05748834-I9",
+          "verdict": "unknown",
+          "reason": "No absolute neutrophil count has ever been recorded; haemoglobin 16.488 g/dL and platelets 244.26 x10^3/uL date from 2016-01-18."
+        },
+        {
+          "criterion_id": "NCT05748834-I10",
+          "verdict": "unknown",
+          "reason": "No serum bilirubin, AST or ALT result appears anywhere in this chart; the only bilirubin is a urine dipstick value."
+        },
+        {
+          "criterion_id": "NCT05748834-I11",
+          "verdict": "unknown",
+          "reason": "The most recent MDRD eGFR is 92.939 mL/min/1.73 m2 on 2016-02-15, ten years old."
+        },
+        {
+          "criterion_id": "NCT05748834-I12",
+          "verdict": "unknown",
+          "reason": "No ejection fraction has ever been measured for this patient."
+        },
+        {
+          "criterion_id": "NCT05748834-I13",
+          "verdict": "unknown",
+          "reason": "No brain imaging of any kind appears in the record."
+        },
+        {
+          "criterion_id": "NCT05748834-E1",
+          "verdict": "unknown",
+          "reason": "The 21-day, 28-day and 14-day windows all fall after 2016-06-13, the last documented encounter."
+        },
+        {
+          "criterion_id": "NCT05748834-E2",
+          "verdict": "unknown",
+          "reason": "No brain imaging of any kind appears in the record."
+        },
+        {
+          "criterion_id": "NCT05748834-E3",
+          "verdict": "unknown",
+          "reason": "Medication orders stop at 2016-02-15 and the five days before first dose are undocumented."
+        },
+        {
+          "criterion_id": "NCT05748834-E4",
+          "verdict": "unknown",
+          "reason": "Whether there has been prior anti-cancer therapy is itself undetermined, so its toxicities cannot be assessed."
+        },
+        {
+          "criterion_id": "NCT05748834-E5",
+          "verdict": "unknown",
+          "reason": "The patient is female and 41, Female infertility due to cystic fibrosis is recorded from 1984-10-15, and no pregnancy or lactation status within ten years is on file."
+        },
+        {
+          "criterion_id": "NCT05748834-E7",
+          "verdict": "unknown",
+          "reason": "No gastrointestinal diagnosis is recorded, but the ten years before screening are undocumented."
+        },
+        {
+          "criterion_id": "NCT05748834-E8",
+          "verdict": "unknown",
+          "reason": "No electrocardiogram and no ejection fraction has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT05748834-E10",
+          "verdict": "unknown",
+          "reason": "No HIV diagnosis is recorded, but the ten years before screening are undocumented."
+        },
+        {
+          "criterion_id": "NCT05748834-E11",
+          "verdict": "unknown",
+          "reason": "The three years before screening contain no encounter."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-027",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "nct_id": "NCT06717698",
+      "labels": [
+        {
+          "criterion_id": "NCT06717698-I1",
+          "verdict": "met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT06717698-I2",
+          "verdict": "met",
+          "reason": "Born 1979-11-06; age 46 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT06717698-I3",
+          "verdict": "met",
+          "reason": "Type 2 diabetes active from 2025-06-03, 363 days before screening, and HbA1c 7.58% on 2025-06-03 is inside the 6.5-10.5% band."
+        },
+        {
+          "criterion_id": "NCT06717698-I4",
+          "verdict": "met",
+          "reason": "BMI 30.3 kg/m2 on 2025-06-03, at or above 27.0."
+        },
+        {
+          "criterion_id": "NCT06717698-I5",
+          "verdict": "not_met",
+          "reason": "The only eGFR on file is 141.3 mL/min/1.73 m2 on 2025-06-03, above the 90 upper bound; it is a creatinine-only MDRD value where the criterion names a creatinine-and-cystatin-C equation, but no plausible equation brings 141 below 90."
+        },
+        {
+          "criterion_id": "NCT06717698-I6",
+          "verdict": "not_met",
+          "reason": "The only UACR on file is 13.37 mg/g on 2025-06-03, below the 100 mg/g floor."
+        },
+        {
+          "criterion_id": "NCT06717698-I7",
+          "verdict": "not_met",
+          "reason": "No ACE inhibitor or ARB among the eight medication orders; encounters through 2026-05-12 cover the 30-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E1",
+          "verdict": "not_met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT06717698-E2",
+          "verdict": "not_met",
+          "reason": "No lupus nephritis and no ANCA-associated vasculitis in the chart; encounters through 2026-05-12."
+        },
+        {
+          "criterion_id": "NCT06717698-E3",
+          "verdict": "not_met",
+          "reason": "No immunosuppressive agent among the eight medication orders; the encounter on 2026-05-12 covers the six-month window."
+        },
+        {
+          "criterion_id": "NCT06717698-E4",
+          "verdict": "not_met",
+          "reason": "No GLP-1 receptor agonist on file; the encounter on 2026-05-12 covers the 90-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E5",
+          "verdict": "not_met",
+          "reason": "No myocardial infarction, stroke, TIA or unstable-angina hospitalisation in the chart; encounters cover the 180-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E6",
+          "verdict": "not_met",
+          "reason": "No dialysis recorded; the encounter on 2026-05-12 covers the 90-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E7",
+          "verdict": "unknown",
+          "reason": "The patient has type 2 diabetes so this criterion applies; the only ophthalmic data are intraocular pressures and LogMAR acuity from 2025-06-24 and no eye examination falls within the 90 days before screening."
+        },
+        {
+          "criterion_id": "NCT06717698-E8",
+          "verdict": "not_met",
+          "reason": "No malignant neoplasm or in situ carcinoma in the chart; encounters cover the five-year window."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-028",
+      "patient_id": "23da8e71-dfb9-9773-1bc1-7b5e31d085b5",
+      "nct_id": "NCT06717698",
+      "labels": [
+        {
+          "criterion_id": "NCT06717698-I1",
+          "verdict": "met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT06717698-I2",
+          "verdict": "met",
+          "reason": "Born 1963-03-16; age 63 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT06717698-I3",
+          "verdict": "met",
+          "reason": "No type 2 diabetes diagnosis, which the criterion permits, and HbA1c 5.86% on 2026-05-30 is below the 6.5% ceiling for non-diabetic participants."
+        },
+        {
+          "criterion_id": "NCT06717698-I4",
+          "verdict": "met",
+          "reason": "BMI 28.82 kg/m2 on 2026-05-30, at or above 27.0."
+        },
+        {
+          "criterion_id": "NCT06717698-I5",
+          "verdict": "unknown",
+          "reason": "No eGFR has ever been recorded and no cystatin C has ever been measured; the chart carries only creatinine 0.95 mg/dL on 2026-05-30."
+        },
+        {
+          "criterion_id": "NCT06717698-I6",
+          "verdict": "unknown",
+          "reason": "No urine albumin-to-creatinine ratio has ever been recorded for this patient."
+        },
+        {
+          "criterion_id": "NCT06717698-I7",
+          "verdict": "not_met",
+          "reason": "No ACE inhibitor or ARB among the six medication orders; the regimen is metoprolol, clopidogrel, nitroglycerin and simvastatin, all ordered 2011-04-16."
+        },
+        {
+          "criterion_id": "NCT06717698-E1",
+          "verdict": "not_met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT06717698-E2",
+          "verdict": "not_met",
+          "reason": "No lupus nephritis and no ANCA-associated vasculitis in the chart; encounters through 2026-05-30."
+        },
+        {
+          "criterion_id": "NCT06717698-E3",
+          "verdict": "not_met",
+          "reason": "No immunosuppressive agent among the six medication orders."
+        },
+        {
+          "criterion_id": "NCT06717698-E4",
+          "verdict": "not_met",
+          "reason": "No GLP-1 receptor agonist on file; encounters cover the 90-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E5",
+          "verdict": "not_met",
+          "reason": "The last coronary event on file is the 2011 bypass graft; nothing in the 180 days before screening, with an encounter on 2026-05-30."
+        },
+        {
+          "criterion_id": "NCT06717698-E6",
+          "verdict": "not_met",
+          "reason": "No dialysis recorded; encounters cover the 90-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E7",
+          "verdict": "not_met",
+          "reason": "The criterion applies only to participants with type 2 diabetes, and this patient has none."
+        },
+        {
+          "criterion_id": "NCT06717698-E8",
+          "verdict": "not_met",
+          "reason": "No malignant neoplasm or in situ carcinoma in the chart; encounters cover the five-year window."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-029",
+      "patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1",
+      "nct_id": "NCT06717698",
+      "labels": [
+        {
+          "criterion_id": "NCT06717698-I1",
+          "verdict": "met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT06717698-I2",
+          "verdict": "met",
+          "reason": "Born 1980-01-13; age 46 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT06717698-I3",
+          "verdict": "met",
+          "reason": "No type 2 diabetes diagnosis, which the criterion permits, and HbA1c 6.11% on 2026-02-01 is below the 6.5% ceiling for non-diabetic participants."
+        },
+        {
+          "criterion_id": "NCT06717698-I4",
+          "verdict": "met",
+          "reason": "BMI 30.17 kg/m2 on 2026-02-01, at or above 27.0."
+        },
+        {
+          "criterion_id": "NCT06717698-I5",
+          "verdict": "unknown",
+          "reason": "No eGFR and no cystatin C result has ever been recorded; the chart carries creatinine 1.23 mg/dL on 2026-02-01."
+        },
+        {
+          "criterion_id": "NCT06717698-I6",
+          "verdict": "unknown",
+          "reason": "No urine albumin-to-creatinine ratio has ever been recorded; a urine protein dipstick of 2.51 mg/dL on 2024-04-12 is not a UACR."
+        },
+        {
+          "criterion_id": "NCT06717698-I7",
+          "verdict": "unknown",
+          "reason": "Lisinopril 10 mg was ordered on 2026-02-01 and has been stable for the 120 days since, but 10 mg is not the maximum labelled dose of 40 mg and nothing records whether it is the maximum this patient tolerates."
+        },
+        {
+          "criterion_id": "NCT06717698-E1",
+          "verdict": "not_met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT06717698-E2",
+          "verdict": "not_met",
+          "reason": "No lupus nephritis and no ANCA-associated vasculitis in the chart; encounters through 2026-02-01."
+        },
+        {
+          "criterion_id": "NCT06717698-E3",
+          "verdict": "not_met",
+          "reason": "No immunosuppressive agent among the four medication orders."
+        },
+        {
+          "criterion_id": "NCT06717698-E4",
+          "verdict": "not_met",
+          "reason": "No GLP-1 receptor agonist on file; the encounter on 2026-02-01 covers the 90-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E5",
+          "verdict": "not_met",
+          "reason": "No myocardial infarction, stroke, TIA or unstable-angina hospitalisation in the chart; encounters cover the 180-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E6",
+          "verdict": "not_met",
+          "reason": "No dialysis recorded; encounters cover the 90-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E7",
+          "verdict": "not_met",
+          "reason": "The criterion applies only to participants with type 2 diabetes, and this patient has none."
+        },
+        {
+          "criterion_id": "NCT06717698-E8",
+          "verdict": "not_met",
+          "reason": "No malignant neoplasm or in situ carcinoma in the chart; encounters cover the five-year window."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-030",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+      "nct_id": "NCT06717698",
+      "labels": [
+        {
+          "criterion_id": "NCT06717698-I1",
+          "verdict": "met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT06717698-I2",
+          "verdict": "met",
+          "reason": "Born 1969-08-20; age 56 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT06717698-I3",
+          "verdict": "met",
+          "reason": "No type 2 diabetes diagnosis, which the criterion permits, and HbA1c 6.02% on 2025-09-24 is below the 6.5% ceiling for non-diabetic participants."
+        },
+        {
+          "criterion_id": "NCT06717698-I4",
+          "verdict": "met",
+          "reason": "BMI 27.32 kg/m2 on 2025-09-24, at or above 27.0."
+        },
+        {
+          "criterion_id": "NCT06717698-I5",
+          "verdict": "unknown",
+          "reason": "The criterion names a serum creatinine and cystatin C-based eGFR; no cystatin C has ever been measured, and the MDRD value of 84.289 mL/min reported on 2025-09-25 is inconsistent with the creatinine of 2.578 mg/dL recorded the same day."
+        },
+        {
+          "criterion_id": "NCT06717698-I6",
+          "verdict": "unknown",
+          "reason": "No urine albumin-to-creatinine ratio has ever been recorded for this patient."
+        },
+        {
+          "criterion_id": "NCT06717698-I7",
+          "verdict": "not_met",
+          "reason": "No ACE inhibitor or ARB among the nine medication orders on file."
+        },
+        {
+          "criterion_id": "NCT06717698-E1",
+          "verdict": "not_met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT06717698-E2",
+          "verdict": "not_met",
+          "reason": "No lupus nephritis and no ANCA-associated vasculitis in the chart; encounters through 2025-10-08."
+        },
+        {
+          "criterion_id": "NCT06717698-E3",
+          "verdict": "not_met",
+          "reason": "No immunosuppressive agent among the nine medication orders."
+        },
+        {
+          "criterion_id": "NCT06717698-E4",
+          "verdict": "not_met",
+          "reason": "No GLP-1 receptor agonist on file; encounters cover the 90-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E5",
+          "verdict": "not_met",
+          "reason": "The ischaemic heart disease dates from 2013-09-04; nothing acute in the 180 days before screening, with an encounter on 2025-10-08."
+        },
+        {
+          "criterion_id": "NCT06717698-E6",
+          "verdict": "not_met",
+          "reason": "No dialysis recorded; encounters cover the 90-day window."
+        },
+        {
+          "criterion_id": "NCT06717698-E7",
+          "verdict": "not_met",
+          "reason": "The criterion applies only to participants with type 2 diabetes, and this patient has none."
+        },
+        {
+          "criterion_id": "NCT06717698-E8",
+          "verdict": "not_met",
+          "reason": "No malignant neoplasm or in situ carcinoma in the chart; encounters cover the five-year window."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-031",
+      "patient_id": "fb56f051-a2cd-ac10-dcb0-e0738295fc1f",
+      "nct_id": "NCT06717698",
+      "labels": [
+        {
+          "criterion_id": "NCT06717698-I1",
+          "verdict": "unknown",
+          "reason": "The patient is female and 58; no menopausal status, hysterectomy or sterilisation is recorded and the last encounter is 1991-06-08, so non-childbearing potential cannot be established."
+        },
+        {
+          "criterion_id": "NCT06717698-I2",
+          "verdict": "met",
+          "reason": "Born 1967-10-07; age 58 at 2026-06-01."
+        },
+        {
+          "criterion_id": "NCT06717698-I3",
+          "verdict": "unknown",
+          "reason": "No diabetes diagnosis is recorded and the most recent HbA1c is 5.55% on 1990-08-13, thirty-six years before screening."
+        },
+        {
+          "criterion_id": "NCT06717698-I4",
+          "verdict": "unknown",
+          "reason": "The most recent BMI is 24.95 kg/m2 on 1990-08-25, outside the 24-month recency bound."
+        },
+        {
+          "criterion_id": "NCT06717698-I5",
+          "verdict": "unknown",
+          "reason": "The most recent eGFR is 134.69 by MDRD in bare mL/min on 1990-08-13 and no cystatin C has ever been measured."
+        },
+        {
+          "criterion_id": "NCT06717698-I6",
+          "verdict": "unknown",
+          "reason": "No urine albumin-to-creatinine ratio has ever been recorded; the only urine protein is a dipstick value of 3.6157 mg/dL on 1989-08-03."
+        },
+        {
+          "criterion_id": "NCT06717698-I7",
+          "verdict": "unknown",
+          "reason": "Lisinopril 20 mg and losartan 50 mg were ordered on 1990-08-25 and nothing since, so current use and 30-day dose stability are undocumented."
+        },
+        {
+          "criterion_id": "NCT06717698-E1",
+          "verdict": "unknown",
+          "reason": "Pregnancy, breast-feeding and contraception status are undocumented; the chart stops on 1991-06-08."
+        },
+        {
+          "criterion_id": "NCT06717698-E2",
+          "verdict": "unknown",
+          "reason": "No lupus nephritis or ANCA-associated vasculitis is recorded, but thirty-five years since 1991-06-08 are undocumented."
+        },
+        {
+          "criterion_id": "NCT06717698-E3",
+          "verdict": "unknown",
+          "reason": "The six months before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT06717698-E4",
+          "verdict": "unknown",
+          "reason": "The 90 days before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT06717698-E5",
+          "verdict": "unknown",
+          "reason": "The 180 days before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT06717698-E6",
+          "verdict": "unknown",
+          "reason": "The 90 days before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT06717698-E7",
+          "verdict": "unknown",
+          "reason": "Whether the participant has type 2 diabetes is itself undetermined and no eye examination appears in a record that stops in 1991."
+        },
+        {
+          "criterion_id": "NCT06717698-E8",
+          "verdict": "unknown",
+          "reason": "The five years before screening contain no encounter."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-032",
+      "patient_id": "cbd1dd48-89c3-3fdb-434e-3f0802738abf",
+      "nct_id": "NCT07252908",
+      "labels": [
+        {
+          "criterion_id": "NCT07252908-I3",
+          "verdict": "not_met",
+          "reason": "Born 1989-04-11; age 37 at 2026-06-01, below the 40-year floor."
+        },
+        {
+          "criterion_id": "NCT07252908-I4",
+          "verdict": "met",
+          "reason": "BMI 22.31 kg/m2 on 2025-12-23, inside 18-30."
+        },
+        {
+          "criterion_id": "NCT07252908-I6",
+          "verdict": "unknown",
+          "reason": "Heart rate 67/min on 2025-12-23 is inside 50-100, but no electrocardiogram and no QTcF interval has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT07252908-I7",
+          "verdict": "met",
+          "reason": "Pulmonary emphysema (disorder) active from 2020-09-15, more than five years, with FEV1/FVC 66.607% on 2025-12-23 below the 0.70 GOLD ratio."
+        },
+        {
+          "criterion_id": "NCT07252908-I8",
+          "verdict": "met",
+          "reason": "Fluticasone/salmeterol dry powder inhaler and albuterol inhalation solution were both ordered 2025-12-23, more than five months before screening, with no change recorded since."
+        },
+        {
+          "criterion_id": "NCT07252908-I10",
+          "verdict": "unknown",
+          "reason": "FEV1/FVC is recorded as 66.607 % on 2025-12-23, a ratio of 0.666 and below 0.70, but the chart does not say whether it was measured after a bronchodilator and no FEV1 percent-predicted value has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT07252908-I11",
+          "verdict": "unknown",
+          "reason": "The four weeks before screening contain no encounter; the last is 2026-01-06."
+        },
+        {
+          "criterion_id": "NCT07252908-I12",
+          "verdict": "unknown",
+          "reason": "No Modified Medical Research Council dyspnoea grade has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT07252908-I14",
+          "verdict": "unknown",
+          "reason": "No smoking status and no pack-year figure appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT07252908-E1",
+          "verdict": "not_met",
+          "reason": "No intensive-care admission and no intubation in a chart with 44 encounters through 2026-01-06."
+        },
+        {
+          "criterion_id": "NCT07252908-E2",
+          "verdict": "unknown",
+          "reason": "No systemic corticosteroid order and no exacerbation is recorded, but the three months before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT07252908-E3",
+          "verdict": "not_met",
+          "reason": "No hospitalisation for COPD or pneumonia; the encounters on 2025-12-23 and 2026-01-06 fall inside the six-month window."
+        },
+        {
+          "criterion_id": "NCT07252908-E4",
+          "verdict": "unknown",
+          "reason": "The six weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT07252908-E5",
+          "verdict": "not_met",
+          "reason": "The only respiratory diagnosis is pulmonary emphysema (2020-09-15), which is COPD itself rather than a concurrent other respiratory disease; acute bronchitis is recorded as resolved on 2021-11-12."
+        },
+        {
+          "criterion_id": "NCT07252908-E6",
+          "verdict": "unknown",
+          "reason": "No chest computed tomography report appears anywhere in the record."
+        },
+        {
+          "criterion_id": "NCT07252908-E7",
+          "verdict": "not_met",
+          "reason": "No thoracic surgery in the chart; encounters run from 2007-08-28 to 2026-01-06."
+        },
+        {
+          "criterion_id": "NCT07252908-E8",
+          "verdict": "unknown",
+          "reason": "No pulmonary rehabilitation is recorded, but the four weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT07252908-E9",
+          "verdict": "unknown",
+          "reason": "No oral corticosteroid, roflumilast or theophylline order is on file, but the three months before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT07252908-E10",
+          "verdict": "not_met",
+          "reason": "No beta-blocker among the ten medication orders in a chart covering this patient's whole adult life."
+        },
+        {
+          "criterion_id": "NCT07252908-E11",
+          "verdict": "not_met",
+          "reason": "TQC3721 is an unapproved investigational compound; no exposure to it could appear in routine care and none does."
+        },
+        {
+          "criterion_id": "NCT07252908-E12",
+          "verdict": "unknown",
+          "reason": "The four weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT07252908-E15",
+          "verdict": "unknown",
+          "reason": "No cardiac diagnosis is recorded and the six-month window is covered by the 2025-12-23 and 2026-01-06 encounters, but the three-month arrhythmia window is not covered and no NYHA class has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT07252908-E16",
+          "verdict": "not_met",
+          "reason": "Blood pressure 93/60 mmHg on 2025-12-23, below both the 160 and 100 mmHg bounds."
+        },
+        {
+          "criterion_id": "NCT07252908-E17",
+          "verdict": "unknown",
+          "reason": "No diabetes diagnosis is recorded, but no blood glucose result of any kind appears in this chart, so the 10 mmol/L fasting limb cannot be checked."
+        },
+        {
+          "criterion_id": "NCT07252908-E18",
+          "verdict": "unknown",
+          "reason": "The eight weeks before screening contain no encounter."
+        },
+        {
+          "criterion_id": "NCT07252908-E19",
+          "verdict": "not_met",
+          "reason": "No malignant tumour in the chart; encounters in 2021-2026 cover the five-year window."
+        },
+        {
+          "criterion_id": "NCT07252908-E20",
+          "verdict": "unknown",
+          "reason": "No ALT, AST, alkaline phosphatase, bilirubin, creatinine or eGFR result appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT07252908-E21",
+          "verdict": "unknown",
+          "reason": "No HIV, hepatitis B, hepatitis C or syphilis serology appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT07252908-E22",
+          "verdict": "not_met",
+          "reason": "Albuterol inhalation solution is an active order from 2025-12-23, so salbutamol is tolerated."
+        },
+        {
+          "criterion_id": "NCT07252908-E23",
+          "verdict": "not_met",
+          "reason": "No oxygen therapy order or device in the chart; encounters through 2026-01-06."
+        },
+        {
+          "criterion_id": "NCT07252908-E24",
+          "verdict": "not_met",
+          "reason": "History of tubal ligation recorded 2024-06-24 and no pregnancy since the 2019 miscarriage, in a chart with encounters through 2026-01-06."
+        },
+        {
+          "criterion_id": "NCT07252908-E25",
+          "verdict": "unknown",
+          "reason": "The 28 days before randomisation contain no encounter."
+        },
+        {
+          "criterion_id": "NCT07252908-E26",
+          "verdict": "not_met",
+          "reason": "No substance-misuse finding; AUDIT-C 1 on 2025-12-23 and DAST-10 1 on 2024-12-17, both inside the three-year window."
+        },
+        {
+          "criterion_id": "NCT07252908-E27",
+          "verdict": "unknown",
+          "reason": "The four weeks before screening contain no encounter."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-033",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "nct_id": "NCT07252908",
+      "labels": [
+        {
+          "criterion_id": "NCT07252908-I3",
+          "verdict": "met",
+          "reason": "Born 1979-11-06; age 46 at 2026-06-01, inside 40-80."
+        },
+        {
+          "criterion_id": "NCT07252908-I4",
+          "verdict": "not_met",
+          "reason": "BMI 30.3 kg/m2 on 2025-06-03, above the inclusive 30 kg/m2 ceiling."
+        },
+        {
+          "criterion_id": "NCT07252908-I6",
+          "verdict": "unknown",
+          "reason": "Heart rate 72/min on 2025-06-03 is inside 50-100, but no electrocardiogram and no QTcF interval has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT07252908-I7",
+          "verdict": "not_met",
+          "reason": "No chronic obstructive pulmonary disease diagnosis in a chart with 38 encounters through 2026-05-12; the airway diagnosis is asthma, active from 2000-01-11."
+        },
+        {
+          "criterion_id": "NCT07252908-I8",
+          "verdict": "not_met",
+          "reason": "Budesonide inhalation suspension and albuterol were ordered 2025-06-03 for asthma, and no COPD is diagnosed, so there is no background inhaled therapy for COPD."
+        },
+        {
+          "criterion_id": "NCT07252908-I10",
+          "verdict": "unknown",
+          "reason": "No spirometry of any kind has ever been recorded for this patient."
+        },
+        {
+          "criterion_id": "NCT07252908-I11",
+          "verdict": "not_met",
+          "reason": "No COPD is diagnosed, so there is no COPD to have been clinically stable."
+        },
+        {
+          "criterion_id": "NCT07252908-I12",
+          "verdict": "unknown",
+          "reason": "No Modified Medical Research Council dyspnoea grade has ever been recorded."
+        },
+        {
+          "criterion_id": "NCT07252908-I14",
+          "verdict": "unknown",
+          "reason": "No smoking status and no pack-year figure appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT07252908-E1",
+          "verdict": "not_met",
+          "reason": "No intensive-care admission and no intubation in 38 encounters through 2026-05-12."
+        },
+        {
+          "criterion_id": "NCT07252908-E2",
+          "verdict": "not_met",
+          "reason": "No systemic corticosteroid has ever been ordered; the only steroid is inhaled budesonide, and the encounter on 2026-05-12 falls inside the three-month window."
+        },
+        {
+          "criterion_id": "NCT07252908-E3",
+          "verdict": "not_met",
+          "reason": "No hospitalisation for COPD or pneumonia; the encounter on 2026-05-12 falls inside the six-month window."
+        },
+        {
+          "criterion_id": "NCT07252908-E4",
+          "verdict": "not_met",
+          "reason": "No antibiotic has ever been ordered; the encounter on 2026-05-12 falls inside the six-week window."
+        },
+        {
+          "criterion_id": "NCT07252908-E5",
+          "verdict": "met",
+          "reason": "Asthma (disorder) is active from 2000-01-11 and the criterion lists asthma among the concurrent other respiratory diseases that exclude."
+        },
+        {
+          "criterion_id": "NCT07252908-E6",
+          "verdict": "unknown",
+          "reason": "No chest computed tomography report appears anywhere in the record."
+        },
+        {
+          "criterion_id": "NCT07252908-E7",
+          "verdict": "not_met",
+          "reason": "No thoracic surgery in the chart."
+        },
+        {
+          "criterion_id": "NCT07252908-E8",
+          "verdict": "not_met",
+          "reason": "No pulmonary rehabilitation is recorded; the encounter on 2026-05-12 covers the four-week window."
+        },
+        {
+          "criterion_id": "NCT07252908-E9",
+          "verdict": "not_met",
+          "reason": "No oral corticosteroid, roflumilast or theophylline has ever been ordered; the encounter on 2026-05-12 covers the three-month window."
+        },
+        {
+          "criterion_id": "NCT07252908-E10",
+          "verdict": "not_met",
+          "reason": "No beta-blocker among the eight medication orders on file."
+        },
+        {
+          "criterion_id": "NCT07252908-E11",
+          "verdict": "not_met",
+          "reason": "TQC3721 is an unapproved investigational compound; no exposure to it appears."
+        },
+        {
+          "criterion_id": "NCT07252908-E12",
+          "verdict": "not_met",
+          "reason": "No azathioprine, cyclophosphamide or other immunotherapy on file; the encounter on 2026-05-12 falls inside the four-week window."
+        },
+        {
+          "criterion_id": "NCT07252908-E15",
+          "verdict": "not_met",
+          "reason": "No myocardial infarction, unstable angina or stroke in the six months, no arrhythmia in the three months, and no heart failure diagnosis at all; encounters cover both windows."
+        },
+        {
+          "criterion_id": "NCT07252908-E16",
+          "verdict": "not_met",
+          "reason": "Blood pressure 147/87 mmHg on 2025-06-03, below both the 160 and 100 mmHg bounds."
+        },
+        {
+          "criterion_id": "NCT07252908-E17",
+          "verdict": "unknown",
+          "reason": "The patient has type 2 diabetes with HbA1c 7.58% on 2025-06-03, but the protocol does not define poorly controlled, and the blood glucose of 93.45 mg/dL (5.19 mmol/L) on 2025-06-03 is not recorded as a fasting value."
+        },
+        {
+          "criterion_id": "NCT07252908-E18",
+          "verdict": "not_met",
+          "reason": "No surgery in the chart; the encounter on 2026-05-12 falls inside the eight-week window."
+        },
+        {
+          "criterion_id": "NCT07252908-E19",
+          "verdict": "not_met",
+          "reason": "No malignant tumour in the chart; encounters in 2021-2026 cover the five-year window."
+        },
+        {
+          "criterion_id": "NCT07252908-E20",
+          "verdict": "unknown",
+          "reason": "No ALT, AST, alkaline phosphatase or bilirubin result appears anywhere in this chart; the eGFR limb is satisfied by 141.3 mL/min/1.73 m2 on 2025-06-03 but the liver limb cannot be checked."
+        },
+        {
+          "criterion_id": "NCT07252908-E21",
+          "verdict": "unknown",
+          "reason": "No HIV, hepatitis B, hepatitis C or syphilis serology appears anywhere in this chart."
+        },
+        {
+          "criterion_id": "NCT07252908-E22",
+          "verdict": "not_met",
+          "reason": "Albuterol (salbutamol) is an active order from 2025-06-03, so it is tolerated."
+        },
+        {
+          "criterion_id": "NCT07252908-E23",
+          "verdict": "not_met",
+          "reason": "No oxygen therapy order or device in the chart; encounters through 2026-05-12."
+        },
+        {
+          "criterion_id": "NCT07252908-E24",
+          "verdict": "not_met",
+          "reason": "Patient is male."
+        },
+        {
+          "criterion_id": "NCT07252908-E25",
+          "verdict": "not_met",
+          "reason": "No immunisation order appears in the chart; the encounter on 2026-05-12 falls inside the 28-day window."
+        },
+        {
+          "criterion_id": "NCT07252908-E26",
+          "verdict": "not_met",
+          "reason": "Unhealthy alcohol drinking behavior is recorded as resolved on 2020-05-05, six years before screening; AUDIT-C 2 on 2024-05-28 and DAST-10 2 on 2025-06-03."
+        },
+        {
+          "criterion_id": "NCT07252908-E27",
+          "verdict": "not_met",
+          "reason": "No research participation in the chart; the encounter on 2026-05-12 falls inside the four-week window."
+        }
+      ]
+    }
+  ]
+}

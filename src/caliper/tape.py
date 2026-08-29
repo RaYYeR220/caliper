@@ -155,6 +155,10 @@ class Tape:
             counts[exchange.agent] = counts.get(exchange.agent, 0) + 1
         return dict(sorted(counts.items()))
 
+    def exchanges(self) -> list[Exchange]:
+        """Every recorded exchange, in the order the file holds them."""
+        return [self._entries[key] for key in sorted(self._entries)]
+
     def lookup(self, payload: dict[str, Any]) -> Exchange | None:
         found = self._entries.get(exchange_key(payload))
         if found is None:

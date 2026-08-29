@@ -1,7 +1,7 @@
 """Running the metamorphic catalogue and reporting it.
 
 Each case is two screenings of the same hand-written criteria: one against the committed chart and
-one against the perturbed chart. Everything is deterministic -- the screening date is fixed by
+one against the perturbed chart. Everything is deterministic — the screening date is fixed by
 `corpus.default_screening_date`, the patients are files in the repository, and no language model is
 reachable from this module or from `cases`.
 
@@ -12,9 +12,10 @@ act on.
 
 from __future__ import annotations
 
+import sys
 from collections.abc import Sequence
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache
 
 from caliper.corpus import default_screening_date, load_patient
 from caliper.perturb import PerturbationError
@@ -35,7 +36,7 @@ class CaseResult:
     detail: str
 
 
-@lru_cache(maxsize=None)
+@cache
 def _patient(patient_id: str) -> PatientIndex:
     """Load a chart once per process.
 
@@ -87,14 +88,12 @@ def _row(cells: Sequence[str]) -> str:
     return "| " + " | ".join(cells) + " |"
 
 
-def to_markdown(
-    results: Sequence[CaseResult], cases: Sequence[MetamorphicCase] = CASES
-) -> str:
+def to_markdown(results: Sequence[CaseResult], cases: Sequence[MetamorphicCase] = CASES) -> str:
     """A table a judge reads: what each case asserts, against which patient, and whether it held.
 
     `cases` supplies the plain-English descriptions, which a `CaseResult` deliberately does not
-    carry. Any result whose case is not in the catalogue -- a one-off, or a deliberately broken
-    case built in a test -- still gets a row, identified by its id.
+    carry. Any result whose case is not in the catalogue — a one-off, or a deliberately broken
+    case built in a test — still gets a row, identified by its id.
     """
     catalogue = {case.id: case for case in cases}
     passed = sum(1 for result in results if result.passed)
@@ -129,4 +128,6 @@ def to_markdown(
 
 
 if __name__ == "__main__":  # pragma: no cover
-    print(to_markdown(run_all()), end="")
+    # Written as bytes so that a console using a legacy code page cannot turn the report into a
+    # UnicodeEncodeError on the way out.
+    sys.stdout.buffer.write(to_markdown(run_all()).encode("utf-8"))

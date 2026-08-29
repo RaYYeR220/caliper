@@ -1,0 +1,506 @@
+{
+  "schema": "caliper.ui.screening/1",
+  "nct_id": "NCT01131676",
+  "trial_title": "BI 10773 (Empagliflozin) Cardiovascular Outcome Event Trial in Type 2 Diabetes Mellitus Patients (EMPA-REG OUTCOME).",
+  "criteria_fingerprint": "34d9721a8386bb66b40d001730b4db4afc5fa20d1680358a6f7c13593dfa2b89",
+  "patient": {
+    "id": "cbd1dd48-89c3-3fdb-434e-3f0802738abf",
+    "summary": "36 years old at screening, recorded sex female",
+    "age": 36,
+    "sex": "female"
+  },
+  "screened_on": "2026-04-01",
+  "decision": "ineligible",
+  "decision_label": "Not eligible",
+  "blocked_by": null,
+  "criteria_total": 22,
+  "criteria_resolved": 4,
+  "coverage": 0.18181818181818182,
+  "deciding_criterion_ids": [
+    "INC-01"
+  ],
+  "approximations": [
+    "the protocol anchors this window to consent, which was evaluated against the screening date"
+  ],
+  "absence_policy": {
+    "value": "coverage_gated",
+    "note": "coverage-gated, meaning a finding absent from the chart counts as absent only where an encounter documents the window"
+  },
+  "open_items": [],
+  "criteria": [
+    {
+      "id": "INC-01",
+      "kind": "inclusion",
+      "quote": "Diagnosis of type 2 diabetes mellitus prior to informed consent",
+      "unsupported": false,
+      "verdict": "not_met",
+      "verdict_label": "Not met",
+      "decisive": true,
+      "rationale": "type 2 diabetes mellitus is not documented in a window the chart covers",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [
+        "the protocol anchors this window to consent, which was evaluated against the screening date"
+      ],
+      "evidence": [],
+      "resolution": null
+    },
+    {
+      "id": "INC-02",
+      "kind": "inclusion",
+      "quote": "Male or female patients on diet and exercise regimen who are drug naive or pre treated with any background therapy. Antidiabetic therapy has to be unchanged for 12 weeks prior to randomization.",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: the chart records prescriptions, not whether antidiabetic therapy was unchanged over the 12 weeks before randomisation",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "INC-03",
+      "kind": "inclusion",
+      "quote": "Glycosylated haemoglobin (HbA1c) of >= 7.0% and <=10% for patients on background therapy or HbA1c >= 7.0% and <= 9.0% for drug naive patients",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. B admits a drug-naive patient whose HbA1c is between 9.0% and 10%, whom A excludes.",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "INC-04",
+      "kind": "inclusion",
+      "quote": "Age >= 18 years",
+      "unsupported": false,
+      "verdict": "met",
+      "verdict_label": "Met",
+      "decisive": false,
+      "rationale": "age 36 years at screening against >= 18.0",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": null
+    },
+    {
+      "id": "INC-05",
+      "kind": "inclusion",
+      "quote": "Body Mass index <= 45 at Visit 1",
+      "unsupported": false,
+      "verdict": "met",
+      "verdict_label": "Met",
+      "decisive": false,
+      "rationale": "22.31 kg/m2 on 2025-12-23 against <= 45.0 kg/m2",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [
+        {
+          "resource": "Observation/cbd1dd48-89c3-3fdb-3d31-2bc91c99d6cd",
+          "resource_type": "Observation",
+          "resource_id": "cbd1dd48-89c3-3fdb-3d31-2bc91c99d6cd",
+          "kind": "observation",
+          "display": "Body mass index (BMI) [Ratio]",
+          "value": 22.31,
+          "unit": "kg/m2",
+          "date": "2025-12-23",
+          "fhir_path": "Bundle.entry[381].resource",
+          "source": "structured",
+          "narrative_quote": null,
+          "codes": [
+            {
+              "system": "LOINC",
+              "code": "39156-5",
+              "display": "Body mass index (BMI) [Ratio]"
+            }
+          ]
+        }
+      ],
+      "resolution": null
+    },
+    {
+      "id": "INC-06",
+      "kind": "inclusion",
+      "quote": "Signed and dated informed consent",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: consent is a site procedure and leaves no finding in the patient record",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "INC-07",
+      "kind": "inclusion",
+      "quote": "High cardiovascular risk",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: the protocol defines high cardiovascular risk in a table the registry record does not carry",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-01",
+      "kind": "exclusion",
+      "quote": "Uncontrolled hyperglycaemia with a glucose level >240 mg/dl (>13.3 mmol/L) after an overnight fast during placebo run-in and confirmed by a second measurement (not on the same day)",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A requires a fasting measurement confirmed on a second day; B is satisfied by one random glucose.",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-02",
+      "kind": "exclusion",
+      "quote": "Indication of liver disease, defined by serum levels of either alanine aminotransferase (ALT), aspartate aminotransferase ALT or alkaline phosphatase above 3 x upper limit of normal (ULN) as determined at screening and/or run in.",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. A is also triggered by aspartate aminotransferase or alkaline phosphatase above three times the upper limit of normal; B tests only alanine aminotransferase.",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-03",
+      "kind": "exclusion",
+      "quote": "Planned cardiac surgery or angioplasty within 3 months",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: a planned procedure is an intention, and the chart records events",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-04",
+      "kind": "exclusion",
+      "quote": "Impaired renal function, defined as Glomerular Filtration Rate <30 ml/min (severe renal impairment, Modification of Diet in Renal Disease formula) during screening or run in.",
+      "unsupported": false,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "no glomerular filtration rate result is on file for the required window",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "a glomerular filtration rate result",
+        "where_to_look": "the laboratory result system or the most recent panel in the chart",
+        "fhir_query": "Observation?patient=cbd1dd48-89c3-3fdb-434e-3f0802738abf&code=33914-3",
+        "retrievable": true
+      }
+    },
+    {
+      "id": "EXC-05",
+      "kind": "exclusion",
+      "quote": "Bariatric surgery within the past two years and other gastrointestinal surgeries that induce chronic malabsorption",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: 'other gastrointestinal surgeries that induce chronic malabsorption' names no enumerable set of procedure codes",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-06",
+      "kind": "exclusion",
+      "quote": "Blood dyscrasias or any disorders causing haemolysis or unstable Red Blood Cell (e.g. malaria, babesiosis, haemolytic anemia)",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: the criterion names three examples of an open class of disorders, and compiling the examples would exclude fewer patients than the protocol does",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-07",
+      "kind": "exclusion",
+      "quote": "Medical history of cancer (except for basal cell carcinoma) and/or treatment for cancer within the last 5 years",
+      "unsupported": false,
+      "verdict": "not_met",
+      "verdict_label": "Not met",
+      "decisive": false,
+      "rationale": "malignant neoplastic disease is not documented in a window the chart covers",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": null
+    },
+    {
+      "id": "EXC-08",
+      "kind": "exclusion",
+      "quote": "Contraindications to background therapy according to the local label",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: the local label is not part of the patient record",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-09",
+      "kind": "exclusion",
+      "quote": "Treatment with anti-obesity drugs (e.g. sibutramine, orlistat) 3 months prior to informed consent or any other treatment at the time of screening (i.e. surgery, aggressive diet regimen, etc.) leading to unstable body weight",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: the second half of the criterion covers any treatment leading to unstable body weight, which names no coded intervention",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-10",
+      "kind": "exclusion",
+      "quote": "Current treatment with systemic steroids at time of informed consent or change in dosage of thyroid hormones within 6 weeks prior to informed consent or any other uncontrolled endocrine disorder except type 2 diabetes mellitus",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: a change in thyroid dose and an uncontrolled endocrine disorder are neither of them recorded as a codeable finding",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-11",
+      "kind": "exclusion",
+      "quote": "Pre-menopausal women (last menstruation <+ 1 year prior to informed consent) who:",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: birth control and agreement to periodic pregnancy testing are undertakings by the patient, not findings in the chart",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-12",
+      "kind": "exclusion",
+      "quote": "Alcohol or drug abuse within the 3 months prior to informed consent that would interfere with trial participation or any ongoing condition leading to a decreased compliance to study procedures or study drug intake",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: the criterion turns on whether the behaviour would interfere with participation, which is a judgement rather than a finding",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-13",
+      "kind": "exclusion",
+      "quote": "Participation in another trial with an investigational drug within 30 days prior to informed consent",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: participation in another trial is not recorded in the chart",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-14",
+      "kind": "exclusion",
+      "quote": "Any other clinical condition that would jeopardize patients safety while participating in this clinical trial",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: the criterion is a catch-all reserved for the investigator",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-15",
+      "kind": "exclusion",
+      "quote": "Acute coronary syndrome, stroke or TIA within 2 months prior to informed consent",
+      "unsupported": false,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "nothing documents acute coronary syndrome in the required window, and the chart does not show the window was covered or nothing documents stroke in the required window, and the chart does not show the window was covered or nothing documents transient ischaemic attack in the required window, and the chart does not show the window was covered",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [
+        "the protocol anchors this window to consent, which was evaluated against the screening date",
+        "the protocol anchors this window to consent, which was evaluated against the screening date",
+        "the protocol anchors this window to consent, which was evaluated against the screening date"
+      ],
+      "evidence": [],
+      "resolution": {
+        "missing": "confirmation that acute coronary syndrome is genuinely absent rather than merely unrecorded",
+        "where_to_look": "the problem list and recent discharge summaries",
+        "fhir_query": "Condition?patient=cbd1dd48-89c3-3fdb-434e-3f0802738abf&code=394659003,22298006&date=ge2026-02-01",
+        "retrievable": true
+      }
+    }
+  ],
+  "rationales": {
+    "total": 22,
+    "engine_written": 22
+  },
+  "disclaimer": "This packet is decision support for pre-screening. Eligibility is determined by the investigator."
+}

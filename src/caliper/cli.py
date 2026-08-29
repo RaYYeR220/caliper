@@ -170,6 +170,35 @@ def trajectory(run: Path, out: Path = typer.Option(None, help="Write Markdown he
 
 
 @app.command()
+def tape(
+    path: Path = typer.Option(Path("eval/tape.jsonl"), help="The recording to inspect."),
+    agent: str = typer.Option(None, help="Show only what this agent was asked."),
+    limit: int = typer.Option(5, help="How many exchanges to print in full."),
+) -> None:
+    """Read a recorded run: what each agent was asked, and what it said."""
+    from caliper.tape import Tape
+
+    loaded = Tape(path, mode="replay")
+    console.print(f"{len(loaded)} exchanges in {path}")
+    for name, count in loaded.agents.items():
+        console.print(f"  {name}: {count}")
+
+    shown = 0
+    for exchange in loaded.exchanges():
+        if agent and exchange.agent != agent:
+            continue
+        if shown >= limit:
+            break
+        shown += 1
+        console.print("")
+        console.print(
+            f"[bold]{exchange.agent}[/bold]  {exchange.model}  {exchange.key[:12]}"
+        )
+        console.print(f"  asked:  {exchange.user[:400]}")
+        console.print(f"  said:   {exchange.response[:400]}")
+
+
+@app.command()
 def costs(run: Path) -> None:
     """Summarise what a recorded run cost, by agent and by model."""
     loaded = Trajectory.read_jsonl(run)

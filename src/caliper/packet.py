@@ -285,13 +285,22 @@ def _quote_of(criterion: Criterion | None) -> str:
 
 
 def _patient_summary(patient: PatientIndex, as_of: date) -> str:
-    """Age and recorded sex, for the coordinator checking they have the right chart open."""
+    """Age and recorded sex, for the coordinator checking they have the right chart open.
+
+    A death the chart records before the screening date belongs on this line too. "67 years old at
+    screening" is not something to print about someone who died four weeks earlier, whatever the
+    rest of the page goes on to say.
+    """
+    died = patient.died_before(as_of)
     parts = []
     age = patient.age_at(as_of)
     if age is not None:
-        parts.append(f"{age:g} years old at screening")
+        parts.append(f"{age:g} years old" if died else f"{age:g} years old at screening")
     if patient.sex:
         parts.append(f"recorded sex {patient.sex}")
+    if died:
+        assert patient.deceased is not None
+        parts.append(f"died {patient.deceased.isoformat()}")
     return ", ".join(parts) if parts else "no demographics on file"
 
 
@@ -362,9 +371,16 @@ def _markdown_open_items(packet: Packet) -> list[str]:
 
 def _markdown_criteria(packet: Packet) -> list[str]:
     if packet.stopped_note is not None:
-        # A table headed "Criteria" with nothing under it reads as a broken program rather than as
-        # an answer, and the answer here is that the protocol was never applied.
-        return [f"## {NOTHING_EVALUATED_HEADING}", "", packet.stopped_note, "", NOTHING_EVALUATED, ""]
+        # A table headed "Criteria" with nothing under it reads as a broken program rather than
+        # as an answer, and the answer here is that the protocol was never applied.
+        return [
+            f"## {NOTHING_EVALUATED_HEADING}",
+            "",
+            packet.stopped_note,
+            "",
+            NOTHING_EVALUATED,
+            "",
+        ]
 
     lines = [
         "## Criteria",

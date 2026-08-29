@@ -1,7 +1,8 @@
 """The metamorphic suite: relations between two runs that hold without an answer key.
 
-`cases` holds the catalogue and the relation vocabulary; `runner` runs it and renders the table.
-`python -m eval.metamorphic.runner` prints that table.
+`cases` holds the catalogue and the relation vocabulary. The runner lives in
+`eval.metamorphic.runner` and is deliberately not re-exported here, so that
+`python -m eval.metamorphic.runner` — which prints the report table — does not import it twice.
 """
 
 from .cases import (
@@ -15,15 +16,14 @@ from .cases import (
     OnlyThisCriterionChanges,
     OutcomeUnchanged,
     Relation,
+    ScreeningBlockedOn,
     all_of,
 )
-from .runner import CaseResult, run_all, run_case, to_markdown
 
 __all__ = [
     "CASES",
     "AllOf",
     "AllVerdictsUnchanged",
-    "CaseResult",
     "CoverageDoesNotDecrease",
     "CriterionBecomesUnknown",
     "CriterionVerdictFlips",
@@ -31,8 +31,6 @@ __all__ = [
     "OnlyThisCriterionChanges",
     "OutcomeUnchanged",
     "Relation",
+    "ScreeningBlockedOn",
     "all_of",
-    "run_all",
-    "run_case",
-    "to_markdown",
 ]

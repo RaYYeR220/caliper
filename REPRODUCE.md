@@ -97,7 +97,7 @@ A live run calls a provider. It costs money and it will not reproduce byte for b
 
 ```bash
 cp .env.example .env       # then put a key in it
-caliper eval --record      # calls the provider and re-records the cassettes
+caliper eval --record      # calls the provider and rewrites eval/tape.jsonl
 ```
 
 `CALIPER_PROVIDER` and `CALIPER_MODEL` select the provider and model; the defaults are Venice with
@@ -113,7 +113,8 @@ provider needs.
 | Cost | under two dollars at `claude-sonnet-5` list prices |
 | Wall clock | ten to fifteen minutes, dominated by rate limits rather than compute |
 
-`caliper costs eval/results/trajectory.jsonl` breaks the actual figure down by agent and by model.
+`caliper costs eval/results/trajectory.jsonl` breaks the actual figure down by agent and by model,
+and `caliper tape` shows what was asked to produce it.
 
 Single pieces, if you want to watch one:
 
@@ -135,11 +136,18 @@ what else was in the batch. A fixed seed only controls the sampler, which at tem
 already doing nothing. We set `temperature=0`, `top_p=1` and a fixed seed anyway, as variance
 reduction rather than as a guarantee, and pin the exact model identifier.
 
-What carries the reproducibility claim instead is the recording. `eval/cassettes/` holds the HTTP
-exchanges of the committed run, matched on method, host, path **and request body** — body matching
-matters, because every call in a run goes to the same URL, and a cassette matched on the URL alone
-would answer the compiler with the critic's response. Authorisation headers are redacted before
-anything is written, and a test greps the cassette directory to prove no key is in it.
+What carries the reproducibility claim instead is the recording, in `eval/tape.jsonl`. It is kept at
+the level of the exchange rather than the socket: one JSON object per model call, carrying the
+system prompt, the question, the answer and the token usage. A packet capture would prove traffic
+moved; it would not let you read what the compiler was asked about criterion four and decide whether
+the answer was reasonable. `caliper tape --agent compiler` prints exactly that.
+
+The key includes the model, the whole message list and the name of the schema demanded back. The
+system prompt has to be part of it: several agents are asked about the same protocol text in one
+run, and a key built from the question alone would hand the critic the compiler's answer. A request
+the tape has no answer for raises rather than falling through to the provider, so "this ran offline"
+is a fact rather than a hope. Nothing but the conversation is recorded, so no header and no key can
+end up in the file, and a test asserts it.
 
 ---
 
@@ -161,7 +169,7 @@ works offline and on a machine with no Node installed.
 |---|---|
 | `data verify` reports a changed file | The fixtures were edited. Re-clone; do not proceed. |
 | `eval` reports the key does not match its digest | `eval/answer_key.json` was edited after freezing. Scoring against it would prove nothing, so the command refuses. |
-| `eval --replay` raises `CannotOverwriteExistingCassette` | A request was made that the recording does not contain, which means the code changed since the recording. Re-record with a key, or check out the commit the cassettes belong to. |
+| `eval --replay` raises `TapeMiss` | A request was made that the recording does not contain, which means a prompt or the model changed since it was recorded. The error prints what was asked. Re-record with a key, or check out the commit the tape belongs to. |
 | `no API key found in VENICE_API_KEY` | You ran a live command. The replay path needs no key. |
 | Tests fail on Windows with line-ending noise | `git config core.autocrlf false`, then re-clone. The repository is LF throughout. |
 

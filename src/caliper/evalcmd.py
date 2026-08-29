@@ -23,9 +23,9 @@ from caliper.baselines import AlwaysEligible, AlwaysNeedsReview, RandomOutcome, 
 from caliper.evalrun import Arm, ArmReport, run_arm
 from caliper.evaluate import AbsencePolicy
 from caliper.ir import CriteriaSet
-from caliper.llm import LLMClient, Trajectory, profile_from_env
+from caliper.llm import LLMClient, Trajectory, profile_from_env, resolve_api_key
 from caliper.pipeline import PipelineConfig, compile_trial
-from caliper.replay import cassette
+from caliper.tape import DEFAULT_TAPE, Tape, TapeTransport
 
 app = typer.Typer(help="Run the evaluation and rebuild the results.")
 console = Console()
@@ -59,11 +59,27 @@ def _compile_key(config: PipelineConfig) -> tuple[int, bool, bool, bool]:
     )
 
 
-def _context() -> AgentContext:
+def _context(tape: Tape) -> AgentContext:
+    """One client for the whole run, answering from the tape or recording into it.
+
+    Recording needs a live upstream; replaying refuses to build one, so a tape miss surfaces as a
+    miss rather than as an unbudgeted call to a provider.
+    """
+    profile = profile_from_env()
     trajectory = Trajectory()
-    return AgentContext(
-        client=LLMClient(profile_from_env(), trajectory=trajectory), trajectory=trajectory
+    upstream = None
+    if tape.mode == "record":
+        from openai import OpenAI
+
+        upstream = OpenAI(api_key=resolve_api_key(profile), base_url=profile.base_url)
+
+    client = LLMClient(
+        profile,
+        transport=TapeTransport(tape, upstream=upstream),
+        trajectory=trajectory,
+        env={profile.api_key_env: "replayed"} if tape.mode == "replay" else None,
     )
+    return AgentContext(client=client, trajectory=trajectory)
 
 
 def _compiler(
@@ -119,6 +135,7 @@ def run_eval(
     arms: str = typer.Option("all", help="Comma-separated arm names, or 'all'."),
     replay: bool = typer.Option(True, help="Replay recorded model responses. Needs no API key."),
     record: bool = typer.Option(False, help="Call the provider and record the responses."),
+    tape_path: Path = typer.Option(DEFAULT_TAPE, "--tape", help="The recording to use."),
 ) -> None:
     """Run every arm over the answer key and write the results."""
     if not verify_frozen(key_path):
@@ -132,10 +149,19 @@ def run_eval(
     if unknown:
         raise typer.BadParameter(f"unknown arm(s): {', '.join(unknown)}")
 
-    ctx = _context()
-    mode = "all" if record else ("none" if replay else "once")
-    with cassette("evaluation", mode=mode):
-        reports = _run(key, names, ctx)
+    tape = Tape(tape_path, mode="record" if record else "replay")
+    if tape.mode == "replay" and len(tape) == 0:
+        raise typer.BadParameter(
+            f"{tape_path} is empty. Run with --record and a key to produce it, or check out the "
+            "commit whose tape belongs to this code."
+        )
+    ctx = _context(tape)
+    reports = _run(key, names, ctx)
+    if record:
+        tape.save()
+        console.print(f"recorded {len(tape)} exchanges to {tape_path}")
+    else:
+        console.print(f"replayed {tape.hits} exchanges from {tape_path}")
 
     out.mkdir(parents=True, exist_ok=True)
     for arm_report in reports:
@@ -150,6 +176,8 @@ def run_eval(
                 "key_cases": len(key.cases),
                 "arms": [r.arm for r in reports],
                 "replayed": not record,
+                "tape_exchanges": len(tape),
+                "tape_agents": tape.agents,
                 "total_usd": ctx.trajectory.total_usd(),
             },
             indent=2,

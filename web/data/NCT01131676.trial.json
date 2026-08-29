@@ -1,0 +1,696 @@
+{
+  "schema": "caliper.ui.trial/1",
+  "nct_id": "NCT01131676",
+  "title": "BI 10773 (Empagliflozin) Cardiovascular Outcome Event Trial in Type 2 Diabetes Mellitus Patients (EMPA-REG OUTCOME).",
+  "criteria_fingerprint": "34d9721a8386bb66b40d001730b4db4afc5fa20d1680358a6f7c13593dfa2b89",
+  "source_text": "Inclusion criteria:\n\n1. Diagnosis of type 2 diabetes mellitus prior to informed consent\n2. Male or female patients on diet and exercise regimen who are drug naive or pre treated with any background therapy. Antidiabetic therapy has to be unchanged for 12 weeks prior to randomization.\n3. Glycosylated haemoglobin (HbA1c) of >= 7.0% and <=10% for patients on background therapy or HbA1c >= 7.0% and <= 9.0% for drug naive patients\n4. Age >= 18 years\n5. Body Mass index <= 45 at Visit 1\n6. Signed and dated informed consent\n7. High cardiovascular risk\n\nExclusion criteria:\n\n1. Uncontrolled hyperglycaemia with a glucose level >240 mg/dl (>13.3 mmol/L) after an overnight fast during placebo run-in and confirmed by a second measurement (not on the same day)\n2. Indication of liver disease, defined by serum levels of either alanine aminotransferase (ALT), aspartate aminotransferase ALT or alkaline phosphatase above 3 x upper limit of normal (ULN) as determined at screening and/or run in.\n3. Planned cardiac surgery or angioplasty within 3 months\n4. Impaired renal function, defined as Glomerular Filtration Rate <30 ml/min (severe renal impairment, Modification of Diet in Renal Disease formula) during screening or run in.\n5. Bariatric surgery within the past two years and other gastrointestinal surgeries that induce chronic malabsorption\n6. Blood dyscrasias or any disorders causing haemolysis or unstable Red Blood Cell (e.g. malaria, babesiosis, haemolytic anemia)\n7. Medical history of cancer (except for basal cell carcinoma) and/or treatment for cancer within the last 5 years\n8. Contraindications to background therapy according to the local label\n9. Treatment with anti-obesity drugs (e.g. sibutramine, orlistat) 3 months prior to informed consent or any other treatment at the time of screening (i.e. surgery, aggressive diet regimen, etc.) leading to unstable body weight\n10. Current treatment with systemic steroids at time of informed consent or change in dosage of thyroid hormones within 6 weeks prior to informed consent or any other uncontrolled endocrine disorder except type 2 diabetes mellitus\n11. Pre-menopausal women (last menstruation <+ 1 year prior to informed consent) who:\n\n    * are nursing or pregnant or\n    * are of child-bearing potential and are not practicing an acceptable method of birth control, or do not plan to continue using this method throughout the study and do not agree to submit to periodic pregnancy testing during participation in the trial. Acceptable methods of birth control include tubal ligation, transdermal patch, intra uterine devices/systems, oral, implantable or injectable contraceptives, sexual abstinence, double barrier method and vasectomised partner\n12. Alcohol or drug abuse within the 3 months prior to informed consent that would interfere with trial participation or any ongoing condition leading to a decreased compliance to study procedures or study drug intake\n13. Participation in another trial with an investigational drug within 30 days prior to informed consent\n14. Any other clinical condition that would jeopardize patients safety while participating in this clinical trial\n15. Acute coronary syndrome, stroke or TIA within 2 months prior to informed consent",
+  "counts": {
+    "criteria": 22,
+    "inclusion": 7,
+    "exclusion": 15,
+    "unsupported": 16,
+    "reviewed": 9,
+    "downgraded": 3
+  },
+  "critic_ran": true,
+  "criteria": [
+    {
+      "id": "INC-01",
+      "kind": "inclusion",
+      "source_quote": "Diagnosis of type 2 diabetes mellitus prior to informed consent",
+      "notes": null,
+      "predicate_type": "condition",
+      "compiled_as": "a documented diagnosis of type 2 diabetes mellitus, current as of consent",
+      "unsupported": false,
+      "unsupported_reason": null,
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "44054006",
+          "display": "Diabetes mellitus type 2 (disorder)"
+        }
+      ],
+      "critic": {
+        "severity": "equivalent",
+        "reason": "Both require a recorded diagnosis of type 2 diabetes mellitus and add no further condition.",
+        "downgraded": false,
+        "reviewed_rendering": "a documented diagnosis of type 2 diabetes mellitus, current as of consent",
+        "reviewed_quote": "Diagnosis of type 2 diabetes mellitus prior to informed consent"
+      }
+    },
+    {
+      "id": "INC-02",
+      "kind": "inclusion",
+      "source_quote": "Male or female patients on diet and exercise regimen who are drug naive or pre treated with any background therapy. Antidiabetic therapy has to be unchanged for 12 weeks prior to randomization.",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: the chart records prescriptions, not whether antidiabetic therapy was unchanged over the 12 weeks before randomisation",
+      "unsupported": true,
+      "unsupported_reason": "the chart records prescriptions, not whether antidiabetic therapy was unchanged over the 12 weeks before randomisation",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "INC-03",
+      "kind": "inclusion",
+      "source_quote": "Glycosylated haemoglobin (HbA1c) of >= 7.0% and <=10% for patients on background therapy or HbA1c >= 7.0% and <= 9.0% for drug naive patients",
+      "notes": "the ceiling depends on whether the patient is drug naive, which is not compiled",
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: back-translation: the compiled predicate is broader than the protocol quote. B admits a drug-naive patient whose HbA1c is between 9.0% and 10%, whom A excludes.",
+      "unsupported": true,
+      "unsupported_reason": "back-translation: the compiled predicate is broader than the protocol quote. B admits a drug-naive patient whose HbA1c is between 9.0% and 10%, whom A excludes.",
+      "codes": [],
+      "critic": {
+        "severity": "broader",
+        "reason": "B admits a drug-naive patient whose HbA1c is between 9.0% and 10%, whom A excludes.",
+        "downgraded": true,
+        "reviewed_rendering": "HbA1c between 7 and 10% inclusive",
+        "reviewed_quote": "Glycosylated haemoglobin (HbA1c) of >= 7.0% and <=10% for patients on background therapy or HbA1c >= 7.0% and <= 9.0% for drug naive patients"
+      }
+    },
+    {
+      "id": "INC-04",
+      "kind": "inclusion",
+      "source_quote": "Age >= 18 years",
+      "notes": null,
+      "predicate_type": "demographic",
+      "compiled_as": "age at least 18 years",
+      "unsupported": false,
+      "unsupported_reason": null,
+      "codes": [],
+      "critic": {
+        "severity": "equivalent",
+        "reason": "Both admit patients aged 18 years or older at screening.",
+        "downgraded": false,
+        "reviewed_rendering": "age at least 18 years",
+        "reviewed_quote": "Age >= 18 years"
+      }
+    },
+    {
+      "id": "INC-05",
+      "kind": "inclusion",
+      "source_quote": "Body Mass index <= 45 at Visit 1",
+      "notes": null,
+      "predicate_type": "observation",
+      "compiled_as": "body mass index at most 45 kg/m2",
+      "unsupported": false,
+      "unsupported_reason": null,
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "39156-5",
+          "display": "Body mass index (BMI) [Ratio]"
+        }
+      ],
+      "critic": {
+        "severity": "equivalent",
+        "reason": "Visit 1 is the screening visit, and B is evaluated as of the screening date.",
+        "downgraded": false,
+        "reviewed_rendering": "body mass index at most 45 kg/m2",
+        "reviewed_quote": "Body Mass index <= 45 at Visit 1"
+      }
+    },
+    {
+      "id": "INC-06",
+      "kind": "inclusion",
+      "source_quote": "Signed and dated informed consent",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: consent is a site procedure and leaves no finding in the patient record",
+      "unsupported": true,
+      "unsupported_reason": "consent is a site procedure and leaves no finding in the patient record",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "INC-07",
+      "kind": "inclusion",
+      "source_quote": "High cardiovascular risk",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: the protocol defines high cardiovascular risk in a table the registry record does not carry",
+      "unsupported": true,
+      "unsupported_reason": "the protocol defines high cardiovascular risk in a table the registry record does not carry",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-01",
+      "kind": "exclusion",
+      "source_quote": "Uncontrolled hyperglycaemia with a glucose level >240 mg/dl (>13.3 mmol/L) after an overnight fast during placebo run-in and confirmed by a second measurement (not on the same day)",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: back-translation: the compiled predicate is broader than the protocol quote. A requires a fasting measurement confirmed on a second day; B is satisfied by one random glucose.",
+      "unsupported": true,
+      "unsupported_reason": "back-translation: the compiled predicate is broader than the protocol quote. A requires a fasting measurement confirmed on a second day; B is satisfied by one random glucose.",
+      "codes": [],
+      "critic": {
+        "severity": "broader",
+        "reason": "A requires a fasting measurement confirmed on a second day; B is satisfied by one random glucose.",
+        "downgraded": true,
+        "reviewed_rendering": "blood glucose above 240 mg/dL",
+        "reviewed_quote": "Uncontrolled hyperglycaemia with a glucose level >240 mg/dl (>13.3 mmol/L) after an overnight fast during placebo run-in and confirmed by a second measurement (not on the same day)"
+      }
+    },
+    {
+      "id": "EXC-02",
+      "kind": "exclusion",
+      "source_quote": "Indication of liver disease, defined by serum levels of either alanine aminotransferase (ALT), aspartate aminotransferase ALT or alkaline phosphatase above 3 x upper limit of normal (ULN) as determined at screening and/or run in.",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: back-translation: the compiled predicate is narrower than the protocol quote. A is also triggered by aspartate aminotransferase or alkaline phosphatase above three times the upper limit of normal; B tests only alanine aminotransferase.",
+      "unsupported": true,
+      "unsupported_reason": "back-translation: the compiled predicate is narrower than the protocol quote. A is also triggered by aspartate aminotransferase or alkaline phosphatase above three times the upper limit of normal; B tests only alanine aminotransferase.",
+      "codes": [],
+      "critic": {
+        "severity": "narrower",
+        "reason": "A is also triggered by aspartate aminotransferase or alkaline phosphatase above three times the upper limit of normal; B tests only alanine aminotransferase.",
+        "downgraded": true,
+        "reviewed_rendering": "alanine aminotransferase above 120 U/L",
+        "reviewed_quote": "Indication of liver disease, defined by serum levels of either alanine aminotransferase (ALT), aspartate aminotransferase ALT or alkaline phosphatase above 3 x upper limit of normal (ULN) as determined at screening and/or run in."
+      }
+    },
+    {
+      "id": "EXC-03",
+      "kind": "exclusion",
+      "source_quote": "Planned cardiac surgery or angioplasty within 3 months",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: a planned procedure is an intention, and the chart records events",
+      "unsupported": true,
+      "unsupported_reason": "a planned procedure is an intention, and the chart records events",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-04",
+      "kind": "exclusion",
+      "source_quote": "Impaired renal function, defined as Glomerular Filtration Rate <30 ml/min (severe renal impairment, Modification of Diet in Renal Disease formula) during screening or run in.",
+      "notes": null,
+      "predicate_type": "observation",
+      "compiled_as": "glomerular filtration rate below 30 mL/min",
+      "unsupported": false,
+      "unsupported_reason": null,
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "33914-3",
+          "display": "Glomerular filtration rate by Creatinine-based formula (MDRD)/1.73 sq M"
+        }
+      ],
+      "critic": {
+        "severity": "equivalent",
+        "reason": "Both exclude a glomerular filtration rate below 30 ml/min measured around screening.",
+        "downgraded": false,
+        "reviewed_rendering": "glomerular filtration rate below 30 mL/min",
+        "reviewed_quote": "Impaired renal function, defined as Glomerular Filtration Rate <30 ml/min (severe renal impairment, Modification of Diet in Renal Disease formula) during screening or run in."
+      }
+    },
+    {
+      "id": "EXC-05",
+      "kind": "exclusion",
+      "source_quote": "Bariatric surgery within the past two years and other gastrointestinal surgeries that induce chronic malabsorption",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: 'other gastrointestinal surgeries that induce chronic malabsorption' names no enumerable set of procedure codes",
+      "unsupported": true,
+      "unsupported_reason": "'other gastrointestinal surgeries that induce chronic malabsorption' names no enumerable set of procedure codes",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-06",
+      "kind": "exclusion",
+      "source_quote": "Blood dyscrasias or any disorders causing haemolysis or unstable Red Blood Cell (e.g. malaria, babesiosis, haemolytic anemia)",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: the criterion names three examples of an open class of disorders, and compiling the examples would exclude fewer patients than the protocol does",
+      "unsupported": true,
+      "unsupported_reason": "the criterion names three examples of an open class of disorders, and compiling the examples would exclude fewer patients than the protocol does",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-07",
+      "kind": "exclusion",
+      "source_quote": "Medical history of cancer (except for basal cell carcinoma) and/or treatment for cancer within the last 5 years",
+      "notes": null,
+      "predicate_type": "all_of",
+      "compiled_as": "(a documented diagnosis of malignant neoplastic disease, recorded within the 5 years before screening) and (not (a documented diagnosis of basal cell carcinoma, recorded within the 5 years before screening))",
+      "unsupported": false,
+      "unsupported_reason": null,
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "363346000",
+          "display": "Malignant neoplastic disease (disorder)"
+        },
+        {
+          "system": "SNOMED",
+          "code": "254701007",
+          "display": "Basal cell carcinoma (disorder)"
+        }
+      ],
+      "critic": {
+        "severity": "equivalent",
+        "reason": "Both exclude a documented malignancy other than basal cell carcinoma within the last five years.",
+        "downgraded": false,
+        "reviewed_rendering": "(a documented diagnosis of malignant neoplastic disease, recorded within the 5 years before screening) and (not (a documented diagnosis of basal cell carcinoma, recorded within the 5 years before screening))",
+        "reviewed_quote": "Medical history of cancer (except for basal cell carcinoma) and/or treatment for cancer within the last 5 years"
+      }
+    },
+    {
+      "id": "EXC-08",
+      "kind": "exclusion",
+      "source_quote": "Contraindications to background therapy according to the local label",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: the local label is not part of the patient record",
+      "unsupported": true,
+      "unsupported_reason": "the local label is not part of the patient record",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-09",
+      "kind": "exclusion",
+      "source_quote": "Treatment with anti-obesity drugs (e.g. sibutramine, orlistat) 3 months prior to informed consent or any other treatment at the time of screening (i.e. surgery, aggressive diet regimen, etc.) leading to unstable body weight",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: the second half of the criterion covers any treatment leading to unstable body weight, which names no coded intervention",
+      "unsupported": true,
+      "unsupported_reason": "the second half of the criterion covers any treatment leading to unstable body weight, which names no coded intervention",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-10",
+      "kind": "exclusion",
+      "source_quote": "Current treatment with systemic steroids at time of informed consent or change in dosage of thyroid hormones within 6 weeks prior to informed consent or any other uncontrolled endocrine disorder except type 2 diabetes mellitus",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: a change in thyroid dose and an uncontrolled endocrine disorder are neither of them recorded as a codeable finding",
+      "unsupported": true,
+      "unsupported_reason": "a change in thyroid dose and an uncontrolled endocrine disorder are neither of them recorded as a codeable finding",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-11",
+      "kind": "exclusion",
+      "source_quote": "Pre-menopausal women (last menstruation <+ 1 year prior to informed consent) who:",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: birth control and agreement to periodic pregnancy testing are undertakings by the patient, not findings in the chart",
+      "unsupported": true,
+      "unsupported_reason": "birth control and agreement to periodic pregnancy testing are undertakings by the patient, not findings in the chart",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-12",
+      "kind": "exclusion",
+      "source_quote": "Alcohol or drug abuse within the 3 months prior to informed consent that would interfere with trial participation or any ongoing condition leading to a decreased compliance to study procedures or study drug intake",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: the criterion turns on whether the behaviour would interfere with participation, which is a judgement rather than a finding",
+      "unsupported": true,
+      "unsupported_reason": "the criterion turns on whether the behaviour would interfere with participation, which is a judgement rather than a finding",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-13",
+      "kind": "exclusion",
+      "source_quote": "Participation in another trial with an investigational drug within 30 days prior to informed consent",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: participation in another trial is not recorded in the chart",
+      "unsupported": true,
+      "unsupported_reason": "participation in another trial is not recorded in the chart",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-14",
+      "kind": "exclusion",
+      "source_quote": "Any other clinical condition that would jeopardize patients safety while participating in this clinical trial",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: the criterion is a catch-all reserved for the investigator",
+      "unsupported": true,
+      "unsupported_reason": "the criterion is a catch-all reserved for the investigator",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-15",
+      "kind": "exclusion",
+      "source_quote": "Acute coronary syndrome, stroke or TIA within 2 months prior to informed consent",
+      "notes": null,
+      "predicate_type": "any_of",
+      "compiled_as": "(a documented diagnosis of acute coronary syndrome, recorded within the 2 months before consent) or (a documented diagnosis of stroke, recorded within the 2 months before consent) or (a documented diagnosis of transient ischaemic attack, recorded within the 2 months before consent)",
+      "unsupported": false,
+      "unsupported_reason": null,
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "394659003",
+          "display": "Acute coronary syndrome (disorder)"
+        },
+        {
+          "system": "SNOMED",
+          "code": "22298006",
+          "display": "Myocardial infarction (disorder)"
+        },
+        {
+          "system": "SNOMED",
+          "code": "230690007",
+          "display": "Cerebrovascular accident (disorder)"
+        },
+        {
+          "system": "SNOMED",
+          "code": "266257000",
+          "display": "Transient ischemic attack (disorder)"
+        }
+      ],
+      "critic": {
+        "severity": "equivalent",
+        "reason": "Both exclude an acute coronary syndrome, a stroke or a transient ischaemic attack in the two months before screening.",
+        "downgraded": false,
+        "reviewed_rendering": "(a documented diagnosis of acute coronary syndrome, recorded within the 2 months before consent) or (a documented diagnosis of stroke, recorded within the 2 months before consent) or (a documented diagnosis of transient ischaemic attack, recorded within the 2 months before consent)",
+        "reviewed_quote": "Acute coronary syndrome, stroke or TIA within 2 months prior to informed consent"
+      }
+    }
+  ],
+  "coverage": {
+    "total": 24,
+    "claimed": 24,
+    "direct": 22,
+    "inherited": 2,
+    "unclaimed": 0,
+    "ratio": 1.0,
+    "spans": [
+      {
+        "index": 0,
+        "section": "inclusion",
+        "text": "Diagnosis of type 2 diabetes mellitus prior to informed consent",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 1,
+        "section": "inclusion",
+        "text": "Male or female patients on diet and exercise regimen who are drug naive or pre treated with any background therapy. Antidiabetic therapy has to be unchanged for 12 weeks prior to randomization.",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 2,
+        "section": "inclusion",
+        "text": "Glycosylated haemoglobin (HbA1c) of >= 7.0% and <=10% for patients on background therapy or HbA1c >= 7.0% and <= 9.0% for drug naive patients",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 3,
+        "section": "inclusion",
+        "text": "Age >= 18 years",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 4,
+        "section": "inclusion",
+        "text": "Body Mass index <= 45 at Visit 1",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 5,
+        "section": "inclusion",
+        "text": "Signed and dated informed consent",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 6,
+        "section": "inclusion",
+        "text": "High cardiovascular risk",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 7,
+        "section": "exclusion",
+        "text": "Uncontrolled hyperglycaemia with a glucose level >240 mg/dl (>13.3 mmol/L) after an overnight fast during placebo run-in and confirmed by a second measurement (not on the same day)",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 8,
+        "section": "exclusion",
+        "text": "Indication of liver disease, defined by serum levels of either alanine aminotransferase (ALT), aspartate aminotransferase ALT or alkaline phosphatase above 3 x upper limit of normal (ULN) as determined at screening and/or run in.",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 9,
+        "section": "exclusion",
+        "text": "Planned cardiac surgery or angioplasty within 3 months",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 10,
+        "section": "exclusion",
+        "text": "Impaired renal function, defined as Glomerular Filtration Rate <30 ml/min (severe renal impairment, Modification of Diet in Renal Disease formula) during screening or run in.",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 11,
+        "section": "exclusion",
+        "text": "Bariatric surgery within the past two years and other gastrointestinal surgeries that induce chronic malabsorption",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 12,
+        "section": "exclusion",
+        "text": "Blood dyscrasias or any disorders causing haemolysis or unstable Red Blood Cell (e.g. malaria, babesiosis, haemolytic anemia)",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 13,
+        "section": "exclusion",
+        "text": "Medical history of cancer (except for basal cell carcinoma) and/or treatment for cancer within the last 5 years",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 14,
+        "section": "exclusion",
+        "text": "Contraindications to background therapy according to the local label",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 15,
+        "section": "exclusion",
+        "text": "Treatment with anti-obesity drugs (e.g. sibutramine, orlistat) 3 months prior to informed consent or any other treatment at the time of screening (i.e. surgery, aggressive diet regimen, etc.) leading to unstable body weight",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 16,
+        "section": "exclusion",
+        "text": "Current treatment with systemic steroids at time of informed consent or change in dosage of thyroid hormones within 6 weeks prior to informed consent or any other uncontrolled endocrine disorder except type 2 diabetes mellitus",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 17,
+        "section": "exclusion",
+        "text": "Pre-menopausal women (last menstruation <+ 1 year prior to informed consent) who:",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 18,
+        "section": "exclusion",
+        "text": "are nursing or pregnant or",
+        "parent_index": 17,
+        "claim": "inherited"
+      },
+      {
+        "index": 19,
+        "section": "exclusion",
+        "text": "are of child-bearing potential and are not practicing an acceptable method of birth control, or do not plan to continue using this method throughout the study and do not agree to submit to periodic pregnancy testing during participation in the trial. Acceptable methods of birth control include tubal ligation, transdermal patch, intra uterine devices/systems, oral, implantable or injectable contraceptives, sexual abstinence, double barrier method and vasectomised partner",
+        "parent_index": 17,
+        "claim": "inherited"
+      },
+      {
+        "index": 20,
+        "section": "exclusion",
+        "text": "Alcohol or drug abuse within the 3 months prior to informed consent that would interfere with trial participation or any ongoing condition leading to a decreased compliance to study procedures or study drug intake",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 21,
+        "section": "exclusion",
+        "text": "Participation in another trial with an investigational drug within 30 days prior to informed consent",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 22,
+        "section": "exclusion",
+        "text": "Any other clinical condition that would jeopardize patients safety while participating in this clinical trial",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 23,
+        "section": "exclusion",
+        "text": "Acute coronary syndrome, stroke or TIA within 2 months prior to informed consent",
+        "parent_index": null,
+        "claim": "direct"
+      }
+    ],
+    "quote_problems": []
+  },
+  "terminology": [
+    {
+      "text": "HbA1c",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "4548-4",
+          "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+        }
+      ]
+    },
+    {
+      "text": "acute coronary syndrome",
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "394659003",
+          "display": "Acute coronary syndrome (disorder)"
+        },
+        {
+          "system": "SNOMED",
+          "code": "22298006",
+          "display": "Myocardial infarction (disorder)"
+        }
+      ]
+    },
+    {
+      "text": "alanine aminotransferase",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "1742-6",
+          "display": "Alanine aminotransferase in Serum or Plasma"
+        }
+      ]
+    },
+    {
+      "text": "basal cell carcinoma",
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "254701007",
+          "display": "Basal cell carcinoma (disorder)"
+        }
+      ]
+    },
+    {
+      "text": "blood glucose",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "2339-0",
+          "display": "Glucose [Mass/volume] in Blood"
+        },
+        {
+          "system": "LOINC",
+          "code": "2345-7",
+          "display": "Glucose [Mass/volume] in Serum or Plasma"
+        }
+      ]
+    },
+    {
+      "text": "body mass index",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "39156-5",
+          "display": "Body mass index (BMI) [Ratio]"
+        }
+      ]
+    },
+    {
+      "text": "glomerular filtration rate",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "33914-3",
+          "display": "Glomerular filtration rate by Creatinine-based formula (MDRD)/1.73 sq M"
+        }
+      ]
+    },
+    {
+      "text": "malignant neoplastic disease",
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "363346000",
+          "display": "Malignant neoplastic disease (disorder)"
+        }
+      ]
+    },
+    {
+      "text": "stroke",
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "230690007",
+          "display": "Cerebrovascular accident (disorder)"
+        }
+      ]
+    },
+    {
+      "text": "transient ischaemic attack",
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "266257000",
+          "display": "Transient ischemic attack (disorder)"
+        }
+      ]
+    },
+    {
+      "text": "type 2 diabetes mellitus",
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "44054006",
+          "display": "Diabetes mellitus type 2 (disorder)"
+        }
+      ]
+    }
+  ],
+  "spans_unaccounted": [],
+  "config": {
+    "label": "caliper-no-resolver-no-rationales",
+    "resolver": false,
+    "critic": true,
+    "rationales": false,
+    "narrative": false,
+    "absence_policy": "coverage_gated"
+  }
+}

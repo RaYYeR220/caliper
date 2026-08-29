@@ -8,8 +8,11 @@ a fabricated value here becomes an unarguable verdict three modules later.
 Every row keeps `Bundle.entry[i].resource`, the pointer back to the exact entry it came from, so
 any claim in the final report can be opened and checked against the source bundle.
 
-DocumentReference is decoded by `narrative_notes` rather than indexed by `load_patient_index`:
-see that function for why the bundle's own notes stay out of the index.
+DocumentReference is decoded by `narrative_notes` rather than indexed by `load_patient_index`.
+Synthea's notes are fill-in-the-blank templates, so indexing them as `kind="note"` would put
+boilerplate in front of the extractor and would make `PatientIndex.notes()` non-empty for every
+patient, which is not what that question means. Narrative evidence comes from `caliper.notes` and
+the hand-authored tree beside the bundles; these are decoded and handed back, and nothing else.
 """
 
 from __future__ import annotations
@@ -411,8 +414,8 @@ def load_patient_index(bundle: dict[str, Any]) -> PatientIndex:
     a `FhirBundleError` rather than a silent choice between candidates. Resource types we have no
     mapping for are skipped, and evidence keeps the bundle's own ordering.
 
-    A death recorded without a date cannot be carried by `PatientIndex` and is warned about rather
-    than dropped in silence; see the comment below.
+    A death recorded without a date is carried as `deceased_undated` and warned about, rather than
+    given a date it does not have; see the comment below.
     """
     entries = _entries(bundle)
     patients = [entry for entry in entries if entry.resource_type == "Patient"]
@@ -421,21 +424,26 @@ def load_patient_index(bundle: dict[str, Any]) -> PatientIndex:
             f"expected exactly one Patient resource in the bundle, found {len(patients)}"
         )
 
+    patient_id = patients[0].resource_id
     demographics = patients[0].resource
     gender = demographics.get("gender")
-    index = PatientIndex(
-        patient_id=patients[0].resource_id,
-        birth_date=_parse_date(demographics.get("birthDate")),
-        sex=gender.strip() if isinstance(gender, str) and gender.strip() else None,
-        deceased=_parse_date(demographics.get("deceasedDateTime")),
-    )
+    deceased = _parse_date(demographics.get("deceasedDateTime"))
 
     # `deceasedBoolean` is legal FHIR and says the patient is dead without saying when. No date is
-    # invented for it: `screen.py` prints `deceased.isoformat()` straight into the coordinator's
-    # rationale, so a sentinel would surface there as a fabricated date of death. Saying "dead,
-    # date unknown" needs a field `PatientIndex` does not have, so the gap is made audible instead.
-    if index.deceased is None and demographics.get("deceasedBoolean") is True:
-        warnings.warn(DEAD_WITHOUT_A_DATE.format(patient=index.patient_id), stacklevel=2)
+    # invented for it: `screen.py` prints a date of death straight into the coordinator's
+    # rationale, so a sentinel would surface there as a fact nobody recorded. The death travels as
+    # a flag instead, and the missing date is warned about rather than passed over in silence.
+    undated_death = deceased is None and demographics.get("deceasedBoolean") is True
+    if undated_death:
+        warnings.warn(DEAD_WITHOUT_A_DATE.format(patient=patient_id), stacklevel=2)
+
+    index = PatientIndex(
+        patient_id=patient_id,
+        birth_date=_parse_date(demographics.get("birthDate")),
+        sex=gender.strip() if isinstance(gender, str) and gender.strip() else None,
+        deceased=deceased,
+        deceased_undated=undated_death,
+    )
 
     references = _References(medications=_medication_lookup(entries))
     for entry in entries:

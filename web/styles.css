@@ -1,0 +1,759 @@
+/* Caliper — the coordinator's interface.
+ *
+ * Two substrates carry the whole information design. Anything quoted from the protocol sits on
+ * paper; anything Caliper derived sits on the panel. A coordinator can therefore tell, without
+ * reading a word, which text a person wrote and which text a compiler produced — which is the
+ * distinction the entire system turns on. Everything else here is kept quiet so that device reads.
+ *
+ * One accent, and it means one thing: somewhere you can act. Verdicts never use it, because a
+ * verdict must survive being printed in grey, photocopied, and read by someone who cannot
+ * distinguish red from green. Verdicts are told apart by border style, fill and glyph shape.
+ *
+ * Light only, deliberately. Inverting the page would put the protocol quote on the darker of the
+ * two substrates and the machine's output on the lighter one, which is the wrong way round and
+ * would quietly undo the one thing this stylesheet is for.
+ */
+
+/* ---------------------------------------------------------------------------------- tokens -- */
+
+:root {
+  color-scheme: light;
+
+  --ink: #16181d;          /* shared with the printed packet, so the two read as one product */
+  --ink-soft: #3b3f47;
+  --muted: #575b63;
+  --paper: #fffefb;        /* the protocol's substrate */
+  --paper-rule: #e2ddd0;
+  --chassis: #e6e7e3;      /* the instrument's ground */
+  --panel: #f3f4f1;
+  --hair: #d2d4ce;
+  --rule: #b4b7af;
+  --accent: #2c3a8e;       /* action, and only action */
+  --accent-wash: #dee1f1;
+  --on-accent: #f8f9fc;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  --gutter: 1.75rem;
+  --measure: 82rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--chassis);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------------------------ typography -- */
+
+/* The instrument's own voice: labels, counts, verdicts, column heads. Tabular figures throughout,
+ * because a column of numbers that does not line up is a column nobody scans. */
+.eyebrow,
+.micro,
+.chip,
+.stat__label,
+th,
+.nav a,
+.wordmark,
+.control,
+button,
+select,
+input {
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.micro {
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0.5rem 0 0;
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  line-height: 1.15;
+}
+
+h2 {
+  margin: 2.5rem 0 0.9rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h3 {
+  margin: 1.5rem 0 0.4rem;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+p { margin: 0 0 0.7rem; }
+p:last-child { margin-bottom: 0; }
+
+.lede { max-width: 44rem; color: var(--ink-soft); }
+.note { color: var(--muted); font-size: 0.87rem; }
+
+code, .pointer, .query {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  overflow-wrap: anywhere;
+}
+
+a { color: var(--accent); }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem; top: -3rem;
+  z-index: 10;
+  padding: 0.5rem 0.9rem;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0.5rem; }
+
+/* ---------------------------------------------------------------------------------- chrome -- */
+
+.chrome {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  border-bottom: 1px solid var(--rule);
+  background: var(--panel);
+}
+
+.chrome__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem 1.6rem;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0.6rem var(--gutter);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+/* The jaw of a caliper, closed on nothing: two rules and the gap they measure. */
+.wordmark::before {
+  content: "";
+  width: 13px;
+  height: 9px;
+  border-left: 2px solid var(--ink);
+  border-right: 2px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  transform: translateY(-1px);
+}
+
+.nav { display: flex; gap: 1.2rem; }
+
+.nav a {
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+
+.nav a:hover { border-bottom-color: var(--rule); }
+
+.nav a[aria-current="page"] {
+  font-weight: 600;
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.chrome__meta {
+  margin-left: auto;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.chrome__meta .pointer { font-size: 0.66rem; }
+
+/* ----------------------------------------------------------------------------------- frame -- */
+
+main { display: block; }
+
+.page {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 1.9rem var(--gutter) 5rem;
+}
+
+.page--document { max-width: 68rem; }
+
+.page__head { margin-bottom: 1.6rem; }
+.page__head .subtitle { margin: 0.35rem 0 0; color: var(--ink-soft); }
+
+/* A row of counts, ruled rather than boxed: a card grid would put eight pieces of chrome around
+ * eight numbers, and the numbers are the only part anyone reads. */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2.1rem;
+  margin: 1.2rem 0 0;
+  padding: 0.75rem 0 0;
+  border-top: 1px solid var(--ink);
+}
+
+.stat { padding: 0.1rem 0; }
+.stat__value { display: block; font-size: 1.32rem; font-weight: 600; line-height: 1.1; }
+.stat__label {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.stat--quiet .stat__value { font-weight: 400; color: var(--ink-soft); }
+
+/* ------------------------------------------------------------------------ the protocol scale -- */
+
+/* The signature. Every span the segmenter found, drawn to the same width, in document order: the
+ * protocol as a ruler. A filled tick is a span some criterion quotes, an outlined tick is one
+ * claimed only through its parent, a stub is one nobody went near. Hovering or tabbing a tick
+ * prints it in the readout below, the way a gauge prints the value under the needle.
+ */
+.scale { margin: 0.5rem 0 0; }
+
+.scale__ticks {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  height: 30px;
+  list-style: none;
+  border-bottom: 1px solid var(--ink);
+}
+
+.scale__ticks > li { flex: 1 1 0; min-width: 5px; height: 100%; display: flex; align-items: flex-end; }
+
+.tick {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.tick--direct { height: 100%; background: var(--ink); }
+.tick--inherited { height: 100%; border: 1px solid var(--ink); background: var(--paper); }
+.tick--unclaimed { height: 34%; border-top: 2px dashed var(--ink); background: none; }
+
+.tick:hover, .tick[aria-pressed="true"] { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.scale__readout {
+  display: flex;
+  gap: 0.8rem;
+  margin: 0.45rem 0 0;
+  min-height: 2.4em;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.scale__readout .micro { flex: none; color: var(--muted); padding-top: 0.12rem; }
+
+.scale__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.3rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+
+.scale__legend li { display: flex; align-items: center; gap: 0.4rem; }
+.scale__legend i { display: block; width: 10px; height: 12px; }
+.scale__legend .tick--unclaimed { height: 4px; }
+
+/* ------------------------------------------------------------------------------------ marks -- */
+
+/* The three criterion verdicts. Border style, fill and glyph shape all differ, so the mark
+ * survives greyscale, a photocopier and a colour-blind reader. Colour is not used at all. */
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34em;
+  padding: 0.16em 0.44em;
+  border: 1px solid var(--ink);
+  font-family: var(--sans);
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mark svg { display: block; flex: none; }
+
+.mark--met { background: var(--paper); }
+.mark--not-met { background: var(--ink); color: var(--paper); font-weight: 700; }
+.mark--unresolved { background: none; border-style: dashed; font-weight: 500; }
+
+/* ------------------------------------------------------------------------------------ table -- */
+
+.scroller {
+  overflow-x: auto;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+caption {
+  padding: 0 0 0.6rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.45rem 0.7rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+td {
+  padding: 0.6rem 0.7rem;
+  border-bottom: 1px solid var(--hair);
+  vertical-align: top;
+}
+
+tbody tr:last-child td { border-bottom: 0; }
+
+/* The two substrates. A protocol cell is paper and keeps its own rules; everything else is the
+ * instrument. */
+td.protocol {
+  background: var(--paper);
+  border-left: 1px solid var(--paper-rule);
+  border-right: 1px solid var(--paper-rule);
+  font-family: var(--serif);
+  min-width: 15rem;
+}
+
+.id { font-family: var(--sans); font-size: 0.76rem; font-weight: 600; white-space: nowrap; }
+.kind { font-family: var(--sans); font-size: 0.65rem; color: var(--muted); }
+
+.codes { margin: 0; padding: 0; list-style: none; }
+.codes li {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.none { color: var(--muted); }
+
+/* -------------------------------------------------------------------------- criteria review -- */
+
+/* The criteria a person will always have to read. First on the page, and ruled top and bottom
+ * rather than tinted, because it is not a warning — it is the part of the protocol Caliper is
+ * telling you it did not take on. */
+.panel {
+  margin: 1.1rem 0 0;
+  padding: 1rem 1.1rem 1.1rem;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-left: 8px solid var(--ink);
+}
+
+.panel--dashed { border-left-style: dashed; border-left-width: 3px; }
+.panel--double { border-left-style: double; border-left-width: 10px; }
+.panel--action { border-left-color: var(--accent); }
+
+.panel > h3:first-child { margin-top: 0; }
+
+.stack { margin: 0; padding: 0; list-style: none; }
+
+.stack > li {
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--hair);
+}
+.stack > li:first-child { border-top: 0; padding-top: 0.3rem; }
+
+.stack__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.8rem;
+}
+
+blockquote {
+  margin: 0.3rem 0;
+  padding: 0.35rem 0.8rem;
+  background: var(--paper);
+  border-left: 2px solid var(--rule);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+blockquote p { margin: 0; }
+
+.reason { margin: 0.3rem 0 0; font-size: 0.87rem; color: var(--ink-soft); }
+
+/* A compiled predicate the critic withdrew: struck through, still legible, with the severity and
+ * the sentence that condemned it. */
+.withdrawn {
+  display: block;
+  text-decoration-line: line-through;
+  text-decoration-thickness: 1px;
+  color: var(--muted);
+}
+
+.severity {
+  display: inline-block;
+  margin-right: 0.4rem;
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--ink);
+  border-style: dashed;
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.severity--equivalent { border-style: solid; color: var(--muted); border-color: var(--rule); }
+
+/* --------------------------------------------------------------------------------- controls -- */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.9rem 1.6rem;
+  margin: 1.2rem 0 0.5rem;
+}
+
+.field { display: flex; flex-direction: column; gap: 0.28rem; }
+
+.field > .micro { color: var(--muted); }
+
+.segmented { display: flex; }
+
+.segmented button {
+  padding: 0.3rem 0.65rem;
+  margin-left: -1px;
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.segmented button:first-child { margin-left: 0; }
+.segmented button:hover { background: var(--paper); }
+
+.segmented button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+.segmented .count { font-variant-numeric: tabular-nums; opacity: 0.75; margin-left: 0.35rem; }
+
+select, input[type="search"] {
+  padding: 0.3rem 0.45rem;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.78rem;
+}
+
+input[type="search"] { min-width: 14rem; }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.26rem 0.6rem;
+  border: 1px solid var(--accent);
+  background: none;
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.button:hover { background: var(--accent-wash); }
+.button[data-copied="true"] { background: var(--accent); color: var(--on-accent); }
+
+/* Sortable column heads. The arrow is drawn from the sort state, so a header that is not the sort
+ * key shows nothing rather than a permanent pair of grey chevrons. */
+th button.sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+th button.sort:hover { color: var(--ink); text-decoration: underline; }
+th[aria-sort] button.sort { color: var(--ink); }
+th[aria-sort="ascending"] button.sort::after { content: "\2191"; }
+th[aria-sort="descending"] button.sort::after { content: "\2193"; }
+
+/* ----------------------------------------------------------------------------------- queue -- */
+
+.queue td { vertical-align: middle; }
+
+.queue tbody tr { border-left: 6px solid var(--ink); }
+.queue tbody tr.row--ineligible { border-left-style: double; border-left-width: 8px; }
+.queue tbody tr.row--needs_review { border-left-style: dashed; border-left-width: 3px; }
+.queue tbody tr:hover td { background: var(--panel); }
+.queue tbody tr:hover td.protocol { background: var(--paper); }
+
+.queue .patient { font-family: var(--mono); font-size: 0.78rem; text-decoration: none; }
+.queue .patient:hover { text-decoration: underline; }
+.queue .summary { font-family: var(--sans); font-size: 0.68rem; color: var(--muted); }
+
+/* Resolved n of m, drawn as m ticks: the same scale device as the protocol ruler, so a reader who
+ * has learnt it once has learnt it everywhere. */
+.ticks {
+  display: flex;
+  gap: 1px;
+  width: 6.5rem;
+  height: 10px;
+  margin-top: 0.25rem;
+}
+
+.ticks i { flex: 1 1 0; background: var(--hair); }
+.ticks i.on { background: var(--ink); }
+
+.count-cell { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.count-cell strong { font-size: 1.02rem; font-weight: 600; }
+.count-cell.is-zero { color: var(--muted); }
+
+.blocking { font-size: 0.83rem; max-width: 26rem; }
+.blocking .micro { color: var(--muted); display: block; }
+
+.empty {
+  padding: 1.6rem 1.1rem;
+  background: var(--panel);
+  border: 1px dashed var(--rule);
+  color: var(--ink-soft);
+}
+
+.empty h3 { margin-top: 0; }
+
+/* ---------------------------------------------------------------------------------- packet -- */
+
+.decision {
+  margin: 1.3rem 0 0;
+  padding: 0.9rem 1.2rem;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-left: 8px solid var(--ink);
+}
+
+/* The same border vocabulary the printed packet uses, so the two documents agree. */
+.decision--ineligible { border-left-style: double; border-left-width: 10px; }
+.decision--needs_review { border-left-style: dashed; border-left-width: 3px; }
+
+.decision__label { display: block; }
+.decision__value { display: block; margin-top: 0.2rem; font-size: 1.3rem; font-weight: 600; }
+.decision__note { margin: 0.4rem 0 0; color: var(--ink-soft); font-size: 0.9rem; }
+
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1.4rem;
+  margin: 1.2rem 0 0;
+  font-size: 0.9rem;
+}
+
+.facts dt {
+  font-family: var(--sans);
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.22rem;
+}
+
+.facts dd { margin: 0; }
+
+.open-item { display: grid; grid-template-columns: max-content 1fr; gap: 0.22rem 1.2rem; margin: 0.45rem 0 0; }
+.open-item dt {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.2rem;
+}
+.open-item dd { margin: 0; font-size: 0.9rem; }
+
+.query-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+
+.query {
+  padding: 0.2rem 0.45rem;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+}
+
+.evidence { margin: 0.35rem 0 0; padding: 0; list-style: none; font-size: 0.8rem; }
+.evidence li { padding: 0.25rem 0; border-top: 1px dotted var(--hair); }
+.evidence li:first-child { border-top: 0; }
+.evidence .value { font-family: var(--sans); font-variant-numeric: tabular-nums; font-weight: 600; }
+.evidence .when { font-family: var(--sans); color: var(--muted); }
+.evidence .pointer { display: block; color: var(--muted); }
+
+.rationale { min-width: 14rem; }
+
+.engine {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.decisive {
+  display: inline-block;
+  margin-top: 0.3rem;
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+tr.row--unknown td:not(.protocol) { background: var(--panel); }
+
+footer.about { margin-top: 2.5rem; }
+
+.disclaimer {
+  margin: 1.4rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ink);
+  font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------------------- states -- */
+
+.notice { max-width: 40rem; margin: 4rem auto; padding: 0 var(--gutter); }
+.notice h1 { margin-bottom: 0.6rem; }
+
+/* --------------------------------------------------------------------------------- responsive */
+
+@media (max-width: 60rem) {
+  :root { --gutter: 1rem; }
+  .chrome__meta { margin-left: 0; width: 100%; }
+  .facts, .open-item { grid-template-columns: 1fr; gap: 0.05rem; }
+  .facts dt, .open-item dt { padding-top: 0.55rem; }
+  .stats { gap: 0 1.3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .chrome, .toolbar, .skip-link, .button, .scale__legend { display: none; }
+  body { background: #fff; }
+  .scroller { overflow: visible; }
+  th { position: static; }
+  tr, .stack > li { break-inside: avoid; }
+}

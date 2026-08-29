@@ -1,0 +1,32 @@
+{
+  "schema": "caliper.ui.screening/1",
+  "nct_id": "NCT01131676",
+  "trial_title": "BI 10773 (Empagliflozin) Cardiovascular Outcome Event Trial in Type 2 Diabetes Mellitus Patients (EMPA-REG OUTCOME).",
+  "criteria_fingerprint": "34d9721a8386bb66b40d001730b4db4afc5fa20d1680358a6f7c13593dfa2b89",
+  "patient": {
+    "id": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd",
+    "summary": "45 years old, recorded sex male, died 2015-09-24",
+    "age": 45,
+    "sex": "male"
+  },
+  "screened_on": "2026-04-01",
+  "decision": "ineligible",
+  "decision_label": "Not eligible",
+  "blocked_by": "the chart records that the patient died on 2015-09-24, before the screening date",
+  "criteria_total": 0,
+  "criteria_resolved": 0,
+  "coverage": 1.0,
+  "deciding_criterion_ids": [],
+  "approximations": [],
+  "absence_policy": {
+    "value": "coverage_gated",
+    "note": "coverage-gated, meaning a finding absent from the chart counts as absent only where an encounter documents the window"
+  },
+  "open_items": [],
+  "criteria": [],
+  "rationales": {
+    "total": 0,
+    "engine_written": 0
+  },
+  "disclaimer": "This packet is decision support for pre-screening. Eligibility is determined by the investigator."
+}
