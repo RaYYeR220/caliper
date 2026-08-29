@@ -1,0 +1,51 @@
+# --- secrets ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# --- python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# --- node / web ---
+node_modules/
+web/dist/
+web/.vite/
+*.tsbuildinfo
+
+# --- working artifacts that must never be published ---
+internal/
+*-internal/
+scratch/
+notes-*.md
+ui-prototypes/
+mockups/
+design-ref/
+variants/
+video/
+*.mp4
+*.mov
+*.bundle
+*-backup*
+
+# --- large or regenerable data ---
+data/patients/raw/
+.cache/
+runs/*/raw/
+
+# --- os ---
+.DS_Store
+Thumbs.db
