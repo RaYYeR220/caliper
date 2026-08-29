@@ -99,12 +99,13 @@ class PerturbedPatient:
 
 
 def _rebuild(patient: PatientIndex, evidence: Iterable[Evidence]) -> PatientIndex:
-    return PatientIndex(
-        patient_id=patient.patient_id,
-        birth_date=patient.birth_date,
-        sex=patient.sex,
-        evidence=list(evidence),
-    )
+    """Copy the whole index and swap the evidence.
+
+    Listing the fields by hand is how a chart edit came to resurrect a deceased patient: `deceased`
+    was added to `PatientIndex` afterwards and this function silently dropped it. `replace` cannot
+    lose a field that is added later.
+    """
+    return replace(patient, evidence=list(evidence))
 
 
 def _result(

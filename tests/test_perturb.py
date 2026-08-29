@@ -343,3 +343,35 @@ class TestComposition:
         before = copy.deepcopy(first.patient)
         first.then(shift_value, "4548-4", to=6.9)
         assert first.patient == before
+
+
+def test_a_chart_edit_does_not_bring_a_patient_back_to_life(tmp_path):
+    """Rebuilding a PatientIndex field by field drops whatever field was added last."""
+    from datetime import date
+
+    from caliper.perturb import redact_analyte
+    from caliper.record import Code, Evidence, PatientIndex
+
+    creatinine = Code(system="LOINC", code="2160-0")
+    patient = PatientIndex(
+        patient_id="p-1",
+        birth_date=date(1970, 1, 1),
+        sex="female",
+        evidence=[
+            Evidence(
+                kind="observation",
+                resource_type="Observation",
+                resource_id="obs-1",
+                display="Creatinine",
+                fhir_path="Bundle.entry[1].resource",
+                codes=(creatinine,),
+                value=1.1,
+                unit="mg/dL",
+                date=date(2026, 1, 1),
+            )
+        ],
+        deceased=date(2026, 5, 3),
+    )
+    perturbed = redact_analyte(patient, "2160-0").patient
+    assert perturbed.deceased == date(2026, 5, 3)
+    assert perturbed.died_before(date(2026, 6, 1)) is True

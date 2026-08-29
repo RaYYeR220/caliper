@@ -130,6 +130,15 @@
     font-weight: 600;
   }
 
+  .decision .stopped {
+    margin: 0.7rem 0 0;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--rule);
+    font-size: 1rem;
+  }
+
+  .stopped-detail { margin: 0 0 1rem; font-size: 1.05rem; }
+
   blockquote {
     margin: 0 0 1rem;
     padding: 0.2rem 0 0.2rem 1.1rem;
@@ -298,13 +307,18 @@
       <dd>{{ packet.nct_id }}{% if packet.trial_title %} — {{ packet.trial_title }}{% endif %}</dd>
       <dt>Screened on</dt>
       <dd>{{ packet.screened_on.isoformat() }}</dd>
+      {% if not packet.blocked_by %}
       <dt>Criteria</dt>
-      <dd>{{ packet.criteria_resolved }} of {{ packet.criteria_total }} resolved from the record</dd>
+      <dd>{{ packet.coverage_note }}</dd>
+      {% endif %}
     </dl>
 
     <div class="decision decision--{{ packet.decision.value }}">
       <span class="label">Decision</span>
       <span class="value">{{ packet.verdict }}</span>
+      {% if packet.stopped_note %}
+      <p class="stopped">{{ packet.stopped_note }}</p>
+      {% endif %}
     </div>
   </header>
 
@@ -352,6 +366,13 @@
   </section>
   {% endif %}
 
+  {% if packet.blocked_by %}
+  <section id="not-evaluated">
+    <h2>{{ nothing_evaluated_heading }}</h2>
+    <p class="stopped-detail">{{ packet.stopped_note }}</p>
+    <p>{{ nothing_evaluated }}</p>
+  </section>
+  {% else %}
   <section id="criteria">
     <h2>Criteria</h2>
     <div class="scroll">
@@ -396,6 +417,7 @@
       </table>
     </div>
   </section>
+  {% endif %}
 
   <footer id="about">
     <h2>About this packet</h2>
@@ -404,18 +426,12 @@
       <dd>{{ packet.absence_policy_note }}</dd>
       <dt>Criteria fingerprint</dt>
       <dd><code>{{ packet.criteria_fingerprint }}</code></dd>
-      <dt>Resolved</dt>
-      <dd>{{ packet.criteria_resolved }} of {{ packet.criteria_total }} criteria decided from the
-        patient record</dd>
+      <dt>Criteria</dt>
+      <dd>{{ packet.coverage_note }}</dd>
+      {% if packet.rationale_note %}
       <dt>Rationale sentences</dt>
-      <dd>
-        {% if packet.engine_written %}
-        {{ packet.engine_written }} of {{ packet.criteria_total }} were written by the screening
-        engine, because the drafted sentence could not be verified against the record
-        {% else %}
-        every sentence was checked against the record it describes
-        {% endif %}
-      </dd>
+      <dd>{{ packet.rationale_note }}</dd>
+      {% endif %}
     </dl>
     <p class="disclaimer">{{ disclaimer }}</p>
   </footer>

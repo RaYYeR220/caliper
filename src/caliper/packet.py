@@ -34,6 +34,13 @@ DISCLAIMER = (
     "investigator."
 )
 
+NOTHING_EVALUATED_HEADING = "No criteria were evaluated"
+
+NOTHING_EVALUATED = (
+    "No criterion in this protocol was evaluated against this chart, so nothing here says whether "
+    "this patient would otherwise have met them."
+)
+
 VERDICT_LABELS = {
     Verdict.MET: "Met",
     Verdict.NOT_MET: "Not met",
@@ -111,6 +118,9 @@ class Packet:
     screened_on: date
     decision: ScreeningOutcome
     verdict: str
+    blocked_by: str | None
+    """Why the screening stopped before any criterion was evaluated, if it did."""
+
     deciding: tuple[CriterionRow, ...]
     open_items: tuple[OpenItem, ...]
     rows: tuple[CriterionRow, ...]
@@ -125,6 +135,36 @@ class Packet:
     @property
     def trial(self) -> str:
         return f"{self.nct_id} - {self.trial_title}" if self.trial_title else self.nct_id
+
+    @property
+    def stopped_note(self) -> str | None:
+        """The blocking fact as a sentence, for printing beside the verdict.
+
+        `blocked_by` is phrased as a clause about the record; a coordinator opening this page needs
+        it as a statement about what happened to their screening.
+        """
+        if self.blocked_by is None:
+            return None
+        return f"Screening stopped before any criterion was evaluated, because {self.blocked_by}."
+
+    @property
+    def coverage_note(self) -> str:
+        """How much of the protocol was actually decided, as both renderings print it."""
+        if self.blocked_by is not None:
+            return "no criterion was evaluated; the screening stopped before the protocol was run"
+        return f"{self.criteria_resolved} of {self.criteria_total} decided from the patient record"
+
+    @property
+    def rationale_note(self) -> str | None:
+        """How the rationale sentences were arrived at, or None when there are none."""
+        if not self.rows:
+            return None
+        if not self.engine_written:
+            return "every sentence was checked against the record it describes"
+        return (
+            f"{self.engine_written} of {len(self.rows)} were written by the screening engine, "
+            "because the drafted sentence could not be verified against the record"
+        )
 
 
 def build_packet(
@@ -185,6 +225,7 @@ def build_packet(
         screened_on=result.screened_on,
         decision=result.decision,
         verdict=DECISION_WORDS[result.decision],
+        blocked_by=result.blocked_by,
         deciding=deciding,
         open_items=open_items,
         rows=rows,
@@ -271,9 +312,11 @@ def render_markdown(packet: Packet) -> str:
         f"- **Decision:** {packet.verdict}",
         "",
     ]
+    if packet.stopped_note is not None:
+        lines += [f"**{packet.stopped_note}**", ""]
     lines += _markdown_deciding(packet)
     lines += _markdown_open_items(packet)
-    lines += _markdown_table(packet)
+    lines += _markdown_criteria(packet)
     lines += _markdown_footer(packet)
     return "\n".join(lines)
 
@@ -317,7 +360,12 @@ def _markdown_open_items(packet: Packet) -> list[str]:
     return lines
 
 
-def _markdown_table(packet: Packet) -> list[str]:
+def _markdown_criteria(packet: Packet) -> list[str]:
+    if packet.stopped_note is not None:
+        # A table headed "Criteria" with nothing under it reads as a broken program rather than as
+        # an answer, and the answer here is that the protocol was never applied.
+        return [f"## {NOTHING_EVALUATED_HEADING}", "", packet.stopped_note, "", NOTHING_EVALUATED, ""]
+
     lines = [
         "## Criteria",
         "",
@@ -347,30 +395,17 @@ def _markdown_table(packet: Packet) -> list[str]:
 
 
 def _markdown_footer(packet: Packet) -> list[str]:
-    return [
+    lines = [
         "## About this packet",
         "",
         f"- Absence policy in effect: {packet.absence_policy_note}.",
         f"- Compiled criteria fingerprint: `{packet.criteria_fingerprint}`",
-        (
-            f"- Resolved {packet.criteria_resolved} of {packet.criteria_total} criteria from the "
-            "patient record."
-        ),
-        f"- {_engine_written_note(packet)}",
-        "",
-        DISCLAIMER,
-        "",
+        f"- Criteria: {packet.coverage_note}.",
     ]
-
-
-def _engine_written_note(packet: Packet) -> str:
-    if not packet.engine_written:
-        return "Every rationale sentence below was checked against the record it describes."
-    return (
-        f"{packet.engine_written} of {packet.criteria_total} rationale sentences were written by "
-        "the screening engine, because the drafted sentence could not be verified against the "
-        "record."
-    )
+    if packet.rationale_note is not None:
+        lines.append(f"- Rationale sentences: {packet.rationale_note}.")
+    lines += ["", DISCLAIMER, ""]
+    return lines
 
 
 def _cell(text: str) -> str:
@@ -399,4 +434,9 @@ _TEMPLATE = _ENVIRONMENT.from_string(
 
 def render_html(packet: Packet) -> str:
     """The packet as a single self-contained page: no scripts, no fonts, no requests."""
-    return _TEMPLATE.render(packet=packet, disclaimer=DISCLAIMER)
+    return _TEMPLATE.render(
+        packet=packet,
+        disclaimer=DISCLAIMER,
+        nothing_evaluated_heading=NOTHING_EVALUATED_HEADING,
+        nothing_evaluated=NOTHING_EVALUATED,
+    )

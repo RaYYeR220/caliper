@@ -30,7 +30,13 @@ from caliper.ir import (
     TemporalWindow,
 )
 from caliper.logic import ScreeningOutcome
-from caliper.packet import Packet, build_packet, render_html, render_markdown
+from caliper.packet import (
+    NOTHING_EVALUATED_HEADING,
+    Packet,
+    build_packet,
+    render_html,
+    render_markdown,
+)
 from caliper.record import Evidence, PatientIndex
 from caliper.screen import ScreeningResult, screen
 
@@ -143,12 +149,15 @@ INFARCTION_ROW = Evidence(
 )
 
 
-def a_patient(patient_id: str, evidence: list[Evidence]) -> PatientIndex:
+def a_patient(
+    patient_id: str, evidence: list[Evidence], deceased: date | None = None
+) -> PatientIndex:
     return PatientIndex(
         patient_id=patient_id,
         birth_date=date(1959, 3, 2),
         sex="female",
         evidence=evidence,
+        deceased=deceased,
     )
 
 
@@ -157,6 +166,10 @@ INELIGIBLE_PATIENT = a_patient(
     "P-002", [ENCOUNTER, CREATININE_ROW, HAEMOGLOBIN_ROW, INFARCTION_ROW]
 )
 REVIEW_PATIENT = a_patient("P-003", [ENCOUNTER])
+# A chart that looks entirely current until you read the date of death.
+DECEASED_PATIENT = a_patient(
+    "P-004", [ENCOUNTER, CREATININE_ROW, HAEMOGLOBIN_ROW], deceased=date(2026, 5, 3)
+)
 
 
 def a_screening(patient: PatientIndex) -> ScreeningResult:
@@ -340,3 +353,75 @@ class TestComposition:
         assert sentence in render_markdown(packet)
         assert sentence in render_html(packet)
         assert "Written by the screening engine" not in render_html(packet)
+
+
+class TestBlockedScreening:
+    """A screening stopped by a fact about the patient, before the protocol was applied.
+
+    The packet is the whole answer here, and an empty criteria table would read as a crash rather
+    than as a finding. The reason has to be on the page, next to the verdict, in words.
+    """
+
+    def test_the_reason_is_stated_beside_the_verdict(self):
+        packet = a_packet(DECEASED_PATIENT)
+
+        assert packet.blocked_by is not None
+        assert packet.verdict == "Not eligible"
+        assert "died on 2026-05-03" in packet.stopped_note
+
+        for rendered in (render_markdown(packet), render_html(packet)):
+            assert packet.stopped_note in rendered
+            # Near the verdict: above everything the document has to say afterwards.
+            assert rendered.index(packet.stopped_note) < rendered.index("About this packet")
+
+    def test_no_criterion_table_is_rendered(self):
+        packet = a_packet(DECEASED_PATIENT)
+        markdown = render_markdown(packet)
+        html = render_html(packet)
+
+        assert packet.rows == ()
+        assert "## Criteria" not in markdown
+        assert 'id="criteria"' not in html
+        assert NOTHING_EVALUATED_HEADING in markdown
+        assert NOTHING_EVALUATED_HEADING in html
+        assert "no criterion was evaluated" in packet.coverage_note
+
+    def test_there_is_nothing_to_resolve(self):
+        packet = a_packet(DECEASED_PATIENT)
+
+        assert packet.open_items == ()
+        assert packet.deciding == ()
+        assert "Open items" not in render_markdown(packet)
+        assert 'id="open-items"' not in render_html(packet)
+        assert render_markdown(packet).count("FHIR query") == 0
+
+    def test_the_footer_is_unchanged(self):
+        packet = a_packet(DECEASED_PATIENT)
+
+        for rendered in (render_markdown(packet), render_html(packet)):
+            assert "coverage-gated" in rendered
+            assert CRITERIA.source_text_sha256 in rendered
+            assert "pre-screening" in rendered
+            assert "investigator" in rendered
+        # There are no sentences, so the footer does not account for any.
+        assert packet.rationale_note is None
+
+    def test_an_ordinary_screening_says_nothing_about_being_stopped(self):
+        for patient in (ELIGIBLE_PATIENT, INELIGIBLE_PATIENT, REVIEW_PATIENT):
+            packet = a_packet(patient)
+
+            assert packet.blocked_by is None
+            assert packet.stopped_note is None
+            for rendered in (render_markdown(packet), render_html(packet)):
+                assert NOTHING_EVALUATED_HEADING not in rendered
+                assert "Screening stopped" not in rendered
+
+    def test_markdown_and_html_agree(self):
+        packet = a_packet(DECEASED_PATIENT)
+        markdown = render_markdown(packet)
+        html = render_html(packet)
+
+        assert packet.verdict in markdown
+        assert packet.verdict in html
+        assert markdown.count(packet.stopped_note) == html.count(packet.stopped_note) == 2
+        assert markdown.count("FHIR query") == html.count("FHIR query") == 0

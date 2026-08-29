@@ -78,7 +78,12 @@ def _deceased(
     is a fact about the screening rather than about any criterion, so it is reported as one and not
     smuggled in as a pseudo-criterion the protocol never contained.
     """
-    assert patient.deceased is not None
+    reason = (
+        f"the chart records that the patient died on {patient.deceased.isoformat()}, "
+        "before the screening date"
+        if patient.deceased is not None
+        else "the chart records that the patient has died, without giving a date"
+    )
     return ScreeningResult(
         nct_id=criteria_set.nct_id,
         patient_id=patient.patient_id,
@@ -88,10 +93,7 @@ def _deceased(
         deciding_criterion_ids=(),
         resolution_worklist=(),
         absence_policy=policy,
-        blocked_by=(
-            f"the chart records that the patient died on {patient.deceased.isoformat()}, "
-            "before the screening date"
-        ),
+        blocked_by=reason,
     )
 
 
@@ -102,7 +104,7 @@ def screen(
     policy: AbsencePolicy = AbsencePolicy.COVERAGE_GATED,
 ) -> ScreeningResult:
     """Evaluate every criterion in `criteria_set` against `patient` and roll the results up."""
-    if patient.died_before(as_of):
+    if patient.died_before(as_of) or patient.deceased_undated:
         return _deceased(criteria_set, patient, as_of, policy)
 
     results = tuple(

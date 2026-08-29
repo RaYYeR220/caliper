@@ -102,6 +102,9 @@ class PatientIndex:
     sex: str | None
     evidence: list[Evidence] = field(default_factory=list)
     deceased: date | None = None
+    deceased_undated: bool = False
+    """FHIR permits `deceasedBoolean` with no date. Inventing one would put a date of death in
+    front of a coordinator that nobody recorded, so the fact is carried without it."""
 
     def find(
         self,
@@ -140,6 +143,10 @@ class PatientIndex:
         thin.
         """
         return self.deceased is not None and self.deceased <= as_of
+
+    def is_deceased(self) -> bool:
+        """Whether the chart records a death at all, dated or not."""
+        return self.deceased is not None or self.deceased_undated
 
     def age_at(self, as_of: date) -> float | None:
         if self.birth_date is None:

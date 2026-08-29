@@ -324,6 +324,9 @@ def export_screening(screening: Screening, patient: PatientIndex, trial_title: s
         "screened_on": result.screened_on.isoformat(),
         "decision": result.decision.value,
         "decision_label": packet.verdict,
+        # A screening the evaluator stopped before any criterion was read. The criteria list is
+        # then legitimately empty, and the interface has to say why rather than draw a blank table.
+        "blocked_by": result.blocked_by,
         "criteria_total": result.criteria_total,
         "criteria_resolved": result.criteria_resolved,
         "coverage": result.coverage,
@@ -385,6 +388,7 @@ def _screening_entry(payload: dict[str, Any]) -> dict[str, Any]:
         "screened_on": payload["screened_on"],
         "decision": payload["decision"],
         "decision_label": payload["decision_label"],
+        "blocked_by": payload["blocked_by"],
         "criteria_total": payload["criteria_total"],
         "criteria_resolved": payload["criteria_resolved"],
         "open_items": len(open_items),

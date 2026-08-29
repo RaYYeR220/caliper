@@ -56,9 +56,9 @@ NO_MEDICATION_CODE = "medication with no recorded code"
 """Display for a MedicationRequest that names no drug, by reference or otherwise."""
 
 DEAD_WITHOUT_A_DATE = (
-    "Patient {patient} is recorded as deceased with no deceasedDateTime. PatientIndex.deceased "
-    "holds a date and nothing else, so this death cannot be represented and the chart will screen "
-    "as though the patient were alive."
+    "Patient {patient} is recorded as deceased with no usable deceasedDateTime. The death is "
+    "carried as PatientIndex.deceased_undated and will stop the screening, but nothing can be "
+    "asked about when it happened."
 )
 
 

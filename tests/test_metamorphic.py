@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from caliper.corpus import load_patient, patient_ids
+from caliper.corpus import default_screening_date, load_patient, patient_ids
 from caliper.ir import CriteriaSet
 from caliper.perturb import redact_analyte
 
@@ -30,9 +30,12 @@ from eval.metamorphic import runner as runner_module
 from eval.metamorphic.cases import (
     CASES,
     RENAL_PANEL,
+    AllOf,
     AllVerdictsUnchanged,
     CriterionVerdictFlips,
     MetamorphicCase,
+    Relation,
+    ScreeningBlockedOn,
     all_of,
 )
 from eval.metamorphic.runner import run_all, run_case, to_markdown
@@ -68,6 +71,11 @@ def _broken_case(case_id: str, relation: object) -> MetamorphicCase:
 
 def _criterion_ids(criteria: CriteriaSet) -> set[str]:
     return {criterion.id for criterion in criteria.criteria}
+
+
+def _parts(relation: Relation) -> list[Relation]:
+    """The relations a case asserts, flattening the one combinator there is."""
+    return list(relation.relations) if isinstance(relation, AllOf) else [relation]
 
 
 def _imported_modules(path: Path) -> set[str]:
@@ -129,18 +137,46 @@ def test_every_perturbation_kind_is_exercised() -> None:
         for record in case.perturb(load_patient(case.patient_id)).perturbations
     }
     assert kinds == {
+        # Every perturbation `caliper.perturb` offers.
         "redact_analyte",
         "shift_value",
         "convert_units",
         "shift_date",
         "remove_encounters",
         "add_condition",
+        # Plus the one the suite builds for itself, because `perturb` has no function for it.
+        "record_death",
     }
 
 
 def test_both_interesting_absence_policies_are_exercised() -> None:
     policies = {case.policy for case in CASES}
     assert {"coverage_gated", "closed_world"} <= {policy.value for policy in policies}
+
+
+def test_the_vital_status_cases_rest_on_the_corpus_as_shipped() -> None:
+    """Two cases assume a fact about the corpus; say so plainly if the corpus ever moves."""
+    as_of = default_screening_date()
+    assert load_patient(cases_module.DECEASED).died_before(as_of)
+    assert not load_patient(cases_module.FRESH_CHART).died_before(as_of)
+
+
+def test_only_the_vital_status_cases_screen_around_a_block() -> None:
+    """A criterion-level relation needs criteria, and a blocked screening evaluates none.
+
+    `screen` stops before reading anything for a patient recorded dead on or before the screening
+    date. A case that landed on such a patient by accident would compare two empty criteria tables
+    and pass without asserting anything, so every case that does not mean to exercise the block
+    has to start from a chart that is actually read.
+    """
+    for case in CASES:
+        if any(isinstance(part, ScreeningBlockedOn) for part in _parts(case.relation)):
+            continue
+        result = run_case(case)
+        assert result.before is not None and result.before.blocked_by is None, (
+            f"{case.id} screens a patient whose chart is blocked, so no criterion is evaluated "
+            f"and its relation has nothing to be about"
+        )
 
 
 def test_the_suite_is_deterministic() -> None:

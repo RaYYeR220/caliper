@@ -21,9 +21,15 @@ from caliper.agents.writer import (
     rationale_request,
     write_rationales,
 )
-from caliper.evaluate import AbsencePolicy, CriterionResult, ResolutionHint
+from caliper.evaluate import (
+    AbsencePolicy,
+    CriterionResult,
+    ResolutionHint,
+    evaluate_criterion,
+)
 from caliper.ir import (
     Code,
+    CompositePredicate,
     Concept,
     CriteriaSet,
     Criterion,
@@ -31,10 +37,11 @@ from caliper.ir import (
     ObservationPredicate,
     PresencePredicate,
     TemporalWindow,
+    UnsupportedPredicate,
 )
 from caliper.logic import ScreeningOutcome, Verdict
 from caliper.prose import check_rationale
-from caliper.record import Evidence
+from caliper.record import Evidence, PatientIndex
 from caliper.screen import ScreeningResult
 
 from fakes import a_routed_client
@@ -310,3 +317,216 @@ class TestDeterministicRationales:
         assert [r.criterion_id for r in written] == ["INC-01", "INC-02"]
         assert all(isinstance(r, Rationale) and r.source == "fallback" for r in written)
         assert written["INC-02"].sentence == AGE_MET.rationale
+
+
+# ------------------------------------------------------------------------------------------------
+# The floor the packet degrades to.
+#
+# `_fallback` prints the evaluator's own rationale, and the packet has no other safety net: if that
+# sentence can fail the linter, a fallback ships an unverifiable claim about a patient wearing the
+# appearance of having been checked. The invariant is supposed to hold by construction, so it is
+# asserted against what the evaluator actually produces rather than against prose written here.
+# ------------------------------------------------------------------------------------------------
+
+HAEMOGLOBIN = Code(system="LOINC", code="718-7", display="Haemoglobin")
+SPECIFIC_GRAVITY = Code(system="LOINC", code="5811-5", display="Specific gravity")
+HAEMOGLOBIN_CONCEPT = Concept(text="haemoglobin", codes=(HAEMOGLOBIN,))
+GRAVITY_CONCEPT = Concept(text="specific gravity", codes=(SPECIFIC_GRAVITY,))
+DIABETES = Concept(text="type 2 diabetes", codes=(Code(system="SNOMED", code="44054006"),))
+
+FULL_CHART = PatientIndex(
+    patient_id="P-FULL",
+    birth_date=date(1959, 3, 2),
+    sex="female",
+    evidence=[
+        Evidence(
+            kind="encounter",
+            resource_type="Encounter",
+            resource_id="enc-1",
+            display="Office visit",
+            fhir_path="Bundle.entry[1].resource",
+            date=date(2026, 5, 14),
+        ),
+        CREATININE_ROW,
+        Evidence(  # a result with no number attached to it
+            kind="observation",
+            resource_type="Observation",
+            resource_id="obs-sg",
+            display="Specific gravity",
+            fhir_path="Bundle.entry[5].resource",
+            codes=(SPECIFIC_GRAVITY,),
+            date=date(2026, 5, 14),
+        ),
+        Evidence(  # a result in a unit nothing can honestly convert to mg/dL
+            kind="observation",
+            resource_type="Observation",
+            resource_id="obs-hb",
+            display="Haemoglobin",
+            fhir_path="Bundle.entry[6].resource",
+            codes=(HAEMOGLOBIN,),
+            value=11.4,
+            unit="%",
+            date=date(2026, 5, 14),
+        ),
+        Evidence(
+            kind="condition",
+            resource_type="Condition",
+            resource_id="cond-mi",
+            display="Acute myocardial infarction",
+            fhir_path="Bundle.entry[9].resource",
+            codes=(Code(system="SNOMED", code="22298006"),),
+            date=date(2026, 2, 1),
+        ),
+    ],
+)
+
+EMPTY_CHART = PatientIndex(patient_id="P-EMPTY", birth_date=None, sex=None, evidence=[])
+
+
+def an_observation(
+    identifier: str, concept: Concept, op: str, value: float, unit: str, **extra: object
+) -> Criterion:
+    return Criterion(
+        id=identifier,
+        kind="inclusion",
+        source_quote=f"{concept.text} {op} {value} {unit}",
+        predicate=ObservationPredicate(concept=concept, op=op, value=value, unit=unit, **extra),
+    )
+
+
+CREAT_LOW = an_observation("O-01", CREATININE_CONCEPT, "<=", 1.5, "mg/dL")
+CREAT_STRICT = an_observation("O-02", CREATININE_CONCEPT, "<=", 1.0, "mg/dL")
+CREAT_RANGE = an_observation(
+    "O-03", CREATININE_CONCEPT, "between", 1.0, "mg/dL", value_high=2.0
+)
+GRAVITY = an_observation("O-04", GRAVITY_CONCEPT, ">", 1.0, "1")
+UNCONVERTIBLE = an_observation("O-05", HAEMOGLOBIN_CONCEPT, ">=", 9.0, "mg/dL")
+WINDOWED = an_observation(
+    "O-06",
+    CREATININE_CONCEPT,
+    "<=",
+    1.5,
+    "mg/dL",
+    window=TemporalWindow(relation="within", amount=6, unit="months"),
+)
+
+MATRIX = [
+    CREAT_LOW,
+    CREAT_STRICT,
+    CREAT_RANGE,
+    GRAVITY,
+    UNCONVERTIBLE,
+    WINDOWED,
+    INFARCT,
+    Criterion(
+        id="P-02",
+        kind="inclusion",
+        source_quote="No history of myocardial infarction",
+        predicate=PresencePredicate(type="condition", concept=INFARCTION, presence="absent"),
+    ),
+    Criterion(
+        id="P-03",
+        kind="exclusion",
+        source_quote="Type 2 diabetes",
+        predicate=PresencePredicate(type="condition", concept=DIABETES, presence="present"),
+    ),
+    AGE,
+    Criterion(
+        id="D-02",
+        kind="inclusion",
+        source_quote="Age 90 years or older",
+        predicate=DemographicPredicate(field="age", op=">=", value=90, unit="years"),
+    ),
+    Criterion(
+        id="D-03",
+        kind="inclusion",
+        source_quote="Female",
+        predicate=DemographicPredicate(field="sex", op="==", value="female"),
+    ),
+    Criterion(
+        id="D-04",
+        kind="exclusion",
+        source_quote="Male",
+        predicate=DemographicPredicate(field="sex", op="==", value="male"),
+    ),
+    Criterion(
+        id="U-01",
+        kind="exclusion",
+        source_quote="Unsuitable in the opinion of the investigator",
+        predicate=UnsupportedPredicate(reason="requires investigator judgement"),
+    ),
+    Criterion(
+        id="C-01",
+        kind="inclusion",
+        source_quote="Serum creatinine <= 1.5 mg/dL and age 18 years or older",
+        predicate=CompositePredicate(type="all_of", operands=(CREAT_LOW.predicate, AGE.predicate)),
+    ),
+    Criterion(
+        id="C-02",
+        kind="inclusion",
+        source_quote="Serum creatinine <= 1.0 mg/dL and age 18 years or older",
+        predicate=CompositePredicate(
+            type="all_of", operands=(CREAT_STRICT.predicate, AGE.predicate)
+        ),
+    ),
+    Criterion(
+        id="C-03",
+        kind="inclusion",
+        source_quote="Haemoglobin >= 9 mg/dL or serum creatinine <= 1.5 mg/dL",
+        predicate=CompositePredicate(
+            type="any_of", operands=(UNCONVERTIBLE.predicate, CREAT_LOW.predicate)
+        ),
+    ),
+    Criterion(
+        id="C-04",
+        kind="inclusion",
+        source_quote="Specific gravity > 1 and age 18 years or older",
+        predicate=CompositePredicate(type="all_of", operands=(GRAVITY.predicate, AGE.predicate)),
+    ),
+    Criterion(
+        id="C-05",
+        kind="exclusion",
+        source_quote="Not serum creatinine <= 1.5 mg/dL",
+        predicate=CompositePredicate(type="not", operands=(CREAT_LOW.predicate,)),
+    ),
+]
+
+
+class TestTheFallbackFloor:
+    def test_every_rationale_the_evaluator_writes_passes_the_linter(self):
+        seen = set()
+        for criterion in MATRIX:
+            for chart in (FULL_CHART, EMPTY_CHART):
+                result = evaluate_criterion(criterion, chart, SCREENING)
+                seen.add(result.verdict)
+                violations = check_rationale(result.rationale, criterion, result)
+                assert violations == [], (
+                    f"{criterion.id} on {chart.patient_id} would ship an unverifiable fallback: "
+                    f"{result.rationale!r} names {[v.token for v in violations]}"
+                )
+
+        # Guard against the matrix quietly collapsing onto one branch.
+        assert seen == {Verdict.MET, Verdict.NOT_MET, Verdict.UNKNOWN}
+
+
+class TestBlockedScreening:
+    def test_a_screening_stopped_before_the_protocol_asks_the_model_nothing(self):
+        blocked = ScreeningResult(
+            nct_id="NCT04000000",
+            patient_id="P-004",
+            screened_on=SCREENING,
+            decision=ScreeningOutcome.INELIGIBLE,
+            criteria=(),
+            deciding_criterion_ids=(),
+            resolution_worklist=(),
+            absence_policy=AbsencePolicy.COVERAGE_GATED,
+            blocked_by="the chart records that the patient died on 2026-05-03",
+        )
+        client, transport = a_routed_client({}, default=draft("unreachable"))
+        ctx = AgentContext(client=client)
+
+        written = write_rationales(blocked, CRITERIA, ctx)
+
+        assert len(written) == 0
+        assert transport.requests == []
+        assert ctx.trajectory.steps == []

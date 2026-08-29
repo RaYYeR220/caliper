@@ -166,3 +166,29 @@ class TestEmptyDisplays:
     def test_an_unlabelled_row_is_still_reachable_by_its_code(self):
         record = index(row(codes=(MI_CODE,), display=""))
         assert len(record.find("condition", MI, None, SCREENING)) == 1
+
+
+class TestDeathWithoutADate:
+    """FHIR allows deceasedBoolean with no date, and a date must not be invented for it."""
+
+    def undated(self) -> PatientIndex:
+        return PatientIndex(
+            patient_id="p-1",
+            birth_date=date(1970, 1, 1),
+            sex="female",
+            evidence=[],
+            deceased_undated=True,
+        )
+
+    def test_a_patient_dead_on_an_unknown_date_is_still_deceased(self):
+        assert self.undated().is_deceased() is True
+
+    def test_but_no_date_is_asserted_about_them(self):
+        assert self.undated().deceased is None
+
+    def test_they_do_not_pass_a_test_that_needs_a_date(self):
+        """`died_before` answers a question about a date, and there is no date to answer it with."""
+        assert self.undated().died_before(SCREENING) is False
+
+    def test_a_living_patient_is_neither(self):
+        assert index().is_deceased() is False

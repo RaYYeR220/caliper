@@ -74,8 +74,21 @@ FIXTURE_NCT = "NCT01131676"
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[2] / "web"
 
-EVER = TemporalWindow(relation="ever")
-WITHIN_TWO_MONTHS = TemporalWindow(relation="within", amount=2, unit="months")
+DEMO_SCREENING_DATE = date(2026, 4, 1)
+"""The date the demo cohort is screened against, and it is not the corpus's own reference date.
+
+`corpus.default_screening_date()` is 2026-06-01, and the one patient in the committed corpus who
+carries a type 2 diabetes diagnosis is recorded as having died on 2026-05-03. Screening on the
+corpus date therefore closes every screening in the cohort before a criterion is evaluated, which
+would demonstrate the interface against no open work at all. Two months earlier the same charts
+still support a live decision. `--as-of` reproduces either.
+"""
+
+# "prior to informed consent" and "within 2 months prior to informed consent" are anchored to
+# consent, not to screening. Caliper only ever has the screening date, so recording the anchor is
+# what turns a silent substitution into a reported approximation on every result that depends on it.
+AT_CONSENT = TemporalWindow(relation="current", anchor="consent")
+WITHIN_TWO_MONTHS = TemporalWindow(relation="within", amount=2, unit="months", anchor="consent")
 WITHIN_FIVE_YEARS = TemporalWindow(relation="within", amount=5, unit="years")
 
 T2DM = Concept(
@@ -154,7 +167,7 @@ def _criteria(source_text: str) -> CriteriaSet:
             kind="inclusion",
             source_quote="Diagnosis of type 2 diabetes mellitus prior to informed consent",
             predicate=PresencePredicate(
-                type="condition", concept=T2DM, presence="present", window=EVER
+                type="condition", concept=T2DM, presence="present", window=AT_CONSENT
             ),
         ),
         Criterion(
@@ -552,10 +565,10 @@ def screen_cohort(trial: CompiledTrial, as_of: date) -> list[ScreeningRecord]:
 @app.command("demo")
 def demo(
     root: Path = typer.Option(DEFAULT_ROOT, help="The web root to write the bundle into."),
-    as_of: str = typer.Option(None, help="Screening date, ISO 8601. Defaults to the corpus date."),
+    as_of: str = typer.Option(None, help="Screening date, ISO 8601. See DEMO_SCREENING_DATE."),
 ) -> None:
     """Build the interface bundle from the committed fixtures. No API key, no network."""
-    screening_date = date.fromisoformat(as_of) if as_of else corpus.default_screening_date()
+    screening_date = date.fromisoformat(as_of) if as_of else DEMO_SCREENING_DATE
     trial = corpus.load_trial(FIXTURE_NCT)
     compiled = compile_fixture(trial.criteria_text)
     records = screen_cohort(compiled, screening_date)
