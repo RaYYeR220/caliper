@@ -64,7 +64,7 @@ true by construction and owe nothing to our judgement. The suite includes a deli
 to prove the runner catches failures.
 
 **The answer key is frozen and hashed.** `caliper eval` refuses to score against a key whose digest
-does not match its sidecar, so the key demonstrably predates the results.
+does not match its sidecar (`eval/answer_key.json.sha256`), so the key demonstrably predates the results.
 [`eval/annotation/`](eval/annotation/) holds the annotation protocol, both independent passes, every
 disagreement with how it was decided, and the inter-annotator agreement. It is model-assisted dual
 annotation with human adjudication, and it says so — there was no clinician review and we do not

@@ -124,7 +124,7 @@ on everything. The **false-abstention rate** and an explicit always-abstain base
 table so that trade is visible rather than implied.
 
 The answer key was frozen and hashed before the first scored run; its digest is in
-[`eval/answer_key.sha256`](eval/) and `caliper eval` refuses to score against a key that no longer
+[`eval/answer_key.json.sha256`](eval/) and `caliper eval` refuses to score against a key that no longer
 matches it.
 
 ---
