@@ -48,10 +48,15 @@ PATIENTS_DIR = DATA_DIR / "patients"
 ARCHIVE_CACHE = CACHE_DIR / "synthea_sample_data_fhir_latest.zip"
 
 # Bumped whenever the scan extracts different facts, so a stale cache is never reused.
-SCAN_SCHEMA = 3
+SCAN_SCHEMA = 4
 
 # Resource types the screening engine can consume. Everything else in the Synthea
 # bundles is billing, scheduling or provenance scaffolding.
+#
+# Medication earns its place despite being a lookup table: Synthea writes many
+# MedicationRequests as a medicationReference rather than an inline
+# medicationCodeableConcept, so dropping Medication leaves a third of the drug rows with
+# no identity at all and makes any criterion about a concomitant drug unanswerable.
 ALLOWED_RESOURCE_TYPES = frozenset(
     {
         "AllergyIntolerance",
@@ -59,6 +64,7 @@ ALLOWED_RESOURCE_TYPES = frozenset(
         "DocumentReference",
         "Encounter",
         "Immunization",
+        "Medication",
         "MedicationRequest",
         "Observation",
         "Patient",
@@ -162,6 +168,7 @@ class PatientSummary:
     patient_id: str
     member: str
     birth_date: str | None
+    deceased_date: str | None
     sex: str | None
     condition_displays: list[str]
     condition_codes: list[str]
@@ -370,10 +377,14 @@ def summarise(bundle: dict[str, Any], member: str, trimmed_bytes: int) -> Patien
                 if stamp:
                     encounter_dates.append(stamp[:10])
 
+    # Synthea marks death with deceasedDateTime; the date alone is enough for the manifest.
+    deceased_datetime = patient.get("deceasedDateTime")
+
     return PatientSummary(
         patient_id=patient["id"],
         member=member,
         birth_date=patient.get("birthDate"),
+        deceased_date=deceased_datetime[:10] if deceased_datetime else None,
         sex=patient.get("gender"),
         condition_displays=sorted(displays),
         condition_codes=sorted(condition_codes),
@@ -547,6 +558,7 @@ def build_index(picks: list[Selection]) -> dict[str, Any]:
                 "id": pick.summary.patient_id,
                 "file": f"{pick.summary.patient_id}.json",
                 "birth_date": pick.summary.birth_date,
+                "deceased_date": pick.summary.deceased_date,
                 "sex": pick.summary.sex,
                 "condition_display_list": pick.summary.condition_displays,
                 "observation_loinc_codes_present": pick.summary.loinc_codes,
@@ -554,6 +566,34 @@ def build_index(picks: list[Selection]) -> dict[str, Any]:
                 "latest_encounter_date": pick.summary.latest_encounter_date,
             }
             for pick in sorted(picks, key=lambda p: p.summary.patient_id)
+        ],
+    }
+
+
+def _mortality_summary(picks: list[Selection]) -> dict[str, Any]:
+    """Summarise which patients are deceased relative to the fixed screening date.
+
+    A corpus where a fifth of the patients are dead reads very differently from one where
+    none are, and one patient died four weeks before the screening date -- close enough
+    that a screener treating death as "no longer eligible" and one ignoring it entirely
+    give different answers. It is recorded here so nobody has to rediscover it.
+    """
+    deceased = sorted(
+        (pick.summary for pick in picks if pick.summary.deceased_date),
+        key=lambda summary: summary.deceased_date or "",
+    )
+    reference = AGE_REFERENCE_DATE.isoformat()
+    return {
+        "screening_reference_date": reference,
+        "deceased_count": len(deceased),
+        "living_count": len(picks) - len(deceased),
+        "deceased": [
+            {
+                "id": summary.patient_id,
+                "deceased_date": summary.deceased_date,
+                "died_before_reference_date": (summary.deceased_date or "") < reference,
+            }
+            for summary in deceased
         ],
     }
 
@@ -606,6 +646,7 @@ def build_provenance(
             "screening_panel_loinc": {name: list(codes) for name, codes in SCREENING_PANEL.items()},
             "reasons": {pick.summary.patient_id: pick.reason for pick in picks},
         },
+        "mortality": _mortality_summary(picks),
         "modifications": {
             "reserialised": "UTF-8, two-space indent, sorted object keys, LF newlines",
             "kept_resource_types": sorted(ALLOWED_RESOURCE_TYPES),

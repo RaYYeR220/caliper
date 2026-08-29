@@ -1,19 +1,20 @@
 {
   "modifications": {
-    "kept_entry_count": 9863,
+    "kept_entry_count": 9977,
     "kept_resource_types": [
       "AllergyIntolerance",
       "Condition",
       "DocumentReference",
       "Encounter",
       "Immunization",
+      "Medication",
       "MedicationRequest",
       "Observation",
       "Patient",
       "Procedure"
     ],
     "note": "Entries outside the allow-list were removed wholesale. Retained resources are unchanged in content, but references from them to removed resources are no longer resolvable within this corpus.",
-    "removed_entry_count": 4278,
+    "removed_entry_count": 4164,
     "removed_resource_types": {
       "CarePlan": 56,
       "CareTeam": 56,
@@ -22,14 +23,45 @@
       "DiagnosticReport": 1393,
       "ExplanationOfBenefit": 1005,
       "ImagingStudy": 65,
-      "Medication": 114,
       "MedicationAdministration": 114,
       "Provenance": 24,
       "SupplyDelivery": 363
     },
     "reserialised": "UTF-8, two-space indent, sorted object keys, LF newlines"
   },
-  "retrieved_utc": "2026-08-29T07:36:08+00:00",
+  "mortality": {
+    "deceased": [
+      {
+        "deceased_date": "1961-08-23",
+        "died_before_reference_date": true,
+        "id": "30889246-5f7d-9305-542f-55cb89e1f4de"
+      },
+      {
+        "deceased_date": "1991-06-06",
+        "died_before_reference_date": true,
+        "id": "fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
+      },
+      {
+        "deceased_date": "2015-09-24",
+        "died_before_reference_date": true,
+        "id": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd"
+      },
+      {
+        "deceased_date": "2016-06-03",
+        "died_before_reference_date": true,
+        "id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b"
+      },
+      {
+        "deceased_date": "2026-05-03",
+        "died_before_reference_date": true,
+        "id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8"
+      }
+    ],
+    "deceased_count": 5,
+    "living_count": 19,
+    "screening_reference_date": "2026-06-01"
+  },
+  "retrieved_utc": "2026-08-29T09:41:02+00:00",
   "selection": {
     "adult_age_range": [
       18,
@@ -39,7 +71,7 @@
     "anchor_max_budget_fraction": 0.25,
     "byte_budget": 25500000,
     "candidate_bundles": 109,
-    "corpus_bytes": 20123512,
+    "corpus_bytes": 20211379,
     "min_disease_carriers": {
       "asthma": 1,
       "ckd": 1,

@@ -27,6 +27,8 @@ class ScreeningResult:
     deciding_criterion_ids: tuple[str, ...]
     resolution_worklist: tuple[ResolutionHint, ...]
     absence_policy: AbsencePolicy
+    blocked_by: str | None = None
+    """A screening-level fact that ended the screening before any criterion was evaluated."""
 
     @property
     def approximations(self) -> tuple[str, ...]:
@@ -55,14 +57,15 @@ class ScreeningResult:
         """The share of criteria decided from data.
 
         Reported per screening rather than averaged away, because a trial where one hard criterion
-        always abstains behaves very differently from one where abstention is spread thin.
+        always abstains behaves very differently from one where abstention is spread thin. A
+        screening stopped by a screening-level fact is complete rather than uncovered: nothing is
+        unresolved, because nothing needed resolving.
         """
+        if self.blocked_by is not None:
+            return 1.0
         if not self.criteria:
             return 0.0
         return self.criteria_resolved / self.criteria_total
-
-
-VITAL_STATUS = "VITAL-STATUS"
 
 
 def _deceased(
@@ -71,25 +74,24 @@ def _deceased(
     """Stop before evaluating anything else.
 
     Continuing would produce a criterion table describing a person who cannot be enrolled, and a
-    coordinator skimming forty green rows would have to notice the one line that mattered. It is a
-    screening decision, not a criterion, so it is reported as one.
+    coordinator skimming forty resolved rows would have to notice the one line that mattered. This
+    is a fact about the screening rather than about any criterion, so it is reported as one and not
+    smuggled in as a pseudo-criterion the protocol never contained.
     """
     assert patient.deceased is not None
-    row = CriterionResult(
-        criterion_id=VITAL_STATUS,
-        kind="inclusion",
-        verdict=Verdict.NOT_MET,
-        rationale=f"the chart records that the patient died on {patient.deceased.isoformat()}",
-    )
     return ScreeningResult(
         nct_id=criteria_set.nct_id,
         patient_id=patient.patient_id,
         screened_on=as_of,
         decision=ScreeningOutcome.INELIGIBLE,
-        criteria=(row,),
-        deciding_criterion_ids=(VITAL_STATUS,),
+        criteria=(),
+        deciding_criterion_ids=(),
         resolution_worklist=(),
         absence_policy=policy,
+        blocked_by=(
+            f"the chart records that the patient died on {patient.deceased.isoformat()}, "
+            "before the screening date"
+        ),
     )
 
 

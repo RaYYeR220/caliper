@@ -1,9 +1,10 @@
 """The metamorphic suite, run as a test, plus the negative control on the suite itself.
 
-Two of these tests matter more than the rest. `test_the_runner_reports_a_relation_that_does_not_
-hold` builds cases whose assertions are false on purpose and demands that the runner says so, in
-detail: a suite that cannot fail is not evidence of anything. And `test_the_suite_never_reaches_a
-_model` makes the no-model claim checkable rather than merely asserted in a docstring.
+Two of these matter more than the rest. The negative control builds cases whose assertions are
+false on purpose and demands that the runner say so in detail, because a suite that cannot fail is
+not evidence of anything. And the last two tests make the no-model claim checkable — once by
+reading the imports out of the modules, once by making the construction of a client an error and
+running the whole catalogue anyway — rather than leaving it asserted in a docstring.
 """
 
 from __future__ import annotations

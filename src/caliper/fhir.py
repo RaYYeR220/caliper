@@ -8,13 +8,14 @@ a fabricated value here becomes an unarguable verdict three modules later.
 Every row keeps `Bundle.entry[i].resource`, the pointer back to the exact entry it came from, so
 any claim in the final report can be opened and checked against the source bundle.
 
-DocumentReference is handled by `narrative_notes` rather than `load_patient_index`: see that
-function for why narrative text is not currently indexable as `Evidence`.
+DocumentReference is decoded by `narrative_notes` rather than indexed by `load_patient_index`:
+see that function for why the bundle's own notes stay out of the index.
 """
 
 from __future__ import annotations
 
 import base64
+import warnings
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from datetime import date, datetime
@@ -44,6 +45,22 @@ _ICD10_STEM = "http://hl7.org/fhir/sid/icd-10"
 # decide a screening, which is worse than not knowing about it at all.
 _RETRACTED = frozenset({"refuted", "entered-in-error"})
 
+UNRESOLVED_MEDICATION = "unresolved medication reference"
+"""Display for a MedicationRequest pointing at a Medication the bundle does not carry.
+
+A blank display would read as a coding failure and would quietly match no concept at all. Naming
+the pointer says which resource is missing, so the gap can be closed rather than puzzled over.
+"""
+
+NO_MEDICATION_CODE = "medication with no recorded code"
+"""Display for a MedicationRequest that names no drug, by reference or otherwise."""
+
+DEAD_WITHOUT_A_DATE = (
+    "Patient {patient} is recorded as deceased with no deceasedDateTime. PatientIndex.deceased "
+    "holds a date and nothing else, so this death cannot be represented and the chart will screen "
+    "as though the patient were alive."
+)
+
 
 @dataclass(frozen=True)
 class _Entry:
@@ -67,6 +84,18 @@ class _Entry:
     @property
     def fhir_path(self) -> str:
         return f"Bundle.entry[{self.position}].resource"
+
+
+@dataclass(frozen=True)
+class _References:
+    """Resources that other resources point at, keyed by every form the pointer might take.
+
+    FHIR lets a resource carry its codes inline or hold a reference to a resource elsewhere in the
+    same bundle. Resolving those references needs a view of the whole bundle, which a converter
+    looking at one entry does not have.
+    """
+
+    medications: Mapping[str, Mapping[str, Any]]
 
 
 def _dig(node: Any, *path: str) -> Any:
@@ -199,7 +228,7 @@ def _row(
     )
 
 
-def _observations(entry: _Entry) -> list[Evidence]:
+def _observations(entry: _Entry, _references: _References) -> list[Evidence]:
     resource = entry.resource
     when = _first_date(resource.get("effectiveDateTime"), resource.get("issued"))
     components = [c for c in (resource.get("component") or ()) if isinstance(c, Mapping)]
@@ -237,7 +266,7 @@ def _observations(entry: _Entry) -> list[Evidence]:
     return rows
 
 
-def _conditions(entry: _Entry) -> list[Evidence]:
+def _conditions(entry: _Entry, _references: _References) -> list[Evidence]:
     resource = entry.resource
     if _status(resource.get("verificationStatus")) in _RETRACTED:
         return []
@@ -265,20 +294,39 @@ def _conditions(entry: _Entry) -> list[Evidence]:
     ]
 
 
-def _medications(entry: _Entry) -> list[Evidence]:
-    medication = entry.resource.get("medicationCodeableConcept")
+def _medications(entry: _Entry, references: _References) -> list[Evidence]:
+    resource = entry.resource
+    concept = resource.get("medicationCodeableConcept")
+    fallback = NO_MEDICATION_CODE
+
+    if concept is None:
+        # Synthea writes a third of its MedicationRequests as a reference to a Medication resource
+        # carried elsewhere in the same bundle rather than inlining the drug's codes.
+        reference = _dig(resource, "medicationReference", "reference")
+        if isinstance(reference, str) and reference:
+            medication = references.medications.get(reference)
+            if medication is None:
+                shown = _dig(resource, "medicationReference", "display")
+                fallback = (
+                    shown.strip()
+                    if isinstance(shown, str) and shown.strip()
+                    else f"{UNRESOLVED_MEDICATION} {reference}"
+                )
+            else:
+                concept = medication.get("code")
+
     return [
         _row(
             entry,
             "medication",
-            display=_display(medication),
-            codes=_codes(medication),
-            when=_parse_date(entry.resource.get("authoredOn")),
+            display=_display(concept, fallback=fallback),
+            codes=_codes(concept),
+            when=_parse_date(resource.get("authoredOn")),
         )
     ]
 
 
-def _procedures(entry: _Entry) -> list[Evidence]:
+def _procedures(entry: _Entry, _references: _References) -> list[Evidence]:
     resource = entry.resource
     return [
         _row(
@@ -293,7 +341,7 @@ def _procedures(entry: _Entry) -> list[Evidence]:
     ]
 
 
-def _encounters(entry: _Entry) -> list[Evidence]:
+def _encounters(entry: _Entry, _references: _References) -> list[Evidence]:
     resource = entry.resource
     types = [t for t in (resource.get("type") or ()) if isinstance(t, Mapping)]
     labels = [label for label in (_display(t) for t in types) if label]
@@ -312,7 +360,9 @@ def _encounters(entry: _Entry) -> list[Evidence]:
     ]
 
 
-_CONVERTERS: dict[str, Callable[[_Entry], list[Evidence]]] = {
+# Medication is deliberately absent: it is a lookup table for MedicationRequest, not a clinical
+# event, and indexing it would put a drug on the chart that was never prescribed to anyone.
+_CONVERTERS: dict[str, Callable[[_Entry, _References], list[Evidence]]] = {
     "Observation": _observations,
     "Condition": _conditions,
     "MedicationRequest": _medications,
@@ -360,6 +410,9 @@ def load_patient_index(bundle: dict[str, Any]) -> PatientIndex:
     A bundle is one person's chart, so exactly one Patient resource is required; anything else is
     a `FhirBundleError` rather than a silent choice between candidates. Resource types we have no
     mapping for are skipped, and evidence keeps the bundle's own ordering.
+
+    A death recorded without a date cannot be carried by `PatientIndex` and is warned about rather
+    than dropped in silence; see the comment below.
     """
     entries = _entries(bundle)
     patients = [entry for entry in entries if entry.resource_type == "Patient"]
@@ -374,11 +427,21 @@ def load_patient_index(bundle: dict[str, Any]) -> PatientIndex:
         patient_id=patients[0].resource_id,
         birth_date=_parse_date(demographics.get("birthDate")),
         sex=gender.strip() if isinstance(gender, str) and gender.strip() else None,
+        deceased=_parse_date(demographics.get("deceasedDateTime")),
     )
+
+    # `deceasedBoolean` is legal FHIR and says the patient is dead without saying when. No date is
+    # invented for it: `screen.py` prints `deceased.isoformat()` straight into the coordinator's
+    # rationale, so a sentinel would surface there as a fabricated date of death. Saying "dead,
+    # date unknown" needs a field `PatientIndex` does not have, so the gap is made audible instead.
+    if index.deceased is None and demographics.get("deceasedBoolean") is True:
+        warnings.warn(DEAD_WITHOUT_A_DATE.format(patient=index.patient_id), stacklevel=2)
+
+    references = _References(medications=_medication_lookup(entries))
     for entry in entries:
         convert = _CONVERTERS.get(entry.resource_type)
         if convert is not None:
-            index.evidence.extend(convert(entry))
+            index.evidence.extend(convert(entry, references))
     return index
 
 
@@ -409,12 +472,12 @@ def _attachment_text(attachment: Mapping[str, Any]) -> str | None:
 def narrative_notes(bundle: dict[str, Any]) -> list[NarrativeNote]:
     """Decode the notes carried as base64 attachments on the bundle's DocumentReference resources.
 
-    These are returned separately rather than as `Evidence` because narrative text belongs to no
-    member of `EvidenceKind`. Filing a discharge summary under "encounter" would tell
-    `PatientIndex.has_documented_activity` that a visit happened, and filing it under "condition"
-    would let a note match a coded presence check on its wording alone. Once `EvidenceKind` gains
-    a note member these become Evidence rows with `source="narrative"` and `narrative_quote` set,
-    with no other change here.
+    These are returned as plain records rather than folded into the index. `EvidenceKind` does now
+    have a "note" member, but `caliper.notes` owns narrative evidence and sources it from the
+    hand-authored tree beside the bundles; emitting Synthea's generated prose as note rows as well
+    would put boilerplate in front of the extractor and change what `PatientIndex.notes()` means
+    for every patient. Whether the bundle's own notes should join them is a decision for the
+    corpus, not for the parser, so this hands them back and indexes nothing.
     """
     notes = []
     for entry in _entries(bundle):

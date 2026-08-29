@@ -9228,6 +9228,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:5517d9bd-0393-a629-d51f-68fa3e8656ae",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "5517d9bd-0393-a629-d51f-68fa3e8656ae",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:f870c432-0887-125e-b6b9-d71583c30477",
       "request": {
         "method": "POST",
@@ -25251,6 +25278,33 @@
         "subject": {
           "reference": "urn:uuid:f870c432-0887-125e-f778-cf5110d3de1d"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8bc2db6a-65bb-f174-0202-dd4e35122496",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "8bc2db6a-65bb-f174-0202-dd4e35122496",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {

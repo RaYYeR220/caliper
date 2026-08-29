@@ -7,12 +7,19 @@ the exact resource a claim rests on.
 
 import base64
 import json
+import warnings
 from datetime import date
 from pathlib import Path
 
 import pytest
 
-from caliper.fhir import FhirBundleError, load_patient_index, narrative_notes
+from caliper.fhir import (
+    NO_MEDICATION_CODE,
+    UNRESOLVED_MEDICATION,
+    FhirBundleError,
+    load_patient_index,
+    narrative_notes,
+)
 from caliper.ir import Code, Concept
 
 LOINC = "http://loinc.org"
@@ -119,6 +126,51 @@ class TestPatientDemographics:
     def test_a_bundle_with_no_entries_at_all_is_rejected(self):
         with pytest.raises(FhirBundleError):
             load_patient_index({"resourceType": "Bundle", "type": "transaction"})
+
+
+class TestVitalStatus:
+    """A chart that stops because the patient died looks exactly like a chart that is thin."""
+
+    def test_a_recorded_death_is_read_off_the_patient(self):
+        resource = a_patient(deceasedDateTime="2026-05-03T13:57:29+00:00")
+        index = load_patient_index(a_bundle(resource))
+        assert index.deceased == date(2026, 5, 3)
+
+    def test_a_death_before_the_screening_date_is_visible_to_the_screener(self):
+        resource = a_patient(deceasedDateTime="2026-05-03T13:57:29+00:00")
+        index = load_patient_index(a_bundle(resource))
+        assert index.died_before(date(2026, 6, 1))
+        assert not index.died_before(date(2026, 4, 1))
+
+    def test_a_living_patient_records_no_death(self):
+        assert load_patient_index(a_bundle(a_patient())).deceased is None
+
+    def test_a_malformed_death_date_is_dropped_like_any_other(self):
+        index = load_patient_index(a_bundle(a_patient(deceasedDateTime="sometime in May")))
+        assert index.deceased is None
+
+    def test_a_death_recorded_without_a_date_invents_none(self):
+        """`deceasedBoolean` is legal FHIR; a fabricated date would be printed as fact."""
+        with pytest.warns(UserWarning, match="deceasedDateTime"):
+            index = load_patient_index(a_bundle(a_patient(deceasedBoolean=True)))
+        assert index.deceased is None
+
+    def test_a_death_recorded_without_a_date_is_not_passed_over_in_silence(self):
+        with pytest.warns(UserWarning, match="3f1a-patient"):
+            load_patient_index(a_bundle(a_patient(deceasedBoolean=True)))
+
+    def test_a_patient_explicitly_recorded_as_alive_says_nothing(self):
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            index = load_patient_index(a_bundle(a_patient(deceasedBoolean=False)))
+        assert index.deceased is None
+
+    def test_a_dated_death_alongside_the_boolean_needs_no_warning(self):
+        resource = a_patient(deceasedBoolean=True, deceasedDateTime="2026-05-03T13:57:29+00:00")
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            index = load_patient_index(a_bundle(resource))
+        assert index.deceased == date(2026, 5, 3)
 
 
 class TestObservations:
@@ -304,6 +356,12 @@ class TestMedicationsAndProcedures:
         assert med.date == date(2021, 3, 9)
         assert med.display == "Lisinopril 10 MG Oral Tablet"
 
+    def test_a_medication_request_naming_no_drug_at_all_is_labelled(self):
+        resource = {"resourceType": "MedicationRequest", "id": "med-0", "status": "active"}
+        index = load_patient_index(a_bundle(a_patient(), resource))
+        [med] = only(index.evidence, "medication")
+        assert med.display == NO_MEDICATION_CODE
+
     def test_a_procedure_uses_its_performed_date(self):
         resource = {
             "resourceType": "Procedure",
@@ -326,6 +384,89 @@ class TestMedicationsAndProcedures:
         index = load_patient_index(a_bundle(a_patient(), resource))
         [proc] = only(index.evidence, "procedure")
         assert proc.date == date(2017, 11, 2)
+
+
+class TestMedicationReferences:
+    """A third of Synthea's MedicationRequests point at a Medication instead of inlining codes."""
+
+    MEDICATION = {
+        "resourceType": "Medication",
+        "id": "574bf57a",
+        "code": {
+            "text": "Penicillin V Potassium 250 MG Oral Tablet",
+            "coding": [{"system": RXNORM, "code": "834061"}],
+        },
+    }
+
+    @staticmethod
+    def a_request(reference: str) -> dict:
+        return {
+            "resourceType": "MedicationRequest",
+            "id": "med-ref",
+            "status": "completed",
+            "authoredOn": "2020-05-19T19:25:00+00:00",
+            "medicationReference": {"reference": reference},
+        }
+
+    def test_a_reference_resolves_through_the_entrys_full_url(self):
+        """Synthea points at `urn:uuid:...`, which is the entry's fullUrl, not `Medication/id`."""
+        bundle = a_bundle(a_patient(), self.MEDICATION, self.a_request("urn:uuid:574bf57a"))
+        [med] = only(load_patient_index(bundle).evidence, "medication")
+        assert [(c.system, c.code) for c in med.codes] == [("RxNorm", "834061")]
+        assert med.display == "Penicillin V Potassium 250 MG Oral Tablet"
+        assert med.date == date(2020, 5, 19)
+
+    def test_a_reference_also_resolves_through_the_resource_id(self):
+        bundle = a_bundle(a_patient(), self.MEDICATION, self.a_request("Medication/574bf57a"))
+        [med] = only(load_patient_index(bundle).evidence, "medication")
+        assert [(c.system, c.code) for c in med.codes] == [("RxNorm", "834061")]
+
+    def test_the_resolved_row_still_points_at_the_request_not_the_medication(self):
+        """The prescription is the clinical event; the Medication is only how it is spelled."""
+        bundle = a_bundle(a_patient(), self.MEDICATION, self.a_request("urn:uuid:574bf57a"))
+        [med] = only(load_patient_index(bundle).evidence, "medication")
+        assert med.resource_type == "MedicationRequest"
+        assert med.resource_id == "med-ref"
+        assert med.fhir_path == "Bundle.entry[2].resource"
+
+    def test_a_medication_resource_is_a_lookup_table_not_an_event(self):
+        bundle = a_bundle(a_patient(), self.MEDICATION, self.a_request("urn:uuid:574bf57a"))
+        evidence = load_patient_index(bundle).evidence
+        assert [e.resource_type for e in evidence] == ["MedicationRequest"]
+
+    def test_an_inlined_code_is_preferred_and_needs_no_lookup(self):
+        request = self.a_request("urn:uuid:574bf57a")
+        request["medicationCodeableConcept"] = {
+            "text": "Lisinopril 10 MG Oral Tablet",
+            "coding": [{"system": RXNORM, "code": "314076"}],
+        }
+        bundle = a_bundle(a_patient(), self.MEDICATION, request)
+        [med] = only(load_patient_index(bundle).evidence, "medication")
+        assert [(c.system, c.code) for c in med.codes] == [("RxNorm", "314076")]
+
+    def test_a_dangling_reference_still_produces_a_row(self):
+        bundle = a_bundle(a_patient(), self.a_request("urn:uuid:missing"))
+        assert len(only(load_patient_index(bundle).evidence, "medication")) == 1
+
+    def test_a_dangling_reference_is_labelled_rather_than_left_blank(self):
+        """A blank display reads as a coding failure and quietly matches nothing."""
+        bundle = a_bundle(a_patient(), self.a_request("urn:uuid:missing"))
+        [med] = only(load_patient_index(bundle).evidence, "medication")
+        assert med.display == f"{UNRESOLVED_MEDICATION} urn:uuid:missing"
+        assert med.codes == ()
+
+    def test_a_dangling_reference_prefers_the_wording_the_reference_carries(self):
+        request = self.a_request("urn:uuid:missing")
+        request["medicationReference"]["display"] = "Penicillin V Potassium 250 MG Oral Tablet"
+        bundle = a_bundle(a_patient(), request)
+        [med] = only(load_patient_index(bundle).evidence, "medication")
+        assert med.display == "Penicillin V Potassium 250 MG Oral Tablet"
+
+    def test_a_medication_that_resolves_but_carries_no_code_is_labelled_as_such(self):
+        medication = {"resourceType": "Medication", "id": "574bf57a", "status": "active"}
+        bundle = a_bundle(a_patient(), medication, self.a_request("urn:uuid:574bf57a"))
+        [med] = only(load_patient_index(bundle).evidence, "medication")
+        assert med.display == NO_MEDICATION_CODE
 
 
 class TestEncounters:
@@ -438,7 +579,7 @@ def _note(text: str, **overrides: object) -> dict:
 
 
 class TestNarrativeDocuments:
-    """DocumentReference has no honest home in `EvidenceKind` yet — see the module docstring."""
+    """`caliper.notes` owns narrative evidence — see `narrative_notes` for why these stay out."""
 
     def test_an_attachment_is_decoded_from_base64(self):
         bundle = a_bundle(a_patient(), _note("Chief complaint: exertional chest pain."))
@@ -476,28 +617,85 @@ class TestNarrativeDocuments:
         assert decoded.text == "First paragraph.\n\nSecond paragraph."
 
 
-# Synthea also writes provider and organization bundles into its output directory; they carry no
-# Patient and are not charts, so they are not candidates for this test.
+# `index.json` and `PROVENANCE.json` are the corpus's own manifests rather than charts, and
+# Synthea writes provider and organization bundles alongside its patients. None carry a Patient.
 _PATIENTS = Path(__file__).resolve().parents[1] / "data" / "patients"
+_NOT_A_CHART = ("index.json", "PROVENANCE.json")
 _SYNTHEA_INFRASTRUCTURE = ("hospitalInformation", "practitionerInformation")
 _BUNDLE_FILES = (
-    [p for p in sorted(_PATIENTS.glob("*.json")) if not p.name.startswith(_SYNTHEA_INFRASTRUCTURE)]
+    [
+        p
+        for p in sorted(_PATIENTS.glob("*.json"))
+        if p.name not in _NOT_A_CHART and not p.name.startswith(_SYNTHEA_INFRASTRUCTURE)
+    ]
     if _PATIENTS.is_dir()
     else []
 )
 
 
+@pytest.fixture(scope="module")
+def corpus() -> list[tuple[Path, dict, object]]:
+    """Every chart in the corpus, parsed once, as (path, bundle, index)."""
+    charts = []
+    for path in _BUNDLE_FILES:
+        bundle = json.loads(path.read_text(encoding="utf-8"))
+        charts.append((path, bundle, load_patient_index(bundle)))
+    return charts
+
+
 @pytest.mark.skipif(not _BUNDLE_FILES, reason="no Synthea bundles under data/patients")
-def test_a_real_synthea_bundle_produces_a_non_empty_index():
-    bundle = json.loads(_BUNDLE_FILES[0].read_text(encoding="utf-8"))
-    index = load_patient_index(bundle)
+class TestTheRealCorpus:
+    def test_every_chart_produces_a_non_empty_index(self, corpus):
+        for path, _, index in corpus:
+            assert index.patient_id, path
+            assert index.evidence, path
+            assert any(e.kind == "encounter" for e in index.evidence), path
+            assert any(e.kind == "observation" and e.value is not None for e in index.evidence)
 
-    assert index.patient_id
-    assert index.evidence
-    assert any(e.kind == "encounter" for e in index.evidence)
-    assert any(e.kind == "observation" and e.value is not None for e in index.evidence)
+    def test_every_fhir_path_resolves_to_the_resource_it_claims(self, corpus):
+        for path, bundle, index in corpus:
+            entries = bundle["entry"]
+            for evidence in index.evidence:
+                pointer = evidence.fhir_path
+                position = int(pointer.removeprefix("Bundle.entry[").removesuffix("].resource"))
+                resource = entries[position]["resource"]
+                assert resource["resourceType"] == evidence.resource_type, f"{path} {pointer}"
+                assert resource.get("id", f"entry-{position}") == evidence.resource_id
 
-    entries = bundle["entry"]
-    for evidence in index.evidence:
-        position = int(evidence.fhir_path.removeprefix("Bundle.entry[").removesuffix("].resource"))
-        assert entries[position]["resource"]["resourceType"] == evidence.resource_type
+    def test_every_medication_row_says_which_drug_it_is(self, corpus):
+        """Empty is the shape a `medicationReference` used to leave behind."""
+        rows = [e for _, _, index in corpus for e in index.evidence if e.kind == "medication"]
+        assert rows
+        assert all(row.display.strip() for row in rows)
+
+    def test_no_medication_resource_is_indexed_as_an_event(self, corpus):
+        rows = [e for _, _, index in corpus for e in index.evidence]
+        assert not [e for e in rows if e.resource_type == "Medication"]
+
+    def test_a_recorded_death_reaches_the_index(self, corpus):
+        for path, bundle, index in corpus:
+            patients = [
+                e["resource"]
+                for e in bundle["entry"]
+                if e.get("resource", {}).get("resourceType") == "Patient"
+            ]
+            recorded = patients[0].get("deceasedDateTime")
+            if recorded is None:
+                assert index.deceased is None, path
+            else:
+                assert index.deceased is not None, path
+                assert recorded.startswith(index.deceased.isoformat()), path
+
+    def test_the_corpus_contains_a_death_that_precedes_the_screening_date(self, corpus):
+        """Five of these charts end in a death; one of them four weeks before screening."""
+        screening = date(2026, 6, 1)
+        died = [index.patient_id for _, _, index in corpus if index.died_before(screening)]
+        assert died
+
+    def test_the_patient_who_died_four_weeks_before_screening_is_dated_exactly(self, corpus):
+        by_id = {index.patient_id: index for _, _, index in corpus}
+        index = by_id.get("1be83f06-48ef-7bac-7097-b9e0644aeaf8")
+        if index is None:
+            pytest.skip("that patient is not in the current corpus")
+        assert index.deceased == date(2026, 5, 3)
+        assert index.died_before(date(2026, 6, 1))

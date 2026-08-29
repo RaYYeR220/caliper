@@ -4215,6 +4215,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:bd1f9c5a-5f7e-fe1f-a1d5-5d84a38249ea",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "bd1f9c5a-5f7e-fe1f-a1d5-5d84a38249ea",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-e163-2f287797023f",
       "request": {
         "method": "POST",
@@ -6861,6 +6888,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:010e3ebd-2479-c2d3-920f-891bd963331d",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "010e3ebd-2479-c2d3-920f-891bd963331d",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -12862,6 +12916,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:fb3c4b06-5ef5-1ca0-048e-6b3e97d833cf",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "fb3c4b06-5ef5-1ca0-048e-6b3e97d833cf",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -33071,6 +33152,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:49f2d7e3-06a9-8923-caf8-fbd10ffba9a0",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "49f2d7e3-06a9-8923-caf8-fbd10ffba9a0",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -74522,6 +74630,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:97b3c304-ac3a-5cd9-2bc5-334f3d3eb4ad",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "97b3c304-ac3a-5cd9-2bc5-334f3d3eb4ad",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-fb5f-49df44e01b8d",
       "request": {
         "method": "POST",
@@ -74569,6 +74704,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:87699222-fccf-7684-0f8c-5209345af8d9",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "87699222-fccf-7684-0f8c-5209345af8d9",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -74622,6 +74784,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:c1d76a2c-2232-3bf9-c62f-9025f3a2868a",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "c1d76a2c-2232-3bf9-c62f-9025f3a2868a",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-0f62-2b0d361c4689",
       "request": {
         "method": "POST",
@@ -74669,6 +74858,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a894fb76-b833-2e19-0b75-9098c0e3cc73",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "a894fb76-b833-2e19-0b75-9098c0e3cc73",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -74722,6 +74938,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:87197f9f-eb3c-c2c0-9e1e-28b030c448b9",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "87197f9f-eb3c-c2c0-9e1e-28b030c448b9",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-4962-82f28c349963",
       "request": {
         "method": "POST",
@@ -74769,6 +75012,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f87e3887-14b4-910b-012f-7babf795262e",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "f87e3887-14b4-910b-012f-7babf795262e",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -74822,6 +75092,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:63fecd98-124c-eefe-8f14-13593c910061",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "63fecd98-124c-eefe-8f14-13593c910061",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-97c6-137cfc83956a",
       "request": {
         "method": "POST",
@@ -74869,6 +75166,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5e73bbcc-ca93-66a3-1f9d-ffde2e634769",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "5e73bbcc-ca93-66a3-1f9d-ffde2e634769",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -74922,6 +75246,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:fbffe766-531c-82a0-0552-07f176c1e4cf",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "fbffe766-531c-82a0-0552-07f176c1e4cf",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-1587-bcf3f4158211",
       "request": {
         "method": "POST",
@@ -74969,6 +75320,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:af71bae5-9685-5e6d-61fe-76c8771a8076",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "af71bae5-9685-5e6d-61fe-76c8771a8076",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -75022,6 +75400,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:3cbf0860-d9ad-7d65-49d6-0d09e9f3145e",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "3cbf0860-d9ad-7d65-49d6-0d09e9f3145e",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-8bac-897e4e0f71df",
       "request": {
         "method": "POST",
@@ -75069,6 +75474,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e5d16834-a959-2eee-f737-cb436f1a5932",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "e5d16834-a959-2eee-f737-cb436f1a5932",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -75122,6 +75554,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:932f45d4-603c-dafc-c138-97f4eb7519ce",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "932f45d4-603c-dafc-c138-97f4eb7519ce",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-4d9a-05ed3c20562f",
       "request": {
         "method": "POST",
@@ -75169,6 +75628,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a47f7948-4e5c-c481-f00a-fb9cd67f93da",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "a47f7948-4e5c-c481-f00a-fb9cd67f93da",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -75222,6 +75708,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:c0da61ab-2542-980c-69ea-a74c6b07af11",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "c0da61ab-2542-980c-69ea-a74c6b07af11",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-0f85-bcc73af0db39",
       "request": {
         "method": "POST",
@@ -75269,6 +75782,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:806f5ed6-c35d-9047-daac-ee0833a8214b",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "806f5ed6-c35d-9047-daac-ee0833a8214b",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -75322,6 +75862,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:77267320-7d4e-a7c7-4f68-a129cf6f3314",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "77267320-7d4e-a7c7-4f68-a129cf6f3314",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-e263-ffa5d6fc4956",
       "request": {
         "method": "POST",
@@ -75369,6 +75936,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:b3a5ab36-3372-ad00-d67a-2addbef50188",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "b3a5ab36-3372-ad00-d67a-2addbef50188",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -75422,6 +76016,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:831f6dbb-73bd-e2b3-1841-7670e60d8594",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "831f6dbb-73bd-e2b3-1841-7670e60d8594",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-44cf-bb14e9484fd5",
       "request": {
         "method": "POST",
@@ -75469,6 +76090,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:afbd4a62-ffeb-f1fb-0c08-a091093e1287",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "afbd4a62-ffeb-f1fb-0c08-a091093e1287",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -75522,6 +76170,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:c3e787f0-0332-88d5-74a0-610707db991b",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "c3e787f0-0332-88d5-74a0-610707db991b",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-5b9a-aea66faf6960",
       "request": {
         "method": "POST",
@@ -75569,6 +76244,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:60f5c961-00e7-4c06-c78d-d78f0a396c91",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "60f5c961-00e7-4c06-c78d-d78f0a396c91",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -75622,6 +76324,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:837f5cb7-4562-cfdc-50c5-1de189743d54",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "837f5cb7-4562-cfdc-50c5-1de189743d54",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-7dec-8938c37f96f3",
       "request": {
         "method": "POST",
@@ -75669,6 +76398,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:393db008-869c-b31b-8b5e-3b796b62e124",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "393db008-869c-b31b-8b5e-3b796b62e124",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -75722,6 +76478,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:7ca9e8c5-b676-0e32-340a-9ae8970b303b",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "7ca9e8c5-b676-0e32-340a-9ae8970b303b",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-77ca-b19d198637d1",
       "request": {
         "method": "POST",
@@ -75769,6 +76552,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6acd370f-dba9-5743-038c-4e1484b99d01",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "6acd370f-dba9-5743-038c-4e1484b99d01",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -75822,6 +76632,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:f9150d68-cdf2-de6c-4197-3b6a2d5b9692",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "f9150d68-cdf2-de6c-4197-3b6a2d5b9692",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-72af-63ea08814825",
       "request": {
         "method": "POST",
@@ -75869,6 +76706,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:d2076e94-4906-8531-29ea-d174de288dea",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "d2076e94-4906-8531-29ea-d174de288dea",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -75922,6 +76786,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:6394c6b3-f6cc-4d7f-0ddd-e9948bee5638",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "6394c6b3-f6cc-4d7f-0ddd-e9948bee5638",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-6f14-3661bf1d9794",
       "request": {
         "method": "POST",
@@ -75969,6 +76860,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:c99ffd62-f216-6533-6de1-148287f2c146",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "c99ffd62-f216-6533-6de1-148287f2c146",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -76022,6 +76940,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:5fbedf2b-5d18-a923-d25d-08711e42ed34",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "5fbedf2b-5d18-a923-d25d-08711e42ed34",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-d94d-da1e9174eca6",
       "request": {
         "method": "POST",
@@ -76069,6 +77014,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f737977e-b351-9c20-0089-b80a4d69424f",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "f737977e-b351-9c20-0089-b80a4d69424f",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -76122,6 +77094,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:b4cece85-6417-5b5f-f8e0-426d245d1c89",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "b4cece85-6417-5b5f-f8e0-426d245d1c89",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-818d-bb8780c424ba",
       "request": {
         "method": "POST",
@@ -76169,6 +77168,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:fbf26470-09f4-aea7-7e46-ec92f30dc633",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "fbf26470-09f4-aea7-7e46-ec92f30dc633",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -76222,6 +77248,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:9936a685-56a3-de83-c7dc-d16e0ec92705",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "9936a685-56a3-de83-c7dc-d16e0ec92705",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:fb56f051-a2cd-ac10-be4e-5a87fe6c65e4",
       "request": {
         "method": "POST",
@@ -76269,6 +77322,33 @@
         "subject": {
           "reference": "urn:uuid:fb56f051-a2cd-ac10-dcb0-e0738295fc1f"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:389521e6-f9b0-35f9-9b75-b709026b210a",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1719286",
+              "display": "10 ML Furosemide 10 MG/ML Injection",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "10 ML Furosemide 10 MG/ML Injection"
+        },
+        "id": "389521e6-f9b0-35f9-9b75-b709026b210a",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {

@@ -141,3 +141,33 @@ def a_routed_client(
         profile or a_profile(), transport=transport, env={"TEST_API_KEY": "not-a-real-key"}, **kw
     )
     return client, transport
+
+
+class ProgrammableTransport(FakeTransport):
+    """Replies computed from the request, for tests that run over real corpus data.
+
+    A canned reply cannot satisfy the compiler on a real protocol, because the quote it returns is
+    checked against the protocol text and a fixed string will not match forty different spans. This
+    transport is handed a function of the system and user prompts and can therefore echo the span it
+    was actually given.
+    """
+
+    def __init__(self, respond: Any):
+        super().__init__([])
+        self.respond = respond
+
+    def _create(self, **kwargs: Any) -> SimpleNamespace:
+        self.requests.append(kwargs)
+        system = kwargs["messages"][0]["content"]
+        user = kwargs["messages"][-1]["content"]
+        return _response(self.respond(system, user))
+
+
+def a_programmable_client(
+    respond: Any, *, profile: ProviderProfile | None = None, **kw: Any
+) -> tuple[LLMClient, ProgrammableTransport]:
+    transport = ProgrammableTransport(respond)
+    client = LLMClient(
+        profile or a_profile(), transport=transport, env={"TEST_API_KEY": "not-a-real-key"}, **kw
+    )
+    return client, transport

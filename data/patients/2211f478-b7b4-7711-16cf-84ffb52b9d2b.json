@@ -4213,6 +4213,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:38d9ed7b-18e5-3b82-7295-ab3cab4c67aa",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "38d9ed7b-18e5-3b82-7295-ab3cab4c67aa",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-e316-450a41ebfeeb",
       "request": {
         "method": "POST",
@@ -12649,6 +12676,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:5805c13c-4544-06e4-cef5-31a10f51a6df",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313572",
+              "display": "Vancomycin 50 MG/ML Injectable Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "Vancomycin 50 MG/ML Injectable Solution"
+        },
+        "id": "5805c13c-4544-06e4-cef5-31a10f51a6df",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-82ef-e2e92f645fd6",
       "request": {
         "method": "POST",
@@ -13357,6 +13411,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:3e6a24c0-3ffd-c552-1f33-bb240c7ca331",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "3e6a24c0-3ffd-c552-1f33-bb240c7ca331",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -14423,6 +14504,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:2465c2b1-27e4-81af-014a-1f0f05d28e49",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "2465c2b1-27e4-81af-014a-1f0f05d28e49",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-e411-2f087a5c9d4d",
       "request": {
         "method": "POST",
@@ -15164,6 +15272,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:dc348e5d-e4c6-5821-97f2-4ff17dacd294",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313572",
+              "display": "Vancomycin 50 MG/ML Injectable Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "Vancomycin 50 MG/ML Injectable Solution"
+        },
+        "id": "dc348e5d-e4c6-5821-97f2-4ff17dacd294",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -21799,6 +21934,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:270dbd77-a643-4191-7ba5-352fd8c7ad23",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "270dbd77-a643-4191-7ba5-352fd8c7ad23",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-d90d-625badbca483",
       "request": {
         "method": "POST",
@@ -22987,6 +23149,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:2397fd04-e8c4-d891-0186-09a72e3c70ff",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313572",
+              "display": "Vancomycin 50 MG/ML Injectable Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "Vancomycin 50 MG/ML Injectable Solution"
+        },
+        "id": "2397fd04-e8c4-d891-0186-09a72e3c70ff",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -28419,6 +28608,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:5609c22a-0b82-7896-df81-39e23e23dc2b",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "5609c22a-0b82-7896-df81-39e23e23dc2b",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-2460-b24e35e1bcca",
       "request": {
         "method": "POST",
@@ -28782,6 +28998,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:29445dc7-e3eb-8144-0825-285d4997ab22",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313572",
+              "display": "Vancomycin 50 MG/ML Injectable Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "Vancomycin 50 MG/ML Injectable Solution"
+        },
+        "id": "29445dc7-e3eb-8144-0825-285d4997ab22",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -36705,6 +36948,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:b8d9f042-2e9e-dd90-5295-ae03c47e6a77",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "b8d9f042-2e9e-dd90-5295-ae03c47e6a77",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-3af5-8175e0021a97",
       "request": {
         "method": "POST",
@@ -37068,6 +37338,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:29ff86b6-3981-49ab-8177-3ee8fc50978c",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313572",
+              "display": "Vancomycin 50 MG/ML Injectable Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "Vancomycin 50 MG/ML Injectable Solution"
+        },
+        "id": "29ff86b6-3981-49ab-8177-3ee8fc50978c",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -44309,6 +44606,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:6d65810d-f170-0af4-73c0-51032ab379eb",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "6d65810d-f170-0af4-73c0-51032ab379eb",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-c150-8c8f881b249e",
       "request": {
         "method": "POST",
@@ -45041,6 +45365,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f8bf19d4-f921-2a52-0575-238593770841",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313572",
+              "display": "Vancomycin 50 MG/ML Injectable Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "Vancomycin 50 MG/ML Injectable Solution"
+        },
+        "id": "f8bf19d4-f921-2a52-0575-238593770841",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -51855,6 +52206,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:60afc59d-b7a4-66b5-2063-a37c98703494",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "60afc59d-b7a4-66b5-2063-a37c98703494",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-305e-3430a1263fc7",
       "request": {
         "method": "POST",
@@ -52218,6 +52596,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e37cb0a5-db50-5013-89f3-8828970e11ab",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313572",
+              "display": "Vancomycin 50 MG/ML Injectable Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "Vancomycin 50 MG/ML Injectable Solution"
+        },
+        "id": "e37cb0a5-db50-5013-89f3-8828970e11ab",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -56421,6 +56826,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:a7c42758-27b2-7d93-1f3f-aa89080de44d",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "a7c42758-27b2-7d93-1f3f-aa89080de44d",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-f996-4fb50fe63b2e",
       "request": {
         "method": "POST",
@@ -59792,6 +60224,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:2553296c-e6e0-f9d1-0341-3630f8a088c7",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "2553296c-e6e0-f9d1-0341-3630f8a088c7",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-0691-322bae5cc56a",
       "request": {
         "method": "POST",
@@ -60571,6 +61030,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:727704cc-9405-2b4f-d58b-7774f3742255",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313572",
+              "display": "Vancomycin 50 MG/ML Injectable Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "Vancomycin 50 MG/ML Injectable Solution"
+        },
+        "id": "727704cc-9405-2b4f-d58b-7774f3742255",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -62029,6 +62515,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:ea3c13cd-e6ab-ba91-abd5-586bf0a8764f",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "ea3c13cd-e6ab-ba91-abd5-586bf0a8764f",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -66493,6 +67006,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:28cf5c03-fb56-cb98-cfd7-b772f25d3191",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313572",
+              "display": "Vancomycin 50 MG/ML Injectable Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "Vancomycin 50 MG/ML Injectable Solution"
+        },
+        "id": "28cf5c03-fb56-cb98-cfd7-b772f25d3191",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -80395,6 +80935,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:b84bb937-3db4-972f-a951-67152bc16892",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "b84bb937-3db4-972f-a951-67152bc16892",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-b6d5-82c057f8ece9",
       "request": {
         "method": "POST",
@@ -86179,6 +86746,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:36c392bb-dd26-dfae-a72a-23ec1ad54e9d",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "36c392bb-dd26-dfae-a72a-23ec1ad54e9d",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {
@@ -104025,6 +104619,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:3ff459c3-13d9-69d4-f827-b5819fbf414b",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "3ff459c3-13d9-69d4-f827-b5819fbf414b",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:2211f478-b7b4-7711-a40a-8681b22f69c3",
       "request": {
         "method": "POST",
@@ -105361,6 +105982,33 @@
         "subject": {
           "reference": "urn:uuid:2211f478-b7b4-7711-16cf-84ffb52b9d2b"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:989879db-67e1-aa7a-58cc-12af96d11ae1",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "989879db-67e1-aa7a-58cc-12af96d11ae1",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {

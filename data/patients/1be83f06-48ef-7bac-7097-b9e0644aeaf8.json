@@ -12701,6 +12701,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:574bf57a-4004-5fc5-7e0a-4cd9c172a141",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "574bf57a-4004-5fc5-7e0a-4cd9c172a141",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:1be83f06-48ef-7bac-821f-d6b75e4d96bd",
       "request": {
         "method": "POST",
@@ -32191,6 +32218,33 @@
         "subject": {
           "reference": "urn:uuid:1be83f06-48ef-7bac-7097-b9e0644aeaf8"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a5580e25-5d0c-3c9f-ab48-b27bb1ed2c58",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "313521",
+              "display": "tropicamide 5 MG/ML Ophthalmic Solution",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "tropicamide 5 MG/ML Ophthalmic Solution"
+        },
+        "id": "a5580e25-5d0c-3c9f-ab48-b27bb1ed2c58",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {

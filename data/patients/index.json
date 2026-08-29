@@ -1,6 +1,6 @@
 {
   "age_reference_date": "2026-06-01",
-  "generated_utc": "2026-08-29T07:36:08+00:00",
+  "generated_utc": "2026-08-29T09:41:02+00:00",
   "patients": [
     {
       "birth_date": "1979-11-06",
@@ -31,6 +31,7 @@
         "Unhealthy alcohol drinking behavior (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": "2026-05-03",
       "file": "1be83f06-48ef-7bac-7097-b9e0644aeaf8.json",
       "id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
       "latest_encounter_date": "2026-05-12",
@@ -121,6 +122,7 @@
         "Risk activity involvement (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "1e32a1a3-3638-cb8c-7253-ff98a97dc0fe.json",
       "id": "1e32a1a3-3638-cb8c-7253-ff98a97dc0fe",
       "latest_encounter_date": "2025-09-21",
@@ -198,6 +200,7 @@
         "Victim of intimate partner abuse (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": "2016-06-03",
       "file": "2211f478-b7b4-7711-16cf-84ffb52b9d2b.json",
       "id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b",
       "latest_encounter_date": "2016-06-13",
@@ -334,6 +337,7 @@
         "Victim of intimate partner abuse (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "23da8e71-dfb9-9773-1bc1-7b5e31d085b5.json",
       "id": "23da8e71-dfb9-9773-1bc1-7b5e31d085b5",
       "latest_encounter_date": "2026-06-20",
@@ -412,6 +416,7 @@
         "Medication review due (situation)",
         "Seizure disorder (disorder)"
       ],
+      "deceased_date": "1961-08-23",
       "file": "30889246-5f7d-9305-542f-55cb89e1f4de.json",
       "id": "30889246-5f7d-9305-542f-55cb89e1f4de",
       "latest_encounter_date": "1961-08-25",
@@ -468,6 +473,7 @@
         "Stress (finding)",
         "Victim of intimate partner abuse (finding)"
       ],
+      "deceased_date": null,
       "file": "35f80d0e-eaad-ef68-b762-3a1c12a872c1.json",
       "id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1",
       "latest_encounter_date": "2026-06-15",
@@ -572,6 +578,7 @@
         "Stress (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "3fa46c70-b194-f14c-3d51-e06cfa4bb9e2.json",
       "id": "3fa46c70-b194-f14c-3d51-e06cfa4bb9e2",
       "latest_encounter_date": "2026-05-30",
@@ -654,6 +661,7 @@
         "Unhealthy alcohol drinking behavior (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "5dae1e9e-46fb-5537-54f4-8837a56dd3d5.json",
       "id": "5dae1e9e-46fb-5537-54f4-8837a56dd3d5",
       "latest_encounter_date": "2026-05-31",
@@ -750,6 +758,7 @@
         "Received higher education (finding)",
         "Stress (finding)"
       ],
+      "deceased_date": null,
       "file": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b.json",
       "id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b",
       "latest_encounter_date": "2025-12-06",
@@ -847,6 +856,7 @@
         "Victim of intimate partner abuse (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "8c5b83b2-737e-46cf-953b-414e07ed78e7.json",
       "id": "8c5b83b2-737e-46cf-953b-414e07ed78e7",
       "latest_encounter_date": "2025-11-24",
@@ -938,6 +948,7 @@
         "Unhealthy alcohol drinking behavior (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": "2015-09-24",
       "file": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd.json",
       "id": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd",
       "latest_encounter_date": "2015-09-26",
@@ -1054,6 +1065,7 @@
         "Transport problem (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "97e39468-6488-ca8f-fac2-235a80b4dcf7.json",
       "id": "97e39468-6488-ca8f-fac2-235a80b4dcf7",
       "latest_encounter_date": "2025-10-15",
@@ -1144,6 +1156,7 @@
         "Social isolation (finding)",
         "Stress (finding)"
       ],
+      "deceased_date": null,
       "file": "a406f356-c8b4-54ad-e79c-54a5e15ffc19.json",
       "id": "a406f356-c8b4-54ad-e79c-54a5e15ffc19",
       "latest_encounter_date": "2026-06-05",
@@ -1212,6 +1225,7 @@
         "Acute bronchitis (disorder)",
         "Medication review due (situation)"
       ],
+      "deceased_date": null,
       "file": "a6d0791e-4c15-58e6-c30a-ec25e285ace9.json",
       "id": "a6d0791e-4c15-58e6-c30a-ec25e285ace9",
       "latest_encounter_date": "2026-06-09",
@@ -1264,6 +1278,7 @@
         "Stress (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "afb99eee-0bd5-8853-8a32-fad74da7b103.json",
       "id": "afb99eee-0bd5-8853-8a32-fad74da7b103",
       "latest_encounter_date": "2026-02-11",
@@ -1348,6 +1363,7 @@
         "Otitis media (disorder)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "babc4b97-d859-0fe4-2874-fb6fe493ae6b.json",
       "id": "babc4b97-d859-0fe4-2874-fb6fe493ae6b",
       "latest_encounter_date": "2026-02-28",
@@ -1398,6 +1414,7 @@
         "Risk activity involvement (finding)",
         "Stress (finding)"
       ],
+      "deceased_date": null,
       "file": "bd4e49cb-391b-d08a-c7ab-b585e7bd5758.json",
       "id": "bd4e49cb-391b-d08a-c7ab-b585e7bd5758",
       "latest_encounter_date": "2024-12-22",
@@ -1492,6 +1509,7 @@
         "Stress (finding)",
         "Victim of intimate partner abuse (finding)"
       ],
+      "deceased_date": null,
       "file": "cbd1dd48-89c3-3fdb-434e-3f0802738abf.json",
       "id": "cbd1dd48-89c3-3fdb-434e-3f0802738abf",
       "latest_encounter_date": "2026-01-06",
@@ -1574,6 +1592,7 @@
         "Victim of intimate partner abuse (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "cc3eac4a-34a7-9a15-1522-8087135631b7.json",
       "id": "cc3eac4a-34a7-9a15-1522-8087135631b7",
       "latest_encounter_date": "2026-02-09",
@@ -1648,6 +1667,7 @@
       "condition_display_list": [
         "Medication review due (situation)"
       ],
+      "deceased_date": null,
       "file": "ee4b7339-ca58-b6af-c199-04b6d5761c73.json",
       "id": "ee4b7339-ca58-b6af-c199-04b6d5761c73",
       "latest_encounter_date": "2026-07-01",
@@ -1697,6 +1717,7 @@
         "Prediabetes (finding)",
         "Stress (finding)"
       ],
+      "deceased_date": null,
       "file": "f67eaca3-2366-7ee2-6887-a5bd449b54a6.json",
       "id": "f67eaca3-2366-7ee2-6887-a5bd449b54a6",
       "latest_encounter_date": "2025-05-26",
@@ -1796,6 +1817,7 @@
         "Victim of intimate partner abuse (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "f870c432-0887-125e-f778-cf5110d3de1d.json",
       "id": "f870c432-0887-125e-f778-cf5110d3de1d",
       "latest_encounter_date": "2025-10-08",
@@ -1900,6 +1922,7 @@
         "Stress (finding)",
         "Victim of intimate partner abuse (finding)"
       ],
+      "deceased_date": "1991-06-06",
       "file": "fb56f051-a2cd-ac10-dcb0-e0738295fc1f.json",
       "id": "fb56f051-a2cd-ac10-dcb0-e0738295fc1f",
       "latest_encounter_date": "1991-06-08",
@@ -2040,6 +2063,7 @@
         "Victim of intimate partner abuse (finding)",
         "Viral sinusitis (disorder)"
       ],
+      "deceased_date": null,
       "file": "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4.json",
       "id": "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4",
       "latest_encounter_date": "2025-09-10",

@@ -2039,6 +2039,33 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:8e2ac760-98db-29d8-96f8-09a7e07540ea",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1605257",
+              "display": "levonorgestrel 0.000813 MG/HR Intrauterine System [Liletta]",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "levonorgestrel 0.000813 MG/HR Intrauterine System [Liletta]"
+        },
+        "id": "8e2ac760-98db-29d8-96f8-09a7e07540ea",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:cbd1dd48-89c3-3fdb-1769-93ab0170f85f",
       "request": {
         "method": "POST",
@@ -5441,6 +5468,33 @@
         "subject": {
           "reference": "urn:uuid:cbd1dd48-89c3-3fdb-434e-3f0802738abf"
         }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:d67b148d-30b3-72ce-81f4-d15de943cbaa",
+      "request": {
+        "method": "POST",
+        "url": "Medication"
+      },
+      "resource": {
+        "code": {
+          "coding": [
+            {
+              "code": "1535362",
+              "display": "sodium fluoride 0.0272 MG/MG Oral Gel",
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm"
+            }
+          ],
+          "text": "sodium fluoride 0.0272 MG/MG Oral Gel"
+        },
+        "id": "d67b148d-30b3-72ce-81f4-d15de943cbaa",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication"
+          ]
+        },
+        "resourceType": "Medication",
+        "status": "active"
       }
     },
     {

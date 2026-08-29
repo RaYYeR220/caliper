@@ -211,8 +211,14 @@ class TestDeceasedPatients:
 
     def test_the_reason_is_stated_rather_than_left_to_a_criterion(self):
         result = screen(criteria(AGE, A1C), self.dead_patient(date(2026, 5, 3)), SCREENING)
-        assert result.deciding_criterion_ids == ("VITAL-STATUS",)
-        assert any("died" in c.rationale for c in result.criteria)
+        assert result.blocked_by is not None
+        assert "died on 2026-05-03" in result.blocked_by
+        assert result.criteria == ()
+
+    def test_a_blocked_screening_is_complete_rather_than_uncovered(self):
+        """Nothing is unresolved, because nothing needed resolving."""
+        result = screen(criteria(AGE, A1C), self.dead_patient(date(2026, 5, 3)), SCREENING)
+        assert result.coverage == 1.0
 
     def test_a_death_recorded_after_the_screening_date_changes_nothing(self):
         result = screen(criteria(AGE, A1C), self.dead_patient(date(2026, 9, 1)), SCREENING)
