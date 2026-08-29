@@ -1,0 +1,63 @@
+# Improvement changelog
+
+How Caliper got from a single prompt to what is in this repository, what each change was supposed to
+buy, and what the evidence said.
+
+Two honesty notes before the table. First, not every entry came from an experiment. Some choices
+were made up front from the prior art — three-valued logic because CQL already specifies it, a
+deterministic evaluator because that was the whole premise — and pretending otherwise would make
+this document a story rather than a record. Where a decision was taken on principle it says so, and
+where it was forced by evidence the evidence is named.
+
+Second, the numbers live in [`RESULTS.md`](RESULTS.md), which is generated. Nothing here is typed
+by hand, so nothing here can go stale against the run.
+
+---
+
+## The journey
+
+| # | What was tried, and why | Evidence | Decision |
+|---|---|---|---|
+| 0 | **Baseline.** One prompt: the protocol text, the patient's chart, and "is this patient eligible?" | `single_prompt` row in `RESULTS.md` | Established the starting point, and the failure mode everything after this is about — it answers every case with the same confidence, including the ones the chart cannot support. |
+| 1 | **Compile to an executable IR, evaluate in code.** The premise: if the model produces a predicate rather than a verdict, the verdict becomes reviewable. | it worked, and immediately exposed entry 2 | Kept. This is the spine. |
+| 2 | **Boolean logic was wrong, not merely incomplete.** With two values, "no creatinine on file" and "creatinine above the ceiling" both came out as *not met*, and the patient was screened out for a lab nobody had ordered. | every case with a missing value produced a confident exclusion | Replaced with three-valued logic. `Verdict.UNKNOWN` is a first-class outcome, following CQL's null-propagation semantics rather than inventing our own. |
+| 3 | **Propagation.** Three values are only worth having if `UNKNOWN` cannot be rounded away. | `roll_up` in `logic.py`; asserted in `tests/test_logic.py` | Kept. `ELIGIBLE` is unreachable while any criterion is unresolved. This is the design, and everything else is in service of making it survivable. |
+| 4 | **Whole-protocol compilation → per-span compilation.** The obvious implementation hands the model the whole eligibility blob. Criteria went missing, and nothing noticed. | `caliper-whole-protocol` arm: the count of protocol spans no criterion claims | Kept per-span. The alternative is still in the repository and still measured, because "we chose the expensive one" is only worth saying with a number attached. |
+| 5 | **Quote fidelity.** A compiler that paraphrases before formalising leaves no way to tell which version the predicate encodes. | `test_a_paraphrasing_compiler_is_caught_on_real_text` | Kept. A criterion whose quote is not verbatim in the protocol is downgraded to unresolved rather than trusted. |
+| 6 | **Composite predicates.** Coverage was collapsing: "eGFR ≥25 and ≤60", "on an ACE inhibitor or an ARB" and every sub-bulleted criterion was being recorded as unformalisable. | the share of criteria compiled as `unsupported`, before and after | Kept, with a caveat. The IR is recursive; the schema sent to the model is the same structure unrolled to a fixed depth, because strict JSON-schema modes handle reference cycles badly and Venice reports one as a timeout rather than an error. |
+| 7 | **Terminology resolution, with a store that remembers.** Nothing matches evidence without a code, and a trial mentioning creatinine six times should cost one lookup. | `caliper-no-resolver` arm; the store's own hit rate across trials | Kept. The confidence gate matters more than the cache: a candidate below high confidence is discarded, because an uncoded concept still falls back to wording while a *wrong* code silently matches the wrong evidence. |
+| 8 | **The critic.** A compiled predicate that is subtly wrong looks exactly like one that is right. | `caliper-no-critic` arm; the downgrade rate per trial | Kept, in a specific form. The critic is shown two English sentences — the protocol's, and a deterministic rendering of the predicate — and never the JSON. Comparing sentences is a job that can be audited; auditing a data structure is not. |
+| 9 | **How to read silence.** The first version treated an unmentioned condition as absent, which is what a naive implementation does implicitly. | `caliper-closed-world` and `caliper-open-world` arms | Kept the coverage-gated middle. Absence counts only where an encounter documents the window. It is a modelling assumption and the alternatives are reported beside it so its size is visible. |
+| 10 | **Actionable abstention.** Abstention that does not say what is missing has moved the work rather than reduced it — and a 2025 study of 259 clinicians found abstention without explanation shifted errors rather than removing them. | every `UNKNOWN` in the packet carries a missing datum, a place to look, and a FHIR query | Kept. This is what makes the design a product rather than a safety argument. |
+| 11 | **Narrative extraction.** Real eligibility lives in prose, and a system that resolves a criterion by finding a phrase in a note will confidently diagnose the patient's father. | `tests/test_extractor.py`; the manifest in `data/notes/manifest.json` | Kept, with the guard in code rather than in the prompt. Only `present` and `absent` assertions survive; the quoted sentence must appear in the note verbatim; a narrative row cannot match a concept by wording at all, only by a code something took responsibility for attaching. |
+| 12 | **The writer and the prose linter.** A coordinator reading forty criteria wants sentences, and a sentence is the one place a model can drift. | `tests/test_writer.py`; the fallback rate reported per run | Kept. Every number and date in a written sentence is bound to *that criterion's* own values; two failures and the packet degrades to machine prose and says so. |
+
+## Experiments that were removed
+
+| What | Why it was tried | What happened |
+|---|---|---|
+| **A pseudo-criterion for vital status** | Five patients in the corpus are deceased, one of them four weeks before the screening date, and screening them normally produced a table of resolved criteria about a person who cannot be enrolled. The first fix injected a synthetic criterion called `VITAL-STATUS` into the result. | **Removed.** It leaked a criterion the protocol never contained into every consumer — the packet renderer crashed on it, and the metamorphic suite reported it as a criterion that had appeared from nowhere. Replaced with `blocked_by` on the screening itself: a fact about the screening is not a criterion, and modelling it as one made three other components wrong. |
+| **Rounding in the prose linter** | A sentence saying "1.2 mg/dL" should be allowed to describe a value of 1.199, so the linter accepted any number an allowed value rounded to. | **Revised.** Rounding to the whole number meant a threshold of 1.5 vouched for a sentence saying "2" — a linter that certifies an invented number is worse than none, because nobody looks again. Rounding is now permitted only to a decimal place. |
+| **Dates seeding the numeric allowed set** | The evaluator's own rationale is by definition derived from the record, so its numbers were added to what a sentence may say. | **Revised.** `2026-05-14` decomposed into 2026, 5 and 14, so a sentence could assert a creatinine of 2026 and pass. Dates are now stripped before numbers are extracted. |
+| **Letting the model choose the inclusion-or-exclusion kind** | It has the criterion in front of it and could reasonably say. | **Removed.** The segmenter already knows, from the section heading, and a model that mislabels it silently inverts the criterion's meaning. The kind now comes from the heading, and the model's opinion is discarded. |
+| **Letting the model choose criterion identifiers** | Simplest thing that could work. | **Removed.** Identifiers assigned in code are stable across runs and across models, which is what makes two arms comparable at all. |
+
+## Bugs the process found
+
+None of these were visible from outside the layer they lived in. All four came from reading one
+component closely enough to notice something did not fit.
+
+| Bug | Consequence | Found by |
+|---|---|---|
+| A criterion with no temporal window accepted evidence of **any** date, including after the screening date | Screenings dated 1 June were being decided from results dated in August. Synthea charts run past the fixed screening date, so this was live rather than theoretical. | building the chart summariser, which correctly hid future rows while the evaluator used them |
+| `Patient.deceasedDateTime` was dropped on ingestion | One patient who died four weeks before the screening date read as an ordinary, complete, screenable chart | building the evaluation cases |
+| `medicationReference` was not resolved, and `Medication` had been trimmed from the corpus | 114 of 342 prescriptions carried no drug identity at all, so any criterion about a concomitant or prohibited medication was unresolvable for two thirds of patients | rendering medications in the chart summary |
+| The prose linter's rounding rule | See above | writing the packet against it |
+
+## What the changelog is missing
+
+The order above is the order the components were reasoned about, not a clean chronology — several
+were built in parallel, and the ablation numbers were all measured at the end against the same
+frozen key rather than one at a time as each landed. That is a weaker form of evidence than a
+sequential A/B would be, and it is worth saying: the arms tell you what each component contributes
+to the *finished* system, not what it contributed on the day it was added.
