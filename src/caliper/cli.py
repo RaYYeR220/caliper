@@ -16,7 +16,7 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-from caliper import corpus
+from caliper import corpus, evalcmd
 from caliper.agents.base import AgentContext
 from caliper.llm import LLMClient, Trajectory, has_api_key, profile_from_env
 from caliper.pipeline import DEFAULT_CONFIG, PipelineConfig, compile_trial, screen_patient
@@ -24,6 +24,7 @@ from caliper.pipeline import DEFAULT_CONFIG, PipelineConfig, compile_trial, scre
 app = typer.Typer(add_completion=False, help="Evidence-bound pre-screening for clinical trials.")
 data_app = typer.Typer(help="Inspect and verify the committed fixtures.")
 app.add_typer(data_app, name="data")
+app.add_typer(evalcmd.app, name="")
 
 console = Console()
 

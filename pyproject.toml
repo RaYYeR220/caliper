@@ -50,6 +50,8 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 [tool.ruff.lint.per-file-ignores]
 # Typer's whole calling convention is function calls in argument defaults.
 "src/caliper/cli.py" = ["B008"]
+"src/caliper/evalcmd.py" = ["B008"]
+"src/caliper/uicmd.py" = ["B008"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["caliper"]

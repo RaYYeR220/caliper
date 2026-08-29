@@ -30,6 +30,7 @@ ALLOWED_RESOURCE_TYPES = frozenset(
         "DocumentReference",
         "Encounter",
         "Immunization",
+        "Medication",
         "MedicationRequest",
         "Observation",
         "Patient",
@@ -147,6 +148,54 @@ def test_patient_bundle_shape(path: Path) -> None:
     assert patient["id"] == path.stem, "file name must be the Patient resource id"
 
 
+def _coded_drug_is_resolvable(bundle: dict[str, Any], request: dict[str, Any]) -> bool:
+    """Whether a MedicationRequest names a drug that can be identified from this bundle."""
+    if (request.get("medicationCodeableConcept") or {}).get("coding"):
+        return True
+    reference = (request.get("medicationReference") or {}).get("reference")
+    if not reference:
+        return False
+    # Synthea links the two with urn:uuid references matching the Medication's fullUrl.
+    for entry in bundle["entry"]:
+        resource = entry["resource"]
+        if resource["resourceType"] != "Medication":
+            continue
+        if entry.get("fullUrl") == reference or resource.get("id") == reference.rsplit(":", 1)[-1]:
+            return bool((resource.get("code") or {}).get("coding"))
+    return False
+
+
+@pytest.mark.parametrize("path", PATIENT_PATHS, ids=[path.stem for path in PATIENT_PATHS])
+def test_medication_requests_resolve_to_a_coded_drug(path: Path) -> None:
+    """Every prescription must name an identifiable drug.
+
+    Synthea writes many MedicationRequests as a medicationReference into a Medication
+    resource. If Medication is ever dropped from the allow-list again, the reference
+    survives but resolves to nothing and criteria about concomitant drugs silently become
+    unanswerable, so this asserts on resolution rather than on the allow-list.
+    """
+    bundle = _load_json(path)
+    unresolved = [
+        entry["resource"].get("id")
+        for entry in bundle["entry"]
+        if entry["resource"]["resourceType"] == "MedicationRequest"
+        and not _coded_drug_is_resolvable(bundle, entry["resource"])
+    ]
+    assert not unresolved, f"{path.name} has MedicationRequests with no drug identity: {unresolved}"
+
+
+def test_hand_authored_notes_are_checksummed() -> None:
+    """The notes tree is a committed source too, so it must be under the same digests."""
+    notes_dir = DATA_DIR / "notes"
+    assert notes_dir.is_dir(), "data/notes is missing"
+    note_files = {
+        path.relative_to(DATA_DIR).as_posix() for path in notes_dir.rglob("*") if path.is_file()
+    }
+    assert note_files, "data/notes contains no files"
+    listed = {relative_path for _, relative_path in CHECKSUM_ENTRIES}
+    assert note_files <= listed, f"notes missing from SHA256SUMS: {sorted(note_files - listed)}"
+
+
 def test_index_covers_exactly_the_committed_bundles() -> None:
     """The manifest and the directory listing must agree in both directions."""
     index = _load_json(PATIENTS_DIR / "index.json")
@@ -168,6 +217,7 @@ def test_index_entry_is_complete(path: Path) -> None:
         "id",
         "file",
         "birth_date",
+        "deceased_date",
         "sex",
         "condition_display_list",
         "observation_loinc_codes_present",

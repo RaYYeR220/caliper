@@ -51,6 +51,7 @@ class _Entry:
 
     position: int
     resource: Mapping[str, Any]
+    full_url: str | None = None
 
     @property
     def resource_type(self) -> str:
@@ -326,8 +327,31 @@ def _entries(bundle: Mapping[str, Any]) -> list[_Entry]:
     for position, entry in enumerate(bundle.get("entry") or ()):
         resource = _dig(entry, "resource")
         if isinstance(resource, Mapping) and resource.get("resourceType"):
-            entries.append(_Entry(position=position, resource=resource))
+            full_url = _dig(entry, "fullUrl")
+            entries.append(
+                _Entry(
+                    position=position,
+                    resource=resource,
+                    full_url=full_url if isinstance(full_url, str) and full_url else None,
+                )
+            )
     return entries
+
+
+def _medication_lookup(entries: list[_Entry]) -> dict[str, Mapping[str, Any]]:
+    """Medication resources keyed by every pointer a MedicationRequest might use to reach them.
+
+    Synthea references them by the entry's `fullUrl` (`urn:uuid:...`), but a bundle assembled by
+    anything else may use `Medication/{id}` or the bare id, so all three forms are keyed.
+    """
+    lookup: dict[str, Mapping[str, Any]] = {}
+    for entry in entries:
+        if entry.resource_type != "Medication":
+            continue
+        for key in (entry.full_url, f"Medication/{entry.resource_id}", entry.resource_id):
+            if key:
+                lookup.setdefault(key, entry.resource)
+    return lookup
 
 
 def load_patient_index(bundle: dict[str, Any]) -> PatientIndex:
