@@ -10,13 +10,15 @@ from __future__ import annotations
 
 import json
 from types import SimpleNamespace
+from typing import get_args
 
 import pytest
 
 from caliper.agents import AgentContext
 from caliper.agents.critic import (
     AGENT_NAME,
-    ANCHOR,
+    ANCHOR_PHRASES,
+    DEFAULT_ANCHOR,
     BackTranslation,
     CriticReport,
     apply_findings,
@@ -233,6 +235,27 @@ JUDGEMENT = Criterion(
     predicate=UNSUPPORTED,
 )
 
+STEROID_QUOTE = "No systemic corticosteroids within 12 weeks prior to randomisation."
+STEROID_PROTOCOL = f"Exclusion Criteria\n\n* {STEROID_QUOTE}\n"
+
+STEROIDS = PresencePredicate(
+    type="medication",
+    concept=Concept(text="systemic corticosteroids"),
+    presence="absent",
+    window=TemporalWindow(relation="within", amount=12, unit="weeks", anchor="randomisation"),
+)
+
+
+def _steroid_criterion(*, anchor: str) -> Criterion:
+    """The same protocol sentence, compiled once faithfully and once with the anchor dropped."""
+    window = TemporalWindow(relation="within", amount=12, unit="weeks", anchor=anchor)
+    return Criterion(
+        id="EXC-01",
+        kind="exclusion",
+        source_quote=STEROID_QUOTE,
+        predicate=STEROIDS.model_copy(update={"window": window}),
+    )
+
 
 def a_criteria_set(*criteria: Criterion, source_text: str = PROTOCOL) -> CriteriaSet:
     return CriteriaSet(nct_id="NCT00000001", source_text=source_text, criteria=list(criteria))
@@ -279,12 +302,12 @@ class TestRenderPredicate:
         for relation, phrase in expected.items():
             window = TemporalWindow(relation=relation, amount=2, unit="weeks")
             rendered = render_predicate(CREATININE.model_copy(update={"window": window}))
-            assert f"{phrase} 2 weeks before {ANCHOR}" in rendered
+            assert f"{phrase} 2 weeks before {DEFAULT_ANCHOR}" in rendered
 
     def test_a_current_window_is_anchored_too(self):
         window = TemporalWindow(relation="current")
         rendered = render_predicate(CREATININE.model_copy(update={"window": window}))
-        assert f"current as of {ANCHOR}" in rendered
+        assert f"current as of {DEFAULT_ANCHOR}" in rendered
 
     def test_a_range_names_both_bounds_and_says_whether_they_are_included(self):
         rendered = render_predicate(FEV1_RANGE)
@@ -341,6 +364,78 @@ class TestRenderPredicate:
         assert [render_predicate(p) for p in EVERY_PREDICATE] == [
             render_predicate(p) for p in EVERY_PREDICATE
         ]
+
+
+# ------------------------------------------------------------------------------------------------
+
+
+class TestAnchorRendering:
+    """The anchor is the one part of a window nothing downstream re-checks.
+
+    `caliper.evaluate` resolves every window against the screening date whatever the protocol
+    anchored it to, and records the difference as an approximation rather than an error. The
+    back-translation is therefore the only place a *miscompiled* anchor is caught, and the only
+    way it can be caught is for the rendered sentence to say which event the window counts from.
+    """
+
+    def _anchored(self, anchor: str, relation: str = "within") -> str:
+        window = TemporalWindow(relation=relation, amount=12, unit="weeks", anchor=anchor)
+        return render_predicate(STEROIDS.model_copy(update={"window": window}))
+
+    def test_every_anchor_the_ir_allows_has_a_phrase(self):
+        """If the IR grows an anchor, this fails before a rendering can quietly omit it."""
+        allowed = get_args(TemporalWindow.model_fields["anchor"].annotation)
+        assert set(allowed) == set(ANCHOR_PHRASES)
+        assert DEFAULT_ANCHOR in ANCHOR_PHRASES
+
+    def test_each_anchor_renders_as_the_event_it_names(self):
+        for anchor, phrase in ANCHOR_PHRASES.items():
+            rendered = self._anchored(anchor)
+            assert rendered.endswith(f"recorded within the 12 weeks before {phrase}")
+            assert "_" not in rendered, f"{anchor} leaked its identifier spelling"
+
+    def test_a_current_window_carries_its_anchor_too(self):
+        window = TemporalWindow(relation="current", anchor="first_dose")
+        rendered = render_predicate(STEROIDS.model_copy(update={"window": window}))
+        assert rendered.endswith("current as of the first dose")
+
+    def test_a_non_screening_anchor_does_not_mention_screening(self):
+        rendered = self._anchored("randomisation")
+        assert "before randomisation" in rendered
+        assert "screening" not in rendered
+
+    def test_an_open_window_names_no_anchor_because_it_has_no_boundary(self):
+        window = TemporalWindow(relation="ever", anchor="randomisation")
+        rendered = render_predicate(STEROIDS.model_copy(update={"window": window}))
+        assert rendered.endswith("recorded at any time in the patient's record")
+        assert "randomisation" not in rendered
+
+    def test_an_anchor_shifted_criterion_is_compared_against_its_own_anchor(self):
+        """The spurious mismatch that used to be unavoidable: quote and sentence now agree."""
+        criterion = _steroid_criterion(anchor="randomisation")
+        ctx, transport = a_context([a_verdict("equivalent", "same span, same anchor")])
+        finding = back_translate(criterion, ctx)
+
+        user = transport.requests[0]["messages"][1]["content"]
+        assert "prior to randomisation" in user
+        assert "before randomisation" in user
+        assert "screening" not in user
+        assert not finding.is_downgrade
+
+    def test_the_same_quote_compiled_against_screening_is_still_catchable(self):
+        """The genuine bug: the protocol counts back from randomisation, the predicate does not."""
+        criterion = _steroid_criterion(anchor="screening")
+        ctx, transport = a_context(
+            [a_verdict("contradicts", "the quote counts back from randomisation, not screening")]
+        )
+        criteria_set = a_criteria_set(criterion, source_text=STEROID_PROTOCOL)
+        applied = apply_findings(criteria_set, review(criteria_set, ctx))
+
+        user = transport.requests[0]["messages"][1]["content"]
+        assert "prior to randomisation" in user
+        assert "before screening" in user
+        assert applied.criteria[0].predicate.type == "unsupported"
+        assert "randomisation" in applied.criteria[0].predicate.reason
 
 
 # ------------------------------------------------------------------------------------------------
@@ -528,7 +623,19 @@ class TestCoverageReport:
         assert coverage.claimed_span_indices == (1, 2, 3)
         assert coverage.unclaimed_span_indices == (0, 4)
 
-    def test_a_quote_spanning_a_parent_and_its_children_claims_all_three(self):
+    def test_an_inherited_claim_is_reported_apart_from_the_quote_that_earned_it(self):
+        """The sub-bullet thresholds rest on nothing but their parent, and the report says so."""
+        coverage = coverage_report(a_criteria_set(COPD))
+        assert coverage.direct_span_indices == (1,)
+        assert coverage.inherited_span_indices == (2, 3)
+        assert [s.text for s in coverage.inherited_spans] == [
+            "Post-bronchodilator FEV1/FVC ratio <0.70.",
+            "FEV1 between 30% and 70% predicted.",
+        ]
+        # Weaker evidence, not a failure: the ratio is unchanged and nothing is flagged.
+        assert coverage.coverage == pytest.approx(0.6)
+
+    def test_a_quote_spanning_a_parent_and_its_children_claims_all_three_directly(self):
         quoted = Criterion(
             id="INC-02",
             kind="inclusion",
@@ -539,7 +646,20 @@ class TestCoverageReport:
             ),
             predicate=FEV1_RANGE,
         )
-        assert coverage_report(a_criteria_set(quoted)).claimed_span_indices == (1, 2, 3)
+        coverage = coverage_report(a_criteria_set(quoted))
+        assert coverage.direct_span_indices == (1, 2, 3)
+        assert coverage.inherited_spans == ()
+
+    def test_a_span_quoted_in_its_own_right_is_never_demoted_to_inherited(self):
+        child = Criterion(
+            id="INC-03",
+            kind="inclusion",
+            source_quote="FEV1 between 30% and 70% predicted.",
+            predicate=FEV1_RANGE,
+        )
+        coverage = coverage_report(a_criteria_set(COPD, child))
+        assert coverage.direct_span_indices == (1, 3)
+        assert coverage.inherited_span_indices == (2,)
 
     def test_claiming_forgives_whitespace_and_case_but_not_wording(self):
         loose = Criterion(
@@ -575,6 +695,13 @@ class TestCoverageReport:
         assert "Current smoker." in markdown
         assert "[4]" in markdown
 
+    def test_the_report_separates_what_is_missing_from_what_is_merely_implied(self):
+        markdown = coverage_report(a_criteria_set(AGE_BAND, COPD)).to_markdown()
+        missing = markdown.index("Spans no criterion claims")
+        implied = markdown.index("Spans claimed only through their parent")
+        assert missing < implied
+        assert "FEV1 between 30% and 70% predicted." in markdown[implied:]
+
 
 # ------------------------------------------------------------------------------------------------
 
@@ -591,6 +718,9 @@ class TestCriticReportRendering:
         assert "narrower" in markdown
         assert "window too tight" in markdown
         assert "Current smoker." in markdown
+        # The weak claims travel with the report a human actually opens, not only with `Coverage`.
+        assert [s.index for s in report.inherited_spans] == [2, 3]
+        assert "Spans claimed only through their parent" in markdown
 
     def test_a_report_without_findings_still_renders(self):
         report = CriticReport.from_coverage((), coverage_report(a_criteria_set(AGE_BAND)))

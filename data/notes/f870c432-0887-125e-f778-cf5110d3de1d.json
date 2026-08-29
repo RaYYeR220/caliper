@@ -1,0 +1,23 @@
+[
+  {
+    "author_role": "cardiology registrar",
+    "date": "2025-03-18",
+    "note_id": "f870c432-disch-2025-03-18",
+    "text": "Discharge summary - Coronary Care Unit\n\nDOA 14/03/2025   DOD 18/03/2025\n\nPresented with an inferior STEMI on 14 March 2025 and was treated with primary PCI to the right\ncoronary artery, one drug eluting stent, door to balloon 52 minutes.\n\nPeak troponin 8400 ng/L. Echo the following morning showed inferior hypokinesia with an EF of\n48%.\n\nUncomplicated recovery. Brief run of accelerated idioventricular rhythm on day 1, self\nterminating, no treatment given.\n\nDischarged on ticagrelor 90 mg bd for 12 months, aspirin 75 mg od indefinitely, bisoprolol\n2.5 mg od, ramipril 2.5 mg od, atorvastatin 80 mg nocte.\n\nHe tells me his brother had a stent at 47 and his mother has angina.\n\nCardiac rehab referral made. Not to drive for one week. GP to check lipids and renal function at\nfour weeks.",
+    "type": "Discharge summary"
+  },
+  {
+    "author_role": "cardiologist",
+    "date": "2025-06-10",
+    "note_id": "f870c432-card-2025-06-10",
+    "text": "Dear Dr Salmond\n\nThank you for asking me to see this 55 year old man again, three months after his inferior\ninfarct.\n\nHe is limited more by his back than by his heart. Walks 20 minutes on the flat. No chest pain\nsince discharge and no breathlessness lying flat.\n\nRepeat echo today: EF 44%, mild mitral regurgitation, normal right ventricle. LDL 2.9 mmol/L on\natorvastatin 80 mg. HbA1c 5.4%.\n\nHe does not have diabetes and never has. A single raised fasting glucose in 2011 was not\nreproduced.\n\nWe would consider an ICD if the ejection fraction is still below 35% at the nine month scan, but\non today's numbers that looks unlikely.\n\nContinue current treatment. I will see him once more in December and then discharge him back to\nyou.\n\nYours sincerely\nDr M. Farrow",
+    "type": "Cardiology clinic letter"
+  },
+  {
+    "author_role": "general practitioner",
+    "date": "2025-10-08",
+    "note_id": "f870c432-gp-2025-10-08",
+    "text": "Med review. 15 minute appointment, ran over.\n\nMain issue today is the back. Wants something stronger than co-codamol. I have said no and\nexplained why; he took it reasonably.\n\nCardiac side is quiet. No angina since March, taking everything, ticagrelor due to stop in March\n2026.\n\nSleep is poor. His partner is currently on treatment for smear positive pulmonary TB and he is\nworried about it. Contact screening arranged through the chest clinic; he has no cough and no\nweight loss.\n\nBP 128/78. Weight 104 kg, up 3 kg since June.\n\nActions: physio referral for the back, chest clinic contact screening, review 3/12.",
+    "type": "GP consultation"
+  }
+]

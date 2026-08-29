@@ -134,12 +134,28 @@ class Finding:
 
 @dataclass(frozen=True)
 class Coverage:
-    """Which spans of the protocol some criterion claims, and which nobody does."""
+    """Which spans of the protocol some criterion claims, and which nobody does.
+
+    A claim comes with one of two strengths, and they are kept apart rather than summed. A *direct*
+    claim means a criterion's quote contains that span's text. An *inherited* claim means only that
+    the span's parent was claimed — which is the right default (a sub-bullet qualifies its parent
+    rather than standing alone) but is genuinely weaker evidence, and a compiler that quoted a
+    parent while dropping the threshold underneath it looks identical from here.
+    """
 
     total_spans: int
-    claimed_span_indices: tuple[int, ...]
+    direct_span_indices: tuple[int, ...]
+    inherited_spans: tuple[CriterionSpan, ...]
     unclaimed_spans: tuple[CriterionSpan, ...]
     quote_problems: tuple[QuoteProblem, ...]
+
+    @property
+    def claimed_span_indices(self) -> tuple[int, ...]:
+        return tuple(sorted(set(self.direct_span_indices) | set(self.inherited_span_indices)))
+
+    @property
+    def inherited_span_indices(self) -> tuple[int, ...]:
+        return tuple(span.index for span in self.inherited_spans)
 
     @property
     def coverage(self) -> float:
@@ -161,7 +177,11 @@ class Coverage:
             f"{len(self.claimed_span_indices)} of {self.total_spans} protocol spans claimed "
             f"({self.coverage * 100:.0f}%)."
         )
-        return "\n".join(_coverage_section(headline, self.unclaimed_spans, self.quote_problems))
+        return "\n".join(
+            _coverage_section(
+                headline, self.unclaimed_spans, self.inherited_spans, self.quote_problems
+            )
+        )
 
 
 @dataclass(frozen=True)
@@ -172,6 +192,8 @@ class CriticReport:
     coverage: float
     unclaimed_spans: tuple[CriterionSpan, ...]
     quote_problems: tuple[QuoteProblem, ...]
+    inherited_spans: tuple[CriterionSpan, ...] = ()
+    """Spans claimed only through a parent. Not a failure, but the weakest claim in the report."""
 
     @classmethod
     def from_coverage(cls, findings: tuple[Finding, ...], coverage: Coverage) -> CriticReport:
@@ -180,6 +202,7 @@ class CriticReport:
             coverage=coverage.coverage,
             unclaimed_spans=coverage.unclaimed_spans,
             quote_problems=coverage.quote_problems,
+            inherited_spans=coverage.inherited_spans,
         )
 
     @property
@@ -198,7 +221,9 @@ class CriticReport:
             ]
             out += ["", f"{len(self.downgrades)} of {len(self.findings)} would be downgraded.", ""]
         headline = f"{self.coverage * 100:.0f}% of protocol spans are claimed by some criterion."
-        out += _coverage_section(headline, self.unclaimed_spans, self.quote_problems)
+        out += _coverage_section(
+            headline, self.unclaimed_spans, self.inherited_spans, self.quote_problems
+        )
         return "\n".join(out)
 
 
@@ -273,18 +298,27 @@ def _with_window(base: str, window: TemporalWindow | None, verb: str) -> str:
 
 def _window(window: TemporalWindow, verb: str) -> str:
     if window.relation == "ever":
+        # An unbounded window has no anchor to speak of: naming one would assert a boundary the
+        # predicate does not have, and invite the model to disagree about a date nothing uses.
         return f"{verb} at any time in the patient's record"
+
+    anchor = _anchor(window)
     if window.relation == "current":
-        return f"current as of {ANCHOR}"
+        return f"current as of {anchor}"
 
     assert window.amount is not None and window.unit is not None  # enforced by the IR
     unit = window.unit[:-1] if window.amount == 1 else window.unit
     span = f"{window.amount} {unit}"
     if window.relation == "within":
-        return f"{verb} within the {span} before {ANCHOR}"
+        return f"{verb} within the {span} before {anchor}"
     if window.relation == "before":
-        return f"{verb} more than {span} before {ANCHOR}"
-    return f"{verb} less than {span} before {ANCHOR}"
+        return f"{verb} more than {span} before {anchor}"
+    return f"{verb} less than {span} before {anchor}"
+
+
+def _anchor(window: TemporalWindow) -> str:
+    """The event the window counts back from, in words. An unmapped anchor still reads as one."""
+    return ANCHOR_PHRASES.get(window.anchor, window.anchor.replace("_", " "))
 
 
 def _number(value: float | str) -> str:
@@ -319,9 +353,10 @@ def critic_prompt() -> str:
 def comparison_request(quote: str, rendered: str) -> str:
     """The two sentences, labelled, and nothing else. No JSON reaches the model from here.
 
-    Nothing is said here about what B was compiled from or what vocabulary it was rendered with.
-    A hint that the anchor is fixed by the IR would excuse the one mistake this check is best
-    placed to catch — a window that no longer measures from the date the protocol measured from.
+    Nothing is said about what B was compiled from or what vocabulary it was rendered with. A hint
+    that some part of B is fixed by the IR rather than chosen by the compiler would excuse exactly
+    the mistakes this check is best placed to catch — a window that counts back from a different
+    event than the protocol counted back from, most of all.
     """
     return (
         "Sentence A, quoted from the protocol:\n"
@@ -418,37 +453,47 @@ def _downgrade_reason(finding: Finding) -> str:
 def coverage_report(criteria_set: CriteriaSet) -> Coverage:
     """Which segmented spans of the protocol some criterion claims, and which nobody does."""
     spans = segment(criteria_set.source_text)
-    claimed = _claimed_span_indices(spans, criteria_set)
+    direct, inherited = _claim_spans(spans, criteria_set)
+    claimed = direct | inherited
     return Coverage(
         total_spans=len(spans),
-        claimed_span_indices=tuple(sorted(claimed)),
+        direct_span_indices=tuple(sorted(direct)),
+        inherited_spans=tuple(span for span in spans if span.index in inherited),
         unclaimed_spans=tuple(span for span in spans if span.index not in claimed),
         quote_problems=tuple(quote_fidelity_problems(criteria_set)),
     )
 
 
-def _claimed_span_indices(spans: list[CriterionSpan], criteria_set: CriteriaSet) -> set[int]:
-    """A span is claimed when some criterion's quote contains it, or its parent's quote does.
+def _claim_spans(
+    spans: list[CriterionSpan], criteria_set: CriteriaSet
+) -> tuple[set[int], set[int]]:
+    """Split the claimed spans into the ones a quote actually contains and the ones it implies.
 
     Containment rather than equality, because one criterion legitimately quotes a parent bullet
-    together with the sub-bullets underneath it. The inherited claim covers the other half of that
-    case: a criterion quoting only the parent has compiled the sub-conditions hanging off it, since
-    those qualify the parent rather than standing on their own. Both readings are deliberately
-    generous — this check exists to find spans nobody went near, and a false alarm on a
-    legitimately merged criterion trains people to ignore the report.
+    together with the sub-bullets underneath it. Inheritance covers the other half of that case: a
+    criterion quoting only the parent has compiled the sub-conditions hanging off it, since those
+    qualify the parent rather than standing on their own.
+
+    Both readings are deliberately generous — this check exists to find spans nobody went near, and
+    a false alarm on a legitimately merged criterion trains people to ignore the report. Returning
+    the two sets separately is how the generosity stays honest: the report can say which spans rest
+    on nothing but their parent without promoting them to failures.
     """
     quotes = [_normalise(criterion.source_quote) for criterion in criteria_set.criteria]
-    claimed = {
+    direct = {
         span.index
         for span in spans
         if span.text.strip() and any(_normalise(span.text) in quote for quote in quotes)
     }
     # Spans are in document order and a parent always precedes its children, so one forward pass
     # propagates a claim down an arbitrarily deep nesting.
+    inherited: set[int] = set()
     for span in spans:
-        if span.parent_index is not None and span.parent_index in claimed:
-            claimed.add(span.index)
-    return claimed
+        if span.parent_index is None or span.index in direct:
+            continue
+        if span.parent_index in direct or span.parent_index in inherited:
+            inherited.add(span.index)
+    return direct, inherited
 
 
 def _normalise(text: str) -> str:
@@ -464,13 +509,23 @@ def _cell(text: str) -> str:
 def _coverage_section(
     headline: str,
     unclaimed: tuple[CriterionSpan, ...],
+    inherited: tuple[CriterionSpan, ...],
     problems: tuple[QuoteProblem, ...],
 ) -> list[str]:
-    """The half of either report a reviewer actually acts on: what nobody compiled."""
+    """The half of either report a reviewer actually acts on: what nobody compiled.
+
+    Unclaimed spans come first because they are the failures. Inherited claims follow, listed but
+    not counted against the ratio: they are the spans a reviewer should spot-check first if the
+    compiled criteria look thinner than the protocol reads.
+    """
     out = ["## Coverage", "", headline, ""]
     if unclaimed:
         out += ["Spans no criterion claims:", ""]
         out += [f"- [{span.index}] {span.text}" for span in unclaimed]
+        out += [""]
+    if inherited:
+        out += ["Spans claimed only through their parent, not quoted by any criterion:", ""]
+        out += [f"- [{span.index}] {span.text}" for span in inherited]
         out += [""]
     if problems:
         out += ["Quotes that are not verbatim in the protocol text:", ""]

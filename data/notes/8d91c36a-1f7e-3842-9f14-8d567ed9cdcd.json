@@ -1,0 +1,16 @@
+[
+  {
+    "author_role": "heart failure nurse specialist",
+    "date": "2015-04-22",
+    "note_id": "8d91c36a-hf-2015-04-22",
+    "text": "HF clinic, nurse led.\n\n34M with chronic heart failure, non-ischaemic, EF 30% at diagnosis in 2012. Admitted with\ndecompensated heart failure in 2013; no recurrence since.\n\nToday: weight 98.4 kg against a dry weight of 97 kg. No orthopnoea, sleeps on one pillow. Ankles\nfine. NYHA II.\n\nFurosemide 40 mg od, ramipril 7.5 mg od, bisoprolol 7.5 mg od, spironolactone 25 mg od.\nTolerating all of it.\n\nU&E stable, creatinine 1.1 mg/dL, potassium 4.4 mmol/L.\n\nDenies alcohol now. He was drinking heavily until 2012 and says he has not touched it since the\nadmission.\n\nUptitration complete. Echo booked for August. Will discuss ICD implantation with the consultant\nif the EF is still below 35% on that scan.",
+    "type": "Heart failure clinic note"
+  },
+  {
+    "author_role": "emergency department doctor",
+    "date": "2015-09-26",
+    "note_id": "8d91c36a-ed-2015-09-26",
+    "text": "ED 23:10.\n\nHand laceration, kitchen knife, 4 cm across the left palm. Tetanus up to date.\n\nWound explored under local anaesthetic. No tendon or nerve involvement. Closed with six 4/0\nnylon. Neurovascularly intact distally.\n\nKnown heart failure, on furosemide. No shortness of breath today, no chest pain, chest clear.\n\nHe mentions his sister was told last year that she has a 'weak heart' as well and asks whether\nit runs in families.\n\nRemoval of sutures in 10 days at the practice. Discharged.",
+    "type": "Emergency department note"
+  }
+]

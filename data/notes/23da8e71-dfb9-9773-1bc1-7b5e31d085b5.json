@@ -1,0 +1,23 @@
+[
+  {
+    "author_role": "cardiologist",
+    "date": "2026-03-04",
+    "note_id": "23da8e71-card-2026-03-04",
+    "text": "Cardiology clinic - six month review\n\n62M, ex-smoker (stopped 2011), seen six months after CABG x3.\n\nSymptoms\nNYHA II on inclines only. No rest angina, no orthopnoea, no PND. Walking the dog twice a day\nwithout stopping.\n\nO/E\nSternotomy well healed. JVP not raised. HS I + II + 0. Chest clear, no peripheral oedema.\nBP 138/84 sitting, HR 62 and regular.\n\nBloods\nCreatinine today 1.7 mg/dL, up from 1.2 in January. K 4.6, Hb 12.1. Repeat U&E in two weeks\nbefore we touch the ramipril.\n\nBackground\nThree-vessel disease at angiography, grafted electively on 6 November 2024. No history of\nmyocardial infarction. Father had an MI in his fifties and a second one at 61, which killed him.\n\nImpression: stable revascularised ischaemic heart disease with a creeping creatinine, most\nlikely ACE related.\n\nPlan: repeat bloods 2/52, hold the ramipril dose, review in six months. If the creatinine has\nnot settled we would consider stopping the ACE inhibitor altogether.",
+    "type": "Cardiology clinic letter"
+  },
+  {
+    "author_role": "cardiology registrar",
+    "date": "2026-05-19",
+    "note_id": "23da8e71-disch-2026-05-19",
+    "text": "DISCHARGE SUMMARY\n\nAdmitted 17/05/2026. Discharged 19/05/2026. Ward B4, under Dr Okonjo.\n\nPresenting complaint\nCentral chest tightness at rest, 40 minutes, settled with GTN in the ambulance.\n\nInpatient course\nSerial troponin flat at 14 then 15 ng/L. ECG unchanged from the 2024 tracing. Myocardial\ninfarction was excluded on this admission. He was pain free from arrival and mobilised on the\nward without symptoms.\n\nChest wall tenderness was reproducible on palpation over the left costal margin, and the pain is\nmore likely musculoskeletal than cardiac.\n\nCT head, requested by the medical registrar after a witnessed collapse in the department,\nreported an old right occipital infarct unchanged since 2019. He had not been told about this\nbefore and it was discussed with him at length prior to discharge.\n\nQuery paroxysmal AF as the cause of the collapse. A 7 day holter has been fitted and the result\nwill go to the cardiology clinic.\n\nDischarge medication unchanged: bisoprolol 5 mg od, atorvastatin 80 mg nocte, aspirin 75 mg od,\nramipril 5 mg od.",
+    "type": "Discharge summary"
+  },
+  {
+    "author_role": "practice nurse",
+    "date": "2026-06-20",
+    "note_id": "23da8e71-triage-2026-06-20",
+    "text": "Telephone triage 08:40.\n\nRash both shins x3 days. No fever, no blistering, not systemically unwell. No new medication and\nno new soap or washing powder.\n\nSays the chest has been fine since the May admission, no further tightness, taking all four\ntablets.\n\nAsked directly: no bleeding, no black stools, no bruising on the aspirin.\n\nBooked face to face with the duty GP tomorrow am for the rash. Safety netted for fever or\nspreading redness.",
+    "type": "Nurse triage note"
+  }
+]

@@ -85,6 +85,9 @@ class CriterionRow:
     verdict_slug: str
     rationale: str
     engine_written: bool
+    decisive: bool = False
+    """Whether this criterion alone ended the screening."""
+
     evidence: tuple[EvidenceLine, ...] = ()
 
 
@@ -149,7 +152,8 @@ def build_packet(
         )
 
     by_id = {criterion.id: criterion for criterion in criteria_set.criteria}
-    rows = tuple(_row(outcome, by_id, rationales) for outcome in result.criteria)
+    decisive = set(result.deciding_criterion_ids)
+    rows = tuple(_row(outcome, by_id, rationales, decisive) for outcome in result.criteria)
     rows_by_id = {row.criterion_id: row for row in rows}
 
     deciding: tuple[CriterionRow, ...] = ()
@@ -197,6 +201,7 @@ def _row(
     outcome: CriterionResult,
     by_id: dict[str, Criterion],
     rationales: RationaleSet,
+    decisive: set[str],
 ) -> CriterionRow:
     criterion = by_id.get(outcome.criterion_id)
     if criterion is None:
@@ -216,6 +221,7 @@ def _row(
         verdict_slug=_VERDICT_SLUGS[outcome.verdict],
         rationale=sentence,
         engine_written=engine_written,
+        decisive=outcome.criterion_id in decisive,
         evidence=tuple(_evidence_line(e) for e in outcome.evidence),
     )
 
@@ -320,12 +326,13 @@ def _markdown_table(packet: Packet) -> list[str]:
     ]
     for row in packet.rows:
         evidence = "; ".join(line.citation for line in row.evidence) or "none on file"
+        identifier = f"{row.criterion_id} (decisive)" if row.decisive else row.criterion_id
         lines.append(
             "| "
             + " | ".join(
                 _cell(value)
                 for value in (
-                    row.criterion_id,
+                    identifier,
                     row.kind,
                     row.verdict,
                     row.quote,

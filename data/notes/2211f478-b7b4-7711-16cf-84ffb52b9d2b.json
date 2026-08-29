@@ -1,0 +1,23 @@
+[
+  {
+    "author_role": "respiratory consultant",
+    "date": "2015-11-30",
+    "note_id": "2211f478-resp-2015-11-30",
+    "text": "CF clinic review\n\n31F with cystic fibrosis, F508del homozygous, followed here since transition from paediatrics.\n\nTwo exacerbations this year, both treated at home with oral ciprofloxacin. FEV1 today 1.62 L,\n54% predicted, down from 61% in March.\n\nSputum grew Pseudomonas aeruginosa in September and eradication was completed in October.\n\nCF related diabetes diagnosed in 2009, on insulin, HbA1c 7.8% last month.\n\nShe has not had a pneumothorax and has never needed non-invasive ventilation.\n\nMother has coeliac disease. No family history of lung disease other than her own.\n\nPlan: annual review bloods, DEXA due, refer to the transplant assessment clinic if the FEV1\nfalls below 40% predicted.",
+    "type": "Respiratory clinic letter"
+  },
+  {
+    "author_role": "renal registrar",
+    "date": "2016-02-04",
+    "note_id": "2211f478-renal-2016-02-04",
+    "text": "Renal clinic\n\nReferred with a rising creatinine on the CF annual bloods.\n\nCreatinine 1.4 mg/dL today, was 0.9 mg/dL eighteen months ago. eGFR 48 mL/min/1.73m2. Urine ACR\n12 mg/mmol.\n\nLong history of aminoglycoside exposure for CF exacerbations, plus CF related diabetes since\n2009. Both are plausible contributors.\n\nRenal ultrasound: kidneys 10.4 and 10.1 cm, normal cortical thickness, no obstruction, a simple\n2 cm cyst on the right.\n\nMesenteric ischaemia was excluded on the CT angiogram done in November for her abdominal pain,\nso the abdominal symptoms are not vascular.\n\nDiabetic nephropathy is the working diagnosis but no biopsy has been done and I would not push\nfor one.\n\nRepeat bloods 3/12. Avoid NSAIDs. Copy to the CF team.",
+    "type": "Nephrology clinic note"
+  },
+  {
+    "author_role": "CF specialist nurse",
+    "date": "2016-06-13",
+    "note_id": "2211f478-triage-2016-06-13",
+    "text": "Phone call from patient, 14:20.\n\nIncreased sputum volume over 4 days, now green. No haemoptysis. Breathless on the stairs, which\nis new for her. Temp 37.8 at home.\n\nAppetite poor. Weight down 1.2 kg since clinic.\n\nSats 94% on the home oximeter.\n\nDiscussed with the on call CF consultant. To come in this afternoon for IV antibiotics via the\nport.\n\nReminded her to call 999 rather than wait for the morning if she deteriorates overnight.",
+    "type": "Nurse triage note"
+  }
+]

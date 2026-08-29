@@ -1,0 +1,16 @@
+[
+  {
+    "author_role": "respiratory registrar",
+    "date": "2025-09-17",
+    "note_id": "cbd1dd48-resp-2025-09-17",
+    "text": "Dear Dr Ainsley\n\nRe: emphysema in a 36 year old.\n\nShe was referred after a CT thorax done for persistent cough showed basal panlobular emphysema.\nAlpha-1 antitrypsin level 0.6 g/L, phenotype PiZZ. That explains it.\n\nSpirometry: FEV1 2.14 L (68%), FEV1/FVC 0.61, no significant reversibility.\n\nTwenty pack year history, stopped in March 2024 and has stayed stopped.\n\nShe has never been admitted with a respiratory infection and has had no exacerbations requiring\nsteroids in the last twelve months.\n\nHer brother has also been found to be PiZZ and is under the Newcastle service.\n\nWe would consider augmentation therapy if the FEV1 declines faster than 60 mL per year, which is\nnot the case at present.\n\nVaccinations up to date. Pulmonary rehabilitation referral made.\n\nYours sincerely\nDr K. Prasad",
+    "type": "Respiratory clinic letter"
+  },
+  {
+    "author_role": "general practitioner",
+    "date": "2026-01-06",
+    "note_id": "cbd1dd48-gp-2026-01-06",
+    "text": "Cough again, 10 days, productive, no fever.\n\nChest: scattered wheeze, no focal signs. Sats 97%. Afebrile.\n\nAcute bronchitis on a background of emphysema. Doxycycline 200 mg then 100 mg for 4 days.\n\nThe miscarriage in 2018 came up again today. She is fine talking about it but wanted it recorded\nthat she does not want it raised at every appointment. Noted.\n\nTubal ligation 2021, so no contraception needed.\n\nReview if not settling in a week, or sooner if she becomes breathless at rest.",
+    "type": "GP consultation"
+  }
+]

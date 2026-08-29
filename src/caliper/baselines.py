@@ -87,7 +87,7 @@ class SinglePrompt:
         return BaselineDecision(
             outcome=ScreeningOutcome(completion.value.outcome),
             rationale=completion.value.reasoning,
-            cost_usd=completion.cost.total_usd,
+            cost_usd=completion.cost.usd,
         )
 
 

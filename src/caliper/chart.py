@@ -72,6 +72,30 @@ def _code(row: Evidence, system: str) -> str | None:
     return next((code.code for code in row.codes if code.system == system), None)
 
 
+def _label(row: Evidence) -> str:
+    """What to call a row on the page.
+
+    Some rows genuinely have no name. Synthea writes a third of its MedicationRequests as a
+    reference to a `Medication` resource that the trimmed corpus does not carry, so `fhir.py` has
+    nothing to display. Saying so is the point: a blank line would read as a formatting glitch,
+    where "(unlabelled MedicationRequest)" tells an annotator the drug is genuinely not on file.
+    """
+    return row.display.strip() or f"(unlabelled {row.resource_type})"
+
+
+def _grouping_key(row: Evidence, system: str) -> str:
+    """How rows are collapsed into one analyte or one drug.
+
+    A row with neither a code nor a name falls back to its own resource id rather than joining
+    every other nameless row under the empty string, which would hide how many there were.
+    """
+    code = _code(row, system)
+    if code:
+        return f"{system}:{code}"
+    label = row.display.strip().casefold()
+    return f"display:{label}" if label else f"resource:{row.resource_id}"
+
+
 def _split_status(display: str) -> tuple[str, str | None, str | None]:
     """Separate a condition's label from its status suffix, or leave the display untouched."""
     match = _TRAILING_PARENTHETICAL.search(display)
@@ -96,7 +120,7 @@ def _condition_entries(rows: list[Evidence]) -> dict[str, list[dict[str, Any]]]:
     active: list[dict[str, Any]] = []
     closed: list[dict[str, Any]] = []
     for row in rows:
-        label, clinical, verification = _split_status(row.display)
+        label, clinical, verification = _split_status(_label(row))
         entry = {
             "date": _iso(row.date),
             "display": label,
@@ -120,9 +144,9 @@ def _medication_entries(rows: list[Evidence]) -> list[dict[str, Any]]:
     """
     latest: dict[str, Evidence] = {}
     for row in _most_recent_first(rows):
-        latest.setdefault(_code(row, "RxNorm") or row.display.casefold(), row)
+        latest.setdefault(_grouping_key(row, "RxNorm"), row)
     entries = [
-        {"date": _iso(row.date), "display": row.display, "resource_id": row.resource_id}
+        {"date": _iso(row.date), "display": _label(row), "resource_id": row.resource_id}
         for row in latest.values()
     ]
     return sorted(entries, key=lambda entry: (entry["display"].casefold(), entry["date"] or ""))
@@ -146,8 +170,7 @@ def _analyte_entries(rows: list[Evidence]) -> list[dict[str, Any]]:
     """One entry per distinct analyte, holding its latest value and the shape of its history."""
     groups: dict[str, list[Evidence]] = {}
     for row in rows:
-        key = _code(row, "LOINC") or f"display:{row.display.casefold()}"
-        groups.setdefault(key, []).append(row)
+        groups.setdefault(_grouping_key(row, "LOINC"), []).append(row)
 
     entries = []
     for series in groups.values():
@@ -158,7 +181,7 @@ def _analyte_entries(rows: list[Evidence]) -> list[dict[str, Any]]:
         entries.append(
             {
                 "loinc": _code(latest, "LOINC"),
-                "display": latest.display,
+                "display": _label(latest),
                 "value": latest.value,
                 "unit": latest.unit,
                 "date": _iso(latest.date),
@@ -176,7 +199,7 @@ def _analyte_entries(rows: list[Evidence]) -> list[dict[str, Any]]:
 
 def _note_entries(rows: list[Evidence]) -> list[dict[str, Any]]:
     entries = [
-        {"date": _iso(row.date), "display": row.display, "resource_id": row.resource_id}
+        {"date": _iso(row.date), "display": _label(row), "resource_id": row.resource_id}
         for row in rows
     ]
     return sorted(entries, key=lambda entry: (entry["date"] or "", entry["resource_id"]))

@@ -1,0 +1,16 @@
+[
+  {
+    "author_role": "neurology consultant",
+    "date": "2025-02-11",
+    "note_id": "f67eaca3-neuro-2025-02-11",
+    "text": "Headache clinic\n\n34M, chronic migraine without aura, 18 headache days a month on a diary, 8 of them disabling.\n\nFailed propranolol (bradycardia), amitriptyline (sedation) and topiramate (word finding\ndifficulty). Now on candesartan 8 mg with partial benefit.\n\nMedication overuse is likely: he is taking sumatriptan 12 to 15 days a month. Withdrawal\ndiscussed at length and he has agreed to try.\n\nNo papilloedema, no focal deficit, no thunderclap onset and no new headache in the last year\nthat is different in character. Imaging is not indicated and I have explained why.\n\nIf the diary shows 15 or more headache days a month after triptan withdrawal he becomes eligible\nfor a CGRP monoclonal, and I would refer at that point.\n\nGrandmother and mother both had migraine.",
+    "type": "Neurology clinic letter"
+  },
+  {
+    "author_role": "general practitioner",
+    "date": "2025-05-26",
+    "note_id": "f67eaca3-gp-2025-05-26",
+    "text": "Follow up after neurology.\n\nTriptan use down to 6 days a month. Diary shows 12 headache days last month, improving.\n\nTired all the time. Hb 11.8 g/dL, MCV 78, ferritin 11 ng/mL. Iron deficiency anaemia, source\nunclear.\n\nCoeliac serology sent. FIT sent. Not anaemic previously - the 2021 bloods were normal.\n\nHe is not vegetarian and there is no overt bleeding.\n\nFerrous sulfate 200 mg od started. Recheck in 8 weeks. Will refer to gastroenterology if the FIT\nis positive or the ferritin does not respond.",
+    "type": "GP consultation"
+  }
+]

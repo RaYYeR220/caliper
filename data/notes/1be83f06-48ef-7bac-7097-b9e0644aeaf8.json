@@ -1,0 +1,16 @@
+[
+  {
+    "author_role": "practice nurse",
+    "date": "2026-01-27",
+    "note_id": "1be83f06-gp-2026-01-27",
+    "text": "Annual diabetes review.\n\nHbA1c 8.4%, was 7.1% a year ago. He admits he stopped the metformin in the summer because of\ndiarrhoea and did not tell anyone.\n\nFeet: pulses present, monofilament intact both sides, no ulceration. Retinal screening up to\ndate, last grading R0M0.\n\nBP 142/88 on two readings today.\n\nNo history of stroke or TIA. No angina. Never smoked.\n\nAsthma is stable. Salbutamol maybe twice a month, no oral steroids in the last two years.\n\nRestarted metformin MR 500 mg od with a plan to titrate. If the HbA1c is still above 8% in three\nmonths we will add an SGLT2 inhibitor.",
+    "type": "Diabetes annual review"
+  },
+  {
+    "author_role": "emergency nurse practitioner",
+    "date": "2026-05-12",
+    "note_id": "1be83f06-ed-2026-05-12",
+    "text": "ED 02:15. Wheeze.\n\nTwo days of coryza then wheeze from midnight. Peak flow 320, best 520. Sats 96% on air. RR 22.\nNo accessory muscle use, talking in full sentences.\n\nSalbutamol 10 mg neb with ipratropium. Prednisolone 40 mg po.\n\nReassessed at 04:00: peak flow 470, chest quiet, comfortable.\n\nType 2 diabetes - warned that the steroids will push his sugars up over the next week and told\nto test more often.\n\nHome with 5 days of prednisolone and follow up with the asthma nurse. Written asthma plan given.",
+    "type": "Emergency department note"
+  }
+]

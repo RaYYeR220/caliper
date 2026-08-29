@@ -1,0 +1,16 @@
+[
+  {
+    "author_role": "general practitioner",
+    "date": "2026-04-08",
+    "note_id": "35f80d0e-gp-2026-04-08",
+    "text": "BP check, third of three.\n\nHome readings averaging 148/92 over a fortnight. In clinic today 152/94 then 149/90.\n\nEssential hypertension confirmed. Starting amlodipine 5 mg od.\n\nHe is worried because his father was on dialysis by 60 and his uncle had a stroke at 55.\nReassured that his own kidney function is normal.\n\nBloods last week: creatinine 0.9 mg/dL, eGFR above 90, ACR 0.8 mg/mmol, HbA1c 42 mmol/mol.\n\nNo proteinuria. No previous myocardial infarction and no known heart disease.\n\nReview 4/52 with a BP diary. QRISK discussed, 9%, statin deferred for now.",
+    "type": "GP consultation"
+  },
+  {
+    "author_role": "emergency department registrar",
+    "date": "2026-06-15",
+    "note_id": "35f80d0e-ed-2026-06-15",
+    "text": "Head injury. Fell off a ladder at home, about 2 m, landed on grass.\n\nGCS 15 throughout. No loss of consciousness witnessed. Vomited once at the scene, not since.\n\nNo anticoagulant and no antiplatelet. Amlodipine only.\n\nCT head within 8 hours per NICE: no acute intracranial injury, no skull fracture.\n\nImpression is concussion with no intracranial injury.\n\nHis wife has epilepsy and asked whether the vomiting could mean he had had a seizure too.\nExplained the difference.\n\nQuery post concussion syndrome if the headache persists beyond two weeks - GP to review.\n\nHead injury advice given verbally and in writing. Wife will observe overnight.",
+    "type": "Emergency department note"
+  }
+]

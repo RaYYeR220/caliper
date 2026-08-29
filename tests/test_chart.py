@@ -216,7 +216,9 @@ class TestConditions:
     def test_active_and_resolved_conditions_are_separated(self):
         patient = index(
             condition("Asthma (disorder) (active, confirmed)", date(2001, 1, 1), resource_id="c1"),
-            condition("Stress (finding) (resolved, confirmed)", date(2013, 3, 26), resource_id="c2"),
+            condition(
+                "Stress (finding) (resolved, confirmed)", date(2013, 3, 26), resource_id="c2"
+            ),
         )
         summary = summarise_dict(patient, as_of=SCREENING)
         assert [c["display"] for c in summary["conditions"]["active"]] == ["Asthma (disorder)"]
@@ -257,6 +259,33 @@ class TestMedicationsEncountersAndNotes:
         medications = summarise_dict(patient, as_of=SCREENING)["medications"]
         assert len(medications) == 1
         assert medications[0]["date"] == "2020-01-03"
+
+    def test_a_medication_with_no_drug_name_is_flagged_rather_than_left_blank(self):
+        """Synthea names a third of its drugs by reference to a resource the corpus drops."""
+        anonymous = Evidence(
+            kind="medication",
+            resource_type="MedicationRequest",
+            resource_id="m-anon",
+            display="",
+            fhir_path="Bundle.entry[5].resource",
+            date=date(2018, 8, 5),
+        )
+        summary = summarise_dict(index(anonymous), as_of=SCREENING)
+        assert summary["medications"][0]["display"] == "(unlabelled MedicationRequest)"
+
+    def test_nameless_medications_are_counted_separately(self):
+        def anonymous(resource_id: str, when: date) -> Evidence:
+            return Evidence(
+                kind="medication",
+                resource_type="MedicationRequest",
+                resource_id=resource_id,
+                display="",
+                fhir_path="Bundle.entry[5].resource",
+                date=when,
+            )
+
+        patient = index(anonymous("m-1", date(2018, 8, 5)), anonymous("m-2", date(2020, 1, 3)))
+        assert len(summarise_dict(patient, as_of=SCREENING)["medications"]) == 2
 
     def test_encounter_count_and_span_are_reported(self):
         patient = index(encounter(date(2019, 1, 1), resource_id="e1"), encounter(date(2025, 4, 1)))

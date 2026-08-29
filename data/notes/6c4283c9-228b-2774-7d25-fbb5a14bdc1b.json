@@ -1,0 +1,16 @@
+[
+  {
+    "author_role": "bariatric surgeon",
+    "date": "2025-07-15",
+    "note_id": "6c4283c9-bariatric-2025-07-15",
+    "text": "Tier 4 assessment, first appointment.\n\n39M. Weight 148 kg, height 1.78 m, BMI 46.7. Has been above 130 kg since his mid twenties.\n\nComorbidity: prediabetes with an HbA1c of 6.2%, obstructive sleep apnoea on CPAP since 2022, no\nhypertension, no diabetes.\n\nAdmitted with a DVT after knee arthroscopy in 2019, treated with three months of rivaroxaban, no\nrecurrence. Thrombophilia screen negative.\n\nHe denies binge eating and there is no purging. The pattern is grazing.\n\nAnaemic on today's bloods, Hb 11.4 g/dL, ferritin 18 ng/mL. Started on ferrous fumarate; this\nwill need rechecking before any surgery.\n\nPsychology and dietetics assessments booked. If he completes the 12 week pathway and holds his\nweight we would list him for a sleeve gastrectomy.",
+    "type": "Bariatric MDT assessment"
+  },
+  {
+    "author_role": "ENT registrar",
+    "date": "2025-12-06",
+    "note_id": "6c4283c9-ent-2025-12-06",
+    "text": "ENT clinic\n\nThree years of nasal blockage, worse on the left, post nasal drip, intermittent anosmia.\n\nNasendoscopy: septum deviated to the left, mucosal oedema, no polyps, no pus today.\n\nCT sinuses from May: Lund-Mackay 8, no bony erosion, no fungal features.\n\nChronic rhinosinusitis without nasal polyps, confirmed on today's nasendoscopy.\n\nFailed maximal medical therapy including three months of intranasal steroid and two courses of\nantibiotics.\n\nListed for functional endoscopic sinus surgery. He knows the bariatric team may want him to lose\nweight first, and that the two waiting lists do not talk to each other.\n\nHe asked about his mother's nasal polyps and whether his are the same thing. Explained that she\nhad polyps and he does not.",
+    "type": "ENT clinic letter"
+  }
+]

@@ -1,0 +1,1321 @@
+{
+  "counts": {
+    "asserted": 16,
+    "denial": 11,
+    "family_history": 8,
+    "historical": 5,
+    "hypothetical": 10,
+    "numeric_in_prose": 12,
+    "other_organ_system": 2,
+    "other_subject": 2,
+    "uncertain": 4
+  },
+  "description": "Ground truth for the narrative extractor. Every sentence below is quoted character for character from the note it names; tests/test_notes.py enforces that. 'extract' is what a correct extraction produces, and an empty list means the correct output is nothing at all.",
+  "notes": [
+    {
+      "date": "2026-05-12",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "display": "Diabetes mellitus type 2",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "type 2 diabetes mellitus",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Type 2 diabetes - warned that the steroids will push his sugars up over the next week and told\nto test more often."
+        },
+        {
+          "assertion": "present",
+          "comment": "The unit is implied by the measurement, not written down.",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "33452-4",
+                  "display": "Maximum expiratory gas flow",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "peak expiratory flow",
+              "date": "2026-05-12",
+              "kind": "observation",
+              "unit": "L/min",
+              "value": 320.0
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "Peak flow 320, best 520."
+        }
+      ],
+      "note_id": "1be83f06-ed-2026-05-12",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8"
+    },
+    {
+      "date": "2026-01-27",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "haemoglobin A1c",
+              "date": "2026-01-27",
+              "kind": "observation",
+              "unit": "%",
+              "value": 8.4
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "HbA1c 8.4%, was 7.1% a year ago."
+        },
+        {
+          "assertion": "absent",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "230690007",
+                  "display": "Cerebrovascular accident",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "stroke",
+              "date": null,
+              "kind": "condition"
+            },
+            {
+              "codes": [
+                {
+                  "code": "266257000",
+                  "display": "Transient ischemic attack",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "transient ischaemic attack",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "No history of stroke or TIA."
+        },
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "195967001",
+                  "display": "Asthma",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "asthma",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Asthma is stable."
+        },
+        {
+          "assertion": "hypothetical",
+          "extract": [],
+          "must_not_extract": [
+            "SGLT2 inhibitor"
+          ],
+          "phenomenon": "hypothetical",
+          "sentence": "If the HbA1c is still above 8% in three\nmonths we will add an SGLT2 inhibitor."
+        }
+      ],
+      "note_id": "1be83f06-gp-2026-01-27",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8"
+    },
+    {
+      "date": "2016-02-04",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "2160-0",
+                  "display": "Creatinine [Mass/volume] in Serum or Plasma",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "serum creatinine",
+              "date": "2016-02-04",
+              "kind": "observation",
+              "unit": "mg/dL",
+              "value": 1.4
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "Creatinine 1.4 mg/dL today, was 0.9 mg/dL eighteen months ago."
+        },
+        {
+          "assertion": "absent",
+          "comment": "'ischaemia' with a vascular verb around it. The organ is the gut; a cardiac concept must take nothing from this sentence.",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "mesenteric ischaemia",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "must_not_extract": [
+            "myocardial ischaemia",
+            "ischaemic heart disease"
+          ],
+          "phenomenon": "other_organ_system",
+          "sentence": "Mesenteric ischaemia was excluded on the CT angiogram done in November for her abdominal pain,\nso the abdominal symptoms are not vascular."
+        },
+        {
+          "assertion": "uncertain",
+          "extract": [],
+          "must_not_extract": [
+            "diabetic nephropathy",
+            "chronic kidney disease"
+          ],
+          "phenomenon": "uncertain",
+          "sentence": "Diabetic nephropathy is the working diagnosis but no biopsy has been done and I would not push\nfor one."
+        }
+      ],
+      "note_id": "2211f478-renal-2016-02-04",
+      "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b"
+    },
+    {
+      "date": "2015-11-30",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "190905008",
+                  "display": "Cystic fibrosis",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "cystic fibrosis",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "31F with cystic fibrosis, F508del homozygous, followed here since transition from paediatrics."
+        },
+        {
+          "assertion": "present",
+          "comment": "CF related diabetes is not type 2 diabetes. A concept list naming type 2 diabetes should not match this sentence.",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "73211009",
+                  "display": "Diabetes mellitus",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "diabetes mellitus",
+              "date": null,
+              "kind": "condition"
+            },
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "haemoglobin A1c",
+              "date": null,
+              "kind": "observation",
+              "unit": "%",
+              "value": 7.8
+            }
+          ],
+          "must_not_extract": [
+            "type 2 diabetes mellitus"
+          ],
+          "phenomenon": "asserted",
+          "sentence": "CF related diabetes diagnosed in 2009, on insulin, HbA1c 7.8% last month."
+        },
+        {
+          "assertion": "absent",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "pneumothorax",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "She has not had a pneumothorax and has never needed non-invasive ventilation."
+        },
+        {
+          "assertion": "family_history",
+          "extract": [],
+          "must_not_extract": [
+            "coeliac disease"
+          ],
+          "phenomenon": "family_history",
+          "sentence": "Mother has coeliac disease."
+        },
+        {
+          "assertion": "hypothetical",
+          "extract": [],
+          "must_not_extract": [
+            "lung transplant"
+          ],
+          "phenomenon": "hypothetical",
+          "sentence": "Plan: annual review bloods, DEXA due, refer to the transplant assessment clinic if the FEV1\nfalls below 40% predicted."
+        }
+      ],
+      "note_id": "2211f478-resp-2015-11-30",
+      "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b"
+    },
+    {
+      "date": "2016-06-13",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "2708-6",
+                  "display": "Oxygen saturation in Arterial blood",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "oxygen saturation",
+              "date": "2016-06-13",
+              "kind": "observation",
+              "unit": "%",
+              "value": 94.0
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "Sats 94% on the home oximeter."
+        }
+      ],
+      "note_id": "2211f478-triage-2016-06-13",
+      "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b"
+    },
+    {
+      "date": "2026-03-04",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "53741008",
+                  "display": "Coronary arteriosclerosis",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "coronary artery disease",
+              "date": null,
+              "kind": "condition"
+            },
+            {
+              "codes": [
+                {
+                  "code": "232717009",
+                  "display": "Coronary artery bypass grafting",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "coronary artery bypass graft",
+              "date": "2024-11-06",
+              "kind": "procedure"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Three-vessel disease at angiography, grafted electively on 6 November 2024."
+        },
+        {
+          "assertion": "absent",
+          "comment": "The sentence is wrapped across two lines in the note. An extractor that quotes it must reproduce the wrapping or be re-anchored to the note's own span; caliper.agents.extractor does the latter.",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "22298006",
+                  "display": "Myocardial infarction",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "myocardial infarction",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "No history of\nmyocardial infarction."
+        },
+        {
+          "assertion": "family_history",
+          "extract": [],
+          "must_not_extract": [
+            "myocardial infarction"
+          ],
+          "phenomenon": "family_history",
+          "sentence": "Father had an MI in his fifties and a second one at 61, which killed him."
+        },
+        {
+          "assertion": "present",
+          "comment": "The result exists only here; no Observation resource carries it.",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "2160-0",
+                  "display": "Creatinine [Mass/volume] in Serum or Plasma",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "serum creatinine",
+              "date": "2026-03-04",
+              "kind": "observation",
+              "unit": "mg/dL",
+              "value": 1.7
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "Creatinine today 1.7 mg/dL, up from 1.2 in January."
+        },
+        {
+          "assertion": "hypothetical",
+          "extract": [],
+          "must_not_extract": [
+            "ACE inhibitor"
+          ],
+          "phenomenon": "hypothetical",
+          "sentence": "If the creatinine has\nnot settled we would consider stopping the ACE inhibitor altogether."
+        }
+      ],
+      "note_id": "23da8e71-card-2026-03-04",
+      "patient_id": "23da8e71-dfb9-9773-1bc1-7b5e31d085b5"
+    },
+    {
+      "date": "2026-05-19",
+      "items": [
+        {
+          "assertion": "absent",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "22298006",
+                  "display": "Myocardial infarction",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "myocardial infarction",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "Myocardial\ninfarction was excluded on this admission."
+        },
+        {
+          "assertion": "present",
+          "comment": "'infarct' is the keyword a naive matcher fires on. The infarct is cerebral and old; for a myocardial infarction concept the correct output is nothing.",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "230690007",
+                  "display": "Cerebrovascular accident",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "cerebral infarction",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "must_not_extract": [
+            "myocardial infarction"
+          ],
+          "phenomenon": "other_organ_system",
+          "sentence": "CT head, requested by the medical registrar after a witnessed collapse in the department,\nreported an old right occipital infarct unchanged since 2019."
+        },
+        {
+          "assertion": "uncertain",
+          "extract": [],
+          "must_not_extract": [
+            "atrial fibrillation"
+          ],
+          "phenomenon": "uncertain",
+          "sentence": "Query paroxysmal AF as the cause of the collapse."
+        }
+      ],
+      "note_id": "23da8e71-disch-2026-05-19",
+      "patient_id": "23da8e71-dfb9-9773-1bc1-7b5e31d085b5"
+    },
+    {
+      "date": "2026-06-20",
+      "items": [
+        {
+          "assertion": "absent",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "gastrointestinal haemorrhage",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "Asked directly: no bleeding, no black stools, no bruising on the aspirin."
+        }
+      ],
+      "note_id": "23da8e71-triage-2026-06-20",
+      "patient_id": "23da8e71-dfb9-9773-1bc1-7b5e31d085b5"
+    },
+    {
+      "date": "2026-06-15",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "concussion injury of brain",
+              "date": "2026-06-15",
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Impression is concussion with no intracranial injury."
+        },
+        {
+          "assertion": "other_subject",
+          "comment": "A spouse is not a blood relative, so 'family_history' is wrong here even though the sentence names a household member's diagnosis.",
+          "extract": [],
+          "must_not_extract": [
+            "epilepsy",
+            "seizure disorder"
+          ],
+          "phenomenon": "other_subject",
+          "sentence": "His wife has epilepsy and asked whether the vomiting could mean he had had a seizure too."
+        },
+        {
+          "assertion": "uncertain",
+          "comment": "Uncertain and hypothetical at once: a suspicion, conditional on a future observation. Either label yields the same outcome, which is why the guard keeps only present and absent rather than ranking the other four.",
+          "extract": [],
+          "must_not_extract": [
+            "post concussion syndrome"
+          ],
+          "phenomenon": "uncertain",
+          "sentence": "Query post concussion syndrome if the headache persists beyond two weeks - GP to review."
+        }
+      ],
+      "note_id": "35f80d0e-ed-2026-06-15",
+      "patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1"
+    },
+    {
+      "date": "2026-04-08",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "59621000",
+                  "display": "Essential hypertension",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "essential hypertension",
+              "date": "2026-04-08",
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Essential hypertension confirmed."
+        },
+        {
+          "assertion": "family_history",
+          "extract": [],
+          "must_not_extract": [
+            "chronic kidney disease",
+            "stroke",
+            "dialysis"
+          ],
+          "phenomenon": "family_history",
+          "sentence": "He is worried because his father was on dialysis by 60 and his uncle had a stroke at 55."
+        },
+        {
+          "assertion": "present",
+          "comment": "'last week' is not a date. The sentence carries none that can be resolved.",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "2160-0",
+                  "display": "Creatinine [Mass/volume] in Serum or Plasma",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "serum creatinine",
+              "date": null,
+              "kind": "observation",
+              "unit": "mg/dL",
+              "value": 0.9
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "Bloods last week: creatinine 0.9 mg/dL, eGFR above 90, ACR 0.8 mg/mmol, HbA1c 42 mmol/mol."
+        },
+        {
+          "assertion": "absent",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "22298006",
+                  "display": "Myocardial infarction",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "myocardial infarction",
+              "date": null,
+              "kind": "condition"
+            },
+            {
+              "codes": [
+                {
+                  "code": "53741008",
+                  "display": "Coronary arteriosclerosis",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "coronary artery disease",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "No previous myocardial infarction and no known heart disease."
+        }
+      ],
+      "note_id": "35f80d0e-gp-2026-04-08",
+      "patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1"
+    },
+    {
+      "date": "2025-07-15",
+      "items": [
+        {
+          "assertion": "present",
+          "comment": "One sentence carrying two assertions and two denials. An extractor that returns a single assertion per sentence will get this wrong.",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "obstructive sleep apnoea",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Comorbidity: prediabetes with an HbA1c of 6.2%, obstructive sleep apnoea on CPAP since 2022, no\nhypertension, no diabetes."
+        },
+        {
+          "assertion": "absent",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "59621000",
+                  "display": "Essential hypertension",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "essential hypertension",
+              "date": null,
+              "kind": "condition"
+            },
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "display": "Diabetes mellitus type 2",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "type 2 diabetes mellitus",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "Comorbidity: prediabetes with an HbA1c of 6.2%, obstructive sleep apnoea on CPAP since 2022, no\nhypertension, no diabetes."
+        },
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "deep vein thrombosis",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "historical",
+          "sentence": "Admitted with a DVT after knee arthroscopy in 2019, treated with three months of rivaroxaban, no\nrecurrence."
+        },
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "271737000",
+                  "display": "Anemia",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "anaemia",
+              "date": "2025-07-15",
+              "kind": "condition"
+            },
+            {
+              "codes": [
+                {
+                  "code": "718-7",
+                  "display": "Hemoglobin [Mass/volume] in Blood",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "haemoglobin",
+              "date": "2025-07-15",
+              "kind": "observation",
+              "unit": "g/dL",
+              "value": 11.4
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "Anaemic on today's bloods, Hb 11.4 g/dL, ferritin 18 ng/mL."
+        },
+        {
+          "assertion": "hypothetical",
+          "extract": [],
+          "must_not_extract": [
+            "sleeve gastrectomy",
+            "bariatric surgery"
+          ],
+          "phenomenon": "hypothetical",
+          "sentence": "If he completes the 12 week pathway and holds his\nweight we would list him for a sleeve gastrectomy."
+        }
+      ],
+      "note_id": "6c4283c9-bariatric-2025-07-15",
+      "patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b"
+    },
+    {
+      "date": "2025-12-06",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "chronic sinusitis",
+              "date": "2025-12-06",
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Chronic rhinosinusitis without nasal polyps, confirmed on today's nasendoscopy."
+        },
+        {
+          "assertion": "hypothetical",
+          "comment": "Being on a waiting list is the strongest form of 'planned' there is, and it still means the operation has not happened.",
+          "extract": [],
+          "must_not_extract": [
+            "functional endoscopic sinus surgery"
+          ],
+          "phenomenon": "hypothetical",
+          "sentence": "Listed for functional endoscopic sinus surgery."
+        },
+        {
+          "assertion": "family_history",
+          "extract": [],
+          "must_not_extract": [
+            "nasal polyps"
+          ],
+          "phenomenon": "family_history",
+          "sentence": "He asked about his mother's nasal polyps and whether his are the same thing."
+        },
+        {
+          "assertion": "absent",
+          "comment": "The denial and the family history are in adjacent sentences about the same word. Only the second is about the patient.",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "nasal polyps",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "Explained that she\nhad polyps and he does not."
+        }
+      ],
+      "note_id": "6c4283c9-ent-2025-12-06",
+      "patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b"
+    },
+    {
+      "date": "2015-09-26",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "84114007",
+                  "display": "Heart failure",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "heart failure",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Known heart failure, on furosemide."
+        },
+        {
+          "assertion": "family_history",
+          "extract": [],
+          "must_not_extract": [
+            "heart failure"
+          ],
+          "phenomenon": "family_history",
+          "sentence": "He mentions his sister was told last year that she has a 'weak heart' as well and asks whether\nit runs in families."
+        }
+      ],
+      "note_id": "8d91c36a-ed-2015-09-26",
+      "patient_id": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd"
+    },
+    {
+      "date": "2015-04-22",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "84114007",
+                  "display": "Heart failure",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "heart failure",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "34M with chronic heart failure, non-ischaemic, EF 30% at diagnosis in 2012."
+        },
+        {
+          "assertion": "present",
+          "comment": "Historical and resolved. The year is the whole point: a trial excluding decompensation within 12 months is not excluded by this sentence.",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "acute decompensated heart failure",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "historical",
+          "sentence": "Admitted with\ndecompensated heart failure in 2013; no recurrence since."
+        },
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "2160-0",
+                  "display": "Creatinine [Mass/volume] in Serum or Plasma",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "serum creatinine",
+              "date": "2015-04-22",
+              "kind": "observation",
+              "unit": "mg/dL",
+              "value": 1.1
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "U&E stable, creatinine 1.1 mg/dL, potassium 4.4 mmol/L."
+        },
+        {
+          "assertion": "hypothetical",
+          "extract": [],
+          "must_not_extract": [
+            "implantable cardioverter defibrillator"
+          ],
+          "phenomenon": "hypothetical",
+          "sentence": "Will discuss ICD implantation with the consultant\nif the EF is still below 35% on that scan."
+        }
+      ],
+      "note_id": "8d91c36a-hf-2015-04-22",
+      "patient_id": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd"
+    },
+    {
+      "date": "2026-01-06",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "acute bronchitis",
+              "date": "2026-01-06",
+              "kind": "condition"
+            },
+            {
+              "codes": [
+                {
+                  "code": "87433001",
+                  "display": "Pulmonary emphysema",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "pulmonary emphysema",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Acute bronchitis on a background of emphysema."
+        },
+        {
+          "assertion": "present",
+          "comment": "A procedure stated as background, five years old. The year is what a 'within 12 months' window turns on.",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "tubal ligation",
+              "date": null,
+              "kind": "procedure"
+            }
+          ],
+          "phenomenon": "historical",
+          "sentence": "Tubal ligation 2021, so no contraception needed."
+        },
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "miscarriage",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "historical",
+          "sentence": "The miscarriage in 2018 came up again today."
+        }
+      ],
+      "note_id": "cbd1dd48-gp-2026-01-06",
+      "patient_id": "cbd1dd48-89c3-3fdb-434e-3f0802738abf"
+    },
+    {
+      "date": "2025-09-17",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "87433001",
+                  "display": "Pulmonary emphysema",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "pulmonary emphysema",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "She was referred after a CT thorax done for persistent cough showed basal panlobular emphysema."
+        },
+        {
+          "assertion": "absent",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "respiratory tract infection",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "She has never been admitted with a respiratory infection and has had no exacerbations requiring\nsteroids in the last twelve months."
+        },
+        {
+          "assertion": "family_history",
+          "extract": [],
+          "must_not_extract": [
+            "alpha-1 antitrypsin deficiency"
+          ],
+          "phenomenon": "family_history",
+          "sentence": "Her brother has also been found to be PiZZ and is under the Newcastle service."
+        },
+        {
+          "assertion": "hypothetical",
+          "extract": [],
+          "must_not_extract": [
+            "alpha-1 antitrypsin augmentation therapy"
+          ],
+          "phenomenon": "hypothetical",
+          "sentence": "We would consider augmentation therapy if the FEV1 declines faster than 60 mL per year, which is\nnot the case at present."
+        }
+      ],
+      "note_id": "cbd1dd48-resp-2025-09-17",
+      "patient_id": "cbd1dd48-89c3-3fdb-434e-3f0802738abf"
+    },
+    {
+      "date": "2025-05-26",
+      "items": [
+        {
+          "assertion": "present",
+          "comment": "'source unclear' qualifies the cause, not the diagnosis. The anaemia itself is asserted.",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "iron deficiency anaemia",
+              "date": "2025-05-26",
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Iron deficiency anaemia, source\nunclear."
+        },
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "718-7",
+                  "display": "Hemoglobin [Mass/volume] in Blood",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "haemoglobin",
+              "date": "2025-05-26",
+              "kind": "observation",
+              "unit": "g/dL",
+              "value": 11.8
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "Hb 11.8 g/dL, MCV 78, ferritin 11 ng/mL."
+        },
+        {
+          "assertion": "absent",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "gastrointestinal haemorrhage",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "He is not vegetarian and there is no overt bleeding."
+        },
+        {
+          "assertion": "hypothetical",
+          "extract": [],
+          "phenomenon": "hypothetical",
+          "sentence": "Will refer to gastroenterology if the FIT\nis positive or the ferritin does not respond."
+        }
+      ],
+      "note_id": "f67eaca3-gp-2025-05-26",
+      "patient_id": "f67eaca3-2366-7ee2-6887-a5bd449b54a6"
+    },
+    {
+      "date": "2025-02-11",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [],
+              "concept": "chronic migraine",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "34M, chronic migraine without aura, 18 headache days a month on a diary, 8 of them disabling."
+        },
+        {
+          "assertion": "uncertain",
+          "extract": [],
+          "must_not_extract": [
+            "medication overuse headache"
+          ],
+          "phenomenon": "uncertain",
+          "sentence": "Medication overuse is likely: he is taking sumatriptan 12 to 15 days a month."
+        },
+        {
+          "assertion": "hypothetical",
+          "extract": [],
+          "must_not_extract": [
+            "CGRP monoclonal antibody"
+          ],
+          "phenomenon": "hypothetical",
+          "sentence": "If the diary shows 15 or more headache days a month after triptan withdrawal he becomes eligible\nfor a CGRP monoclonal, and I would refer at that point."
+        },
+        {
+          "assertion": "family_history",
+          "extract": [],
+          "must_not_extract": [
+            "migraine"
+          ],
+          "phenomenon": "family_history",
+          "sentence": "Grandmother and mother both had migraine."
+        }
+      ],
+      "note_id": "f67eaca3-neuro-2025-02-11",
+      "patient_id": "f67eaca3-2366-7ee2-6887-a5bd449b54a6"
+    },
+    {
+      "date": "2025-06-10",
+      "items": [
+        {
+          "assertion": "absent",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "display": "Diabetes mellitus type 2",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "type 2 diabetes mellitus",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "denial",
+          "sentence": "He does not have diabetes and never has."
+        },
+        {
+          "assertion": "hypothetical",
+          "extract": [],
+          "must_not_extract": [
+            "implantable cardioverter defibrillator"
+          ],
+          "phenomenon": "hypothetical",
+          "sentence": "We would consider an ICD if the ejection fraction is still below 35% at the nine month scan, but\non today's numbers that looks unlikely."
+        },
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "10230-1",
+                  "display": "Left ventricular Ejection fraction",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "left ventricular ejection fraction",
+              "date": "2025-06-10",
+              "kind": "observation",
+              "unit": "%",
+              "value": 44.0
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "Repeat echo today: EF 44%, mild mitral regurgitation, normal right ventricle."
+        },
+        {
+          "assertion": "present",
+          "comment": "The same infarct as f870c432-disch-2025-03-18, referred to in passing. Two notes asserting one event must not become two events.",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "22298006",
+                  "display": "Myocardial infarction",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "myocardial infarction",
+              "date": null,
+              "kind": "condition"
+            }
+          ],
+          "phenomenon": "historical",
+          "sentence": "Thank you for asking me to see this 55 year old man again, three months after his inferior\ninfarct."
+        }
+      ],
+      "note_id": "f870c432-card-2025-06-10",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d"
+    },
+    {
+      "date": "2025-03-18",
+      "items": [
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "22298006",
+                  "display": "Myocardial infarction",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "myocardial infarction",
+              "date": "2025-03-14",
+              "kind": "condition"
+            },
+            {
+              "codes": [
+                {
+                  "code": "415070008",
+                  "display": "Percutaneous coronary intervention",
+                  "system": "SNOMED"
+                }
+              ],
+              "concept": "percutaneous coronary intervention",
+              "date": "2025-03-14",
+              "kind": "procedure"
+            }
+          ],
+          "phenomenon": "asserted",
+          "sentence": "Presented with an inferior STEMI on 14 March 2025 and was treated with primary PCI to the right\ncoronary artery, one drug eluting stent, door to balloon 52 minutes."
+        },
+        {
+          "assertion": "present",
+          "comment": "'the following morning' is the only date the sentence carries; a model that cannot resolve it should return no date rather than guess.",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "10230-1",
+                  "display": "Left ventricular Ejection fraction",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "left ventricular ejection fraction",
+              "date": "2025-03-15",
+              "kind": "observation",
+              "unit": "%",
+              "value": 48.0
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "Echo the following morning showed inferior hypokinesia with an EF of\n48%."
+        },
+        {
+          "assertion": "family_history",
+          "extract": [],
+          "must_not_extract": [
+            "percutaneous coronary intervention",
+            "angina"
+          ],
+          "phenomenon": "family_history",
+          "sentence": "He tells me his brother had a stent at 47 and his mother has angina."
+        }
+      ],
+      "note_id": "f870c432-disch-2025-03-18",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d"
+    },
+    {
+      "date": "2025-10-08",
+      "items": [
+        {
+          "assertion": "other_subject",
+          "comment": "A partner is neither the patient nor a blood relative. 'family_history' would be the wrong label and 'present' would be a fabricated diagnosis.",
+          "extract": [],
+          "must_not_extract": [
+            "tuberculosis"
+          ],
+          "phenomenon": "other_subject",
+          "sentence": "His partner is currently on treatment for smear positive pulmonary TB and he is\nworried about it."
+        },
+        {
+          "assertion": "present",
+          "extract": [
+            {
+              "codes": [
+                {
+                  "code": "29463-7",
+                  "display": "Body weight",
+                  "system": "LOINC"
+                }
+              ],
+              "concept": "body weight",
+              "date": "2025-10-08",
+              "kind": "observation",
+              "unit": "kg",
+              "value": 104.0
+            }
+          ],
+          "phenomenon": "numeric_in_prose",
+          "sentence": "Weight 104 kg, up 3 kg since June."
+        }
+      ],
+      "note_id": "f870c432-gp-2025-10-08",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d"
+    }
+  ],
+  "phenomena": {
+    "asserted": "A finding stated plainly as fact about this patient.",
+    "denial": "An explicit statement that the patient does not have, or has never had, the finding.",
+    "family_history": "The finding belongs to a blood relative.",
+    "historical": "A past or resolved episode where the date is what decides a temporal window.",
+    "hypothetical": "A planned, considered or conditional intervention or diagnosis that has not happened.",
+    "numeric_in_prose": "A measurement that appears only in the narrative, with no structured Observation carrying it.",
+    "other_organ_system": "The wording would fire a keyword match for a concept in a different organ system from the one the sentence is about.",
+    "other_subject": "The finding belongs to someone who is neither the patient nor a blood relative.",
+    "uncertain": "A suspicion, a query, or a working diagnosis that is not settled."
+  }
+}
