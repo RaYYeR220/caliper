@@ -15,7 +15,9 @@ from dateutil.relativedelta import relativedelta
 
 from caliper.ir import Code, Concept, TemporalWindow
 
-EvidenceKind = Literal["observation", "condition", "medication", "procedure", "encounter"]
+EvidenceKind = Literal[
+    "observation", "condition", "medication", "procedure", "encounter", "note"
+]
 
 
 @dataclass(frozen=True)
@@ -73,10 +75,18 @@ def _in_window(when: date | None, window: TemporalWindow | None, as_of: date) ->
 
 
 def _matches_concept(evidence: Evidence, concept: Concept) -> bool:
-    """Prefer a coded match; fall back to the concept's own wording only when no codes exist."""
+    """Prefer a coded match; fall back to the recorded wording only for structured rows.
+
+    The fallback is deliberately unavailable to narrative rows. A note mentioning a condition is
+    not a diagnosis: the sentence around the phrase may be a denial, or about a relative. Prose
+    earns a verdict only once an extraction step has attached a code to it and taken
+    responsibility for reading the sentence, and from then on the code is what matches.
+    """
     if concept.codes:
         wanted = {(c.system, c.code) for c in concept.codes}
         return any((c.system, c.code) in wanted for c in evidence.codes)
+    if evidence.source == "narrative":
+        return False
     return concept.text.casefold() in evidence.display.casefold()
 
 
@@ -101,6 +111,10 @@ class PatientIndex:
             if e.kind == kind and _matches_concept(e, concept) and _in_window(e.date, window, as_of)
         ]
         return sorted(hits, key=lambda e: (e.date is not None, e.date or date.min), reverse=True)
+
+    def notes(self) -> list[Evidence]:
+        """Raw clinical notes, for the extraction step and for showing a coordinator the source."""
+        return [e for e in self.evidence if e.kind == "note"]
 
     def has_documented_activity(self, window: TemporalWindow | None, as_of: date) -> bool:
         """Whether the chart shows anyone was actually looking during the window.

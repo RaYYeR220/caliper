@@ -17,9 +17,11 @@ from datetime import date
 from enum import Enum
 
 from caliper.ir import (
+    CompositePredicate,
     Criterion,
     DemographicPredicate,
     ObservationPredicate,
+    Predicate,
     PresencePredicate,
     UnsupportedPredicate,
 )
@@ -87,12 +89,12 @@ _KIND_LOCATIONS = {
 }
 
 
-def _query(index: PatientIndex, resource: str, criterion: Criterion, since: date | None) -> str:
-    predicate = criterion.predicate
-    codes = getattr(predicate, "concept", None)
+def _query(index: PatientIndex, resource: str, predicate: Predicate, since: date | None) -> str:
+    """A FHIR search a coordinator could paste into their own system to close the gap."""
+    concept = getattr(predicate, "concept", None)
     code_part = ""
-    if codes is not None and codes.codes:
-        code_part = "&code=" + ",".join(c.code for c in codes.codes)
+    if concept is not None and concept.codes:
+        code_part = "&code=" + ",".join(c.code for c in concept.codes)
     date_part = f"&date=ge{since.isoformat()}" if since else ""
     return f"{resource}?patient={index.patient_id}{code_part}{date_part}"
 
@@ -146,7 +148,7 @@ def _evaluate_observation(
             criterion,
             missing=f"a {predicate.concept.text} result",
             where=_KIND_LOCATIONS["observation"],
-            query=_query(index, "Observation", criterion, since),
+            query=_query(index, "Observation", predicate, since),
             rationale=f"no {predicate.concept.text} result is on file for the required window",
         )
 
@@ -156,7 +158,7 @@ def _evaluate_observation(
             criterion,
             missing=f"a numeric value for {predicate.concept.text}",
             where=_KIND_LOCATIONS["observation"],
-            query=_query(index, "Observation", criterion, since),
+            query=_query(index, "Observation", predicate, since),
             rationale="the most recent matching result carries no numeric value",
             evidence=(latest,),
         )
@@ -170,7 +172,7 @@ def _evaluate_observation(
                 f"(the chart reports {latest.unit}, which we cannot convert)"
             ),
             where=_KIND_LOCATIONS["observation"],
-            query=_query(index, "Observation", criterion, since),
+            query=_query(index, "Observation", predicate, since),
             rationale=f"cannot convert {latest.unit} to {predicate.unit} for this analyte",
             evidence=(latest,),
         )
@@ -226,7 +228,7 @@ def _evaluate_presence(
                 "rather than merely unrecorded"
             ),
             where=_KIND_LOCATIONS[predicate.type],
-            query=_query(index, resource, criterion, since),
+            query=_query(index, resource, predicate, since),
             rationale=(
                 f"nothing documents {predicate.concept.text} in the required window, and the "
                 "chart does not show the window was covered"
@@ -278,6 +280,77 @@ def _evaluate_demographic(
     )
 
 
+_FLIPPED = {
+    Verdict.MET: Verdict.NOT_MET,
+    Verdict.NOT_MET: Verdict.MET,
+    Verdict.UNKNOWN: Verdict.UNKNOWN,
+}
+
+
+def _evaluate_composite(
+    criterion: Criterion,
+    predicate: CompositePredicate,
+    index: PatientIndex,
+    as_of: date,
+    policy: AbsencePolicy,
+) -> CriterionResult:
+    """Combine member verdicts under Kleene's strong three-valued logic.
+
+    The rule worth stating out loud: a decisive member settles the composite even when a sibling is
+    unresolved. One failed member of a conjunction cannot be rescued by whatever the unknown member
+    turns out to be, so the conjunction is NOT_MET rather than UNKNOWN — and abstaining there would
+    send a coordinator to the chart for an answer that could not change anything.
+    """
+    members = [
+        _evaluate_predicate(criterion, operand, index, as_of, policy)
+        for operand in predicate.operands
+    ]
+    verdicts = [m.verdict for m in members]
+
+    if predicate.type == "not":
+        member = members[0]
+        return CriterionResult(
+            criterion_id=criterion.id,
+            kind=criterion.kind,
+            verdict=_FLIPPED[member.verdict],
+            rationale=f"not ({member.rationale})",
+            evidence=member.evidence,
+            resolution_hint=member.resolution_hint,
+        )
+
+    decisive = Verdict.NOT_MET if predicate.type == "all_of" else Verdict.MET
+    joiner = " and " if predicate.type == "all_of" else " or "
+
+    if decisive in verdicts:
+        settling = [m for m in members if m.verdict is decisive]
+        return CriterionResult(
+            criterion_id=criterion.id,
+            kind=criterion.kind,
+            verdict=decisive,
+            rationale=joiner.join(m.rationale for m in settling),
+            evidence=tuple(e for m in settling for e in m.evidence),
+        )
+
+    unresolved = [m for m in members if m.verdict is Verdict.UNKNOWN]
+    if unresolved:
+        return CriterionResult(
+            criterion_id=criterion.id,
+            kind=criterion.kind,
+            verdict=Verdict.UNKNOWN,
+            rationale=joiner.join(m.rationale for m in members),
+            evidence=tuple(e for m in members for e in m.evidence),
+            resolution_hint=unresolved[0].resolution_hint,
+        )
+
+    return CriterionResult(
+        criterion_id=criterion.id,
+        kind=criterion.kind,
+        verdict=Verdict.MET if predicate.type == "all_of" else Verdict.NOT_MET,
+        rationale=joiner.join(m.rationale for m in members),
+        evidence=tuple(e for m in members for e in m.evidence),
+    )
+
+
 def evaluate_criterion(
     criterion: Criterion,
     index: PatientIndex,
@@ -285,7 +358,18 @@ def evaluate_criterion(
     policy: AbsencePolicy = AbsencePolicy.COVERAGE_GATED,
 ) -> CriterionResult:
     """Decide one criterion for one patient on one date."""
-    predicate = criterion.predicate
+    return _evaluate_predicate(criterion, criterion.predicate, index, as_of, policy)
+
+
+def _evaluate_predicate(
+    criterion: Criterion,
+    predicate: Predicate,
+    index: PatientIndex,
+    as_of: date,
+    policy: AbsencePolicy,
+) -> CriterionResult:
+    if isinstance(predicate, CompositePredicate):
+        return _evaluate_composite(criterion, predicate, index, as_of, policy)
 
     if isinstance(predicate, UnsupportedPredicate):
         return _unresolved(

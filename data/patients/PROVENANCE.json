@@ -1,0 +1,135 @@
+{
+  "modifications": {
+    "kept_entry_count": 9863,
+    "kept_resource_types": [
+      "AllergyIntolerance",
+      "Condition",
+      "DocumentReference",
+      "Encounter",
+      "Immunization",
+      "MedicationRequest",
+      "Observation",
+      "Patient",
+      "Procedure"
+    ],
+    "note": "Entries outside the allow-list were removed wholesale. Retained resources are unchanged in content, but references from them to removed resources are no longer resolvable within this corpus.",
+    "removed_entry_count": 4278,
+    "removed_resource_types": {
+      "CarePlan": 56,
+      "CareTeam": 56,
+      "Claim": 1005,
+      "Device": 83,
+      "DiagnosticReport": 1393,
+      "ExplanationOfBenefit": 1005,
+      "ImagingStudy": 65,
+      "Medication": 114,
+      "MedicationAdministration": 114,
+      "Provenance": 24,
+      "SupplyDelivery": 363
+    },
+    "reserialised": "UTF-8, two-space indent, sorted object keys, LF newlines"
+  },
+  "retrieved_utc": "2026-08-29T07:36:08+00:00",
+  "selection": {
+    "adult_age_range": [
+      18,
+      85
+    ],
+    "age_reference_date": "2026-06-01",
+    "anchor_max_budget_fraction": 0.25,
+    "byte_budget": 25500000,
+    "candidate_bundles": 109,
+    "corpus_bytes": 20123512,
+    "min_disease_carriers": {
+      "asthma": 1,
+      "ckd": 1,
+      "copd": 2,
+      "diabetes": 1,
+      "heart_failure": 2
+    },
+    "min_panel_carriers": {
+      "creatinine": 4,
+      "egfr": 2,
+      "glucose": 2,
+      "hba1c": 4
+    },
+    "reasons": {
+      "1be83f06-48ef-7bac-7097-b9e0644aeaf8": "condition:asthma",
+      "1e32a1a3-3638-cb8c-7253-ff98a97dc0fe": "sparse",
+      "2211f478-b7b4-7711-16cf-84ffb52b9d2b": "condition:ckd",
+      "23da8e71-dfb9-9773-1bc1-7b5e31d085b5": "senior_history",
+      "30889246-5f7d-9305-542f-55cb89e1f4de": "sparse",
+      "35f80d0e-eaad-ef68-b762-3a1c12a872c1": "fill",
+      "3fa46c70-b194-f14c-3d51-e06cfa4bb9e2": "fill",
+      "5dae1e9e-46fb-5537-54f4-8837a56dd3d5": "fill",
+      "6c4283c9-228b-2774-7d25-fbb5a14bdc1b": "fill",
+      "8c5b83b2-737e-46cf-953b-414e07ed78e7": "fill",
+      "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd": "condition:heart_failure",
+      "97e39468-6488-ca8f-fac2-235a80b4dcf7": "fill",
+      "a406f356-c8b4-54ad-e79c-54a5e15ffc19": "fill",
+      "a6d0791e-4c15-58e6-c30a-ec25e285ace9": "sparse",
+      "afb99eee-0bd5-8853-8a32-fad74da7b103": "fill",
+      "babc4b97-d859-0fe4-2874-fb6fe493ae6b": "sparse",
+      "bd4e49cb-391b-d08a-c7ab-b585e7bd5758": "fill",
+      "cbd1dd48-89c3-3fdb-434e-3f0802738abf": "condition:copd",
+      "cc3eac4a-34a7-9a15-1522-8087135631b7": "fill",
+      "ee4b7339-ca58-b6af-c199-04b6d5761c73": "sparse",
+      "f67eaca3-2366-7ee2-6887-a5bd449b54a6": "fill",
+      "f870c432-0887-125e-f778-cf5110d3de1d": "senior_history",
+      "fb56f051-a2cd-ac10-dcb0-e0738295fc1f": "condition:heart_failure",
+      "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4": "senior_history"
+    },
+    "screening_panel_loinc": {
+      "bmi": [
+        "39156-5"
+      ],
+      "creatinine": [
+        "2160-0",
+        "38483-4"
+      ],
+      "egfr": [
+        "33914-3",
+        "98979-8"
+      ],
+      "glucose": [
+        "2345-7"
+      ],
+      "hba1c": [
+        "4548-4"
+      ],
+      "hemoglobin": [
+        "718-7"
+      ],
+      "platelets": [
+        "777-3",
+        "777-7"
+      ],
+      "systolic_bp": [
+        "8480-6"
+      ]
+    },
+    "selected_bundles": 24,
+    "senior_quota": {
+      "min_age": 55,
+      "min_carriers": 3,
+      "min_record_span_years": 20
+    },
+    "sparse_quota": 5,
+    "target_count": 24,
+    "unmet_quotas": [
+      "condition:copd: 1/2"
+    ]
+  },
+  "source": {
+    "archive_bytes": 29595199,
+    "archive_sha256": "56cb9e49f7ba6ad4e61c40aa80999f8c10a710823fed1becdf2502053777a521",
+    "attribution": "Synthea synthetic patient generator, The MITRE Corporation",
+    "contains_phi": false,
+    "download_url": "https://raw.githubusercontent.com/synthetichealth/synthea-sample-data/9959d9178ea28f4ec10f17ee238b6fabe6eb0de5/downloads/latest/synthea_sample_data_fhir_latest.zip",
+    "license": "Apache-2.0",
+    "path_in_repository": "downloads/latest/synthea_sample_data_fhir_latest.zip",
+    "pinned_commit_date": "2026-08-18T16:20:34Z",
+    "pinned_commit_sha": "9959d9178ea28f4ec10f17ee238b6fabe6eb0de5",
+    "repository": "https://github.com/synthetichealth/synthea-sample-data"
+  }
+}

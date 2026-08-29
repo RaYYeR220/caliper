@@ -117,13 +117,44 @@ class UnsupportedPredicate(_Frozen):
     reason: str = Field(min_length=1)
 
 
+class CompositePredicate(_Frozen):
+    """Several predicates combined. Protocols rarely put one assertion in one bullet.
+
+    The IR is recursive because criteria are; the schema we send a model is not, because strict
+    JSON-schema modes handle `$ref` cycles badly. `unrolled_predicate_schema` in `wire.py` flattens
+    this to a fixed depth, and anything deeper is compiled as unsupported rather than truncated.
+    """
+
+    type: Literal["all_of", "any_of", "not"]
+    operands: tuple[Predicate, ...]
+
+    @model_validator(mode="after")
+    def _arity_matches_the_operator(self) -> CompositePredicate:
+        if self.type == "not":
+            if len(self.operands) != 1:
+                raise ValueError("'not' takes exactly one operand")
+        elif len(self.operands) < 2:
+            raise ValueError(f"{self.type!r} needs at least two operands")
+        return self
+
+
 Predicate = Annotated[
     ObservationPredicate
     | PresencePredicate
     | DemographicPredicate
-    | UnsupportedPredicate,
+    | UnsupportedPredicate
+    | CompositePredicate,
     Field(discriminator="type"),
 ]
+
+CompositePredicate.model_rebuild()
+
+
+def max_predicate_depth(predicate: Predicate) -> int:
+    """How deeply composites nest. Atoms are depth 0."""
+    if not isinstance(predicate, CompositePredicate):
+        return 0
+    return 1 + max(max_predicate_depth(operand) for operand in predicate.operands)
 
 
 class Criterion(_Frozen):

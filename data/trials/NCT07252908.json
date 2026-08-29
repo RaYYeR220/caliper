@@ -1,0 +1,574 @@
+{
+  "derivedSection": {
+    "conditionBrowseModule": {
+      "ancestors": [
+        {
+          "id": "D008173",
+          "term": "Lung Diseases, Obstructive"
+        },
+        {
+          "id": "D008171",
+          "term": "Lung Diseases"
+        },
+        {
+          "id": "D012140",
+          "term": "Respiratory Tract Diseases"
+        },
+        {
+          "id": "D002908",
+          "term": "Chronic Disease"
+        },
+        {
+          "id": "D020969",
+          "term": "Disease Attributes"
+        },
+        {
+          "id": "D010335",
+          "term": "Pathologic Processes"
+        },
+        {
+          "id": "D013568",
+          "term": "Pathological Conditions, Signs and Symptoms"
+        }
+      ],
+      "meshes": [
+        {
+          "id": "D029424",
+          "term": "Pulmonary Disease, Chronic Obstructive"
+        }
+      ]
+    },
+    "miscInfoModule": {
+      "versionHolder": "2026-08-28"
+    }
+  },
+  "hasResults": false,
+  "protocolSection": {
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "description": "750 µg TQC3721 inhalation powder，administered by inhalation，twice a day for 4 weeks.",
+          "interventionNames": [
+            "Drug: TQC3721 inhalation powder"
+          ],
+          "label": "750 µg Dosage group",
+          "type": "EXPERIMENTAL"
+        },
+        {
+          "description": "1000µg TQC3721 inhalation powder，administered by inhalation，twice a day for 4 weeks.",
+          "interventionNames": [
+            "Drug: TQC3721 inhalation powder"
+          ],
+          "label": "1000 µg Dosage group",
+          "type": "EXPERIMENTAL"
+        },
+        {
+          "description": "Placebo for TQC3721 inhalation powder, administered by inhalation, twice a day for 4 weeks.",
+          "interventionNames": [
+            "Drug: Placebo for TQC3721 inhalation powder"
+          ],
+          "label": "Placebo for TQC3721 inhalation powder",
+          "type": "PLACEBO_COMPARATOR"
+        }
+      ],
+      "interventions": [
+        {
+          "armGroupLabels": [
+            "1000 µg Dosage group",
+            "750 µg Dosage group"
+          ],
+          "description": "TQC3721 inhalation powder is target inhibitor.",
+          "name": "TQC3721 inhalation powder",
+          "type": "DRUG"
+        },
+        {
+          "armGroupLabels": [
+            "Placebo for TQC3721 inhalation powder"
+          ],
+          "description": "Placebo for TQC3721 inhalation powder.",
+          "name": "Placebo for TQC3721 inhalation powder",
+          "type": "DRUG"
+        }
+      ]
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Pulmonary Disease, Chronic Obstructive"
+      ]
+    },
+    "contactsLocationsModule": {
+      "locations": [
+        {
+          "city": "Chongqing",
+          "country": "China",
+          "facility": "The Second Affiliated Hospital of Chongqing Medical University",
+          "geoPoint": {
+            "lat": 29.56026,
+            "lon": 106.55771
+          },
+          "state": "Chognqing",
+          "zip": "400010"
+        },
+        {
+          "city": "Guangzhou",
+          "country": "China",
+          "facility": "Guangdong Provincial People's Hospital",
+          "geoPoint": {
+            "lat": 23.11667,
+            "lon": 113.25
+          },
+          "state": "Guangdong",
+          "zip": "510080"
+        },
+        {
+          "city": "Jiangmen",
+          "country": "China",
+          "facility": "Jiangmen Central Hospital",
+          "geoPoint": {
+            "lat": 22.58333,
+            "lon": 113.08333
+          },
+          "state": "Guangdong",
+          "zip": "529000"
+        },
+        {
+          "city": "Guigang",
+          "country": "China",
+          "facility": "Guigang People's Hospital",
+          "geoPoint": {
+            "lat": 23.11603,
+            "lon": 109.59472
+          },
+          "state": "Guangxi",
+          "zip": "537100"
+        },
+        {
+          "city": "Zunyi",
+          "country": "China",
+          "facility": "Zunyi Medical University Affiliated Hospital",
+          "geoPoint": {
+            "lat": 27.68667,
+            "lon": 106.90722
+          },
+          "state": "Guizhou",
+          "zip": "563000"
+        },
+        {
+          "city": "Puyang",
+          "country": "China",
+          "facility": "Puyang Oilfield General Hospital",
+          "geoPoint": {
+            "lat": 35.75641,
+            "lon": 115.04363
+          },
+          "state": "Henan",
+          "zip": "457001"
+        },
+        {
+          "city": "Yichang",
+          "country": "China",
+          "facility": "Yichang Central People's Hospital",
+          "geoPoint": {
+            "lat": 30.71444,
+            "lon": 111.28472
+          },
+          "state": "Hubei",
+          "zip": "443003"
+        },
+        {
+          "city": "Changsha",
+          "country": "China",
+          "facility": "The People's Hospital of Liuyang",
+          "geoPoint": {
+            "lat": 28.19874,
+            "lon": 112.97087
+          },
+          "state": "Hunan",
+          "zip": "410000"
+        },
+        {
+          "city": "Xiangtan",
+          "country": "China",
+          "facility": "Xiangtan County People's Hospital",
+          "geoPoint": {
+            "lat": 27.85,
+            "lon": 112.9
+          },
+          "state": "Hunan",
+          "zip": "411200"
+        },
+        {
+          "city": "Hohhot",
+          "country": "China",
+          "facility": "The Affiliated Hospital of Inner Mongolia Medical University",
+          "geoPoint": {
+            "lat": 40.81056,
+            "lon": 111.65222
+          },
+          "state": "Inner Mongolia",
+          "zip": "010000"
+        },
+        {
+          "city": "Nanjing",
+          "country": "China",
+          "facility": "Nanjing Drum Tower Hospital",
+          "geoPoint": {
+            "lat": 32.06167,
+            "lon": 118.77778
+          },
+          "state": "Jiangsu",
+          "zip": "210000"
+        },
+        {
+          "city": "Wuxi",
+          "country": "China",
+          "facility": "Yixing People'S Hospital",
+          "geoPoint": {
+            "lat": 31.56887,
+            "lon": 120.28857
+          },
+          "state": "Jiangsu",
+          "zip": "214000"
+        },
+        {
+          "city": "Jiujiang",
+          "country": "China",
+          "facility": "Jiujiang First People's Hospital",
+          "geoPoint": {
+            "lat": 29.70475,
+            "lon": 116.00206
+          },
+          "state": "Jiangxi",
+          "zip": "332000"
+        },
+        {
+          "city": "Nanchang",
+          "country": "China",
+          "facility": "Jiangxi Provincial People's Hospital",
+          "geoPoint": {
+            "lat": 28.68396,
+            "lon": 115.85306
+          },
+          "state": "Jiangxi",
+          "zip": "330006"
+        },
+        {
+          "city": "Siping",
+          "country": "China",
+          "facility": "Siping Central People's Hospital",
+          "geoPoint": {
+            "lat": 43.16143,
+            "lon": 124.37785
+          },
+          "state": "Jilin",
+          "zip": "136099"
+        },
+        {
+          "city": "Heze",
+          "country": "China",
+          "facility": "Heze Municipal Hospital",
+          "geoPoint": {
+            "lat": 35.23929,
+            "lon": 115.47358
+          },
+          "state": "Shandong",
+          "zip": "274000"
+        },
+        {
+          "city": "Shanghai",
+          "country": "China",
+          "facility": "Shanghai JiaoTong University of medicine Ruijin Hospital",
+          "geoPoint": {
+            "lat": 31.22222,
+            "lon": 121.45806
+          },
+          "state": "Shanghai Municipality",
+          "zip": "20025"
+        },
+        {
+          "city": "Shanghai",
+          "country": "China",
+          "facility": "Shanghai Pulmonary Hospital",
+          "geoPoint": {
+            "lat": 31.22222,
+            "lon": 121.45806
+          },
+          "state": "Shanghai Municipality",
+          "zip": "200433"
+        },
+        {
+          "city": "Linfen",
+          "country": "China",
+          "facility": "Linfen People's Hospital",
+          "geoPoint": {
+            "lat": 36.08889,
+            "lon": 111.51889
+          },
+          "state": "Shanxi",
+          "zip": "41000"
+        },
+        {
+          "city": "Chengdou",
+          "country": "China",
+          "facility": "Nuclear Industry 416 Hospital",
+          "state": "Sichuan",
+          "zip": "610051"
+        },
+        {
+          "city": "Chengdu",
+          "country": "China",
+          "facility": "Chengdu Fifth People's Hospital",
+          "geoPoint": {
+            "lat": 30.66667,
+            "lon": 104.06667
+          },
+          "state": "Sichuan",
+          "zip": "610044"
+        },
+        {
+          "city": "Chengdu",
+          "country": "China",
+          "facility": "Affiliated Hospital Of ChengDu University",
+          "geoPoint": {
+            "lat": 30.66667,
+            "lon": 104.06667
+          },
+          "state": "Sichuan",
+          "zip": "610081"
+        },
+        {
+          "city": "Chengdu",
+          "country": "China",
+          "facility": "West China Hospital of Sichuan University",
+          "geoPoint": {
+            "lat": 30.66667,
+            "lon": 104.06667
+          },
+          "state": "Sichuan",
+          "zip": "Sichuan 610044"
+        },
+        {
+          "city": "Suining",
+          "country": "China",
+          "facility": "Suining Central Hospital",
+          "geoPoint": {
+            "lat": 30.50802,
+            "lon": 105.57332
+          },
+          "state": "Sichuan",
+          "zip": "629000"
+        },
+        {
+          "city": "Yibin",
+          "country": "China",
+          "facility": "Yibin Second People's Hospital",
+          "geoPoint": {
+            "lat": 28.7593,
+            "lon": 104.63994
+          },
+          "state": "Sichuan",
+          "zip": "644000"
+        },
+        {
+          "city": "Tianjin",
+          "country": "China",
+          "facility": "Tianjin Medical University General Hospital",
+          "geoPoint": {
+            "lat": 39.14222,
+            "lon": 117.17667
+          },
+          "state": "Tianjin Municipality",
+          "zip": "300052"
+        },
+        {
+          "city": "Tianjin",
+          "country": "China",
+          "facility": "The Fourth Central Hospital of Tianjin",
+          "geoPoint": {
+            "lat": 39.14222,
+            "lon": 117.17667
+          },
+          "state": "Tianjin Municipality",
+          "zip": "300140"
+        },
+        {
+          "city": "Taizhou",
+          "country": "China",
+          "facility": "Taizhou central hospital (Taizhou university hospital）",
+          "geoPoint": {
+            "lat": 28.66266,
+            "lon": 121.43312
+          },
+          "state": "Zhejiang",
+          "zip": "31800"
+        },
+        {
+          "city": "Wenzhu",
+          "country": "China",
+          "facility": "The 2th School of Medicine ,WMU/The 2th affiliated Hospital and Yuying Children's Hospital of WMU",
+          "state": "Zhejiang",
+          "zip": "325027"
+        }
+      ]
+    },
+    "descriptionModule": {
+      "briefSummary": "To evaluate the efficacy and safety of TQC3721 inhalation powder in patients with moderate to severe Chronic obstructive pulmonary disease (COPD)."
+    },
+    "designModule": {
+      "designInfo": {
+        "allocation": "RANDOMIZED",
+        "interventionModel": "PARALLEL",
+        "maskingInfo": {
+          "masking": "QUADRUPLE",
+          "whoMasked": [
+            "PARTICIPANT",
+            "CARE_PROVIDER",
+            "INVESTIGATOR",
+            "OUTCOMES_ASSESSOR"
+          ]
+        },
+        "primaryPurpose": "TREATMENT"
+      },
+      "enrollmentInfo": {
+        "count": 195,
+        "type": "ACTUAL"
+      },
+      "phases": [
+        "PHASE2"
+      ],
+      "studyType": "INTERVENTIONAL"
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\n* Sign the informed consent form before the trial and have a full understanding of the trial content, process, and potential adverse reactions.\n* Be willing and able to adhere to the trial visit schedule and procedures and use the dry powder inhaler correctly.\n* Male and female subjects aged 40 to 80 years (inclusive).\n* Body Mass Index (BMI) within the range of 18-30 kg/m² (inclusive).\n* Subjects have no plans for pregnancy and voluntarily adopt effective contraceptive measures from screening to at least 1 month after the last use of the study drug.\n* 12-lead electrocardiogram (ECG) showing: heart rate of 50-100 beats per minute (bpm); corrected QT interval (QTcF) \\<= 450 msec for males or \\<= 470 msec for females.\n* Diagnosed with COPD according to the 2025 Global Initiative for Chronic Obstructive Lung Disease (GOLD) criteria, and have had symptoms consistent with COPD for at least 1 year before screening.\n* Have been on stable background inhaled therapy for COPD for at least 4 weeks before screening.\n* Be able to perform acceptable and reproducible pulmonary function tests.\n* At the screening visit (V1 visit), after administration of a bronchodilator (4 puffs of salbutamol), the FEV1/Forced Vital Capacity (FVC) ratio \\< 0.7, and 30% predicted value \\<= FEV1 \\< 80% predicted value.\n* Clinically stable COPD within 4 weeks before the screening visit (V1 visit) and between the V1 visit and V2 visit.\n* Modified Medical Research Council (mMRC) Dyspnea Scale score \\>= 2 at screening.\n* Meet the concurrent medication restrictions (within the time intervals specified in the protocol) and are expected to maintain the restriction requirements during treatment.\n* Smoking history \\>= 10 pack-years (pack-year: number of packs per day × number of smoking years; e.g., 1 pack (20 cigarettes) per day for 10 consecutive years, or 10 cigarettes per day for 20 consecutive years).\n\nExclusion Criteria:\n\n* Life-threatening COPD history, including admission to the intensive care unit (ICU) and/or requirement for intubation.\n* COPD exacerbation requiring systemic corticosteroid therapy within 3 months before the screening visit (V1 visit) or before the randomization visit (V2 visit).\n* Hospitalization history due to COPD or pneumonia ≥ 1 time within 6 months before screening.\n* Antibiotic treatment for upper and/or lower respiratory tract infections within 6 weeks before screening or before the randomization visit (V3 visit). Note: Subjects with a history of lower respiratory tract infection within 6 weeks cannot be enrolled, but may be rescreened 6 weeks after recovery from the infection.\n* Concurrent other respiratory diseases: α-1 antitrypsin deficiency, primary ciliary dyskinesia, lung cancer; clinically significant active pulmonary infections, pulmonary tuberculosis, bronchiectasis, pulmonary fibrosis, sarcoidosis, pulmonary hypertension, asthma, and other respiratory diseases as assessed by the investigator.\n* Clinically significant abnormalities found on chest computed tomography (CT) that are not caused by COPD and judged by the investigator to have an impact on trial results or patient safety. If there is no chest CT report within 6 months before Visit 1, a chest CT examination must be performed at Visit 1.\n* Previous pulmonary resection or lung volume reduction surgery.\n* Pulmonary rehabilitation therapy (those whose treatment has been stable for 4 weeks before screening and will remain stable during the trial may be enrolled).\n* Receipt of oral corticosteroids or roflumilast for COPD within 3 months before the screening visit (V1 visit), or receipt of oral theophylline and/or theophylline derivatives for COPD within 1 week before the screening visit (V1 visit).\n* Use of non-selective oral beta-blockers.\n* Previous treatment with TQC3721.\n* Patients who received immunotherapy (e.g., azathioprine, cyclophosphamide) within 4 weeks before the screening period.\n* As assessed by the investigator, the patient cannot discontinue the prohibited drugs specified in the protocol during the screening and treatment phases of this study.\n* The patient has a history of currently uncontrolled diseases, including but not limited to endocrine, thyroid, neuropsychiatric, hepatic, gastrointestinal, renal, hematologic, urinary, immunologic, or ophthalmic diseases, which are judged to be clinically significant by the investigator.\n* History or current evidence of clinically significant cardiovascular diseases, defined as any disease that the investigator believes would endanger the patient's safety if participating in the study, or any disease that may affect the efficacy or safety analysis if the disease/condition deteriorates during the study; subjects with any of the following conditions at Visit 1 will be excluded:\n\n  1. Myocardial infarction, unstable angina, or stroke within the past 6 months;\n  2. Unstable or life-threatening arrhythmias requiring intervention within the past 3 months;\n  3. New York Heart Association (NYHA) Class III-IV heart failure.\n* Unstable or uncontrolled hypertension (systolic blood pressure \\>= 160 mmHg and diastolic blood pressure \\>= 100 mmHg after drug control).\n* Patients with poorly controlled type 2 diabetes or fasting blood glucose \\> 10 mmol/L.\n* Receipt of major surgery (requiring general anesthesia) within 8 weeks before the screening visit (V1 visit), failure to fully recover from the surgery at the time of screening (V1 visit), or planned surgery before the end of the study.\n* History of malignant tumors (cured or uncured) of any organ or system within the past 5 years (excluding non-metastatic cutaneous basal cell or squamous cell carcinoma, or cervical carcinoma in situ that have been cured for more than 5 years before the screening period).\n* Clinically significant abnormal values in safety laboratory tests (hematology, biochemistry, or urinalysis) determined by the investigator at the screening visit (V1 visit), including but not limited to one of the following:\n\n  1. Alanine Aminotransferase (ALT) or Aspartate Aminotransferase (AST) \\> 2 × Upper Limit of Normal (ULN); alkaline phosphatase \\> 2 × ULN; total bilirubin \\> 1.5 × ULN;\n  2. Estimated glomerular filtration rate (eGFR) calculated using the Chronic Kidney Disease Epidemiology Collaboration (CKD-EPI) formula \\< 60 mL/min/1.73m².\n* Positive test result for Human Immunodeficiency Virus (HIV) antibody; positive test result for Hepatitis B Surface Antigen (HBsAg) (if HBsAg is positive, Hepatitis B Virus (HBV) DNA testing may be added if necessary; subjects with HBV DNA \\< Lower Limit of Quantification (LLOQ) need not be excluded); positive Hepatitis C Virus (HCV) antibody with confirmed presence of HCV ribonucleic acid (RNA); positive Treponema Pallidum Particle Agglutination (TPPA) antibody.\n* Intolerance or allergy to salbutamol or other inhaled bronchodilator therapies for COPD.\n* Patients requiring continuous or intermittent oxygen therapy.\n* Female subjects who are pregnant, lactating, or planning to become pregnant during the study enrollment period.\n* Receipt of live attenuated vaccine within 28 days before randomization, receipt of inactivated vaccine within 7 days before randomization, or planned vaccination during the study.\n* History of drug abuse or alcoholism within the past 3 years (consumption of 14 units of alcohol per week: 1 unit = 360 ml of beer, or 45 ml of spirits with 40% alcohol content, or 150 ml of wine).\n* Participation in any drug or medical device clinical trial within 4 weeks or 5 drug half-lives (whichever is longer) before screening.\n* Other conditions deemed unsuitable for study participation by the investigator.",
+      "healthyVolunteers": false,
+      "maximumAge": "80 Years",
+      "minimumAge": "40 Years",
+      "sex": "ALL",
+      "stdAges": [
+        "ADULT",
+        "OLDER_ADULT"
+      ]
+    },
+    "identificationModule": {
+      "briefTitle": "A Phase II Clinical Trial on the Efficacy and Safety of TQC3721 Inhalation Powder",
+      "nctId": "NCT07252908",
+      "officialTitle": "A Multicenter, Randomized, Double-blind, Placebo-controlled Phase II Clinical Trial to Evaluate the Efficacy and Safety of TQC3721 Inhalation Powder in Patients With Moderate to Severe Chronic Obstructive Pulmonary Disease",
+      "orgStudyIdInfo": {
+        "id": "TQC3721-D8-II-01"
+      },
+      "organization": {
+        "class": "INDUSTRY",
+        "fullName": "Chia Tai Tianqing Pharmaceutical Group Co., Ltd."
+      }
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "description": "Change of the maximum value of FEV1 was determined from baseline to four weeks after treatment.",
+          "measure": "Change of the maximum value of Forced Expiratory Volume in the first second (FEV1)",
+          "timeFrame": "From baseline to four weeks after treatment"
+        }
+      ],
+      "secondaryOutcomes": [
+        {
+          "description": "Number of subjects of changes in the peak, trough values of FEV1 and average FEV1 Area under the curve (AUC) within 3 hours and 12 hours after morning administration on 1 day, 2 weeks and 4 weeks of treatment compared with the baseline.",
+          "measure": "Number of subjects of changes in the peak, trough values of FEV1 and average FEV1 AUC",
+          "timeFrame": "From baseline to four weeks after treatment"
+        },
+        {
+          "description": "Evaluating valley concentration of TQC3721 (in selected patients only).",
+          "measure": "Valley concentration",
+          "timeFrame": "From baseline to four weeks after treatment"
+        },
+        {
+          "description": "The subjets with the number, frequency, incidence, and severity of adverse events, serious adverse events, and adverse events associated with investigational drugs (including investigational drugs and control drugs), as well as abnormal laboratory indicators were evaluated.",
+          "measure": "Adverse Events (AE)",
+          "timeFrame": "From baseline to safety visit(about 5 weeks after first dosing)"
+        },
+        {
+          "description": "Frequency of rescue medication used during the study compared to placebo group",
+          "measure": "Frequency of rescue medication used during the study",
+          "timeFrame": "From baseline to four weeks after administration"
+        },
+        {
+          "description": "Changes in CAT assessment after 2 and 4 weeks of treatment compared with baseline.The CAT questionnaire is mainly used to assess the impact of COPD on patients' health and daily quality of life.There are 8 questions in the CAT, and each question is scored 0-5 points, with the higher score meaning the more severe symptoms.",
+          "measure": "Changes in Chronic obstructive pulmonary disease Assessment Test (CAT)",
+          "timeFrame": "From baseline to four weeks after treatment"
+        },
+        {
+          "description": "Changes in SGRQ after 2 and 4 weeks of treatment compared with baseline. The SGRQ is a standardized self-assessment tool used to evaluate the quality of life of patients with chronic respiratory diseases. It quantifies the degree of impairment in patients' symptoms, activity capacity and social psychological adaptation, and comprehensively reflects the impact of the disease on patients' daily lives.",
+          "measure": "Changes in St. George's Respiratory Questionnaire (SGRQ)",
+          "timeFrame": "From baseline to four weeks after treatment"
+        },
+        {
+          "description": "Evaluating peak concentration of TQC3721 (in selected patients only)",
+          "measure": "Peak concentration",
+          "timeFrame": "From baseline to four weeks after treatment"
+        },
+        {
+          "description": "Evaluating Area under the concentration-time curve from 0 to last observation (AUC 0-t) of TQC3721. (in selected patients only)",
+          "measure": "Area under the concentration-time curve from 0 to last observation (AUC 0-t) of TQC3721",
+          "timeFrame": "From baseline to four weeks after treatment"
+        },
+        {
+          "description": "Evaluating Vd/F of TQC3721. (in selected patients only)",
+          "measure": "Apparent volume of distribution (Vd/F)",
+          "timeFrame": "From baseline to four weeks after treatment"
+        },
+        {
+          "description": "Evaluating Apparent clearance (CL/F) of TQC3721. (in selected patients only)",
+          "measure": "Apparent clearance (CL/F)",
+          "timeFrame": "From baseline to four weeks after treatment"
+        },
+        {
+          "description": "Evaluating the time required for half of the drug to be eliminated from the plasma of TQC3721. (in selected patients only)",
+          "measure": "Half-ife (t1/2)",
+          "timeFrame": "From baseline to four weeks after treatment"
+        }
+      ]
+    },
+    "oversightModule": {
+      "isFdaRegulatedDevice": false,
+      "isFdaRegulatedDrug": false
+    },
+    "sponsorCollaboratorsModule": {
+      "leadSponsor": {
+        "class": "INDUSTRY",
+        "name": "Chia Tai Tianqing Pharmaceutical Group Co., Ltd."
+      },
+      "responsibleParty": {
+        "type": "SPONSOR"
+      }
+    },
+    "statusModule": {
+      "completionDateStruct": {
+        "date": "2026-05-07",
+        "type": "ACTUAL"
+      },
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "lastUpdatePostDateStruct": {
+        "date": "2026-06-18",
+        "type": "ACTUAL"
+      },
+      "lastUpdateSubmitDate": "2026-06-17",
+      "overallStatus": "COMPLETED",
+      "primaryCompletionDateStruct": {
+        "date": "2026-04-28",
+        "type": "ACTUAL"
+      },
+      "startDateStruct": {
+        "date": "2025-12-22",
+        "type": "ACTUAL"
+      },
+      "statusVerifiedDate": "2026-01",
+      "studyFirstPostDateStruct": {
+        "date": "2025-11-28",
+        "type": "ACTUAL"
+      },
+      "studyFirstSubmitDate": "2025-11-19",
+      "studyFirstSubmitQcDate": "2025-11-25"
+    }
+  }
+}

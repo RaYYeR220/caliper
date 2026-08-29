@@ -1,0 +1,2028 @@
+{
+  "derivedSection": {
+    "conditionBrowseModule": {
+      "ancestors": [
+        {
+          "id": "D051437",
+          "term": "Renal Insufficiency"
+        },
+        {
+          "id": "D007674",
+          "term": "Kidney Diseases"
+        },
+        {
+          "id": "D014570",
+          "term": "Urologic Diseases"
+        },
+        {
+          "id": "D052776",
+          "term": "Female Urogenital Diseases"
+        },
+        {
+          "id": "D005261",
+          "term": "Female Urogenital Diseases and Pregnancy Complications"
+        },
+        {
+          "id": "D000091642",
+          "term": "Urogenital Diseases"
+        },
+        {
+          "id": "D052801",
+          "term": "Male Urogenital Diseases"
+        },
+        {
+          "id": "D002908",
+          "term": "Chronic Disease"
+        },
+        {
+          "id": "D020969",
+          "term": "Disease Attributes"
+        },
+        {
+          "id": "D010335",
+          "term": "Pathologic Processes"
+        },
+        {
+          "id": "D013568",
+          "term": "Pathological Conditions, Signs and Symptoms"
+        }
+      ],
+      "meshes": [
+        {
+          "id": "D051436",
+          "term": "Renal Insufficiency, Chronic"
+        }
+      ]
+    },
+    "interventionBrowseModule": {
+      "meshes": [
+        {
+          "id": "C000591245",
+          "term": "semaglutide"
+        }
+      ]
+    },
+    "miscInfoModule": {
+      "versionHolder": "2026-08-28"
+    }
+  },
+  "hasResults": false,
+  "protocolSection": {
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "description": "Participants will receive once-weekly subcutaneous (s.c) injections of NNC0519-0130 following a fixed dose escalation until the maintenance dose is reached.",
+          "interventionNames": [
+            "Drug: NNC0519-0130"
+          ],
+          "label": "Dosing scheme a: NNC0519-0130",
+          "type": "EXPERIMENTAL"
+        },
+        {
+          "description": "Participants will receive NNC0519-0130 matched placebo s.c. once-weekly.",
+          "interventionNames": [
+            "Drug: Placebo"
+          ],
+          "label": "Dosing scheme a: Placebo",
+          "type": "PLACEBO_COMPARATOR"
+        },
+        {
+          "description": "Participants will receive once-weekly s.c injections of NNC0519-0130 following a fixed dose escalation until the maintenance dose is reached.",
+          "interventionNames": [
+            "Drug: NNC0519-0130"
+          ],
+          "label": "Dosing scheme b: NNC0519-0130",
+          "type": "EXPERIMENTAL"
+        },
+        {
+          "description": "Participants will receive NNC0519-0130 matched placebo s.c. once-weekly.",
+          "interventionNames": [
+            "Drug: Placebo"
+          ],
+          "label": "Dosing scheme b: Placebo",
+          "type": "PLACEBO_COMPARATOR"
+        },
+        {
+          "description": "Participants will receive once-weekly s.c injections of NNC0519-0130 following a fixed dose escalation until the maintenance dose is reached.",
+          "interventionNames": [
+            "Drug: NNC0519-0130"
+          ],
+          "label": "Dosing scheme c: NNC0519-0130",
+          "type": "EXPERIMENTAL"
+        },
+        {
+          "description": "Participants will receive NNC0519-0130 matched placebo s.c. once-weekly.",
+          "interventionNames": [
+            "Drug: Placebo"
+          ],
+          "label": "Dosing scheme c: Placebo",
+          "type": "PLACEBO_COMPARATOR"
+        },
+        {
+          "description": "Participants will receive once-weekly s.c injections of NNC0519-0130 following a fixed dose escalation until the maintenance dose is reached.",
+          "interventionNames": [
+            "Drug: NNC0519-0130"
+          ],
+          "label": "Dosing scheme d: NNC0519-0130",
+          "type": "EXPERIMENTAL"
+        },
+        {
+          "description": "Participants will receive NNC0519-0130 matched placebo s.c. once-weekly.",
+          "interventionNames": [
+            "Drug: Placebo"
+          ],
+          "label": "Dosing scheme d: Placebo",
+          "type": "PLACEBO_COMPARATOR"
+        },
+        {
+          "description": "Participants will receive once-weekly s.c injections of semaglutide with a dose escalation done until maintenance dose is reached.",
+          "interventionNames": [
+            "Drug: Semaglutide"
+          ],
+          "label": "Dosing scheme e: Semaglutide",
+          "type": "ACTIVE_COMPARATOR"
+        }
+      ],
+      "interventions": [
+        {
+          "armGroupLabels": [
+            "Dosing scheme a: NNC0519-0130",
+            "Dosing scheme b: NNC0519-0130",
+            "Dosing scheme c: NNC0519-0130",
+            "Dosing scheme d: NNC0519-0130"
+          ],
+          "description": "NNC0519-0130 will be administered subcutaneously.",
+          "name": "NNC0519-0130",
+          "type": "DRUG"
+        },
+        {
+          "armGroupLabels": [
+            "Dosing scheme a: Placebo",
+            "Dosing scheme b: Placebo",
+            "Dosing scheme c: Placebo",
+            "Dosing scheme d: Placebo"
+          ],
+          "description": "Placebo matching NNC0519-0130 will be administered subcutaneously.",
+          "name": "Placebo",
+          "type": "DRUG"
+        },
+        {
+          "armGroupLabels": [
+            "Dosing scheme e: Semaglutide"
+          ],
+          "description": "Semaglutide will be administered subcutaneously.",
+          "name": "Semaglutide",
+          "type": "DRUG"
+        }
+      ]
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Chronic Kidney Disease"
+      ]
+    },
+    "contactsLocationsModule": {
+      "centralContacts": [
+        {
+          "email": "clinicaltrials@novonordisk.com",
+          "name": "Novo Nordisk",
+          "phone": "(+1) 866-867-7178",
+          "role": "CONTACT"
+        }
+      ],
+      "locations": [
+        {
+          "city": "San Dimas",
+          "country": "United States",
+          "facility": "N America Res Inst - San Dimas",
+          "geoPoint": {
+            "lat": 34.10668,
+            "lon": -117.80673
+          },
+          "state": "California",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "91773"
+        },
+        {
+          "city": "San Ramon",
+          "country": "United States",
+          "facility": "NorCal Endocrinology and Internal Medicine",
+          "geoPoint": {
+            "lat": 37.77993,
+            "lon": -121.97802
+          },
+          "state": "California",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "94583"
+        },
+        {
+          "city": "Aurora",
+          "country": "United States",
+          "facility": "Rocky Mount Reg VA Med-DN",
+          "geoPoint": {
+            "lat": 39.72943,
+            "lon": -104.83192
+          },
+          "state": "Colorado",
+          "status": "COMPLETED",
+          "zip": "80045"
+        },
+        {
+          "city": "Fleming Island",
+          "country": "United States",
+          "facility": "Northeast Research Institute",
+          "geoPoint": {
+            "lat": 30.0933,
+            "lon": -81.71898
+          },
+          "state": "Florida",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "32003"
+        },
+        {
+          "city": "Hollywood",
+          "country": "United States",
+          "facility": "Encore Medical Research LLC",
+          "geoPoint": {
+            "lat": 26.0112,
+            "lon": -80.14949
+          },
+          "state": "Florida",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "33024"
+        },
+        {
+          "city": "Saint Augustine",
+          "country": "United States",
+          "facility": "Northeast Research Institute",
+          "geoPoint": {
+            "lat": 29.89469,
+            "lon": -81.31452
+          },
+          "state": "Florida",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "32080"
+        },
+        {
+          "city": "Winter Haven",
+          "country": "United States",
+          "facility": "Clinical Research of Cent FL",
+          "geoPoint": {
+            "lat": 28.02224,
+            "lon": -81.73286
+          },
+          "state": "Florida",
+          "status": "COMPLETED",
+          "zip": "33880"
+        },
+        {
+          "city": "Skokie",
+          "country": "United States",
+          "facility": "Endeavor Health",
+          "geoPoint": {
+            "lat": 42.03336,
+            "lon": -87.73339
+          },
+          "state": "Illinois",
+          "status": "COMPLETED",
+          "zip": "60077"
+        },
+        {
+          "city": "Valparaiso",
+          "country": "United States",
+          "facility": "Velocity Clin. Res Valparaiso",
+          "geoPoint": {
+            "lat": 41.47309,
+            "lon": -87.06114
+          },
+          "state": "Indiana",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "46383"
+        },
+        {
+          "city": "Flint",
+          "country": "United States",
+          "facility": "Elite Research Center",
+          "geoPoint": {
+            "lat": 43.01253,
+            "lon": -83.68746
+          },
+          "state": "Michigan",
+          "status": "COMPLETED",
+          "zip": "48532"
+        },
+        {
+          "city": "Kansas City",
+          "country": "United States",
+          "facility": "Clinical Research Consultants",
+          "geoPoint": {
+            "lat": 39.09973,
+            "lon": -94.57857
+          },
+          "state": "Missouri",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "64111-5964"
+        },
+        {
+          "city": "Albany",
+          "country": "United States",
+          "facility": "Albany Medical College",
+          "geoPoint": {
+            "lat": 42.65258,
+            "lon": -73.75623
+          },
+          "state": "New York",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "12203"
+        },
+        {
+          "city": "Morehead City",
+          "country": "United States",
+          "facility": "Carteret Medical Group",
+          "geoPoint": {
+            "lat": 34.72294,
+            "lon": -76.72604
+          },
+          "state": "North Carolina",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "28557"
+        },
+        {
+          "city": "Winston-Salem",
+          "country": "United States",
+          "facility": "Brookview Hills Research Associates, LLC",
+          "geoPoint": {
+            "lat": 36.09986,
+            "lon": -80.24422
+          },
+          "state": "North Carolina",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "27103"
+        },
+        {
+          "city": "El Paso",
+          "country": "United States",
+          "facility": "Davita Clinical Research",
+          "geoPoint": {
+            "lat": 31.75872,
+            "lon": -106.48693
+          },
+          "state": "Texas",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "79902"
+        },
+        {
+          "city": "San Antonio",
+          "country": "United States",
+          "facility": "Clinical Advancement Center",
+          "geoPoint": {
+            "lat": 29.42412,
+            "lon": -98.49363
+          },
+          "state": "Texas",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "78212"
+        },
+        {
+          "city": "San Antonio",
+          "country": "United States",
+          "facility": "Tekton Research",
+          "geoPoint": {
+            "lat": 29.42412,
+            "lon": -98.49363
+          },
+          "state": "Texas",
+          "status": "COMPLETED",
+          "zip": "78251"
+        },
+        {
+          "city": "Spokane",
+          "country": "United States",
+          "facility": "Providence Medical Research Center",
+          "geoPoint": {
+            "lat": 47.65966,
+            "lon": -117.42908
+          },
+          "state": "Washington",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "99204"
+        },
+        {
+          "city": "Lanús Este",
+          "country": "Argentina",
+          "facility": "Centro Médico CIMEL",
+          "geoPoint": {
+            "lat": -34.71416,
+            "lon": -58.37431
+          },
+          "state": "Buenos Aires",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "B1824KAJ"
+        },
+        {
+          "city": "Mar del Plata",
+          "country": "Argentina",
+          "facility": "Renalida",
+          "geoPoint": {
+            "lat": -38.00042,
+            "lon": -57.5562
+          },
+          "state": "Buenos Aires",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "B7600"
+        },
+        {
+          "city": "City of Buenos Aires",
+          "country": "Argentina",
+          "facility": "Centro de Investigaciones Metabólicas",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "C1056ABI"
+        },
+        {
+          "city": "Corrientes",
+          "country": "Argentina",
+          "facility": "Instituto de Cardiología de Corrientes",
+          "geoPoint": {
+            "lat": -27.46784,
+            "lon": -58.8344
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "W3400AMY"
+        },
+        {
+          "city": "Mar del Plata",
+          "country": "Argentina",
+          "facility": "Instituto de Investigaciones Clinicas Mar Del Plata",
+          "geoPoint": {
+            "lat": -38.00042,
+            "lon": -57.5562
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "B7600FZN"
+        },
+        {
+          "city": "Castle Hill",
+          "country": "Australia",
+          "facility": "Castle Hill Medical Centre",
+          "geoPoint": {
+            "lat": -33.73333,
+            "lon": 151.0
+          },
+          "state": "New South Wales",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "2154"
+        },
+        {
+          "city": "Gosford",
+          "country": "Australia",
+          "facility": "Gosford Renal Research",
+          "geoPoint": {
+            "lat": -33.4244,
+            "lon": 151.34399
+          },
+          "state": "New South Wales",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "2250"
+        },
+        {
+          "city": "Chelmer",
+          "country": "Australia",
+          "facility": "Heart of Australia",
+          "geoPoint": {
+            "lat": -27.51326,
+            "lon": 152.97524
+          },
+          "state": "Queensland",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "4068"
+        },
+        {
+          "city": "Reservoir",
+          "country": "Australia",
+          "facility": "Melbourne Renal Research Group",
+          "geoPoint": {
+            "lat": -37.71667,
+            "lon": 145.0
+          },
+          "state": "Victoria",
+          "status": "NOT_YET_RECRUITING",
+          "zip": "3073"
+        },
+        {
+          "city": "St Albans",
+          "country": "Australia",
+          "facility": "Sunshine Hospital - Western Centre for Health Research and Education",
+          "geoPoint": {
+            "lat": -37.74496,
+            "lon": 144.80049
+          },
+          "state": "Victoria",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "3021"
+        },
+        {
+          "city": "Curitiba",
+          "country": "Brazil",
+          "facility": "Quanta Diagnóstico Nuclear / Medicina Nuclear Alto da XV",
+          "geoPoint": {
+            "lat": -25.42778,
+            "lon": -49.27306
+          },
+          "state": "Paraná",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "80045-110"
+        },
+        {
+          "city": "Curitiba",
+          "country": "Brazil",
+          "facility": "Instituto Pró-Renal Brasil",
+          "geoPoint": {
+            "lat": -25.42778,
+            "lon": -49.27306
+          },
+          "state": "Paraná",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "80440-020"
+        },
+        {
+          "city": "Curitiba",
+          "country": "Brazil",
+          "facility": "Centro de Diabetes Curitiba",
+          "geoPoint": {
+            "lat": -25.42778,
+            "lon": -49.27306
+          },
+          "state": "Paraná",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "80810-040"
+        },
+        {
+          "city": "Porto Alegre",
+          "country": "Brazil",
+          "facility": "Irmandade da Santa Casa de Misericórdia de Porto Alegre",
+          "geoPoint": {
+            "lat": -30.03283,
+            "lon": -51.23019
+          },
+          "state": "Rio Grande do Sul",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "90020-090"
+        },
+        {
+          "city": "Porto Alegre",
+          "country": "Brazil",
+          "facility": "Núcleo de Pesquisa Clínica do Rio Grande do Sul Ltda.",
+          "geoPoint": {
+            "lat": -30.03283,
+            "lon": -51.23019
+          },
+          "state": "Rio Grande do Sul",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "90430-001"
+        },
+        {
+          "city": "São Paulo",
+          "country": "Brazil",
+          "facility": "Hospital do Rim e Hipertensao Fundacao Oswaldo Ramos",
+          "geoPoint": {
+            "lat": -23.5475,
+            "lon": -46.63611
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "04038-002"
+        },
+        {
+          "city": "Bankya",
+          "country": "Bulgaria",
+          "facility": "SRH - Zdrave EAD",
+          "geoPoint": {
+            "lat": 42.86328,
+            "lon": 22.68034
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "1320"
+        },
+        {
+          "city": "Kozloduy",
+          "country": "Bulgaria",
+          "facility": "Medical centre Zdrave 1 OOD",
+          "geoPoint": {
+            "lat": 43.77691,
+            "lon": 23.73001
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "3320"
+        },
+        {
+          "city": "Smolyan",
+          "country": "Bulgaria",
+          "facility": "Nader Yabrudi - ASMPVBE Individual practice",
+          "geoPoint": {
+            "lat": 41.57439,
+            "lon": 24.71204
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "4700"
+        },
+        {
+          "city": "Sofia",
+          "country": "Bulgaria",
+          "facility": "Medical Centre Acad. Iv. Penchev EOOD",
+          "geoPoint": {
+            "lat": 42.69751,
+            "lon": 23.32415
+          },
+          "status": "COMPLETED",
+          "zip": "1431"
+        },
+        {
+          "city": "Sofia",
+          "country": "Bulgaria",
+          "facility": "Medical Centre Acad. Iv. Penchev EOOD",
+          "geoPoint": {
+            "lat": 42.69751,
+            "lon": 23.32415
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "1431"
+        },
+        {
+          "city": "Sofia",
+          "country": "Bulgaria",
+          "facility": "USHATE Akad. Ivan Penchev EAD, Second Clinic of Endocrinology",
+          "geoPoint": {
+            "lat": 42.69751,
+            "lon": 23.32415
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "1431"
+        },
+        {
+          "city": "Sofia",
+          "country": "Bulgaria",
+          "facility": "UMHAT Sofiamed EAD",
+          "geoPoint": {
+            "lat": 42.69751,
+            "lon": 23.32415
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "1750"
+        },
+        {
+          "city": "Sofia",
+          "country": "Bulgaria",
+          "facility": "UMHAT Sveta Anna Sofia AD, Second Clinic of Internal Diseases",
+          "geoPoint": {
+            "lat": 42.69751,
+            "lon": 23.32415
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "1750"
+        },
+        {
+          "city": "Varna",
+          "country": "Bulgaria",
+          "facility": "UMHAT Sveta Marina EAD, Clinic of Internal Diseases",
+          "geoPoint": {
+            "lat": 43.21912,
+            "lon": 27.91024
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "9010"
+        },
+        {
+          "city": "Český Krumlov",
+          "country": "Czechia",
+          "facility": "Nemocnice Český Krumlov, a.s.",
+          "geoPoint": {
+            "lat": 48.81091,
+            "lon": 14.31521
+          },
+          "status": "WITHDRAWN",
+          "zip": "381 01"
+        },
+        {
+          "city": "Frýdek-Místek",
+          "country": "Czechia",
+          "facility": "MUDr. Petr Buček s.r.o.",
+          "geoPoint": {
+            "lat": 49.68333,
+            "lon": 18.35
+          },
+          "status": "WITHDRAWN",
+          "zip": "738 01"
+        },
+        {
+          "city": "Hodonín",
+          "country": "Czechia",
+          "facility": "CTC Hodonin s.r.o.",
+          "geoPoint": {
+            "lat": 48.84893,
+            "lon": 17.13244
+          },
+          "status": "WITHDRAWN",
+          "zip": "695 01"
+        },
+        {
+          "city": "Prague",
+          "country": "Czechia",
+          "facility": "FNKV-Internal Clinic-Nephrology",
+          "geoPoint": {
+            "lat": 50.08804,
+            "lon": 14.42076
+          },
+          "status": "WITHDRAWN",
+          "zip": "100 34"
+        },
+        {
+          "city": "Prague",
+          "country": "Czechia",
+          "facility": "DiaVize s.r.o.",
+          "geoPoint": {
+            "lat": 50.08804,
+            "lon": 14.42076
+          },
+          "status": "WITHDRAWN",
+          "zip": "140 00"
+        },
+        {
+          "city": "Prague",
+          "country": "Czechia",
+          "facility": "IKEM Klinika nefrologie",
+          "geoPoint": {
+            "lat": 50.08804,
+            "lon": 14.42076
+          },
+          "status": "WITHDRAWN",
+          "zip": "140 21"
+        },
+        {
+          "city": "Prague",
+          "country": "Czechia",
+          "facility": "Fledip s.r.o.",
+          "geoPoint": {
+            "lat": 50.08804,
+            "lon": 14.42076
+          },
+          "status": "WITHDRAWN",
+          "zip": "160 00"
+        },
+        {
+          "city": "Smiřice",
+          "country": "Czechia",
+          "facility": "Internist Care s.r.o.",
+          "geoPoint": {
+            "lat": 50.29978,
+            "lon": 15.86508
+          },
+          "status": "WITHDRAWN",
+          "zip": "503 03"
+        },
+        {
+          "city": "Guntur",
+          "country": "India",
+          "facility": "Endolife Specialty Hospitals",
+          "geoPoint": {
+            "lat": 16.29974,
+            "lon": 80.45729
+          },
+          "state": "Andhra Pradesh",
+          "status": "NOT_YET_RECRUITING",
+          "zip": "522001"
+        },
+        {
+          "city": "Bengaluru",
+          "country": "India",
+          "facility": "MS Ramaiah",
+          "geoPoint": {
+            "lat": 12.97194,
+            "lon": 77.59369
+          },
+          "state": "Karnataka",
+          "status": "NOT_YET_RECRUITING",
+          "zip": "560054"
+        },
+        {
+          "city": "Kozhikode",
+          "country": "India",
+          "facility": "Government Medical College, Kozhikode",
+          "geoPoint": {
+            "lat": 11.24802,
+            "lon": 75.7804
+          },
+          "state": "Kerala",
+          "status": "NOT_YET_RECRUITING",
+          "zip": "673008"
+        },
+        {
+          "city": "Jaipur",
+          "country": "India",
+          "facility": "SMS Medical College & Hospital",
+          "geoPoint": {
+            "lat": 26.91962,
+            "lon": 75.78781
+          },
+          "state": "Rajasthan",
+          "status": "NOT_YET_RECRUITING",
+          "zip": "302004"
+        },
+        {
+          "city": "Jaipur",
+          "country": "India",
+          "facility": "Diabetes, Thyroid and Endocrine Centre",
+          "geoPoint": {
+            "lat": 26.91962,
+            "lon": 75.78781
+          },
+          "state": "Rajasthan",
+          "status": "NOT_YET_RECRUITING",
+          "zip": "302006"
+        },
+        {
+          "city": "Hyderabad",
+          "country": "India",
+          "facility": "Diabetes Research Center, Hyderabad",
+          "geoPoint": {
+            "lat": 17.38405,
+            "lon": 78.45636
+          },
+          "state": "Telangana",
+          "status": "NOT_YET_RECRUITING",
+          "zip": "500082"
+        },
+        {
+          "city": "Hyderabad",
+          "country": "India",
+          "facility": "Nizams Institute of Medical Science",
+          "geoPoint": {
+            "lat": 17.38405,
+            "lon": 78.45636
+          },
+          "state": "Telangana",
+          "status": "NOT_YET_RECRUITING",
+          "zip": "500082"
+        },
+        {
+          "city": "L’Aquila",
+          "country": "Italy",
+          "facility": "ASL Avezzano Sulmona L'Aquila - Ospedale San Salvatore - UOC Diabetologia",
+          "geoPoint": {
+            "lat": 42.35055,
+            "lon": 13.39954
+          },
+          "state": "Abbruzzo",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "67100"
+        },
+        {
+          "city": "Chieti",
+          "country": "Italy",
+          "facility": "Università degli studi G. D'Annunzio Chieti Pescara - CAST",
+          "geoPoint": {
+            "lat": 42.34827,
+            "lon": 14.16494
+          },
+          "state": "Abruzzo",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "66100"
+        },
+        {
+          "city": "Bologna",
+          "country": "Italy",
+          "facility": "A.O.U. Bologna_ Policlinico S.Orsola Malpighi",
+          "geoPoint": {
+            "lat": 44.49381,
+            "lon": 11.33875
+          },
+          "state": "BO",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "40138"
+        },
+        {
+          "city": "Bergamo",
+          "country": "Italy",
+          "facility": "Azienda Ospedaliera Papa Giovanni XXIII",
+          "geoPoint": {
+            "lat": 45.69601,
+            "lon": 9.66721
+          },
+          "status": "COMPLETED",
+          "zip": "24127"
+        },
+        {
+          "city": "Brescia",
+          "country": "Italy",
+          "facility": "Azienda Ospedaliera Spedali Civili di Brescia",
+          "geoPoint": {
+            "lat": 45.53558,
+            "lon": 10.21472
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "25121"
+        },
+        {
+          "city": "Milan",
+          "country": "Italy",
+          "facility": "Azienda Ospedaliera Luigi Sacco",
+          "geoPoint": {
+            "lat": 42.78235,
+            "lon": 12.59836
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "20157"
+        },
+        {
+          "city": "Pisa",
+          "country": "Italy",
+          "facility": "Azienda Ospedaliero Universitaria Pisana Ospedale Cisanello",
+          "geoPoint": {
+            "lat": 43.70853,
+            "lon": 10.4036
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "56124"
+        },
+        {
+          "city": "Roma",
+          "country": "Italy",
+          "facility": "Fondazione Policlinico Universitario Agostino Gemelli IRCS",
+          "geoPoint": {
+            "lat": 44.99364,
+            "lon": 11.10642
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "00168"
+        },
+        {
+          "city": "Koriyama-shi, Fukushima",
+          "country": "Japan",
+          "facility": "Seino Internal Medicine Clinic_Internal medicine",
+          "geoPoint": {
+            "lat": 37.75,
+            "lon": 140.46667
+          },
+          "state": "Fukushima, Japan",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "963-8851"
+        },
+        {
+          "city": "Aichi",
+          "country": "Japan",
+          "facility": "TOSAKI Clinic for Diabetes and Endocrinology_Diabetes and Endocrinology",
+          "geoPoint": {
+            "lat": 32.51879,
+            "lon": 130.62158
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "468-0009"
+        },
+        {
+          "city": "Ibaraki",
+          "country": "Japan",
+          "facility": "Naka Kinen Clinic_Internal medicine",
+          "geoPoint": {
+            "lat": 34.81641,
+            "lon": 135.56828
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "311-0113"
+        },
+        {
+          "city": "Ibaraki",
+          "country": "Japan",
+          "facility": "Naka Kinen Clinic_Internal medicine",
+          "geoPoint": {
+            "lat": 34.81641,
+            "lon": 135.56828
+          },
+          "status": "RECRUITING",
+          "zip": "311-0113"
+        },
+        {
+          "city": "Kanagawa",
+          "country": "Japan",
+          "facility": "Fujisawa City Hospital_Kidney internal medicine",
+          "geoPoint": {
+            "lat": 37.58333,
+            "lon": 139.91667
+          },
+          "status": "COMPLETED",
+          "zip": "251-8550"
+        },
+        {
+          "city": "Kanagawa",
+          "country": "Japan",
+          "facility": "Fujisawa City Hospital_Kidney internal medicine",
+          "geoPoint": {
+            "lat": 37.58333,
+            "lon": 139.91667
+          },
+          "status": "RECRUITING",
+          "zip": "251-8550"
+        },
+        {
+          "city": "Kita-ku, Tokyo",
+          "country": "Japan",
+          "facility": "Higashijujo Sakai Diabetes Clinic_Internal Medicine",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "114-0001"
+        },
+        {
+          "city": "Saitama",
+          "country": "Japan",
+          "facility": "Koshigaya Municipal Hospital_Internal medicine",
+          "geoPoint": {
+            "lat": 35.90807,
+            "lon": 139.65657
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "343-8577"
+        },
+        {
+          "city": "Saitama",
+          "country": "Japan",
+          "facility": "Hanyu General Hospital_Internal Medicine",
+          "geoPoint": {
+            "lat": 35.90807,
+            "lon": 139.65657
+          },
+          "status": "COMPLETED",
+          "zip": "348-8505"
+        },
+        {
+          "city": "Sendai-shi, Miyagi",
+          "country": "Japan",
+          "facility": "Shinden Higashi Clinic_Internal medicine",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "983-0039"
+        },
+        {
+          "city": "Sendai-shi, Miyagi",
+          "country": "Japan",
+          "facility": "Shinden Higashi Clinic",
+          "status": "RECRUITING",
+          "zip": "983-0039"
+        },
+        {
+          "city": "Siga",
+          "country": "Japan",
+          "facility": "Omihachiman Community Medical Center_Nephrology",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "523-0082"
+        },
+        {
+          "city": "Siga",
+          "country": "Japan",
+          "facility": "Omihachiman Community Medical Center_Nephrology",
+          "status": "RECRUITING",
+          "zip": "523-0082"
+        },
+        {
+          "city": "Tokyo",
+          "country": "Japan",
+          "facility": "Tokyo-Eki Center-building Clinic_Internal Medicine",
+          "geoPoint": {
+            "lat": 35.6895,
+            "lon": 139.69171
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "103-0027"
+        },
+        {
+          "city": "Tokyo",
+          "country": "Japan",
+          "facility": "Fukuwa Clinic_Internal Medicine",
+          "geoPoint": {
+            "lat": 35.6895,
+            "lon": 139.69171
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "104-0031"
+        },
+        {
+          "city": "Tokyo",
+          "country": "Japan",
+          "facility": "Fukuwa Clinic_Internal Medicine",
+          "geoPoint": {
+            "lat": 35.6895,
+            "lon": 139.69171
+          },
+          "status": "RECRUITING",
+          "zip": "104-0031"
+        },
+        {
+          "city": "Tokyo",
+          "country": "Japan",
+          "facility": "Fukuwa Clinic",
+          "geoPoint": {
+            "lat": 35.6895,
+            "lon": 139.69171
+          },
+          "status": "RECRUITING",
+          "zip": "104-0031"
+        },
+        {
+          "city": "Tokyo",
+          "country": "Japan",
+          "facility": "Kato Clinic of Internal Medicine_Internal Medicine",
+          "geoPoint": {
+            "lat": 35.6895,
+            "lon": 139.69171
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "125-0054"
+        },
+        {
+          "city": "Tokyo",
+          "country": "Japan",
+          "facility": "Kato Clinic of Internal Medicine",
+          "geoPoint": {
+            "lat": 35.6895,
+            "lon": 139.69171
+          },
+          "status": "RECRUITING",
+          "zip": "125-0054"
+        },
+        {
+          "city": "Kuala Lumpur",
+          "country": "Malaysia",
+          "facility": "University Malaya Medical Centre",
+          "geoPoint": {
+            "lat": 3.1412,
+            "lon": 101.68653
+          },
+          "state": "Kuala Lumpur",
+          "status": "RECRUITING",
+          "zip": "59100"
+        },
+        {
+          "city": "Lembah Pantai",
+          "country": "Malaysia",
+          "facility": "University Malaya Medical Centre",
+          "state": "Kuala Lumpur",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "59100"
+        },
+        {
+          "city": "Ipoh",
+          "country": "Malaysia",
+          "facility": "Hospital Raja Permaisuri Bainun Ipoh",
+          "geoPoint": {
+            "lat": 4.5841,
+            "lon": 101.0829
+          },
+          "state": "Perak",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "30450"
+        },
+        {
+          "city": "George Town",
+          "country": "Malaysia",
+          "facility": "Hospital Pulau Pinang",
+          "geoPoint": {
+            "lat": 5.41123,
+            "lon": 100.33543
+          },
+          "state": "Pulau Pinang",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "10990"
+        },
+        {
+          "city": "Miri",
+          "country": "Malaysia",
+          "facility": "Hospital Miri",
+          "geoPoint": {
+            "lat": 4.39928,
+            "lon": 113.99163
+          },
+          "state": "Sarawak",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "98000"
+        },
+        {
+          "city": "Sibu",
+          "country": "Malaysia",
+          "facility": "Hospital Sibu",
+          "geoPoint": {
+            "lat": 2.3,
+            "lon": 111.81667
+          },
+          "state": "Sarawak",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "96000"
+        },
+        {
+          "city": "Sungai Buloh",
+          "country": "Malaysia",
+          "facility": "Hospital Sungai Buloh",
+          "geoPoint": {
+            "lat": 3.21,
+            "lon": 101.561
+          },
+          "state": "Selangor",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "47000"
+        },
+        {
+          "city": "Kota Bharu, Kelantan",
+          "country": "Malaysia",
+          "facility": "Hospital Universiti Sains Malaysia",
+          "geoPoint": {
+            "lat": 6.12361,
+            "lon": 102.24333
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "16150"
+        },
+        {
+          "city": "Kuala Lumpur",
+          "country": "Malaysia",
+          "facility": "Prince Court Medical Centre",
+          "geoPoint": {
+            "lat": 3.1412,
+            "lon": 101.68653
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "50450"
+        },
+        {
+          "city": "Malacca",
+          "country": "Malaysia",
+          "facility": "Hospital Melaka",
+          "geoPoint": {
+            "lat": 2.196,
+            "lon": 102.2405
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "75400"
+        },
+        {
+          "city": "Włocławek",
+          "country": "Poland",
+          "facility": "Kardio Life - Tomasz Borkowski",
+          "geoPoint": {
+            "lat": 52.64817,
+            "lon": 19.0678
+          },
+          "state": "Kuyavian-Pomeranian Voivodeship",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "87-800"
+        },
+        {
+          "city": "Lublin",
+          "country": "Poland",
+          "facility": "Terpa Sp. z o.o. Sp. k.",
+          "geoPoint": {
+            "lat": 51.25058,
+            "lon": 22.57009
+          },
+          "state": "Lubelskie Voivodeship",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "20-333"
+        },
+        {
+          "city": "Rzeszów",
+          "country": "Poland",
+          "facility": "Kliniczny Szpital Wojewodzki nr 2 im. Sw. Jadwigi Krolowej w Rzeszowie",
+          "geoPoint": {
+            "lat": 50.04132,
+            "lon": 21.99901
+          },
+          "state": "Podkarpackie Voivodeship",
+          "status": "NOT_YET_RECRUITING",
+          "zip": "35-301"
+        },
+        {
+          "city": "Bialystok",
+          "country": "Poland",
+          "facility": "Uniwersytecki Szpital Kliniczny w Bialymstoku",
+          "geoPoint": {
+            "lat": 53.13333,
+            "lon": 23.16433
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "15-276"
+        },
+        {
+          "city": "Bialystok",
+          "country": "Poland",
+          "facility": "Uniwersytecki Szpital Kliniczny w Bialymstoku",
+          "geoPoint": {
+            "lat": 53.13333,
+            "lon": 23.16433
+          },
+          "status": "RECRUITING",
+          "zip": "15-276"
+        },
+        {
+          "city": "Gmina Świecie",
+          "country": "Poland",
+          "facility": "Nowy Szpital Sp. z o.o.",
+          "geoPoint": {
+            "lat": 53.40953,
+            "lon": 18.44742
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "86-100"
+        },
+        {
+          "city": "Gmina Świecie",
+          "country": "Poland",
+          "facility": "Nowy Szpital Sp. z o.o.",
+          "geoPoint": {
+            "lat": 53.40953,
+            "lon": 18.44742
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "86-100"
+        },
+        {
+          "city": "Katowice",
+          "country": "Poland",
+          "facility": "Uniwersyteckie Centrum Kliniczne SUM w Katowicach",
+          "geoPoint": {
+            "lat": 50.2597,
+            "lon": 19.02173
+          },
+          "status": "COMPLETED",
+          "zip": "40-752"
+        },
+        {
+          "city": "Lodz",
+          "country": "Poland",
+          "facility": "SPZOZ Uniwersytecki Szpital Kliniczny Nr 1 im. Norberta Barlickiego UM w Lodzi",
+          "geoPoint": {
+            "lat": 51.77058,
+            "lon": 19.47395
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "90-153"
+        },
+        {
+          "city": "Lodz",
+          "country": "Poland",
+          "facility": "SP ZOZ Centralny Szpital Kliniczny Uniwersytetu Medycznego w Łodzi",
+          "geoPoint": {
+            "lat": 51.77058,
+            "lon": 19.47395
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "92-213"
+        },
+        {
+          "city": "Lublin",
+          "country": "Poland",
+          "facility": "Terpa Sp. z o.o. Sp. k.",
+          "geoPoint": {
+            "lat": 51.25058,
+            "lon": 22.57009
+          },
+          "status": "RECRUITING",
+          "zip": "20-333"
+        },
+        {
+          "city": "Lublin",
+          "country": "Poland",
+          "facility": "Zanamed Medical Clinic Sp. z o.o.",
+          "geoPoint": {
+            "lat": 51.25058,
+            "lon": 22.57009
+          },
+          "status": "COMPLETED",
+          "zip": "20-601"
+        },
+        {
+          "city": "Olsztyn",
+          "country": "Poland",
+          "facility": "Wojewodzki Szpital Specjalistyczny w Olsztynie",
+          "geoPoint": {
+            "lat": 53.78376,
+            "lon": 20.49272
+          },
+          "status": "COMPLETED",
+          "zip": "10-561"
+        },
+        {
+          "city": "Oświęcim",
+          "country": "Poland",
+          "facility": "Formed 2 Sp. z o.o.",
+          "geoPoint": {
+            "lat": 50.03437,
+            "lon": 19.21037
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "32-600"
+        },
+        {
+          "city": "Szczecin",
+          "country": "Poland",
+          "facility": "Uniwersytecki Szpital Kliniczny Nr 2 PUM W Szczecinie",
+          "geoPoint": {
+            "lat": 53.42894,
+            "lon": 14.55302
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "70-111"
+        },
+        {
+          "city": "Tczew",
+          "country": "Poland",
+          "facility": "Szpitale Tczewskie S.A.",
+          "geoPoint": {
+            "lat": 54.09242,
+            "lon": 18.77787
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "83-110"
+        },
+        {
+          "city": "Warsaw",
+          "country": "Poland",
+          "facility": "PANSTWOWY INSTYTUT MEDYCZNY MSWiA",
+          "geoPoint": {
+            "lat": 52.22977,
+            "lon": 21.01178
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "02-507"
+        },
+        {
+          "city": "Wroclaw",
+          "country": "Poland",
+          "facility": "Centrum Medyczne Oporow",
+          "geoPoint": {
+            "lat": 51.10286,
+            "lon": 17.03006
+          },
+          "status": "COMPLETED",
+          "zip": "52-416"
+        },
+        {
+          "city": "Zabrze",
+          "country": "Poland",
+          "facility": "Samodzielny Publiczny Szpital Kliniczny Nr 1 im. Prof. Szyszko",
+          "geoPoint": {
+            "lat": 50.32492,
+            "lon": 18.78576
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "41-800"
+        },
+        {
+          "city": "Goyang-si",
+          "country": "South Korea",
+          "facility": "National Health Insurance Corporation Ilsan Hospital",
+          "geoPoint": {
+            "lat": 37.65639,
+            "lon": 126.835
+          },
+          "state": "Gyeonggi-do",
+          "status": "COMPLETED",
+          "zip": "10444"
+        },
+        {
+          "city": "Busan",
+          "country": "South Korea",
+          "facility": "Pusan National University Hospital",
+          "geoPoint": {
+            "lat": 35.10168,
+            "lon": 129.03004
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "49241"
+        },
+        {
+          "city": "Gyeonggi-do",
+          "country": "South Korea",
+          "facility": "Hallym UMC_Pyeongchon",
+          "geoPoint": {
+            "lat": 37.58944,
+            "lon": 126.76917
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "14068"
+        },
+        {
+          "city": "Gyeonggi-do",
+          "country": "South Korea",
+          "facility": "Hanyang University GURI Hospital",
+          "geoPoint": {
+            "lat": 37.58944,
+            "lon": 126.76917
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "471-101"
+        },
+        {
+          "city": "Seoul",
+          "country": "South Korea",
+          "facility": "The Catholic University of Korea, Seoul ST. Mary's Hospital",
+          "geoPoint": {
+            "lat": 37.566,
+            "lon": 126.9784
+          },
+          "status": "COMPLETED",
+          "zip": "06591"
+        },
+        {
+          "city": "Seoul",
+          "country": "South Korea",
+          "facility": "Korea University Guro Hospital",
+          "geoPoint": {
+            "lat": 37.566,
+            "lon": 126.9784
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "08308"
+        },
+        {
+          "city": "Barcelona",
+          "country": "Spain",
+          "facility": "Hospital Clinic i Provincial",
+          "geoPoint": {
+            "lat": 41.38879,
+            "lon": 2.15899
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "08036"
+        },
+        {
+          "city": "Córdoba",
+          "country": "Spain",
+          "facility": "Hospital Reina Sofia",
+          "geoPoint": {
+            "lat": 37.89155,
+            "lon": -4.77275
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "14004"
+        },
+        {
+          "city": "Córdoba",
+          "country": "Spain",
+          "facility": "Hospital Reina Sofia",
+          "geoPoint": {
+            "lat": 37.89155,
+            "lon": -4.77275
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "14004"
+        },
+        {
+          "city": "Getafe",
+          "country": "Spain",
+          "facility": "Hospital Universitario de Getafe",
+          "geoPoint": {
+            "lat": 40.30571,
+            "lon": -3.73295
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "28905"
+        },
+        {
+          "city": "L'Hospitalet de Llobregat",
+          "country": "Spain",
+          "facility": "Hospital de Bellvitge",
+          "geoPoint": {
+            "lat": 41.35967,
+            "lon": 2.10028
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "08907"
+        },
+        {
+          "city": "L'Hospitalet de Llobregat",
+          "country": "Spain",
+          "facility": "Hospital de Bellvitge",
+          "geoPoint": {
+            "lat": 41.35967,
+            "lon": 2.10028
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "08907"
+        },
+        {
+          "city": "Madrid",
+          "country": "Spain",
+          "facility": "Fundacion Jiménez Díaz",
+          "geoPoint": {
+            "lat": 40.4165,
+            "lon": -3.70256
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "28040"
+        },
+        {
+          "city": "Madrid",
+          "country": "Spain",
+          "facility": "Fundacion Jiménez Díaz",
+          "geoPoint": {
+            "lat": 40.4165,
+            "lon": -3.70256
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "28040"
+        },
+        {
+          "city": "Madrid",
+          "country": "Spain",
+          "facility": "Hospital Clínico San Carlos",
+          "geoPoint": {
+            "lat": 40.4165,
+            "lon": -3.70256
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "28040"
+        },
+        {
+          "city": "Seville",
+          "country": "Spain",
+          "facility": "Clínica Nuevas Tecnologías en Diabetes y Endocrinología",
+          "geoPoint": {
+            "lat": 37.38283,
+            "lon": -5.97317
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "41003"
+        },
+        {
+          "city": "Seville",
+          "country": "Spain",
+          "facility": "Clínica Nuevas Tecnologías en Diabetes y Endocrinología",
+          "geoPoint": {
+            "lat": 37.38283,
+            "lon": -5.97317
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "41003"
+        },
+        {
+          "city": "Valencia",
+          "country": "Spain",
+          "facility": "Hospital Universitario Doctor Peset",
+          "geoPoint": {
+            "lat": 39.47391,
+            "lon": -0.37966
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "46017"
+        },
+        {
+          "city": "Valencia",
+          "country": "Spain",
+          "facility": "Hospital Universitario Doctor Peset",
+          "geoPoint": {
+            "lat": 39.47391,
+            "lon": -0.37966
+          },
+          "status": "NOT_YET_RECRUITING",
+          "zip": "46017"
+        },
+        {
+          "city": "Kayseri",
+          "country": "Turkey (Türkiye)",
+          "facility": "Erciyes Üniversitesi Hastanesi - Nefroloji",
+          "geoPoint": {
+            "lat": 38.73222,
+            "lon": 35.48528
+          },
+          "state": "Melikgazi",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "38039"
+        },
+        {
+          "city": "Adana",
+          "country": "Turkey (Türkiye)",
+          "facility": "Adana Şehir Eğitim ve Araştırma Hastanesi",
+          "geoPoint": {
+            "lat": 36.98615,
+            "lon": 35.32531
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "01060"
+        },
+        {
+          "city": "Ankara",
+          "country": "Turkey (Türkiye)",
+          "facility": "Hacettepe Universitesi Tip Fakultesi Nefroloji Bilim Dali",
+          "geoPoint": {
+            "lat": 39.91987,
+            "lon": 32.85427
+          },
+          "status": "RECRUITING",
+          "zip": "06230"
+        },
+        {
+          "city": "Ankara",
+          "country": "Turkey (Türkiye)",
+          "facility": "Hacettepe Üniversitesi Hastanesi- Nefroloji",
+          "geoPoint": {
+            "lat": 39.91987,
+            "lon": 32.85427
+          },
+          "status": "COMPLETED",
+          "zip": "06230"
+        },
+        {
+          "city": "Ankara",
+          "country": "Turkey (Türkiye)",
+          "facility": "Ankara Bilkent Şehir Hastanesi-Dahiliye",
+          "geoPoint": {
+            "lat": 39.91987,
+            "lon": 32.85427
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "06800"
+        },
+        {
+          "city": "Ankara",
+          "country": "Turkey (Türkiye)",
+          "facility": "Ankara Sehir Hastanesi Dahiliye Klinigi",
+          "geoPoint": {
+            "lat": 39.91987,
+            "lon": 32.85427
+          },
+          "status": "RECRUITING",
+          "zip": "06800"
+        },
+        {
+          "city": "Gaziantep",
+          "country": "Turkey (Türkiye)",
+          "facility": "Gaziantep Universitesi Tip Fakultesi Hastanesi",
+          "geoPoint": {
+            "lat": 37.05944,
+            "lon": 37.3825
+          },
+          "status": "RECRUITING",
+          "zip": "27070"
+        },
+        {
+          "city": "Gaziantep",
+          "country": "Turkey (Türkiye)",
+          "facility": "Gaziantep Üniversitesi Hastanesi- Endokrinoloji",
+          "geoPoint": {
+            "lat": 37.05944,
+            "lon": 37.3825
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "27070"
+        },
+        {
+          "city": "Istanbul",
+          "country": "Turkey (Türkiye)",
+          "facility": "Göztepe Prof. Dr.Süleyman Yalçın Şehir Hastanesi- Dahiliye",
+          "geoPoint": {
+            "lat": 41.01384,
+            "lon": 28.94966
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "34722"
+        },
+        {
+          "city": "Istanbul",
+          "country": "Turkey (Türkiye)",
+          "facility": "T.C SB Goztepe Prof. Dr. Suleyman Yalcin City Hospital",
+          "geoPoint": {
+            "lat": 41.01384,
+            "lon": 28.94966
+          },
+          "status": "RECRUITING",
+          "zip": "34722"
+        },
+        {
+          "city": "Izmir",
+          "country": "Turkey (Türkiye)",
+          "facility": "Ege Universitesi Hastanesi- Endokrinoloji",
+          "geoPoint": {
+            "lat": 38.41273,
+            "lon": 27.13838
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "35100"
+        },
+        {
+          "city": "Izmir",
+          "country": "Turkey (Türkiye)",
+          "facility": "Ege Universitesi Tip Fakultesi Hastanesi",
+          "geoPoint": {
+            "lat": 38.41273,
+            "lon": 27.13838
+          },
+          "status": "RECRUITING",
+          "zip": "35100"
+        },
+        {
+          "city": "Kocaeli",
+          "country": "Turkey (Türkiye)",
+          "facility": "Kocaeli University Nephrology Department",
+          "geoPoint": {
+            "lat": 39.62497,
+            "lon": 27.51145
+          },
+          "status": "RECRUITING",
+          "zip": "41380"
+        },
+        {
+          "city": "Kocaeli",
+          "country": "Turkey (Türkiye)",
+          "facility": "Kocaeli Üniversitesi Araştıma ve Uygulama Hastanesi - Nefroloji",
+          "geoPoint": {
+            "lat": 39.62497,
+            "lon": 27.51145
+          },
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "41380"
+        }
+      ],
+      "overallOfficials": [
+        {
+          "affiliation": "Novo Nordisk A/S",
+          "name": "Clinical Transparency (dept. 2834)",
+          "role": "STUDY_DIRECTOR"
+        }
+      ]
+    },
+    "descriptionModule": {
+      "briefSummary": "The study evaluates the safety of different doses of a new medicine called NNC0519 0130. It also looks into how the medicine may improve kidney function in participants with chronic kidney disease with or without type 2 diabetes, living with overweight or obesity. The participants will either get NNC0519-0130 (a new medicine), semaglutide (a medicine that doctors can already prescribe), or placebo (a \"dummy\" substance). Which treatment the participant will get is decided by chance. The study will last for up to 43 weeks."
+    },
+    "designModule": {
+      "designInfo": {
+        "allocation": "RANDOMIZED",
+        "interventionModel": "PARALLEL",
+        "maskingInfo": {
+          "masking": "QUADRUPLE",
+          "maskingDescription": "Sponsor staff involved in the clinical trial is masked according to company standard procedures.",
+          "whoMasked": [
+            "PARTICIPANT",
+            "CARE_PROVIDER",
+            "INVESTIGATOR",
+            "OUTCOMES_ASSESSOR"
+          ]
+        },
+        "primaryPurpose": "TREATMENT"
+      },
+      "enrollmentInfo": {
+        "count": 465,
+        "type": "ESTIMATED"
+      },
+      "phases": [
+        "PHASE2"
+      ],
+      "studyType": "INTERVENTIONAL"
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\n* Female of non-childbearing potential, or male.\n\n  * For US only: Female of childbearing potential using highly effective non-systemic methods of contraception with low user-dependency at least 2 months prior to screening and willingness to continue using it through-out the study, or male.\n* Age 18 years or above at the time of signing the informed consent.\n* Diagnosed with type 2 diabetes mellitus greater than or equal to (≥) 180 days before screening, or not diagnosed with type 2 diabetes mellitus.\n\n  * HbA1c of 6.5 percentage (%)-10.5 percentage (%) \\[48 - 91 millimoles per mole (mmol/mol)\\] (both inclusive) if diagnosed with type 2 diabetes mellitus, or HbA1c of less than (\\<)6.5 percentage (%) \\[\\<48 mmol/mol\\] if not diagnosed with type 2 diabetes mellitus.\n* BMI greater than or equal to (≥) 27.0 kilogram per square metre (kg/m\\^2) at screening.\n* Kidney impairment defined by serum creatinine and cystatin C-based Egfr greater than or equal to (≥) 15 and less than (\\<) 90 mL/min/1.73 m\\^2.\n* Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal (≥)100 and less than (\\<) 5000 milligram per gram (mg/g).\n* Treatment with maximum labelled or tolerated dose of an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated, in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening.\n\nExclusion Criteria:\n\n* Female who is pregnant, breast-feeding or intends to become pregnant or is of childbearing potential and not using highly effective non-systemic contraception with low user-dependency.\n* Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis.\n* Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.\n* Use of any glucagon-like peptide-1 (GLP-1) RA (including medication with GLP-1 RA activity, e.g., GIP/GLP-1 RA) within 90 days prior to screening.\n* Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.\n* Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.\n* Only applicable for participants with type 2 diabetes (T2D): Uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy. Verified by an eye examination performed within 90 days before screening or in the period between screening and randomisation. Pharmacological pupil-dilation is a requirement unless using a digital fundus photography camera specified for non-dilated examination.\n* Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or carcinoma in situ/high grade prostatic intraepithelial neoplasia (PIN)) within 5 years before screening.",
+      "healthyVolunteers": false,
+      "minimumAge": "18 Years",
+      "sex": "ALL",
+      "stdAges": [
+        "ADULT",
+        "OLDER_ADULT"
+      ]
+    },
+    "identificationModule": {
+      "briefTitle": "A Research Study Comparing How Well Different Doses of the Medicine NNC0519-0130 Can Reduce Kidney Damage in People Living With Chronic Kidney Disease",
+      "nctId": "NCT06717698",
+      "officialTitle": "Efficacy, Safety and Pharmacokinetics of NNC0519-0130 Once Weekly s.c. Versussemaglutide 1.0 mg and Placebo in People With Chronic Kidney Disease, With or Without Type 2 Diabetes, and With Overweight or Obesity: a Proof-of-concept and Dose-finding Study",
+      "orgStudyIdInfo": {
+        "id": "NN9541-7841"
+      },
+      "organization": {
+        "class": "INDUSTRY",
+        "fullName": "Novo Nordisk A/S"
+      },
+      "secondaryIdInfos": [
+        {
+          "domain": "World Health Organization (WHO)",
+          "id": "U1111-1302-5591",
+          "type": "OTHER"
+        },
+        {
+          "domain": "European Medical Agency (EMA)",
+          "id": "2024-510846-15",
+          "type": "OTHER"
+        }
+      ]
+    },
+    "ipdSharingStatementModule": {
+      "description": "According to the Novo Nordisk disclosure commitment on novonordisk-trials.com",
+      "ipdSharing": "YES",
+      "url": "https://novonordisk-trials.com"
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "description": "Measured as a ratio to baseline.",
+          "measure": "Change in urinary albumin-to-creatinine ratio (UACR) at week 12",
+          "timeFrame": "From baseline (week 0) to end of a given maintenance dose period (week 12)"
+        },
+        {
+          "description": "Measured as a ratio to baseline.",
+          "measure": "Change in urinary albumin-to-creatinine ratio (UACR) at week 24",
+          "timeFrame": "From baseline (week 0) to end of a given maintenance dose period (week 24)"
+        },
+        {
+          "description": "Measured as a ratio to baseline.",
+          "measure": "Change in urinary albumin-to-creatinine ratio (UACR) at week 36",
+          "timeFrame": "From baseline (week 0) to end of a given maintenance dose period (week 36)"
+        }
+      ],
+      "secondaryOutcomes": [
+        {
+          "description": "Measured in mililitre per minute per 1.73 square metre (mL/min/1.73 m\\^2).",
+          "measure": "Change in estimated glomerular filtration rate (eGFR) (creatinine and cystatin C-based Chronic Kidney Disease Epidemiology Collaboration [CKD-EPI] 2021)",
+          "timeFrame": "From baseline (week 0) to end of treatment (week 36)"
+        },
+        {
+          "description": "Measured in mililitre per minute per 1.73 square metre (mL/min/1.73 m\\^2).",
+          "measure": "Change in estimated glomerular filtration rate (eGFR) (creatinine-based CKD-EPI 2021)",
+          "timeFrame": "From baseline (week 0) to end of treatment (week 36)"
+        },
+        {
+          "description": "Measured in percentage (%).",
+          "measure": "Relative change in body weight",
+          "timeFrame": "From baseline (week 0) to end of treatment (week 36)"
+        },
+        {
+          "description": "Measured as count of participants.",
+          "measure": "Achievement of greater than or equal to (≥) 5 percentage (%) weight reduction",
+          "timeFrame": "From baseline (week 0) to end of treatment (week 36)"
+        },
+        {
+          "description": "Measured as count of participants.",
+          "measure": "Achievement of greater than or equal to (≥) 10 percentage (%) weight reduction",
+          "timeFrame": "From baseline (week 0) to end of treatment (week 36)"
+        },
+        {
+          "description": "Measured in centimetres (cm).",
+          "measure": "Change in waist circumference",
+          "timeFrame": "From baseline (week 0) to end of treatment (week 36)"
+        },
+        {
+          "description": "Measured in percentage point (%-point).",
+          "measure": "Change in glycated haemoglobin (HbA1c)",
+          "timeFrame": "From baseline (week 0) to end of a given maintenance dose period (week 12, 24 or 36)"
+        },
+        {
+          "description": "Measured in millimetres of mercury (mmHg).",
+          "measure": "Change in systolic blood pressure",
+          "timeFrame": "From baseline (week 0) to end of treatment (week 36)"
+        },
+        {
+          "description": "Measured in millimetres of mercury (mmHg).",
+          "measure": "Change in diastolic blood pressure",
+          "timeFrame": "From baseline (week 0) to end of treatment (week 36)"
+        },
+        {
+          "description": "Measured as count of events.",
+          "measure": "Number of treatment emergent adverse events (TEAEs)",
+          "timeFrame": "From baseline (week 0) to end of study (week 40)"
+        }
+      ]
+    },
+    "oversightModule": {
+      "isFdaRegulatedDevice": false,
+      "isFdaRegulatedDrug": true,
+      "oversightHasDmc": false
+    },
+    "sponsorCollaboratorsModule": {
+      "leadSponsor": {
+        "class": "INDUSTRY",
+        "name": "Novo Nordisk A/S"
+      },
+      "responsibleParty": {
+        "type": "SPONSOR"
+      }
+    },
+    "statusModule": {
+      "completionDateStruct": {
+        "date": "2026-09-17",
+        "type": "ESTIMATED"
+      },
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "lastUpdatePostDateStruct": {
+        "date": "2026-03-11",
+        "type": "ACTUAL"
+      },
+      "lastUpdateSubmitDate": "2026-03-10",
+      "overallStatus": "RECRUITING",
+      "primaryCompletionDateStruct": {
+        "date": "2026-09-01",
+        "type": "ESTIMATED"
+      },
+      "startDateStruct": {
+        "date": "2024-12-02",
+        "type": "ACTUAL"
+      },
+      "statusVerifiedDate": "2026-03",
+      "studyFirstPostDateStruct": {
+        "date": "2024-12-05",
+        "type": "ACTUAL"
+      },
+      "studyFirstSubmitDate": "2024-11-30",
+      "studyFirstSubmitQcDate": "2024-11-30"
+    }
+  }
+}

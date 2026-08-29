@@ -1,0 +1,387 @@
+{
+  "derivedSection": {
+    "conditionBrowseModule": {
+      "ancestors": [
+        {
+          "id": "D009371",
+          "term": "Neoplasms by Site"
+        },
+        {
+          "id": "D009369",
+          "term": "Neoplasms"
+        },
+        {
+          "id": "D001941",
+          "term": "Breast Diseases"
+        },
+        {
+          "id": "D012871",
+          "term": "Skin Diseases"
+        },
+        {
+          "id": "D017437",
+          "term": "Skin and Connective Tissue Diseases"
+        }
+      ],
+      "meshes": [
+        {
+          "id": "D001943",
+          "term": "Breast Neoplasms"
+        }
+      ]
+    },
+    "interventionBrowseModule": {
+      "meshes": [
+        {
+          "id": "C000705452",
+          "term": "tucatinib"
+        },
+        {
+          "id": "C506643",
+          "term": "liposomal doxorubicin"
+        }
+      ]
+    },
+    "miscInfoModule": {
+      "versionHolder": "2026-08-28"
+    }
+  },
+  "hasResults": false,
+  "protocolSection": {
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "description": "Participants will receive tucatinib 300mg by mouth twice daily continuously in combination with Doxil 40mg/m2 given intravenously on day 1 of each cycle. Cycles will be 28 days. Up to 36 participants will be enrolled in this Phase 2 study.",
+          "interventionNames": [
+            "Drug: Tucatinib",
+            "Drug: Doxil"
+          ],
+          "label": "Tucatinib Experimental Treatment Arm",
+          "type": "EXPERIMENTAL"
+        }
+      ],
+      "interventions": [
+        {
+          "armGroupLabels": [
+            "Tucatinib Experimental Treatment Arm"
+          ],
+          "description": "Participants will receive tucatinib 300mg by mouth twice daily continuously (days 1-28) of each 28 day cycle.",
+          "name": "Tucatinib",
+          "otherNames": [
+            "Tukysa"
+          ],
+          "type": "DRUG"
+        },
+        {
+          "armGroupLabels": [
+            "Tucatinib Experimental Treatment Arm"
+          ],
+          "description": "Participants will receive Doxil 40mg/m2 intravenously on day 1 of each 28 day cycle (with a maximum cumulative dose of 550mg/m2).",
+          "name": "Doxil",
+          "otherNames": [
+            "doxorubicin hydrochloride liposome injection"
+          ],
+          "type": "DRUG"
+        }
+      ]
+    },
+    "conditionsModule": {
+      "conditions": [
+        "Breast Cancer"
+      ],
+      "keywords": [
+        "Breast Cancer",
+        "HER2+",
+        "HER2 positive breast cancer",
+        "Human epidermal growth factor receptor 2 positive",
+        "Doxil",
+        "Tucatinib",
+        "Tukysa",
+        "Anti-HER2",
+        "HER2 inhibitor",
+        "HER2 blocker",
+        "Tyrosine Kinase Inhibitor",
+        "Anthracycline"
+      ]
+    },
+    "contactsLocationsModule": {
+      "centralContacts": [
+        {
+          "email": "SCRI.InnovationsMedical@scri.com",
+          "name": "Sarah Cannon Development Innovations",
+          "phone": "1-844-710-6157",
+          "role": "CONTACT"
+        }
+      ],
+      "locations": [
+        {
+          "city": "Columbia",
+          "contacts": [
+            {
+              "name": "Carol Tweed, MD",
+              "role": "PRINCIPAL_INVESTIGATOR"
+            }
+          ],
+          "country": "United States",
+          "facility": "Maryland Oncology Hematology",
+          "geoPoint": {
+            "lat": 39.24038,
+            "lon": -76.83942
+          },
+          "state": "Maryland",
+          "status": "RECRUITING",
+          "zip": "21044"
+        },
+        {
+          "city": "Bensalem",
+          "contacts": [
+            {
+              "name": "Sramila Aithal, MD",
+              "role": "PRINCIPAL_INVESTIGATOR"
+            }
+          ],
+          "country": "United States",
+          "facility": "Alliance Cancer Specialists",
+          "geoPoint": {
+            "lat": 40.10455,
+            "lon": -74.95128
+          },
+          "state": "Pennsylvania",
+          "status": "RECRUITING",
+          "zip": "19020"
+        },
+        {
+          "city": "Nashville",
+          "contacts": [
+            {
+              "name": "Erika Hamilton, MD",
+              "role": "PRINCIPAL_INVESTIGATOR"
+            }
+          ],
+          "country": "United States",
+          "facility": "SCRI Oncology Partners",
+          "geoPoint": {
+            "lat": 36.16589,
+            "lon": -86.78444
+          },
+          "state": "Tennessee",
+          "status": "RECRUITING",
+          "zip": "37203"
+        },
+        {
+          "city": "Nashville",
+          "country": "United States",
+          "facility": "Tennessee Oncology",
+          "geoPoint": {
+            "lat": 36.16589,
+            "lon": -86.78444
+          },
+          "state": "Tennessee",
+          "status": "ACTIVE_NOT_RECRUITING",
+          "zip": "37203"
+        },
+        {
+          "city": "Dallas",
+          "contacts": [
+            {
+              "name": "Joyce O'Shaughnessy, MD",
+              "role": "PRINCIPAL_INVESTIGATOR"
+            }
+          ],
+          "country": "United States",
+          "facility": "Texas Oncology- DFW",
+          "geoPoint": {
+            "lat": 32.78306,
+            "lon": -96.80667
+          },
+          "state": "Texas",
+          "status": "RECRUITING",
+          "zip": "75246"
+        },
+        {
+          "city": "San Antonio",
+          "contacts": [
+            {
+              "name": "Emmalind Aponte, MD",
+              "role": "PRINCIPAL_INVESTIGATOR"
+            }
+          ],
+          "country": "United States",
+          "facility": "Texas Oncology- San Antonio",
+          "geoPoint": {
+            "lat": 29.42412,
+            "lon": -98.49363
+          },
+          "state": "Texas",
+          "status": "RECRUITING",
+          "zip": "78240"
+        },
+        {
+          "city": "Norfolk",
+          "contacts": [
+            {
+              "name": "Nino Balanchivadze, MD",
+              "role": "PRINCIPAL_INVESTIGATOR"
+            }
+          ],
+          "country": "United States",
+          "facility": "Virginia Oncology Associates",
+          "geoPoint": {
+            "lat": 36.84681,
+            "lon": -76.28522
+          },
+          "state": "Virginia",
+          "status": "RECRUITING",
+          "zip": "23502"
+        },
+        {
+          "city": "Salem",
+          "contacts": [
+            {
+              "name": "Amanda Gillespie-Twardy, MD",
+              "role": "PRINCIPAL_INVESTIGATOR"
+            }
+          ],
+          "country": "United States",
+          "facility": "Blue Ridge Cancer Care (Oncology & Hematology Assoc of SW Virginia, Inc)",
+          "geoPoint": {
+            "lat": 37.29347,
+            "lon": -80.05476
+          },
+          "state": "Virginia",
+          "status": "RECRUITING",
+          "zip": "24153"
+        }
+      ],
+      "overallOfficials": [
+        {
+          "affiliation": "SCRI Development Innovations, LLC",
+          "name": "Erika Hamilton, MD",
+          "role": "STUDY_CHAIR"
+        }
+      ]
+    },
+    "descriptionModule": {
+      "briefSummary": "This clinical trial is evaluating tucatinib in combination with Doxil in participants with human epidermal growth factor 2 positive (HER2+) locally advanced or metastatic breast cancer. The main goals of this study are to:\n\n* Learn how well the combination of tucatinib and Doxil works\n* Learn more about the side effects of the combination of tucatinib and Doxil",
+      "detailedDescription": "This is a Phase 2, open-label, single-arm study evaluating the combination of tucatinib with Doxil in participants with HER2+ breast cancer who have received at least one prior line of anti-HER2 therapy for locally advanced/metastatic disease or relapsed within 6 months of completion of anti-HER2 adjuvant therapy.\n\nThis study will start with a lead-in phase wherein the first 6 patients will be evaluated weekly for one treatment cycle (28 days) to ensure the regimen is safe and tolerable. If no severe and/or unexpected toxicities are observed in these initial patients, the study will continue to enroll a total of 36 patients."
+    },
+    "designModule": {
+      "designInfo": {
+        "allocation": "NA",
+        "interventionModel": "SINGLE_GROUP",
+        "maskingInfo": {
+          "masking": "NONE"
+        },
+        "primaryPurpose": "TREATMENT"
+      },
+      "enrollmentInfo": {
+        "count": 36,
+        "type": "ESTIMATED"
+      },
+      "phases": [
+        "PHASE2"
+      ],
+      "studyType": "INTERVENTIONAL"
+    },
+    "eligibilityModule": {
+      "eligibilityCriteria": "Inclusion Criteria:\n\n* Written informed consent, according to local guidelines, signed and dated by the patient or by a legal guardian prior to the performance of any study-specific procedures, sampling, or analyses\n* At least 18 years-of-age at the time of signature of the informed consent form (ICF)\n* Eastern Cooperative Oncology Group (ECOG) Performance Status score of 0 or 1\n* Have a confirmed diagnosis of locally advanced/metastatic HER2+ breast cancer (based on local laboratory testing per American Society of Clinical Oncology (ASCO)/College of American Pathologists (CAP) guidelines immunohistochemistry 3+ (IHC3+) or fluorescence in situ hybridization + (FISH+))\n* Have had prior treatment with at least 1 line of anti-HER2 therapy for locally advanced/metastatic disease or relapsed within 6 months of completion of adjuvant anti-HER2 therapy. Prior treatment with tucatinib in the metastatic setting is allowed\n* Measurable disease as measured by Response Evaluation Criteria in Solid Tumors (RECIST) Version 1.1\n* Females of child-bearing potential should be using adequate contraceptive measures from the time of screening until 6 months following the last dose of study drug(s), should not be breast feeding and must have a negative pregnancy test prior to start of dosing, or must have evidence of non-child-bearing potential by fulfilling one of the following criteria at screening:\n\n  * Post-menopausal: defined as aged more than 50 years and amenorrheic for at least 12 months following cessation of all exogenous hormonal treatments\n  * Documentation of irreversible surgical sterilization by hysterectomy, bilateral oophorectomy, or bilateral salpingectomy, but not tubal ligation\n  * Women under 50 years-of-age will be considered postmenopausal if they have been amenorrheic for at least 12 months following the cessation of exogenous hormonal treatments, and have serum follicle-stimulating hormone and luteinizing hormone levels in the postmenopausal range for the institution.\n* Male patients with female partners of childbearing potential and female patients of childbearing potential are required to use two forms of acceptable contraception, including one barrier method, during their participation in the study and for 6 months following last dose. Male patients must also refrain from donating sperm during their participation in the study.\n* Adequate hematologic function\n\n  * Absolute neutrophil count (ANC) ≥1500/µL\n  * Platelet count ≥100,000/µL (no transfusions allowed to meet this requirement)\n  * Hemoglobin ≥9 g/dL (at least 2-week washout from any transfusion)\n* Adequate hepatic function\n\n  * Total bilirubin ≤1.5 × upper limit of normal (ULN). Exception: participants with known history of Gilbert's Syndrome who have a direct bilirubin ≤1.5 × ULN in addition to a normal aspartate aminotransferase (AST) and alanine aminotransferase (ALT) are eligible.\n  * AST and ALT ≤2.5 × ULN (≤5 × ULN if liver metastases are present)\n* Estimated glomerular filtration rate (eGFR) ≥50 mL/min/1.73 m2\n* Left ventricular ejection fraction (LVEF) ≥50% based on screening echocardiogram (ECHO)/multigated acquisition (MUGA)\n* Central nervous system (CNS) Inclusion - Based on screening contrast brain magnetic resonance imaging (MRI), patients must have one of the following:\n\n  * No evidence of brain metastases\n  * Untreated brain metastases not needing immediate local therapy. For patients with untreated CNS lesions \\>2.0 cm on screening contrast brain MRI, discussion with and approval from the Medical Monitor is required prior to enrollment.\n  * Relevant records of any CNS treatment must be available to allow for classification of target and non-target lesions.\n  * Previously treated brain metastases:\n* Brain metastases previously treated with local therapy may either be stable since treatment or may have progressed since prior local CNS therapy, provided that there is no clinical indication for immediate re-treatment with local therapy in the opinion of the Investigator.\n* Patients treated with CNS local therapy for newly identified lesions found on contrast brain MRI performed during screening for this study may be eligible to enroll if all of the following criteria are met:\n* Time since whole brain radiotherapy (WBRT) is ≥14 days prior to first dose of treatment, time since stereotactic radiosurgery (SRS) is ≥7 days prior to first dose of treatment, or time since surgical resection is ≥28 days\n* Other sites of disease assessable by RECIST 1.1 are present\n\nExclusion Criteria:\n\n* Treatment with any of the following:\n\n  * Any systemic anti-cancer chemotherapy or small molecule, biologic, or hormonal agent from a previous treatment regimen or clinical study within 21 days or 5 half-lives (whichever is shorter) prior to the first dose of study drugs. At least 10 days must have elapsed between the last dose of such agent and the first dose of study drugs.\n  * Prior treatment with anthracycline in any setting\n  * Major surgery (excluding placement of vascular access) within 28 days of first dose of study drugs\n  * Palliative radiation therapy within 14 days of first dose of study drugs\n* Based on screening brain MRI, patients must not have any of the following:\n\n  * Any untreated brain lesions \\>2.0 cm in size, unless discussed with the Medical Monitor and approval for enrollment is granted\n  * Ongoing use of systemic corticosteroids for control of symptoms of brain metastases at a total daily dose of \\>2 mg of dexamethasone (or equivalent). However, patients on a chronic stable dose of ≤2 mg total daily of dexamethasone (or equivalent) may be eligible with discussion and approval by the Medical Monitor\n  * Any brain lesion thought to require immediate local therapy, including (but not limited to) a lesion in an anatomic site where increase in size or possible treatment-related edema may pose risk to patient (e.g., brain stem lesions). Patients who undergo local treatment for such lesions identified by screening contrast brain MRI may still be eligible for the study based on criteria described under CNS inclusion criteria 14c\n  * Known or suspected leptomeningeal disease (LMD) as documented by the Investigator\n  * Have poorly controlled (\\>1 week) generalized or complex partial seizures, or manifest neurologic progression due to brain metastases, notwithstanding CNS-directed therapy.\n* Use of a strong cytochrome P450 (CYP)2C8-inhibitor or use of a strong CYP3A4 or use of a CYP2C8 inducer within 5 days prior to the first dose of study treatment\n* With the exception of alopecia, any unresolved toxicities from prior therapy greater than CTCAE Grade 1 at the time of starting study treatment. Note: patients with chronic Grade 2 toxicities who are asymptomatic or adequately managed with stable medication may be eligible with approval by the Medical Monitor.\n* Women who are pregnant or nursing or plan to become pregnant while in the study and for at least 6 months after the last administration of study treatment\n* Men who plan to father a child while in the study and for at least 6 months after the last administration of study treatment\n* Presence of active gastrointestinal disease or other condition that will interfere significantly with the absorption, distribution, metabolism, or excretion of tucatinib (e.g., ulcerative disease, uncontrolled nausea, vomiting, diarrhea Grade ≥2, malabsorption syndrome)\n* Any of the following cardiac criteria:\n\n  * Mean resting QT interval with QT corrected for heart rate by Fridericia's formula \\[QTcF\\]) prolongation to \\>480 msec for females and \\>460 msec for males in three successive screening measures\n  * Any clinically important abnormalities (as assessed by the Investigator) in rhythm, conduction, or morphology of resting electrocardiograms (ECGs), e.g., complete left bundle branch block, third-degree heart block\n  * Congestive heart failure (New York Heart Association ≥ Grade 2 within past 6 months)\n  * Patients with a left ventricular ejection fraction (LVEF) \\<50% or the lower limit of normal of the institutional standard\n* As judged by the Investigator, any evidence of severe or uncontrolled systemic diseases, including uncontrolled hypertension, uncontrolled diabetes mellitus, active bleeding diatheses, or active infection, including hepatitis B and hepatitis C. Screening for chronic conditions is not required.\n* Known human immunodeficiency virus (HIV) infection or positivity on immunoassay. Testing for seropositive status during screening will be at the discretion of the Investigator for subjects without previously reported results.\n* Presence of other active invasive cancers other than the one treated in this study within 3 years prior to screening, except appropriately treated basal cell carcinoma of the skin, in situ carcinoma of uterine cervix, or other local tumors considered cured by local treatment\n* Psychological, familial, sociological, or geographical conditions that do not permit compliance with the protocol and/or follow-up procedures outlined in the protocol.",
+      "healthyVolunteers": false,
+      "minimumAge": "18 Years",
+      "sex": "ALL",
+      "stdAges": [
+        "ADULT",
+        "OLDER_ADULT"
+      ]
+    },
+    "identificationModule": {
+      "briefTitle": "Study of Tucatinib and Doxil in Participants With Human Epidermal Growth Factor Receptor 2 Positive (HER2+) Metastatic Breast Cancer",
+      "nctId": "NCT05748834",
+      "officialTitle": "Phase 2 Single Arm Trial With a Safety Lead-in of Tucatinib in Combination With Doxil for the Treatment of HER2+ Metastatic Breast Cancer",
+      "orgStudyIdInfo": {
+        "id": "BRE 381"
+      },
+      "organization": {
+        "class": "OTHER",
+        "fullName": "SCRI Development Innovations, LLC"
+      }
+    },
+    "ipdSharingStatementModule": {
+      "ipdSharing": "NO"
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [
+        {
+          "description": "Proportion of participants with confirmed complete response (CR) or partial response (PR) to tucatinib in combination with Doxil according to RECIST v1.1 criteria.",
+          "measure": "Objective response rate (ORR) to assess the anti-tumor activity of tucatinib in combination with Doxil using RECIST v1.1.",
+          "timeFrame": "Up to approximately 40 months."
+        }
+      ],
+      "secondaryOutcomes": [
+        {
+          "description": "Incidence of treatment related adverse events (AEs) using CTCAE v5.0.",
+          "measure": "Number of participants with treatment-related adverse events as assessed by common terminology criteria for adverse events (CTCAE) v5.0.",
+          "timeFrame": "from informed consent (cycle 0 day -28) to 30 days after the last dose of study treatment. Each cycle is 28 days."
+        },
+        {
+          "description": "Time from the first day of study drug administration (day 1) until disease progression as defined by RECIST v1.1, or death on study.",
+          "measure": "Progression-free survival (PFS) to assess the anti-tumor activity of tucatinib in combination with Doxil using RECIST v1.1.",
+          "timeFrame": "Up to approximately 40 months."
+        }
+      ]
+    },
+    "oversightModule": {
+      "isFdaRegulatedDevice": false,
+      "isFdaRegulatedDrug": true,
+      "oversightHasDmc": false
+    },
+    "sponsorCollaboratorsModule": {
+      "collaborators": [
+        {
+          "class": "INDUSTRY",
+          "name": "Seagen Inc."
+        },
+        {
+          "class": "INDUSTRY",
+          "name": "Pfizer"
+        }
+      ],
+      "leadSponsor": {
+        "class": "OTHER",
+        "name": "SCRI Development Innovations, LLC"
+      },
+      "responsibleParty": {
+        "type": "SPONSOR"
+      }
+    },
+    "statusModule": {
+      "completionDateStruct": {
+        "date": "2027-11",
+        "type": "ESTIMATED"
+      },
+      "expandedAccessInfo": {
+        "hasExpandedAccess": false
+      },
+      "lastUpdatePostDateStruct": {
+        "date": "2026-03-20",
+        "type": "ACTUAL"
+      },
+      "lastUpdateSubmitDate": "2026-03-17",
+      "overallStatus": "RECRUITING",
+      "primaryCompletionDateStruct": {
+        "date": "2027-11",
+        "type": "ESTIMATED"
+      },
+      "startDateStruct": {
+        "date": "2023-07-24",
+        "type": "ACTUAL"
+      },
+      "statusVerifiedDate": "2026-03",
+      "studyFirstPostDateStruct": {
+        "date": "2023-03-01",
+        "type": "ACTUAL"
+      },
+      "studyFirstSubmitDate": "2023-02-07",
+      "studyFirstSubmitQcDate": "2023-02-17"
+    }
+  }
+}
