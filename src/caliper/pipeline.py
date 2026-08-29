@@ -14,14 +14,17 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
+from pathlib import Path
 
 from caliper.agents.base import AgentContext
 from caliper.agents.compiler import CompileResult, compile_criteria
 from caliper.agents.critic import CriticReport, apply_findings, review
+from caliper.agents.extractor import ExtractionResult, extract_findings
 from caliper.agents.resolver import resolve_concepts
 from caliper.agents.writer import RationaleSet, deterministic_rationales, write_rationales
 from caliper.evaluate import AbsencePolicy
 from caliper.ir import Code, CriteriaSet, concepts_in, with_codes
+from caliper.notes import DEFAULT_NOTES_ROOT, attach_notes
 from caliper.record import PatientIndex
 from caliper.screen import ScreeningResult, screen
 from caliper.wire import DEFAULT_DEPTH
@@ -38,8 +41,15 @@ class PipelineConfig:
     compile_depth: int = DEFAULT_DEPTH
     use_resolver: bool = True
     use_critic: bool = True
+    use_narrative: bool = False
+    """Read clinical notes.
+
+    Off by default: it costs a call per note, and only some charts carry any.
+    """
+
     write_rationales: bool = True
     absence_policy: AbsencePolicy = AbsencePolicy.COVERAGE_GATED
+    notes_root: Path = DEFAULT_NOTES_ROOT
 
     @property
     def label(self) -> str:
@@ -94,6 +104,7 @@ class Screening:
     trial: CompiledTrial
     result: ScreeningResult
     rationales: RationaleSet | None = None
+    narrative: ExtractionResult | None = None
 
 
 def compile_trial(
@@ -141,7 +152,21 @@ def screen_patient(
 
     The verdict is produced by `caliper.screen`, which no model can reach. Anything a model does
     here happens afterwards, to describe a decision that has already been made.
+
+    When narrative reading is on, the notes are processed first, because extraction can only add
+    coded evidence rows and the screening must see the chart as it will finally stand.
     """
+    narrative: ExtractionResult | None = None
+    if config.use_narrative:
+        narrative = _read_notes(trial, patient, ctx, config)
+        if narrative is not None and narrative.evidence:
+            patient = PatientIndex(
+                patient_id=patient.patient_id,
+                birth_date=patient.birth_date,
+                sex=patient.sex,
+                evidence=[*patient.evidence, *narrative.evidence],
+            )
+
     result = screen(trial.criteria_set, patient, as_of, policy=config.absence_policy)
 
     if config.write_rationales and trial.criteria_set.criteria:
@@ -149,4 +174,25 @@ def screen_patient(
     else:
         rationales = deterministic_rationales(result)
 
-    return Screening(trial=trial, result=result, rationales=rationales)
+    return Screening(trial=trial, result=result, rationales=rationales, narrative=narrative)
+
+
+def _read_notes(
+    trial: CompiledTrial,
+    patient: PatientIndex,
+    ctx: AgentContext,
+    config: PipelineConfig,
+) -> ExtractionResult | None:
+    """Turn this patient's notes into coded evidence, for the concepts this trial actually needs.
+
+    Extraction is scoped to the trial's own concepts rather than run over everything a note might
+    say. A note mentioning forty findings is only interesting here for the ones a criterion asks
+    about, and asking about the rest would be paying to read text nobody will use.
+    """
+    with_notes = attach_notes(patient, config.notes_root)
+    if not with_notes.notes():
+        return None
+    concepts = concepts_in(trial.criteria_set)
+    if not concepts:
+        return None
+    return extract_findings(with_notes, concepts, ctx)

@@ -83,6 +83,7 @@ _HEADINGS = {
     "resolver": "# Concept resolution",
     "critic": "# Back-translation check",
     "writer": "# Rationale writing",
+    "extractor": "# Assertion detection",
 }
 
 
@@ -216,3 +217,73 @@ class TestCostAndTrace:
         compile_trial("NCT1", PROTOCOL, ctx, config)
         agents = {step.agent for step in ctx.trajectory.steps}
         assert {"compiler", "critic"} <= agents
+
+
+class TestNarrativeEvidence:
+    def test_notes_are_read_when_the_flag_is_on(self, tmp_path):
+        """A finding stated only in prose is unreachable until something codes it."""
+        import json as _json
+
+        from caliper.pipeline import screen_patient as _screen
+
+        notes_root = tmp_path / "notes"
+        notes_root.mkdir()
+        (notes_root / "p-1.json").write_text(
+            _json.dumps(
+                [
+                    {
+                        "note_id": "n-1",
+                        "date": "2026-05-20",
+                        "type": "clinic letter",
+                        "author_role": "endocrinology",
+                        "text": "HbA1c today 8.4%, consistent with poor control.",
+                    }
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        extraction = _json.dumps(
+            {
+                "findings": [
+                    {
+                        "concept": "HbA1c",
+                        "sentence": "HbA1c today 8.4%, consistent with poor control.",
+                        "assertion": "present",
+                        "date": "2026-05-20",
+                    }
+                ]
+            }
+        )
+        ctx, transport = a_context(extractor=extraction)
+        config = PipelineConfig(
+            use_resolver=False,
+            use_critic=False,
+            write_rationales=False,
+            use_narrative=True,
+            notes_root=notes_root,
+        )
+        trial = compile_trial("NCT1", PROTOCOL, ctx, config)
+        screening = _screen(trial, patient(a1c=None), SCREENING, ctx, config)
+        assert any(step.agent == "extractor" for step in ctx.trajectory.steps)
+        assert screening.narrative is not None
+
+    def test_no_notes_directory_is_not_an_error(self, tmp_path):
+        ctx, _ = a_context()
+        config = PipelineConfig(
+            use_resolver=False,
+            use_critic=False,
+            write_rationales=False,
+            use_narrative=True,
+            notes_root=tmp_path / "absent",
+        )
+        trial = compile_trial("NCT1", PROTOCOL, ctx, config)
+        screening = screen_patient(trial, patient(), SCREENING, ctx, config)
+        assert screening.result.decision is not None
+
+    def test_the_flag_defaults_off_for_a_run_with_no_notes(self):
+        ctx, transport = a_context()
+        config = PipelineConfig(use_resolver=False, use_critic=False, write_rationales=False)
+        trial = compile_trial("NCT1", PROTOCOL, ctx, config)
+        screen_patient(trial, patient(), SCREENING, ctx, config)
+        assert not any(step.agent == "extractor" for step in ctx.trajectory.steps)

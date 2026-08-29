@@ -8,9 +8,16 @@ network or escapes into markup: a packet is printed, filed, and read on machines
 
 from __future__ import annotations
 
+import json
 from datetime import date
 
-from caliper.agents.writer import Rationale, RationaleSet, deterministic_rationales
+from caliper.agents import AgentContext
+from caliper.agents.writer import (
+    Rationale,
+    RationaleSet,
+    deterministic_rationales,
+    write_rationales,
+)
 from caliper.evaluate import AbsencePolicy
 from caliper.ir import (
     Code,
@@ -23,9 +30,11 @@ from caliper.ir import (
     TemporalWindow,
 )
 from caliper.logic import ScreeningOutcome
-from caliper.packet import build_packet, render_html, render_markdown
+from caliper.packet import Packet, build_packet, render_html, render_markdown
 from caliper.record import Evidence, PatientIndex
 from caliper.screen import ScreeningResult, screen
+
+from fakes import a_routed_client
 
 SCREENING = date(2026, 6, 1)
 WITHIN_SIX_MONTHS = TemporalWindow(relation="within", amount=6, unit="months")
@@ -154,15 +163,11 @@ def a_screening(patient: PatientIndex) -> ScreeningResult:
     return screen(CRITERIA, patient, SCREENING)
 
 
-def a_packet(patient: PatientIndex, **overrides: object):
+def a_packet(patient: PatientIndex) -> Packet:
+    """A packet whose every sentence is the evaluator's, which is the model-free floor."""
     result = a_screening(patient)
     return build_packet(
-        result,
-        CRITERIA,
-        patient,
-        deterministic_rationales(result),
-        trial_title=TRIAL_TITLE,
-        **overrides,
+        result, CRITERIA, patient, deterministic_rationales(result), trial_title=TRIAL_TITLE
     )
 
 
@@ -317,3 +322,21 @@ class TestAgreement:
             assert row.criterion_id in markdown
             assert row.criterion_id in html
             assert row.rationale in markdown
+
+
+class TestComposition:
+    def test_a_checked_sentence_from_the_writer_reaches_the_page(self):
+        result = a_screening(ELIGIBLE_PATIENT)
+        sentence = "Creatinine was 1.2 mg/dL on 2026-05-14, inside the 1.5 mg/dL ceiling."
+        client, _ = a_routed_client(
+            {"INC-01": json.dumps({"sentence": sentence})},
+            default=json.dumps({"sentence": "The record settles this criterion."}),
+        )
+
+        written = write_rationales(result, CRITERIA, AgentContext(client=client))
+        packet = build_packet(result, CRITERIA, ELIGIBLE_PATIENT, written, trial_title=TRIAL_TITLE)
+
+        assert packet.engine_written == 0
+        assert sentence in render_markdown(packet)
+        assert sentence in render_html(packet)
+        assert "Written by the screening engine" not in render_html(packet)

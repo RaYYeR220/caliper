@@ -138,7 +138,7 @@ def write_rationales(
     sentences at once would put them all in one allowed set.
     """
     by_id = {criterion.id: criterion for criterion in criteria_set.criteria}
-    written = []
+    written: list[Rationale] = []
 
     for outcome in result.criteria:
         criterion = by_id.get(outcome.criterion_id)

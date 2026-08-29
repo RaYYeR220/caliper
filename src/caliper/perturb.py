@@ -187,12 +187,13 @@ def convert_units(
     checks that the factor is correct, because the case exists to test whether the system converts
     correctly, and a fixture built from the system's own table could not detect a wrong table.
     """
-    rows = _analyte_rows(patient, loinc)
-    numeric = [row for row in rows if row.value is not None]
+    numeric = [(row, row.value) for row in _analyte_rows(patient, loinc) if row.value is not None]
     if not numeric:
         raise PerturbationError(f"no LOINC {loinc} result carries a numeric value to convert")
 
-    converted = {id(row): replace(row, value=row.value * factor, unit=to_unit) for row in numeric}
+    converted = {
+        id(row): replace(row, value=value * factor, unit=to_unit) for row, value in numeric
+    }
     rebuilt = [converted.get(id(row), row) for row in patient.evidence]
     record = Perturbation(
         kind="convert_units",
@@ -200,9 +201,9 @@ def convert_units(
             f"restated all {len(numeric)} LOINC {loinc} results in {to_unit} "
             f"by multiplying by {factor}"
         ),
-        affected_resource_ids=tuple(row.resource_id for row in numeric),
-        before=tuple(_snapshot(row) for row in numeric),
-        after=tuple(_snapshot(converted[id(row)]) for row in numeric),
+        affected_resource_ids=tuple(row.resource_id for row, _ in numeric),
+        before=tuple(_snapshot(row) for row, _ in numeric),
+        after=tuple(_snapshot(converted[id(row)]) for row, _ in numeric),
     )
     return _result(patient, rebuilt, record)
 
@@ -269,10 +270,6 @@ def add_condition(
     Condition, which appends the clinical and verification statuses in parentheses.
     """
     resource_id = f"perturbation-condition-{code.system.casefold()}-{code.code}"
-    if any(row.resource_id == resource_id for row in patient.evidence):
-        raise PerturbationError(
-            f"patient {patient.patient_id} already carries a perturbed condition {resource_id}"
-        )
     already = any(
         row.kind == "condition"
         and any(c.system == code.system and c.code == code.code for c in row.codes)

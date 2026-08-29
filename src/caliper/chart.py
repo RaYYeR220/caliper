@@ -260,9 +260,7 @@ def _dated_line(entry: dict[str, Any]) -> str:
 def _analyte_line(entry: dict[str, Any]) -> str:
     unit = f" {entry['unit']}" if entry["unit"] else ""
     code = f" [LOINC {entry['loinc']}]" if entry["loinc"] else ""
-    head = (
-        f"- {_stamp(entry['date'])}  {entry['display']}{code}: {_number(entry['value'])}{unit}"
-    )
+    head = f"- {_stamp(entry['date'])}  {entry['display']}{code}: {_number(entry['value'])}{unit}"
     if entry["count"] == 1:
         return f"{head} (only result on file)"
     previous_unit = f" {entry['previous_unit']}" if entry["previous_unit"] else ""
