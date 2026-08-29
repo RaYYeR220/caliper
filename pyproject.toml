@@ -38,6 +38,7 @@ packages = ["src/caliper"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+pythonpath = ["tests"]
 
 [tool.ruff]
 line-length = 100

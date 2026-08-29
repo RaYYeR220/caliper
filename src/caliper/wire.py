@@ -115,6 +115,49 @@ def wire_criteria_set_model(depth: int = DEFAULT_DEPTH) -> type[BaseModel]:
     )
 
 
+@lru_cache(maxsize=8)
+def wire_span_model(depth: int = DEFAULT_DEPTH) -> type[BaseModel]:
+    """What the compiler returns for a single span of protocol text.
+
+    The compiler works one span at a time rather than one protocol at a time. A span is a bounded
+    job, a failure is contained to the criterion it belongs to, and — the reason that matters —
+    every span is accounted for, so a criterion cannot go missing without the coverage check
+    noticing. `is_criterion` is the escape hatch for the headers and registry boilerplate that a
+    segmenter cannot reliably tell apart from criteria.
+    """
+    return create_model(
+        f"SpanCompileD{depth}",
+        __doc__=(
+            "The result of formalising one span of eligibility text. Set is_criterion to false "
+            "when the span is a heading, a note to readers, or registry boilerplate rather than a "
+            "condition a patient can meet."
+        ),
+        __config__=ConfigDict(extra="forbid"),
+        is_criterion=(bool, ...),
+        kind=(
+            Literal["inclusion", "exclusion"] | None,
+            Field(
+                default=None,
+                description=(
+                    "Only needed when the span sits under no inclusion or exclusion header."
+                ),
+            ),
+        ),
+        source_quote=(
+            str | None,
+            Field(default=None, description="The span copied verbatim, character for character."),
+        ),
+        predicate=(wire_predicate_type(depth) | None, Field(default=None)),
+        notes=(
+            str | None,
+            Field(
+                default=None,
+                description="Why this span was hard, or why it is not a criterion.",
+            ),
+        ),
+    )
+
+
 def to_criteria_set(wire: BaseModel, *, source_text: str) -> CriteriaSet:
     """Re-validate a wire payload through the real IR and attach the protocol text we hold."""
     payload = wire.model_dump(mode="json")

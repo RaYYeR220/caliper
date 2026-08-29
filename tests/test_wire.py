@@ -13,7 +13,7 @@ import json
 
 from caliper.ir import CriteriaSet, max_predicate_depth
 from caliper.llm import to_strict_schema
-from caliper.wire import to_criteria_set, wire_criteria_set_model
+from caliper.wire import to_criteria_set, wire_criteria_set_model, wire_span_model
 
 ATOM = {
     "type": "observation",
@@ -126,3 +126,42 @@ def _raises(fn) -> bool:
     except Exception:
         return True
     return False
+
+
+class TestSpanModel:
+    """One protocol bullet at a time. The compiler's unit of work is a span, not a protocol."""
+
+    def test_a_span_that_holds_a_criterion_carries_a_predicate(self):
+        model = wire_span_model(2)
+        model.model_validate(
+            {
+                "is_criterion": True,
+                "kind": "inclusion",
+                "source_quote": "eGFR >= 25",
+                "predicate": ATOM,
+                "notes": None,
+            }
+        )
+
+    def test_a_span_that_is_not_a_criterion_may_omit_the_predicate(self):
+        """Registry blobs contain headers and boilerplate; saying so is a valid answer."""
+        model = wire_span_model(1)
+        parsed = model.model_validate(
+            {
+                "is_criterion": False,
+                "kind": None,
+                "source_quote": None,
+                "predicate": None,
+                "notes": "section header, not a criterion",
+            }
+        )
+        assert parsed.is_criterion is False
+
+    def test_the_span_schema_survives_the_strict_transform(self):
+        schema = to_strict_schema(wire_span_model(2))
+        assert schema["additionalProperties"] is False
+        assert "$ref" not in json.dumps(schema)
+
+    def test_the_span_schema_does_not_let_a_model_choose_its_own_identifier(self):
+        """Identifiers are assigned in code so they stay stable across runs."""
+        assert "id" not in to_strict_schema(wire_span_model(1))["properties"]
