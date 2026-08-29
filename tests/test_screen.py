@@ -164,3 +164,30 @@ class TestEvidenceDiscipline:
         )
         assert result.absence_policy is AbsencePolicy.OPEN_WORLD
         assert result.criteria[0].verdict is Verdict.UNKNOWN
+
+
+class TestApproximations:
+    def test_the_screening_surfaces_every_caveat_its_criteria_carried(self):
+        """A packet that hides an approximation is a packet that lies by omission."""
+        from caliper.ir import TemporalWindow
+
+        windowed = Criterion(
+            id="EXC-09",
+            kind="exclusion",
+            source_quote="Myocardial infarction",
+            predicate=PresencePredicate(
+                type="condition",
+                concept=MI,
+                presence="present",
+                window=TemporalWindow(
+                    relation="within", amount=12, unit="weeks", anchor="randomisation"
+                ),
+            ),
+        )
+        result = screen(criteria(AGE, windowed), patient(visit(date(2026, 4, 1))), SCREENING)
+        assert len(result.approximations) == 1
+        assert "randomisation" in result.approximations[0]
+
+    def test_a_clean_screening_reports_none(self):
+        result = screen(criteria(AGE), patient(visit(date(2026, 4, 1))), SCREENING)
+        assert result.approximations == ()

@@ -9,12 +9,13 @@ reading the document it claims to implement.
 import json
 
 import pytest
-from fakes import Reply, a_client, a_routed_client
 
 from caliper.agents.base import AgentContext
 from caliper.agents.compiler import COMPILER_SYSTEM_PROMPT, compile_criteria
 from caliper.criteria_text import Section
 from caliper.ir import CompositePredicate, UnsupportedPredicate
+
+from fakes import Reply, a_client, a_routed_client
 
 PROTOCOL = (
     "Inclusion Criteria:\n\n"

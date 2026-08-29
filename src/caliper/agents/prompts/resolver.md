@@ -72,7 +72,7 @@ and produces a confident, wrong verdict about a patient with nothing to flag it.
 Codes are checked against their system's format before they are accepted, and anything malformed
 is discarded whatever confidence it carries.
 
-- LOINC: four to five digits, a hyphen, a check digit — `2160-0`.
+- LOINC: up to five digits, a hyphen, a single check digit — `2160-0`.
 - RxNorm: digits only — `6809`.
 - SNOMED CT: six to eighteen digits — `44054006`.
 - ICD-10: a letter, a digit, then further characters, with a dot before the fourth — `E11.9`.

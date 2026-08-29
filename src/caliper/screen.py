@@ -29,6 +29,20 @@ class ScreeningResult:
     absence_policy: AbsencePolicy
 
     @property
+    def approximations(self) -> tuple[str, ...]:
+        """Every place this screening rests on something evaluated inexactly.
+
+        Surfaced at the screening level because a coordinator reading a packet needs to know that a
+        verdict leaned on an approximation, not have it buried in one row of a forty-row table.
+        """
+        seen: list[str] = []
+        for criterion in self.criteria:
+            for caveat in criterion.approximations:
+                if caveat not in seen:
+                    seen.append(caveat)
+        return tuple(seen)
+
+    @property
     def criteria_total(self) -> int:
         return len(self.criteria)
 

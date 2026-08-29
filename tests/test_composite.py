@@ -212,3 +212,50 @@ class TestConstruction:
             )
         )
         assert evaluate_criterion(c, index(egfr(42)), SCREENING).verdict is Verdict.MET
+
+
+class TestTemporalAnchors:
+    """Protocols anchor windows to different events, and those are different dates."""
+
+    def test_a_window_defaults_to_the_screening_anchor(self):
+        from caliper.ir import TemporalWindow
+
+        assert TemporalWindow(relation="within", amount=6, unit="months").anchor == "screening"
+
+    def test_a_protocol_anchored_elsewhere_is_recorded_as_such(self):
+        from caliper.ir import TemporalWindow
+
+        window = TemporalWindow(
+            relation="within", amount=12, unit="weeks", anchor="randomisation"
+        )
+        assert window.anchor == "randomisation"
+
+    def test_evaluating_against_a_non_screening_anchor_is_flagged_as_an_approximation(self):
+        from caliper.ir import PresencePredicate, TemporalWindow
+
+        c = criterion(
+            PresencePredicate(
+                type="condition",
+                concept=EGFR_CONCEPT,
+                presence="absent",
+                window=TemporalWindow(
+                    relation="within", amount=12, unit="weeks", anchor="randomisation"
+                ),
+            )
+        )
+        result = evaluate_criterion(c, index(visit()), SCREENING)
+        assert result.approximations
+        assert "randomisation" in result.approximations[0]
+
+    def test_a_screening_anchored_window_needs_no_caveat(self):
+        from caliper.ir import PresencePredicate, TemporalWindow
+
+        c = criterion(
+            PresencePredicate(
+                type="condition",
+                concept=EGFR_CONCEPT,
+                presence="absent",
+                window=TemporalWindow(relation="within", amount=12, unit="weeks"),
+            )
+        )
+        assert evaluate_criterion(c, index(visit()), SCREENING).approximations == ()

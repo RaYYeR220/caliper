@@ -41,6 +41,9 @@ video/
 *.bundle
 *-backup*
 
+# The concept store is a run artefact, not source.
+.caliper/
+
 # --- large or regenerable data ---
 data/patients/raw/
 .cache/

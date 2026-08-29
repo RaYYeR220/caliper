@@ -12,7 +12,7 @@ burying it: the default accepts absence only where the chart shows someone was l
 from __future__ import annotations
 
 import operator
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date
 from enum import Enum
 
@@ -64,6 +64,8 @@ class CriterionResult:
     rationale: str
     evidence: tuple[Evidence, ...] = ()
     resolution_hint: ResolutionHint | None = None
+    approximations: tuple[str, ...] = ()
+    """Places where the verdict rests on something we could not evaluate exactly."""
 
 
 _COMPARISONS = {
@@ -99,6 +101,17 @@ def _query(index: PatientIndex, resource: str, predicate: Predicate, since: date
     return f"{resource}?patient={index.patient_id}{code_part}{date_part}"
 
 
+def _anchor_caveats(predicate: Predicate) -> tuple[str, ...]:
+    """Note any window anchored to an event other than screening."""
+    window = getattr(predicate, "window", None)
+    if window is None or window.anchor == "screening":
+        return ()
+    return (
+        f"the protocol anchors this window to {window.anchor}, "
+        "which was evaluated against the screening date",
+    )
+
+
 def _unresolved(
     criterion: Criterion,
     *,
@@ -107,6 +120,7 @@ def _unresolved(
     query: str,
     rationale: str,
     evidence: tuple[Evidence, ...] = (),
+    approximations: tuple[str, ...] = (),
 ) -> CriterionResult:
     return CriterionResult(
         criterion_id=criterion.id,
@@ -114,6 +128,7 @@ def _unresolved(
         verdict=Verdict.UNKNOWN,
         rationale=rationale,
         evidence=evidence,
+        approximations=approximations,
         resolution_hint=ResolutionHint(
             missing=missing,
             where_to_look=where,
@@ -128,6 +143,7 @@ def _resolved(
     verdict: Verdict,
     rationale: str,
     evidence: tuple[Evidence, ...] = (),
+    approximations: tuple[str, ...] = (),
 ) -> CriterionResult:
     return CriterionResult(
         criterion_id=criterion.id,
@@ -135,6 +151,7 @@ def _resolved(
         verdict=verdict,
         rationale=rationale,
         evidence=evidence,
+        approximations=approximations,
     )
 
 
@@ -316,6 +333,7 @@ def _evaluate_composite(
             rationale=f"not ({member.rationale})",
             evidence=member.evidence,
             resolution_hint=member.resolution_hint,
+            approximations=member.approximations,
         )
 
     decisive = Verdict.NOT_MET if predicate.type == "all_of" else Verdict.MET
@@ -329,6 +347,7 @@ def _evaluate_composite(
             verdict=decisive,
             rationale=joiner.join(m.rationale for m in settling),
             evidence=tuple(e for m in settling for e in m.evidence),
+            approximations=tuple(a for m in settling for a in m.approximations),
         )
 
     unresolved = [m for m in members if m.verdict is Verdict.UNKNOWN]
@@ -340,6 +359,7 @@ def _evaluate_composite(
             rationale=joiner.join(m.rationale for m in members),
             evidence=tuple(e for m in members for e in m.evidence),
             resolution_hint=unresolved[0].resolution_hint,
+            approximations=tuple(a for m in members for a in m.approximations),
         )
 
     return CriterionResult(
@@ -348,6 +368,7 @@ def _evaluate_composite(
         verdict=Verdict.MET if predicate.type == "all_of" else Verdict.NOT_MET,
         rationale=joiner.join(m.rationale for m in members),
         evidence=tuple(e for m in members for e in m.evidence),
+        approximations=tuple(a for m in members for a in m.approximations),
     )
 
 
@@ -362,6 +383,20 @@ def evaluate_criterion(
 
 
 def _evaluate_predicate(
+    criterion: Criterion,
+    predicate: Predicate,
+    index: PatientIndex,
+    as_of: date,
+    policy: AbsencePolicy,
+) -> CriterionResult:
+    result = _dispatch(criterion, predicate, index, as_of, policy)
+    caveats = _anchor_caveats(predicate)
+    if not caveats:
+        return result
+    return replace(result, approximations=result.approximations + caveats)
+
+
+def _dispatch(
     criterion: Criterion,
     predicate: Predicate,
     index: PatientIndex,

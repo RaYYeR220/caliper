@@ -38,11 +38,21 @@ class Concept(_Frozen):
 
 
 class TemporalWindow(_Frozen):
-    """When the evidence has to have happened, relative to the screening date."""
+    """When the evidence has to have happened, and relative to what.
+
+    Protocols anchor windows to screening, enrolment, randomisation, consent or first dose, and
+    those are genuinely different dates — sometimes weeks apart. Caliper evaluates every window
+    against the screening date because that is the only date it has, so the anchor is recorded
+    rather than discarded: a criterion evaluated against the wrong anchor is reported as an
+    approximation instead of passing silently.
+    """
 
     relation: Literal["within", "before", "after", "ever", "current"]
     amount: int | None = Field(default=None, gt=0)
     unit: Literal["days", "weeks", "months", "years"] | None = None
+    anchor: Literal["screening", "enrolment", "randomisation", "consent", "first_dose"] = (
+        "screening"
+    )
 
     @model_validator(mode="after")
     def _relative_windows_need_a_span(self) -> TemporalWindow:
@@ -196,6 +206,50 @@ class CriteriaSet(BaseModel):
     @property
     def unsupported_count(self) -> int:
         return sum(1 for c in self.criteria if c.predicate.type == "unsupported")
+
+
+def concepts_in(criteria_set: CriteriaSet) -> list[Concept]:
+    """Every distinct concept a trial's criteria mention, composites included.
+
+    Terminology resolution is charged per concept, not per criterion, so this walk is what makes
+    a trial mentioning creatinine six times cost one lookup.
+    """
+    seen: dict[str, Concept] = {}
+    for criterion in criteria_set.criteria:
+        for concept in _concepts_of(criterion.predicate):
+            seen.setdefault(concept.text, concept)
+    return list(seen.values())
+
+
+def _concepts_of(predicate: Predicate) -> list[Concept]:
+    if isinstance(predicate, CompositePredicate):
+        return [c for operand in predicate.operands for c in _concepts_of(operand)]
+    concept = getattr(predicate, "concept", None)
+    return [concept] if concept is not None else []
+
+
+def with_codes(criteria_set: CriteriaSet, codes: dict[str, tuple[Code, ...]]) -> CriteriaSet:
+    """Return a copy in which every concept carries the codes resolved for its text."""
+    return CriteriaSet(
+        nct_id=criteria_set.nct_id,
+        source_text=criteria_set.source_text,
+        criteria=[
+            criterion.model_copy(update={"predicate": _coded(criterion.predicate, codes)})
+            for criterion in criteria_set.criteria
+        ],
+    )
+
+
+def _coded(predicate: Predicate, codes: dict[str, tuple[Code, ...]]) -> Predicate:
+    if isinstance(predicate, CompositePredicate):
+        return predicate.model_copy(
+            update={"operands": tuple(_coded(o, codes) for o in predicate.operands)}
+        )
+    concept = getattr(predicate, "concept", None)
+    if concept is None or concept.text not in codes:
+        return predicate
+    resolved = concept.model_copy(update={"codes": tuple(codes[concept.text])})
+    return predicate.model_copy(update={"concept": resolved})
 
 
 class QuoteProblem(_Frozen):

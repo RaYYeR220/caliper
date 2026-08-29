@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Screening packet — {{ packet.patient_id }} — {{ packet.nct_id }}</title>
+<style>
+  :root {
+    --ink: #16181d;
+    --muted: #5c6068;
+    --rule: #d9d5cc;
+    --hair: #ebe7de;
+    --paper: #fffefb;
+    --ground: #f1efe9;
+    --wash: #f8f5ee;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 2.5rem 1.25rem 4rem;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .packet {
+    max-width: 54rem;
+    margin: 0 auto;
+    padding: 3.5rem 3.25rem 3rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+  }
+
+  .masthead {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  h1 {
+    margin: 0.75rem 0 0;
+    font-size: 1.9rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    margin: 0.4rem 0 0;
+    color: var(--muted);
+    font-size: 1.02rem;
+  }
+
+  h2 {
+    margin: 3.25rem 0 1.4rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  h3 {
+    margin: 2rem 0 0.6rem;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  h3:first-of-type { margin-top: 0; }
+
+  .facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.35rem 1.5rem;
+    margin: 2rem 0 0;
+    font-size: 0.95rem;
+  }
+
+  .facts dt {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.28rem;
+  }
+
+  .facts dd { margin: 0; }
+
+  .decision {
+    margin: 2.25rem 0 0;
+    padding: 1.15rem 1.4rem;
+    border: 1px solid var(--rule);
+    border-left: 8px solid var(--ink);
+    background: var(--wash);
+  }
+
+  /* Verdict states are told apart by border treatment and weight, never by colour alone. */
+  .decision--ineligible { border-left-style: double; border-left-width: 9px; }
+  .decision--needs_review { border-left-style: dashed; }
+
+  .decision .label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .decision .value {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 1.35rem;
+    font-weight: 600;
+  }
+
+  blockquote {
+    margin: 0 0 1rem;
+    padding: 0.2rem 0 0.2rem 1.1rem;
+    border-left: 3px solid var(--rule);
+    font-style: italic;
+    color: #33363d;
+  }
+
+  .lede { margin: 0 0 1.75rem; color: var(--muted); }
+
+  .open-list { margin: 0; padding: 0; list-style: none; counter-reset: item; }
+
+  .open-list > li {
+    padding: 1.25rem 0 1.4rem;
+    border-top: 1px solid var(--hair);
+  }
+
+  .open-list > li:first-child { border-top: 0; padding-top: 0; }
+
+  .detail {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.3rem 1.25rem;
+    margin: 0;
+    font-size: 0.92rem;
+  }
+
+  .detail dt {
+    font-family: var(--sans);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.25rem;
+  }
+
+  .detail dd { margin: 0; }
+
+  .scroll { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  th {
+    padding: 0 0.7rem 0.5rem 0;
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--sans);
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.9rem 0.7rem 0.9rem 0;
+    border-bottom: 1px solid var(--hair);
+    vertical-align: top;
+  }
+
+  tr.row--unresolved td { background: var(--wash); }
+
+  .id { font-family: var(--sans); font-size: 0.78rem; white-space: nowrap; }
+  .kind { font-family: var(--sans); font-size: 0.72rem; color: var(--muted); }
+  .quote { font-style: italic; min-width: 14rem; }
+  .rationale { min-width: 14rem; }
+
+  .verdict {
+    display: inline-block;
+    padding: 0.18em 0.55em;
+    border: 1px solid var(--ink);
+    font-family: var(--sans);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .verdict--not-met { background: var(--ink); color: var(--paper); font-weight: 700; }
+  .verdict--unresolved { border-style: dashed; }
+
+  .evidence { margin: 0; padding: 0; list-style: none; font-size: 0.82rem; }
+  .evidence li { margin-bottom: 0.5rem; }
+  .evidence li:last-child { margin-bottom: 0; }
+  .evidence .resource { font-family: var(--sans); font-size: 0.72rem; }
+  .evidence .recorded { color: var(--muted); }
+  .none { color: var(--muted); }
+
+  code, .pointer {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    word-break: break-all;
+  }
+
+  .engine {
+    display: block;
+    margin-top: 0.4rem;
+    font-family: var(--sans);
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  footer { margin-top: 1rem; }
+
+  .disclaimer {
+    margin: 2rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--ink);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 44rem) {
+    body { padding: 0; }
+    .packet { padding: 2rem 1.25rem 2.5rem; border: 0; }
+    .facts, .detail { grid-template-columns: 1fr; gap: 0.1rem; }
+    .facts dt, .detail dt { padding-top: 0.6rem; }
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .packet { max-width: none; padding: 0; border: 0; background: #fff; }
+    h2 { margin-top: 2rem; }
+    .open-list > li, tr { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+{% macro citations(lines) %}
+<ul class="evidence">
+  {% for line in lines %}
+  <li>
+    <span class="resource">{{ line.resource }}</span> — {{ line.description }}<br>
+    <span class="recorded">{{ line.recorded_on }}</span>
+    <span class="pointer">{{ line.fhir_path }}</span>
+  </li>
+  {% endfor %}
+</ul>
+{% endmacro %}
+<article class="packet">
+
+  <header>
+    <p class="masthead">Trial pre-screening packet</p>
+    <h1>{{ packet.patient_id }}</h1>
+    <p class="subtitle">{{ packet.patient_summary }}</p>
+
+    <dl class="facts">
+      <dt>Trial</dt>
+      <dd>{{ packet.nct_id }}{% if packet.trial_title %} — {{ packet.trial_title }}{% endif %}</dd>
+      <dt>Screened on</dt>
+      <dd>{{ packet.screened_on.isoformat() }}</dd>
+      <dt>Criteria</dt>
+      <dd>{{ packet.criteria_resolved }} of {{ packet.criteria_total }} resolved from the record</dd>
+    </dl>
+
+    <div class="decision decision--{{ packet.decision.value }}">
+      <span class="label">Decision</span>
+      <span class="value">{{ packet.verdict }}</span>
+    </div>
+  </header>
+
+  {% if packet.deciding %}
+  <section id="deciding">
+    <h2>Why this patient is not eligible</h2>
+    {% for row in packet.deciding %}
+    <h3>{{ row.criterion_id }} — {{ row.kind|lower }} criterion</h3>
+    <blockquote>{{ row.quote }}</blockquote>
+    <p>{{ row.rationale }}</p>
+    {% if row.evidence %}
+    {{ citations(row.evidence) }}
+    {% endif %}
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if packet.open_items %}
+  <section id="open-items">
+    <h2>Open items</h2>
+    <p class="lede">
+      {{ packet.open_items|length }}
+      {{ "criterion" if packet.open_items|length == 1 else "criteria" }}
+      could not be decided from the record. Each one has to be closed before this screening can be
+      signed.
+    </p>
+    <ol class="open-list">
+      {% for item in packet.open_items %}
+      <li>
+        <h3>{{ item.criterion_id }}</h3>
+        <blockquote>{{ item.quote }}</blockquote>
+        <dl class="detail">
+          <dt>Missing</dt>
+          <dd>{{ item.missing }}</dd>
+          <dt>Where to look</dt>
+          <dd>{{ item.where_to_look }}</dd>
+          <dt>FHIR query</dt>
+          <dd>{% if item.fhir_query %}<code>{{ item.fhir_query }}</code>{% else %}
+            <span class="none">none — this criterion needs a person, not a query</span>
+          {% endif %}</dd>
+        </dl>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endif %}
+
+  <section id="criteria">
+    <h2>Criteria</h2>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Criterion</th>
+            <th scope="col">Verdict</th>
+            <th scope="col">Protocol text</th>
+            <th scope="col">Rationale</th>
+            <th scope="col">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in packet.rows %}
+          <tr class="row--{{ row.verdict_slug }}">
+            <td>
+              <div class="id">{{ row.criterion_id }}</div>
+              <div class="kind">{{ row.kind }}</div>
+            </td>
+            <td><span class="verdict verdict--{{ row.verdict_slug }}">{{ row.verdict }}</span></td>
+            <td class="quote">{{ row.quote }}</td>
+            <td class="rationale">
+              {{ row.rationale }}
+              {% if row.engine_written %}
+              <span class="engine">Written by the screening engine</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if row.evidence %}
+              {{ citations(row.evidence) }}
+              {% else %}
+              <span class="none">none on file</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer id="about">
+    <h2>About this packet</h2>
+    <dl class="detail">
+      <dt>Absence policy</dt>
+      <dd>{{ packet.absence_policy_note }}</dd>
+      <dt>Criteria fingerprint</dt>
+      <dd><code>{{ packet.criteria_fingerprint }}</code></dd>
+      <dt>Resolved</dt>
+      <dd>{{ packet.criteria_resolved }} of {{ packet.criteria_total }} criteria decided from the
+        patient record</dd>
+      <dt>Rationale sentences</dt>
+      <dd>
+        {% if packet.engine_written %}
+        {{ packet.engine_written }} of {{ packet.criteria_total }} were written by the screening
+        engine, because the drafted sentence could not be verified against the record
+        {% else %}
+        every sentence was checked against the record it describes
+        {% endif %}
+      </dd>
+    </dl>
+    <p class="disclaimer">{{ disclaimer }}</p>
+  </footer>
+
+</article>
+</body>
+</html>

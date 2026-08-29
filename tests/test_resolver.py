@@ -12,6 +12,8 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
+
+from caliper.agents import AgentContext
 from caliper.agents.resolver import (
     DEFAULT_MEMORY_PATH,
     SYSTEM_PROMPT,
@@ -22,8 +24,6 @@ from caliper.agents.resolver import (
     normalise_concept_text,
     resolve_concepts,
 )
-
-from caliper.agents import AgentContext
 from caliper.ir import Code, Concept
 from caliper.llm import (
     LLMClient,
@@ -453,11 +453,12 @@ class TestCodeShapeValidation:
         ],
     )
     def test_well_formed_codes_survive(self, tmp_path: Path, system: str, code: str):
-        ctx, _ = a_context([a_reply(candidate(system=system, code=code))], a_memory(tmp_path))
+        offered = candidate(system=system, code=code, display="a display name")
+        ctx, _ = a_context([a_reply(offered)], a_memory(tmp_path))
 
         resolved = resolve_concepts([Concept(text="a concept")], ctx, nct_id="NCT1")
 
-        assert resolved["a concept"] == (Code(system=system, code=code, display="Creatinine"),)
+        assert resolved["a concept"] == (Code(system=system, code=code, display="a display name"),)
 
     @pytest.mark.parametrize(
         ("system", "code"),

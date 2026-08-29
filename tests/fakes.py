@@ -79,18 +79,40 @@ class RoutedTransport(FakeTransport):
     """Replies chosen by what the request is about, rather than by call order.
 
     Order-based fakes are brittle here: the client's retry ladder decides how many turns a single
-    logical call takes, so a test that counts replies is really asserting on the ladder. Routing on
-    a substring of the user message lets a test say "this criterion fails" and mean it.
+    logical call takes, so a test that counts replies is really asserting on the ladder.
+
+    `agent_routes` is keyed on a substring of the *system* prompt and takes precedence, because in a
+    full pipeline several agents see the same protocol text and routing on the user message alone
+    would hand the critic the compiler's answer.
     """
 
-    def __init__(self, routes: dict[str, str], *, default: str | None = None):
+    def __init__(
+        self,
+        routes: dict[str, str] | None = None,
+        *,
+        agent_routes: dict[str, dict[str, str] | str] | None = None,
+        default: str | None = None,
+    ):
         super().__init__([])
-        self.routes = routes
+        self.routes = routes or {}
+        self.agent_routes = agent_routes or {}
         self.default = default
 
     def _create(self, **kwargs: Any) -> SimpleNamespace:
         self.requests.append(kwargs)
+        system = kwargs["messages"][0]["content"]
         user = kwargs["messages"][-1]["content"]
+
+        for needle, route in self.agent_routes.items():
+            if needle not in system:
+                continue
+            if isinstance(route, str):
+                return _response(route)
+            for user_needle, content in route.items():
+                if user_needle in user:
+                    return _response(content)
+            break
+
         for needle, content in self.routes.items():
             if needle in user:
                 return _response(content)
@@ -107,13 +129,14 @@ def _response(content: str) -> SimpleNamespace:
 
 
 def a_routed_client(
-    routes: dict[str, str],
+    routes: dict[str, str] | None = None,
     *,
+    agent_routes: dict[str, dict[str, str] | str] | None = None,
     default: str | None = None,
     profile: ProviderProfile | None = None,
     **kw: Any,
 ) -> tuple[LLMClient, RoutedTransport]:
-    transport = RoutedTransport(routes, default=default)
+    transport = RoutedTransport(routes, agent_routes=agent_routes, default=default)
     client = LLMClient(
         profile or a_profile(), transport=transport, env={"TEST_API_KEY": "not-a-real-key"}, **kw
     )

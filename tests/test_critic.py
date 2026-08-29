@@ -16,6 +16,7 @@ import pytest
 from caliper.agents import AgentContext
 from caliper.agents.critic import (
     AGENT_NAME,
+    ANCHOR,
     BackTranslation,
     CriticReport,
     apply_findings,
@@ -273,6 +274,18 @@ class TestRenderPredicate:
     def test_an_open_window_says_it_is_open(self):
         assert "at any time" in render_predicate(DIABETES)
 
+    def test_every_relative_window_names_the_span_and_the_date_it_counts_back_from(self):
+        expected = {"within": "within the", "before": "more than", "after": "less than"}
+        for relation, phrase in expected.items():
+            window = TemporalWindow(relation=relation, amount=2, unit="weeks")
+            rendered = render_predicate(CREATININE.model_copy(update={"window": window}))
+            assert f"{phrase} 2 weeks before {ANCHOR}" in rendered
+
+    def test_a_current_window_is_anchored_too(self):
+        window = TemporalWindow(relation="current")
+        rendered = render_predicate(CREATININE.model_copy(update={"window": window}))
+        assert f"current as of {ANCHOR}" in rendered
+
     def test_a_range_names_both_bounds_and_says_whether_they_are_included(self):
         rendered = render_predicate(FEV1_RANGE)
         assert "between 30 and 70%" in rendered
@@ -479,11 +492,12 @@ class TestApplyFindings:
         assert applied.nct_id == criteria_set.nct_id
         assert applied.source_text_sha256 == criteria_set.source_text_sha256
 
-    def test_a_clean_review_changes_nothing(self):
+    def test_a_clean_review_changes_nothing_but_still_hands_back_its_own_list(self):
         ctx, _ = a_context([a_verdict("equivalent"), a_verdict("equivalent")])
         criteria_set = a_criteria_set(AGE_BAND, COPD)
         applied = apply_findings(criteria_set, review(criteria_set, ctx))
         assert applied.criteria == criteria_set.criteria
+        assert applied.criteria is not criteria_set.criteria
 
     def test_a_criterion_that_was_already_unsupported_stays_untouched(self):
         ctx, _ = a_context([a_verdict("equivalent")])
@@ -599,4 +613,3 @@ class TestResponseModel:
     def test_a_blank_reason_is_rejected_because_a_human_has_to_read_it(self):
         with pytest.raises(ValueError):
             BackTranslation(agrees=True, severity="equivalent", reason="")
-</content>
