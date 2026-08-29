@@ -16,6 +16,7 @@ criterion's meaning, and the segmenter already knows the answer.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from importlib import resources
 
@@ -23,7 +24,7 @@ from caliper.agents.base import AgentContext
 from caliper.criteria_text import CriterionSpan, Section, segment, unescape_registry_markdown
 from caliper.ir import CriteriaSet, Criterion, UnsupportedPredicate, quote_fidelity_problems
 from caliper.llm import LLMError
-from caliper.wire import DEFAULT_DEPTH, wire_span_model
+from caliper.wire import DEFAULT_DEPTH, wire_criteria_set_model, wire_span_model
 
 COMPILER_SYSTEM_PROMPT = (
     resources.files("caliper.agents.prompts").joinpath("compiler.md").read_text(encoding="utf-8")
@@ -65,6 +66,8 @@ class CompileResult:
     rejected: tuple[RejectedUnit, ...]
     failures: tuple[CompileFailure, ...]
     downgraded: tuple[str, ...]
+    unclaimed_spans: tuple[int, ...] = ()
+    """Only meaningful for whole-protocol compilation, where a criterion can simply go missing."""
 
     @property
     def spans_total(self) -> int:
@@ -75,7 +78,8 @@ class CompileResult:
     @property
     def spans_unaccounted(self) -> tuple[int, ...]:
         """Spans whose criterion never materialised. Each one is a hole in the protocol."""
-        return tuple(i for f in self.failures for i in f.unit.span_indices)
+        failed = tuple(i for f in self.failures for i in f.unit.span_indices)
+        return tuple(sorted(set(failed) | set(self.unclaimed_spans)))
 
 
 def plan_units(spans: list[CriterionSpan]) -> list[CompileUnit]:
@@ -123,8 +127,17 @@ def compile_criteria(
     ctx: AgentContext,
     *,
     depth: int = DEFAULT_DEPTH,
+    per_span: bool = True,
 ) -> CompileResult:
-    """Compile a registry eligibility blob into a `CriteriaSet`."""
+    """Compile a registry eligibility blob into a `CriteriaSet`.
+
+    `per_span=False` is the obvious alternative — hand the model the whole protocol and take what
+    comes back. It is kept so the choice can be measured rather than argued: see the whole-protocol
+    arm in the evaluation, and the count of spans it leaves unaccounted for.
+    """
+    if not per_span:
+        return _compile_whole(nct_id, criteria_text, ctx, depth)
+
     source_text = unescape_registry_markdown(criteria_text)
     spans = segment(source_text)
     units = plan_units(spans)
@@ -214,4 +227,78 @@ def _downgrade_unfaithful_quotes(criteria_set: CriteriaSet) -> tuple[CriteriaSet
             criteria=rewritten,
         ),
         tuple(sorted(problems)),
+    )
+
+
+def _normalise(text: str) -> str:
+    return re.sub(r"\s+", " ", text).strip().casefold()
+
+
+def _compile_whole(
+    nct_id: str, criteria_text: str, ctx: AgentContext, depth: int
+) -> CompileResult:
+    """Compile a whole protocol in one call, the way the obvious implementation would.
+
+    Kept as a measurable alternative rather than as a fallback. Two things go wrong here that the
+    per-span loop makes impossible: a criterion can be dropped without anyone noticing, and a single
+    failed response costs the entire trial rather than one criterion. Both are counted.
+    """
+    source_text = unescape_registry_markdown(criteria_text)
+    spans = segment(source_text)
+    units = plan_units(spans)
+    all_spans = CompileUnit(
+        span_indices=tuple(s.index for s in spans),
+        section=Section.UNSPECIFIED,
+        text=source_text,
+    )
+
+    try:
+        completion = ctx.client.complete(
+            system=COMPILER_SYSTEM_PROMPT,
+            user="Compile every criterion in this protocol.\n\n" + source_text,
+            model_cls=wire_criteria_set_model(depth),
+            agent="compiler",
+        )
+    except LLMError as error:
+        empty = CriteriaSet(nct_id=nct_id, source_text=source_text, criteria=[])
+        return CompileResult(
+            criteria_set=empty,
+            units=tuple(units),
+            rejected=(),
+            failures=(CompileFailure(unit=all_spans, error=str(error)),),
+            downgraded=(),
+        )
+
+    ordinals = {"inclusion": 0, "exclusion": 0}
+    criteria: list[Criterion] = []
+    for returned in completion.value.criteria:
+        kind = returned.kind
+        ordinals[kind] += 1
+        criteria.append(
+            Criterion.model_validate(
+                {
+                    "id": _identifier(kind, ordinals[kind]),
+                    "kind": kind,
+                    "source_quote": returned.source_quote,
+                    "predicate": returned.predicate.model_dump(mode="json"),
+                    "notes": returned.notes,
+                }
+            )
+        )
+
+    criteria_set = CriteriaSet(nct_id=nct_id, source_text=source_text, criteria=criteria)
+    criteria_set, downgraded = _downgrade_unfaithful_quotes(criteria_set)
+
+    quoted = [_normalise(c.source_quote) for c in criteria_set.criteria]
+    unclaimed = tuple(
+        span.index for span in spans if not any(_normalise(span.text) in q for q in quoted)
+    )
+
+    return CompileResult(
+        criteria_set=criteria_set,
+        units=tuple(units),
+        rejected=(),
+        failures=(),
+        downgraded=downgraded,
+        unclaimed_spans=unclaimed,
     )

@@ -35,6 +35,7 @@ DEFAULT_OUT = Path("eval/results")
 
 ARMS: dict[str, PipelineConfig | None] = {
     "caliper": PipelineConfig(),
+    "caliper-whole-protocol": PipelineConfig(per_span_compile=False),
     "caliper-no-critic": PipelineConfig(use_critic=False),
     "caliper-no-resolver": PipelineConfig(use_resolver=False),
     "caliper-closed-world": PipelineConfig(absence_policy=AbsencePolicy.CLOSED_WORLD),
@@ -48,9 +49,14 @@ ARMS: dict[str, PipelineConfig | None] = {
 BASELINE_ARMS = ("single_prompt", "always_needs_review", "always_eligible", "random")
 
 
-def _compile_key(config: PipelineConfig) -> tuple[int, bool, bool]:
+def _compile_key(config: PipelineConfig) -> tuple[int, bool, bool, bool]:
     """Arms differing only in how they read absence share their compiled criteria exactly."""
-    return (config.compile_depth, config.use_resolver, config.use_critic)
+    return (
+        config.compile_depth,
+        config.per_span_compile,
+        config.use_resolver,
+        config.use_critic,
+    )
 
 
 def _context() -> AgentContext:

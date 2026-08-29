@@ -301,3 +301,84 @@ def test_an_empty_protocol_compiles_to_nothing_rather_than_raising(bad):
     result, transport = compile_protocol([], text=bad)
     assert result.criteria_set.criteria == []
     assert transport.requests == []
+
+
+class TestWholeProtocolCompilation:
+    """The alternative design, kept so the choice can be measured rather than asserted."""
+
+    def whole_reply(self, *criteria: dict) -> Reply:
+        return Reply(json.dumps({"nct_id": "NCT00000001", "criteria": list(criteria)}))
+
+    def a_criterion(self, quote: str, predicate: dict, kind: str = "inclusion") -> dict:
+        return {
+            "id": "ignored",
+            "kind": kind,
+            "source_quote": quote,
+            "predicate": predicate,
+            "notes": None,
+        }
+
+    def test_it_takes_one_call_for_the_whole_protocol(self):
+        client, transport = a_client(
+            [self.whole_reply(self.a_criterion(A1C_QUOTE, A1C))]
+        )
+        result = compile_criteria(
+            "NCT00000001", PROTOCOL, AgentContext(client=client), per_span=False
+        )
+        assert len(transport.requests) == 1
+        assert len(result.criteria_set.criteria) == 1
+
+    def test_identifiers_are_still_assigned_in_code(self):
+        client, _ = a_client(
+            [
+                self.whole_reply(
+                    self.a_criterion(A1C_QUOTE, A1C),
+                    self.a_criterion(JUDGEMENT_QUOTE, UNSUPPORTED, "exclusion"),
+                )
+            ]
+        )
+        result = compile_criteria(
+            "NCT00000001", PROTOCOL, AgentContext(client=client), per_span=False
+        )
+        assert [c.id for c in result.criteria_set.criteria] == ["INC-01", "EXC-01"]
+
+    def test_a_criterion_the_model_dropped_is_reported_as_an_unclaimed_span(self):
+        """This is the failure the per-span design exists to make impossible."""
+        client, _ = a_client([self.whole_reply(self.a_criterion(A1C_QUOTE, A1C))])
+        result = compile_criteria(
+            "NCT00000001", PROTOCOL, AgentContext(client=client), per_span=False
+        )
+        assert len(result.spans_unaccounted) == 2
+
+    def test_a_protocol_fully_compiled_leaves_nothing_unaccounted(self):
+        client, _ = a_client(
+            [
+                self.whole_reply(
+                    self.a_criterion(A1C_QUOTE, A1C),
+                    self.a_criterion(AGE_QUOTE, AGE),
+                    self.a_criterion(JUDGEMENT_QUOTE, UNSUPPORTED, "exclusion"),
+                )
+            ]
+        )
+        result = compile_criteria(
+            "NCT00000001", PROTOCOL, AgentContext(client=client), per_span=False
+        )
+        assert result.spans_unaccounted == ()
+
+    def test_quote_fidelity_is_enforced_the_same_way(self):
+        client, _ = a_client(
+            [self.whole_reply(self.a_criterion("something nobody wrote", A1C))]
+        )
+        result = compile_criteria(
+            "NCT00000001", PROTOCOL, AgentContext(client=client), per_span=False
+        )
+        assert result.downgraded == ("INC-01",)
+
+    def test_a_failed_call_loses_the_entire_protocol(self):
+        """The cost of the cheap design: one bad response and the trial has no criteria at all."""
+        client, _ = a_client([Reply("not json")] * 8)
+        result = compile_criteria(
+            "NCT00000001", PROTOCOL, AgentContext(client=client), per_span=False
+        )
+        assert result.criteria_set.criteria == []
+        assert len(result.spans_unaccounted) == 3

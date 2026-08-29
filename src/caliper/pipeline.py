@@ -39,6 +39,9 @@ class PipelineConfig:
     """
 
     compile_depth: int = DEFAULT_DEPTH
+    per_span_compile: bool = True
+    """Compile one criterion at a time. Off, the whole protocol goes in one call."""
+
     use_resolver: bool = True
     use_critic: bool = True
     use_narrative: bool = False
@@ -59,6 +62,7 @@ class PipelineConfig:
         off = [
             name
             for name, on in (
+                ("per-span", self.per_span_compile),
                 ("resolver", self.use_resolver),
                 ("critic", self.use_critic),
                 ("rationales", self.write_rationales),
@@ -72,7 +76,8 @@ class PipelineConfig:
     @property
     def is_full(self) -> bool:
         return (
-            self.use_resolver
+            self.per_span_compile
+            and self.use_resolver
             and self.use_critic
             and self.write_rationales
             and self.absence_policy is AbsencePolicy.COVERAGE_GATED
@@ -118,7 +123,9 @@ def compile_trial(
     Compilation happens once per trial and is reused across every patient screened against it,
     which is why the expensive parts of this system are cheap in aggregate.
     """
-    compilation = compile_criteria(nct_id, criteria_text, ctx, depth=config.compile_depth)
+    compilation = compile_criteria(
+        nct_id, criteria_text, ctx, depth=config.compile_depth, per_span=config.per_span_compile
+    )
     criteria_set = compilation.criteria_set
 
     resolved: dict[str, tuple[Code, ...]] | None = None
