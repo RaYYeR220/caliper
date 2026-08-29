@@ -76,9 +76,12 @@ def _allowed_numbers(criterion: Criterion, result: CriterionResult) -> set[float
             if converted is not None:
                 allowed.add(converted)
 
-    # The rationale the evaluator itself produced is by definition derived from the record.
-    allowed.update(float(t) for t in _NUMBER.findall(_strip_addresses(result.rationale, literals)))
-    quote = _strip_addresses(criterion.source_quote, literals)
+    # The rationale the evaluator itself produced is by definition derived from the record. Dates
+    # are stripped from it first: a date is checked as a date, and letting 2026-05-14 seed the
+    # numeric set would license a sentence asserting a creatinine of 2026.
+    rationale = _ISO_DATE.sub(" ", _strip_addresses(result.rationale, literals))
+    allowed.update(float(t) for t in _NUMBER.findall(rationale))
+    quote = _ISO_DATE.sub(" ", _strip_addresses(criterion.source_quote, literals))
     allowed.update(float(t) for t in _NUMBER.findall(quote))
     return allowed
 
@@ -104,13 +107,20 @@ def _strip_addresses(text: str, codes: tuple[str, ...] = ()) -> str:
 
 
 def _is_bound(token: str, allowed: set[float]) -> bool:
-    """Accept a rendered number when some allowed value rounds to it at its own precision."""
+    """Accept a rendered number that is exact, or a decimal rounding of an allowed value.
+
+    Rounding is permitted only to a decimal place. Allowing it to the whole number would mean a
+    1.5 mg/dL threshold vouched for a sentence saying "2", which is the kind of hole that makes a
+    linter worse than useless: it would certify the sentence and nobody would look again.
+    """
     rendered = float(token)
     decimals = len(token.split(".")[1]) if "." in token else 0
-    return any(
-        abs(candidate - rendered) < 1e-9 or round(candidate, decimals) == rendered
-        for candidate in allowed
-    )
+    for candidate in allowed:
+        if abs(candidate - rendered) < 1e-9:
+            return True
+        if decimals >= 1 and round(candidate, decimals) == rendered:
+            return True
+    return False
 
 
 def check_rationale(

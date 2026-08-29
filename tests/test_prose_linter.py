@@ -132,3 +132,42 @@ class TestViolationShape:
         assert isinstance(v, ProseViolation)
         assert v.sentence == "It was 42 mg/dL."
         assert "42" in v.message
+
+
+class TestRoundingIsNotALoophole:
+    """A threshold must not vouch for a number it merely rounds to."""
+
+    def test_a_threshold_does_not_license_the_integer_it_rounds_to(self):
+        text = "Neither of the 2 requested results is on file."
+        violations = check_rationale(text, CRITERION, RESULT)
+        assert [v.token for v in violations] == ["2"]
+
+    def test_rounding_to_a_decimal_place_is_still_allowed(self):
+        result = CriterionResult(
+            criterion_id="INC-03",
+            kind="inclusion",
+            verdict=Verdict.MET,
+            rationale="1.199 mg/dL",
+            evidence=(Evidence(**{**EVIDENCE.__dict__, "value": 1.199}),),
+        )
+        assert check_rationale("Creatinine was 1.2 mg/dL.", CRITERION, result) == []
+
+    def test_an_exact_integer_is_bound_as_it_always_was(self):
+        result = CriterionResult(
+            criterion_id="INC-03",
+            kind="inclusion",
+            verdict=Verdict.MET,
+            rationale="6 months",
+            evidence=(),
+        )
+        assert check_rationale("Measured within 6 months.", CRITERION, result) == []
+
+
+class TestDatesDoNotLeakIntoTheNumbers:
+    def test_the_year_of_an_evidence_date_is_not_a_permitted_value(self):
+        """2026-05-14 in the rationale must not license the number 2026 in the sentence."""
+        violations = check_rationale("The value was 2026 mg/dL.", CRITERION, RESULT)
+        assert [v.token for v in violations] == ["2026"]
+
+    def test_the_date_itself_still_passes(self):
+        assert check_rationale("Measured on 2026-05-14.", CRITERION, RESULT) == []

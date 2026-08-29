@@ -62,6 +62,37 @@ class ScreeningResult:
         return self.criteria_resolved / self.criteria_total
 
 
+VITAL_STATUS = "VITAL-STATUS"
+
+
+def _deceased(
+    criteria_set: CriteriaSet, patient: PatientIndex, as_of: date, policy: AbsencePolicy
+) -> ScreeningResult:
+    """Stop before evaluating anything else.
+
+    Continuing would produce a criterion table describing a person who cannot be enrolled, and a
+    coordinator skimming forty green rows would have to notice the one line that mattered. It is a
+    screening decision, not a criterion, so it is reported as one.
+    """
+    assert patient.deceased is not None
+    row = CriterionResult(
+        criterion_id=VITAL_STATUS,
+        kind="inclusion",
+        verdict=Verdict.NOT_MET,
+        rationale=f"the chart records that the patient died on {patient.deceased.isoformat()}",
+    )
+    return ScreeningResult(
+        nct_id=criteria_set.nct_id,
+        patient_id=patient.patient_id,
+        screened_on=as_of,
+        decision=ScreeningOutcome.INELIGIBLE,
+        criteria=(row,),
+        deciding_criterion_ids=(VITAL_STATUS,),
+        resolution_worklist=(),
+        absence_policy=policy,
+    )
+
+
 def screen(
     criteria_set: CriteriaSet,
     patient: PatientIndex,
@@ -69,6 +100,9 @@ def screen(
     policy: AbsencePolicy = AbsencePolicy.COVERAGE_GATED,
 ) -> ScreeningResult:
     """Evaluate every criterion in `criteria_set` against `patient` and roll the results up."""
+    if patient.died_before(as_of):
+        return _deceased(criteria_set, patient, as_of, policy)
+
     results = tuple(
         evaluate_criterion(criterion, patient, as_of, policy) for criterion in criteria_set.criteria
     )

@@ -103,3 +103,66 @@ class TestCoverage:
             date=date(2026, 5, 1),
         )
         assert index(note).has_documented_activity(None, SCREENING) is False
+
+
+class TestTheFuture:
+    """A screening decided on 1 June cannot use a result from August."""
+
+    def test_evidence_dated_after_the_screening_is_never_returned(self):
+        record = index(row(codes=(MI_CODE,), date=date(2026, 8, 1)))
+        assert record.find("condition", MI, None, SCREENING) == []
+
+    def test_evidence_dated_on_the_screening_day_still_counts(self):
+        record = index(row(codes=(MI_CODE,), date=SCREENING))
+        assert len(record.find("condition", MI, None, SCREENING)) == 1
+
+    def test_an_undated_row_is_still_reachable_without_a_window(self):
+        record = index(row(codes=(MI_CODE,), date=None))
+        assert len(record.find("condition", MI, None, SCREENING)) == 1
+
+    def test_a_future_encounter_does_not_document_the_window(self):
+        future = Evidence(
+            kind="encounter",
+            resource_type="Encounter",
+            resource_id="enc-future",
+            display="visit",
+            fhir_path="Bundle.entry[0].resource",
+            date=date(2026, 9, 1),
+        )
+        assert index(future).has_documented_activity(None, SCREENING) is False
+
+
+class TestDeath:
+    def test_a_patient_who_died_before_screening_is_recorded_as_such(self):
+        record = PatientIndex(
+            patient_id="p-1",
+            birth_date=date(1970, 1, 1),
+            sex="female",
+            evidence=[],
+            deceased=date(2026, 5, 3),
+        )
+        assert record.died_before(SCREENING) is True
+
+    def test_a_living_patient_is_not(self):
+        assert index().died_before(SCREENING) is False
+
+    def test_a_death_after_the_screening_date_does_not_apply_to_it(self):
+        record = PatientIndex(
+            patient_id="p-1",
+            birth_date=date(1970, 1, 1),
+            sex="female",
+            evidence=[],
+            deceased=date(2026, 7, 1),
+        )
+        assert record.died_before(SCREENING) is False
+
+
+class TestEmptyDisplays:
+    def test_an_unlabelled_row_never_matches_an_uncoded_concept(self):
+        """A blank display would otherwise match every concept, since "" is in every string."""
+        record = index(row(codes=(), display=""))
+        assert record.find("condition", UNCODED_MI, None, SCREENING) == []
+
+    def test_an_unlabelled_row_is_still_reachable_by_its_code(self):
+        record = index(row(codes=(MI_CODE,), display=""))
+        assert len(record.find("condition", MI, None, SCREENING)) == 1

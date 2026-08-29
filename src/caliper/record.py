@@ -61,6 +61,11 @@ def window_start(window: TemporalWindow | None, as_of: date) -> date | None:
 
 
 def _in_window(when: date | None, window: TemporalWindow | None, as_of: date) -> bool:
+    # Nothing dated after the screening exists yet, whatever the window says. Synthea charts run
+    # past the fixed screening date, and without this a criterion could be decided from a result
+    # the coordinator could not possibly have had in front of them.
+    if when is not None and when > as_of:
+        return False
     if window is None or window.relation in ("ever", "current"):
         return True
     if when is None:
@@ -85,7 +90,7 @@ def _matches_concept(evidence: Evidence, concept: Concept) -> bool:
     if concept.codes:
         wanted = {(c.system, c.code) for c in concept.codes}
         return any((c.system, c.code) in wanted for c in evidence.codes)
-    if evidence.source == "narrative":
+    if evidence.source == "narrative" or not evidence.display.strip():
         return False
     return concept.text.casefold() in evidence.display.casefold()
 
@@ -96,6 +101,7 @@ class PatientIndex:
     birth_date: date | None
     sex: str | None
     evidence: list[Evidence] = field(default_factory=list)
+    deceased: date | None = None
 
     def find(
         self,
@@ -125,6 +131,15 @@ class PatientIndex:
         return any(
             e.kind == "encounter" and _in_window(e.date, window, as_of) for e in self.evidence
         )
+
+    def died_before(self, as_of: date) -> bool:
+        """Whether the chart records a death on or before the screening date.
+
+        Worth its own question rather than being left to the criteria: no protocol writes "patient
+        must be alive", and a chart that stops abruptly looks exactly like a chart that is simply
+        thin.
+        """
+        return self.deceased is not None and self.deceased <= as_of
 
     def age_at(self, as_of: date) -> float | None:
         if self.birth_date is None:

@@ -191,3 +191,29 @@ class TestApproximations:
     def test_a_clean_screening_reports_none(self):
         result = screen(criteria(AGE), patient(visit(date(2026, 4, 1))), SCREENING)
         assert result.approximations == ()
+
+
+class TestDeceasedPatients:
+    """No protocol writes "must be alive", so the screening has to know on its own."""
+
+    def dead_patient(self, when: date) -> PatientIndex:
+        return PatientIndex(
+            patient_id="p-1",
+            birth_date=date(1970, 1, 1),
+            sex="female",
+            evidence=[a1c_result(8.1), visit(date(2026, 4, 1))],
+            deceased=when,
+        )
+
+    def test_a_patient_who_died_before_screening_is_never_eligible(self):
+        result = screen(criteria(AGE, A1C), self.dead_patient(date(2026, 5, 3)), SCREENING)
+        assert result.decision is ScreeningOutcome.INELIGIBLE
+
+    def test_the_reason_is_stated_rather_than_left_to_a_criterion(self):
+        result = screen(criteria(AGE, A1C), self.dead_patient(date(2026, 5, 3)), SCREENING)
+        assert result.deciding_criterion_ids == ("VITAL-STATUS",)
+        assert any("died" in c.rationale for c in result.criteria)
+
+    def test_a_death_recorded_after_the_screening_date_changes_nothing(self):
+        result = screen(criteria(AGE, A1C), self.dead_patient(date(2026, 9, 1)), SCREENING)
+        assert result.decision is ScreeningOutcome.ELIGIBLE
