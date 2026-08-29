@@ -9,8 +9,8 @@ from pydantic import ValidationError
 from caliper.ir import (
     Code,
     Concept,
-    Criterion,
     CriteriaSet,
+    Criterion,
     DemographicPredicate,
     ObservationPredicate,
     PresencePredicate,

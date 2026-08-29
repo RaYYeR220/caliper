@@ -63,6 +63,7 @@ class ObservationPredicate(_Frozen):
     value: float
     value_high: float | None = None
     unit: str = Field(min_length=1)
+    window: TemporalWindow | None = None
 
     @model_validator(mode="after")
     def _ranges_need_two_ordered_bounds(self) -> ObservationPredicate:

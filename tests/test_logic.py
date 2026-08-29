@@ -1,4 +1,7 @@
-"""The rollup rule is the safety spine: ELIGIBLE must be unreachable while anything is unresolved."""
+"""The rollup rule is the safety spine.
+
+ELIGIBLE must be unreachable while anything is unresolved.
+"""
 
 import pytest
 
