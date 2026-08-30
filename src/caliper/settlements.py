@@ -23,9 +23,14 @@ Three smaller rules follow from the same instinct:
 - A settlement carries no evidence, and nothing renders it as though it did. It is a person's word,
   and the packet says so on the row.
 
-Settlements are per trial, not per patient. "The protocol's major risk factors are these six" is
-answered once for the study and holds for the cohort, which is the entire point: the criterion that
-blocks a screening usually blocks all of them.
+A settlement names one patient, always. The first version of this module scoped them to the trial,
+on the reasoning that the criterion blocking one screening usually blocks the whole cohort — and
+that is true, but it does not follow that the answer is the same for everyone. "At least one major
+cardiovascular risk factor" blocks all twenty-four charts and is a different question about each of
+them; a cohort-wide `met` would have quietly enrolled the twenty-three it was not asked about. What
+generalises is the *definition* the coordinator applies, not the verdict it produces, and supplying
+a definition means recompiling the criterion rather than answering it. That is a different feature
+and it is not built.
 """
 
 from __future__ import annotations
@@ -45,6 +50,7 @@ class Settlement:
     """One criterion, answered by a named person on a stated date, with their reason."""
 
     nct_id: str
+    patient_id: str
     criterion_id: str
     verdict: Verdict
     answered_by: str
@@ -61,10 +67,16 @@ class Settlement:
             raise ValueError("a settlement needs answered_by: an unsigned override is a bug")
         if not self.note.strip():
             raise ValueError("a settlement needs a note saying what was asked and what was said")
+        if not self.patient_id.strip():
+            raise ValueError(
+                "a settlement names one patient: an answer that applies to a whole cohort is a "
+                "different question from the one a coordinator was asked"
+            )
 
     def as_dict(self) -> dict[str, str]:
         return {
             "nct_id": self.nct_id,
+            "patient_id": self.patient_id,
             "criterion_id": self.criterion_id,
             "verdict": self.verdict.value,
             "answered_by": self.answered_by,
@@ -76,6 +88,7 @@ class Settlement:
     def from_dict(cls, payload: dict[str, str]) -> Settlement:
         return cls(
             nct_id=payload["nct_id"],
+            patient_id=payload["patient_id"],
             criterion_id=payload["criterion_id"],
             verdict=Verdict(payload["verdict"]),
             answered_by=payload["answered_by"],
@@ -110,13 +123,13 @@ class SettlementLog:
     """
 
     def __init__(self, settlements: Iterable[Settlement] = ()) -> None:
-        self._by_criterion: dict[tuple[str, str], Settlement] = {}
+        self._by_criterion: dict[tuple[str, str, str], Settlement] = {}
         for settlement in settlements:
-            key = (settlement.nct_id, settlement.criterion_id)
+            key = (settlement.nct_id, settlement.patient_id, settlement.criterion_id)
             if key in self._by_criterion:
                 raise ValueError(
-                    f"{settlement.criterion_id} is settled twice for {settlement.nct_id}; one "
-                    "criterion takes one answer"
+                    f"{settlement.criterion_id} is settled twice for {settlement.patient_id} "
+                    f"against {settlement.nct_id}; one criterion takes one answer"
                 )
             self._by_criterion[key] = settlement
         self._refused: list[Refusal] = []
@@ -138,8 +151,8 @@ class SettlementLog:
     def __bool__(self) -> bool:
         return bool(self._by_criterion)
 
-    def for_criterion(self, nct_id: str, criterion_id: str) -> Settlement | None:
-        return self._by_criterion.get((nct_id, criterion_id))
+    def for_criterion(self, nct_id: str, patient_id: str, criterion_id: str) -> Settlement | None:
+        return self._by_criterion.get((nct_id, patient_id, criterion_id))
 
     def refuse(self, criterion_id: str, reason: str) -> None:
         """Record that a settlement was submitted for a criterion and not applied."""

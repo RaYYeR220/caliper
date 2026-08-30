@@ -53,6 +53,7 @@ CRITERIA = CriteriaSet(
 
 SETTLEMENT = Settlement(
     nct_id="NCT99",
+    patient_id="p-1",
     criterion_id="INC-02",
     verdict=Verdict.MET,
     answered_by="r.okonkwo",

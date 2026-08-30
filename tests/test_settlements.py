@@ -70,6 +70,7 @@ NOTE = "Confirmed with the investigator against the protocol's own list."
 def a_settlement(criterion_id: str, verdict: Verdict, **kw: object) -> Settlement:
     return Settlement(
         nct_id=str(kw.get("nct_id", "NCT99")),
+        patient_id=str(kw.get("patient_id", "p")),
         criterion_id=criterion_id,
         verdict=verdict,
         answered_by=str(kw.get("answered_by", "r.okonkwo")),
@@ -143,6 +144,35 @@ class TestASettlementCannotContradictTheRecord:
         )
 
         assert result.verdict is Verdict.UNKNOWN
+
+    def test_a_settlement_for_another_patient_is_not_applied(self):
+        """The property this module was rewritten for.
+
+        The blocking criterion is usually the same one across a whole cohort, which makes a
+        cohort-wide answer tempting and wrong: "does this patient have a major cardiovascular risk
+        factor" is a different question about each of them, and one `met` would have carried
+        twenty-three charts nobody was asked about.
+        """
+        log = SettlementLog([a_settlement("INC-02", Verdict.MET, patient_id="someone-else")])
+        result = evaluate_criterion(
+            OPEN_CATEGORY, patient("p", 8.1), SCREENING, settlements=log, nct_id="NCT99"
+        )
+
+        assert result.verdict is Verdict.UNKNOWN
+
+    def test_an_unnamed_patient_is_refused_at_construction(self):
+        with pytest.raises(ValueError, match="one patient"):
+            a_settlement("INC-02", Verdict.MET, patient_id=" ")
+
+    def test_the_same_criterion_can_be_answered_for_two_patients(self):
+        log = SettlementLog(
+            [
+                a_settlement("INC-02", Verdict.MET, patient_id="a"),
+                a_settlement("INC-02", Verdict.NOT_MET, patient_id="b"),
+            ]
+        )
+
+        assert len(log) == 2
 
     def test_unknown_is_not_an_answer_a_person_may_give(self):
         with pytest.raises(ValueError, match="MET or NOT_MET"):

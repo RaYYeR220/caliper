@@ -411,7 +411,7 @@ def evaluate_criterion(
     if settlements is None:
         return result
 
-    settlement = settlements.for_criterion(nct_id, criterion.id)
+    settlement = settlements.for_criterion(nct_id, index.patient_id, criterion.id)
     if settlement is None:
         return result
     if result.verdict is not Verdict.UNKNOWN:
