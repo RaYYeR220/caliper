@@ -8,7 +8,7 @@ attack first. Every claim in `README.md` is meant to be read against this file.
 | Component | Status |
 |---|---|
 | Trial eligibility criteria | **Real.** Ten studies pulled from the ClinicalTrials.gov v2 API and committed verbatim, with the registry's own `dataTimestamp`. Nothing was hand-edited. |
-| Patient records | **Synthetic.** Synthea FHIR R4 bundles from MITRE's public sample, trimmed to nine resource types. No real person, no PHI, and none of this is derived from a real chart. |
+| Patient records | **Synthetic.** Synthea FHIR R4 bundles from MITRE's public sample, trimmed to ten resource types. No real person, no PHI, and none of this is derived from a real chart. |
 | Clinical notes | **Hand-authored for this project.** Synthea's own notes are fill-in-the-blank templates with no clinical language in them, so the narrative cases use notes we wrote. They are listed in `data/notes/manifest.json` and are clearly labelled as authored fixtures. |
 | Terminology codes | **Real code systems, resolved by a model.** LOINC, SNOMED CT and RxNorm identifiers are checked for shape but are not validated against a terminology server. |
 | Screening verdicts | **Deterministic**, from `caliper/evaluate.py`. No model is reachable from that module. |

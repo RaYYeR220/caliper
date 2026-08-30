@@ -99,7 +99,7 @@ closely enough to notice that something did not fit.
 ### Discipline that was enforced, not hoped for
 
 - **Tests first.** Every module in this repository was specified as failing tests before it existed.
-  The suite is 800-odd tests and most of it was written before the code it covers.
+  The suite is over 1,100 tests and most of it was written before the code it covers.
 - **A shared fake provider.** `tests/fakes.py` lets every agent be exercised offline, with replies
   routed by which agent is asking rather than by call order — because the retry ladder decides how
   many turns one logical call takes, and a test counting replies would really be testing the ladder.

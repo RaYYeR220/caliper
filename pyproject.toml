@@ -52,6 +52,7 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 "src/caliper/cli.py" = ["B008"]
 "src/caliper/evalcmd.py" = ["B008"]
 "src/caliper/uicmd.py" = ["B008"]
+"src/caliper/trajcmd.py" = ["B008"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["caliper"]

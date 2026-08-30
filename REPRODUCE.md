@@ -63,8 +63,10 @@ and nothing below is meaningful.
 **`caliper eval --replay`** — one line per arm as it finishes, then a table of every arm with its
 accuracy, coverage, unsafe errors and cost. The replayed cost is zero. Roughly one minute.
 
-**`caliper report`** — rewrites `RESULTS.md`. It should come back byte-identical to the committed
-copy; `git diff --stat RESULTS.md` is the check.
+**`caliper report`** — writes `RESULTS.md` from the results of step 2. The file is generated rather
+than committed, so there is nothing to diff it against: run step 2 twice and `caliper report` twice
+and the two `RESULTS.md` must be byte-identical, which is what `caliper eval --replay` being a
+replay means. Every figure in it is computed from `eval/results/`; none is typed by hand.
 
 **`pytest`** — the whole suite, about seven seconds. It includes the metamorphic suite, which needs
 no model at all: those cases assert a required relationship between two runs (redact the only
@@ -80,13 +82,16 @@ Nothing is downloaded at run time. Both corpora are committed with digests.
 | What | Where | Source |
 |---|---|---|
 | 10 trials | `data/trials/` | ClinicalTrials.gov API v2, raw JSON, unmodified |
-| 24 patients | `data/patients/` | Synthea (MITRE), trimmed to nine resource types |
+| 24 patients | `data/patients/` | Synthea (MITRE), trimmed to ten resource types |
 | 21 clinical notes | `data/notes/` | Hand-authored for this project |
 
 `data/DATA_SOURCE.md` records the registry's own processing date, the pinned commit and archive
 digest for the Synthea sample, and every modification made. `scripts/fetch_trials.py` and
 `scripts/build_patient_corpus.py` rebuild the fixtures from source; you do not need to run them, and
 running them will produce a different snapshot because the registry moves.
+`scripts/summarise_patients.py` (`make charts`) regenerates `eval/charts/`, the chart summaries the
+annotators worked from — worth knowing about, because what the annotators saw is what the answer key
+rests on.
 
 ---
 
@@ -105,13 +110,20 @@ caliper eval --record      # calls the provider and rewrites eval/tape.jsonl
 against a configured base URL, and the provider profile carries whatever non-standard body each
 provider needs.
 
-**Approximate cost and runtime for one full evaluation** (all nine arms over the answer key):
+**Approximate cost and runtime for one full evaluation** (all ten arms over the answer key):
 
 | | |
 |---|---|
-| Model calls | roughly 400 for compilation and criticism, plus one per case per model-backed arm |
-| Cost | under two dollars at `claude-sonnet-5` list prices |
-| Wall clock | ten to fifteen minutes, dominated by rate limits rather than compute |
+| Model calls | 885 in the committed recording: 479 compiler, 207 critic, 148 resolver, 51 baseline |
+| Tokens | 7.8 million, overwhelmingly prompt rather than completion |
+| Cost | $21.67 at `claude-sonnet-5` list prices |
+| Wall clock | an hour and a half, dominated by rate limits rather than compute |
+
+None of those four figures is typed from memory: `caliper costs eval/results/trajectory.jsonl`
+prints the first three from the recording itself, broken down by agent and by model, and it is the
+same command the cost column in `RESULTS.md` comes from. The compiler dominates because it is asked
+one criterion at a time — that is the choice entry 4 in `CHANGELOG.md` describes, and this is its
+price.
 
 `caliper costs eval/results/trajectory.jsonl` breaks the actual figure down by agent and by model,
 and `caliper tape` shows what was asked to produce it.

@@ -458,3 +458,205 @@ which teaches nothing. Widening the constructed set past one trial needs one of 
 are not the annotator's to make: a small, verified terminology addition to the corpus (a cystatin C
 eGFR, an NYHA class, a fundus finding, a maximum-dose ACE inhibitor product), or acceptance that
 constructed eligibility is demonstrated on one trial only.
+
+---
+
+## 12. Methods amendment: vital status, and what the first scored run found
+
+*Written after the first scored run of the whole evaluation, and after seeing which cases the system
+under test disagreed with. Nothing above this line was reworded. Sections 9 and 11 continue to
+describe key version 1, which is kept unchanged at `eval/answer_key.v1.json`.*
+
+The first full run finished `2026-08-30T08:30:46Z` and cost $21.67. Scored against key version 1,
+digest `42b74a00...`, the `caliper` arm answered 23 of 51 cases correctly, 45.1%, with 0 unsafe
+errors. Investigating the 28 disagreements found that a substantial fraction of them were errors in
+this protocol rather than in the system. That is the most useful thing the run produced, and it is
+reported here rather than buried: an evaluation whose first result is a list of faults in its own
+ground truth is working, but only if the list is published.
+
+**The omission.** This protocol decomposed 153 criteria and stated how to read absence, recency,
+units, negation and thresholds. It never asked whether the patient was alive. Nothing in a criterion
+decomposition could have carried it: no protocol writes "the patient must be alive", so no criterion
+states the fact, so no criterion label can express it.
+
+Five of the fourteen patients in the key are recorded dead before the 2026-06-01 screening date, and
+20 of the 51 cases are on them. Version 1 labelled 11 of those `needs_review` and one `eligible`.
+
+### The rule, which precedes every criterion
+
+> **A patient whose chart records a death on or before the screening date is `ineligible`. No
+> criterion is evaluated, the case carries no criterion labels, and the case's `trap` stays as it
+> was: the rule introduces no trap of its own.**
+
+FHIR permits `deceasedBoolean` with no date; a chart that records a death without one is treated the
+same way, since inventing a date would put one in front of a coordinator that nobody wrote down.
+
+This is applied in `build_answer_key.derive`, which reads `Patient.deceasedDateTime` out of the
+committed bundle directly rather than asking `PatientIndex` for it. `caliper.screen` applies the
+same precedence, short-circuiting on `PatientIndex.died_before(as_of)` and returning no criterion
+table. The two now answer the same question in the same order; before the amendment they did not.
+Everything else is unchanged: where the rule does not fire, the outcome is still
+`caliper.logic.roll_up` over the adjudicated criterion labels, exactly as section 1 describes.
+
+### What it changed
+
+12 outcomes, 264 criterion labels withdrawn, 0 criterion verdicts reversed, 0 cases added or
+dropped, and no change at all to any case on a living patient. Every change is listed with the chart
+value behind it in `corrections.md`. Key version 2 has digest `2c411896...`.
+
+| Outcome | Annotated | Constructed | Total | (v1) |
+|---|---:|---:|---:|---:|
+| `ineligible` | 35 | 6 | **41** | 29 |
+| `needs_review` | 1 | 3 | **4** | 15 |
+| `eligible` | 0 | 6 | **6** | 7 |
+
+### What it cost
+
+Three things, stated plainly.
+
+**The key is more degenerate than it was.** 41 of 51 cases are `ineligible`, so a system that
+answers `ineligible` to everything scores 80.4% against version 2, against 56.9% on version 1 —
+higher than any real arm scored on either. Accuracy against version 2 is a weaker statistic than
+accuracy against version 1, and the corrected key has to be read through selective risk and the
+coverage curve rather than through its headline. Both keys are therefore scored and both tables
+published.
+
+**Four criterion-level probes are dead.** The traps were left as each pair was selected to probe
+them, because rewriting them would erase the fact that this happened. Four cases now carry a trap
+they can no longer exercise, because the vital-status rule decides them before the criterion is
+read:
+
+| case | trap | what it can no longer probe |
+|---|---|---|
+| `CK-002` | `threshold_edge` | an eGFR of 61 against an inclusive ceiling of 60 |
+| `AK-010` | `unit` | an MDRD eGFR in bare `mL/min` where the protocol names CKD-EPI per 1.73 m2 |
+| `AK-001` | `missing_data` | a liver panel the chart has never carried, as named missing data |
+| `CK-003` | `missing_data` | a removed eGFR, as named missing data |
+
+`AK-007`'s potassium of exactly 4.80 mmol/L against a `<=4.8 mmol/L` bound survives, because that
+patient is alive. So do the unit cases `AK-021`, `AK-030` and `AK-032`.
+
+**The one eligible case that did not rest on a supplied diagnosis is gone.** `CK-001` was built on
+`1be83f06`, the only patient in this corpus with a real type 2 diabetes diagnosis (SNOMED 44054006,
+active, onset 2025-06-03) and a real HbA1c above `NCT03315143`'s 7% floor (7.58% on 2025-06-03). He
+died on 2026-05-03. All six remaining `eligible` cases are constructed on patients whose committed
+charts record Prediabetes, SNOMED 714628002, with HbA1c between 6.02% and 6.27%, and every one of
+them is `eligible` only because a recorded edit supplied a diabetes diagnosis and a renal value.
+**The key can no longer demonstrate eligible-detection on a chart whose diabetes was not put there
+by us.** That is a limitation of the corpus, not of the method, and no edit fixes it. Dropping those
+six would return the key to having no `eligible` case at all, which is the degenerate measurement
+section 11 exists to prevent; they are kept, flagged on every build, and the choice between six
+disclosed-but-supplied eligible cases and none is left open.
+
+### The refutation check
+
+Added at this amendment, and run on every build. For every `met` label in the key it tries to
+contradict the label against the raw committed FHIR, reading `data/patients/*.json` itself and using
+neither `caliper.record`, `caliper.evaluate` nor `PatientIndex` — a key checked with the same
+matching code the key is used to score could only ever agree with it. What each `met` label asserts
+is pre-registered per criterion in `refutation.json`, in terms weak enough that a probe can never
+dispute a judgement call: it ignores recency, ignores which result is most recent, and ignores the
+mutual-consistency rule of section 5, so it can only catch a label that nothing on the chart
+supports.
+
+It flags and does not fix, and the build fails while a flag is unanswered. On version 2 it checks
+64 `met` labels and refutes none. It reports 18 as *supplied*: not on the committed chart, and put
+there by an edit the constructed case publishes. Those 18 are the diabetes and renal labels of the
+constructed cases, and `corrections.md` lists every one with the value the committed bundle actually
+carries.
+
+### One implementation of the chart rebuild
+
+A constructed case's labels describe the base chart *plus its edits*. `caliper.evalrun.run_arm`
+screened `load_patient(case.patient_id)` — the base chart, unedited — so in the run above all 15
+constructed cases were scored against labels written for a chart no arm was shown, and `run.json`
+records `"replayed": false`. That is a scoring defect rather than a key error, and it accounts for
+the disagreements on those cases. `caliper.answerkey.rebuild_patient` is now the single
+implementation of replaying a case's recorded perturbations onto its base chart; it refuses to
+proceed if a recorded edit does not apply exactly as recorded, and returns the base unchanged for an
+annotated case.
+
+---
+
+## 13. Scope, and what the system does with it
+
+*Added at the amendment, for the same reason as section 12.*
+
+### The equivalence
+
+Section 3 put 23 of 153 criteria out of scope, with a reason for each, and the key is derived by
+`roll_up` over the remaining 130. That is not merely a restriction of what is annotated; it is a
+substantive claim about the rollup, and it should be stated rather than left for a reader to notice:
+
+> **Deriving the outcome from the in-scope criteria alone is identical to deriving it from all 153
+> with the 23 out-of-scope ones labelled `unknown` and marked non-blocking.**
+
+`roll_up` looks for a disqualifying verdict over every criterion it is given, and an out-of-scope
+criterion labelled `unknown` is never disqualifying; it then forces `needs_review` on any criterion
+that is `unknown` *and blocking*, and an out-of-scope one is not. The two derivations agree on all
+51 cases of version 1 that carry a criterion table, checked directly rather than argued.
+
+This matters because `caliper.screen` makes the same distinction, through
+`UnsupportedPredicate.settlement`: a criterion classified `at_visit` is settled when the patient
+comes in, is settled the same way for every patient, and does not block a verdict; one classified
+`from_data` is a question about the record that the compiler failed to formalise, and does block.
+The key and the system are therefore answering the same question — *nothing in the record rules this
+patient out, everything the record was supposed to settle is settled, and here are the N to confirm
+at the visit* — rather than two questions that happen to share a vocabulary.
+
+### The overlap
+
+The 23 were chosen by this protocol before any system output existed, by a reader applying section
+3's rules to the registry text. The compiler's classifications are produced by a model reading one
+criterion at a time with no knowledge of this protocol. Where they agree, neither party could have
+checked it alone.
+
+Read out of `eval/tape.jsonl`, which holds the recorded compiler responses from the run in section
+12, matched back to `criteria.json` by source quote:
+
+| Section 3's reason for scoping out | Criteria | Compiler called them `unsupported` | My reading of `settlement` |
+|---|---:|---:|---|
+| study process: consent | 5 | 5 | `at_visit` |
+| future intent | 5 | 5 | `at_visit` |
+| investigator discretion | 6 | 6 | `at_visit` |
+| contraception attestation and future intent | 3 | 3 | `at_visit` |
+| study process: compliance | 2 | 2 | `at_visit` |
+| study process: ability to perform a study procedure | 1 | 1 | `at_visit` |
+| study process: protocol medication restrictions | 1 | 1 | `at_visit`, arguable |
+| **total** | **23** | **23** | |
+
+**All 23 agree.** Not one criterion this protocol scoped out was formalised by the compiler, and
+none is missing from the tape.
+
+The one I would argue about is `NCT07252908-I13`, "Meet the concurrent medication restrictions
+(within the time intervals specified in the protocol) and are expected to maintain the restriction
+requirements during treatment." Its second clause is forward-looking and clearly `at_visit`. Its
+first asks what the patient is taking, which is a question about the record — but the restrictions
+live in a protocol appendix the registry entry does not reproduce, so no chart can answer it *as
+written*. I read it `at_visit`; a reader who split the clause would read the first half `from_data`,
+and would be making a defensible point about this document's decomposition rather than about the
+compiler.
+
+### The caveat, and what is not yet checked
+
+The tape predates the `settlement` field. Every recorded `unsupported` response carries no
+settlement and defaults to `from_data`, so **the right-hand column above is my own reading, not the
+compiler's classification.** What the tape does establish is the harder half — that the compiler
+independently refused to formalise exactly the 23 criteria this protocol scoped out — and that half
+needs no re-recording. The comparison of the two `settlement` values is pre-registered here so that
+it can be run against the real classifications as soon as the tape is re-recorded, without anyone
+choosing the expected answer afterwards.
+
+Two further observations from the same matching:
+
+- The compiler also classified **60 of the 130 in-scope criteria** as `unsupported`. Those are not
+  disagreements about visit-settlement; they are formalisation gaps — `from_data` in the new
+  vocabulary — and they are the reason the key's coverage figures matter. This protocol says those
+  60 criteria *are* questions about the record; the compiler says it could not express them. Both
+  can be true, and the distance between them measures the compiler, not the scope.
+- Three compiler responses could not be matched to any criterion id, all on `NCT05748834`: the
+  compiler split sub-bullets that `criteria.json` had joined with `; ` into criteria of their own
+  (the WBRT interval, "other sites of disease assessable by RECIST 1.1", and previously-treated
+  brain metastases). That is a difference in decomposition granularity rather than in judgement, and
+  it moves no label, since all three sit inside criteria that are `unknown` on every chart in the
+  corpus.
