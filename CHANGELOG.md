@@ -161,6 +161,33 @@ because the fix is only correct if it keeps both behaviours apart.
 Verified after the fix: every one of the eleven arms reports identical figures in the container and
 on the host.
 
+## What an adversarial read of our own documentation found
+
+Late in the build, one agent was given a single instruction: read every public document as the judge
+who checks, and find every sentence the repository itself refutes. Report, do not fix. It came back
+with twenty-two, and the three worst were not in the code.
+
+| | |
+|---|---|
+| **The coverage metric was not coverage** | `CaseScore.answered` counted an abstention as an answer whenever the key also said `needs_review` — on the reasoning that abstaining on an undecidable case is the correct output. It is, and the coordinator opens the chart anyway. It inflated our own headline from 65% to 73%, and the tell was in the table the whole time: `always_needs_review`, an arm that decides nothing, scored 8% coverage. It reads 0% now. |
+| **Three required files were not in the repository** | `.gitignore` carried an unanchored `build/`, which swallowed `trajectories/build/` — the coding-agent trajectories the challenge requires and the README links to. Locally the directory was there; in every clone it was three broken links, in the section about honesty. |
+| **`eval/annotation/corrections.md` described a run that no longer existed** | It names `eval/results/run.json` as its source, and every figure in it disagreed: a different timestamp, ten arms instead of eleven, 45.1% where the committed run says 49.0%. The document was written before two bugs it had itself exposed were fixed and the evaluation re-recorded, and nobody regenerated it. Four other documents point a sceptical reader at that file. |
+
+The rest were smaller and the same shape: a cost figure from a superseded trajectory, "every accuracy
+figure moved by twenty-four points" when one arm moved twenty-two the other way, "all ten protocols"
+when the evaluation covers eight, "asserted for every predicate type" when the parametrization listed
+four of eleven, "about seven seconds" for a suite that takes twenty-five.
+
+Two things are worth drawing out of that.
+
+**Generated documents did not appear in the list.** Every refuted claim was in prose a person typed.
+`RESULTS.md` is generated from the run on every build and had nothing wrong in it, which is the
+argument for generating it, made by a check we did not design to make it.
+
+**The findings that cost us most were the ones we would never have found by testing.** No test can
+notice that a metric's name and its definition have drifted apart, because both halves are internally
+consistent. It took someone reading the sentence next to the number.
+
 ## What the changelog is missing
 
 The order above is the order the components were reasoned about, not a clean chronology — several
