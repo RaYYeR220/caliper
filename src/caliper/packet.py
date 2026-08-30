@@ -66,6 +66,10 @@ ABSENCE_POLICY_NOTES = {
     ),
 }
 
+# The class fragment each verdict gets in the HTML rendering, so a stylesheet can colour a row
+# without matching on the printed label. Kept apart from `VERDICT_LABELS` because that one is prose
+# a reader sees and this one is an identifier a stylesheet depends on; the two must be free to move
+# independently. Read by `templates/packet.html.j2`, not from Python.
 _VERDICT_SLUGS = {Verdict.MET: "met", Verdict.NOT_MET: "not-met", Verdict.UNKNOWN: "unresolved"}
 
 
@@ -359,7 +363,12 @@ def _patient_summary(patient: PatientIndex, as_of: date) -> str:
 
 
 def render_markdown(packet: Packet) -> str:
-    """The packet as Markdown, for a terminal, a pull request, or an email."""
+    """The packet as Markdown, for a terminal, a pull request, or an email.
+
+    The same document as `render_html`, and both are kept. A packet that renders only as a page is
+    a packet that cannot be pasted into a ticket, diffed between two runs, or read over SSH, and
+    the coordinator's copy of a screening decision should not depend on having a browser.
+    """
     lines = [
         "# Screening packet",
         "",

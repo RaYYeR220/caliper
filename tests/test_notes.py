@@ -131,6 +131,17 @@ class TestLoading:
         with pytest.raises(NotesError):
             load_notes("p-1", root=tmp_path)
 
+    def test_a_note_date_is_read_by_the_same_parser_the_bundles_are(self):
+        """There were two copies of it, identical line for line, and one place for them to drift."""
+        from caliper import fhir, notes
+
+        assert notes.parse_date is fhir.parse_date
+
+    def test_a_partial_date_is_dropped_rather_than_completed(self, tmp_path):
+        write_notes(tmp_path, "p-1", [{**A_NOTE, "date": "2024-03"}])
+        (row,) = load_notes("p-1", root=tmp_path)
+        assert row.date is None
+
 
 class TestPointers:
     def test_a_pointer_names_the_file_and_the_note(self, tmp_path):

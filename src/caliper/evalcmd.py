@@ -218,6 +218,9 @@ def run_eval(
     )
     ctx.trajectory.write_jsonl(out / "trajectory.jsonl")
 
+    (out / "tape_keys_used.json").write_text(
+        json.dumps(sorted(tape.used), indent=2), encoding="utf-8"
+    )
     _print_summary(reports)
     console.print(f"\nresults written to {out}")
 

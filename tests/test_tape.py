@@ -289,3 +289,43 @@ class TestRecordingIsResumable:
         reply = transport.chat.completions.create(**request())
         assert len(upstream.requests) == 1
         assert reply.choices[0].message.content == "fresh"
+
+
+class TestPruning:
+    """A tape accumulates. Committing exchanges nothing replays makes the artefact confusing."""
+
+    def test_it_keeps_only_the_keys_that_were_used(self, tmp_path):
+        from caliper.tape import prune
+
+        tape = Tape(tmp_path / "t.jsonl", mode="record")
+        tape.record(request(user="wanted"), response="a", agent="compiler")
+        tape.record(request(user="stale"), response="b", agent="compiler")
+        tape.save()
+
+        kept = prune(tmp_path / "t.jsonl", {exchange_key(request(user="wanted"))})
+        assert kept == 1
+        assert len(Tape(tmp_path / "t.jsonl", mode="replay")) == 1
+
+    def test_it_refuses_to_prune_a_key_it_does_not_hold(self, tmp_path):
+        """A miss means the caller replayed against a different tape; emptying this one would hide it."""
+        import pytest
+
+        from caliper.tape import prune
+
+        tape = Tape(tmp_path / "t.jsonl", mode="record")
+        tape.record(request(), response="a", agent="compiler")
+        tape.save()
+
+        with pytest.raises(KeyError):
+            prune(tmp_path / "t.jsonl", {"a key that was never recorded"})
+
+    def test_pruning_nothing_leaves_the_file_alone(self, tmp_path):
+        from caliper.tape import prune
+
+        tape = Tape(tmp_path / "t.jsonl", mode="record")
+        tape.record(request(), response="a", agent="compiler")
+        tape.save()
+        before = (tmp_path / "t.jsonl").read_bytes()
+
+        prune(tmp_path / "t.jsonl", {exchange_key(request())})
+        assert (tmp_path / "t.jsonl").read_bytes() == before

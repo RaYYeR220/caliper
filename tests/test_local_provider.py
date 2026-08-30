@@ -380,6 +380,50 @@ class TestTheProfile:
         assert ask(echoing(tmp_path)).label == "eligible"
 
 
+class TestItCanBeSelected:
+    """The transport above was unreachable: no profile named it, so nothing could route to it.
+
+    343 lines of provider and this file of tests described a path `profile_from_env` could not
+    return. These pin the wiring rather than the behaviour — that `local` is a provider a reviewer
+    can name, and that naming it lands on a profile which needs no account anywhere.
+    """
+
+    def test_local_is_a_provider_the_environment_can_name(self):
+        from caliper.llm import profile_from_env
+
+        profile = profile_from_env({"CALIPER_PROVIDER": "local"})
+        assert profile.name == "local:claude-code"
+
+    def test_it_is_shipped_rather_than_constructed_on_the_spot(self):
+        from caliper.llm import builtin_profiles
+
+        assert "local:claude-code" in builtin_profiles()
+
+    def test_the_shipped_profile_is_the_one_this_module_builds(self):
+        from caliper.llm import profile_for
+
+        assert profile_for("local", "claude-code") == local_profile("claude-code")
+
+    def test_selecting_it_asks_for_no_account_anywhere(self):
+        from caliper.llm import has_api_key, profile_from_env
+
+        assert has_api_key(profile_from_env({"CALIPER_PROVIDER": "local"}), {}) is True
+
+    def test_a_local_model_this_repository_does_not_ship_is_still_refused(self):
+        from caliper.llm import UnknownProfileError, profile_from_env
+
+        with pytest.raises(UnknownProfileError):
+            profile_from_env({"CALIPER_PROVIDER": "local", "CALIPER_MODEL": "ollama-whatever"})
+
+    def test_the_base_url_is_declared_once_in_the_provider_module(self):
+        """`local.py` used to define its own, which is one place for the two to disagree."""
+        from caliper.llm import provider
+        from caliper.llm.local import LOCAL_BASE_URL
+
+        assert LOCAL_BASE_URL is provider.LOCAL_BASE_URL
+        assert provider.local().base_url == LOCAL_BASE_URL
+
+
 class TestTheCommand:
     def test_an_empty_command_is_refused(self):
         with pytest.raises(ValueError):

@@ -136,6 +136,8 @@ class Tape:
         self.mode = mode
         self.hits = 0
         self.misses = 0
+        self.used: set[str] = set()
+        """Keys this instance actually served, so a run can say what it needed."""
         self._entries: dict[str, Exchange] = {}
         if self.path.is_file():
             self._load()
@@ -161,11 +163,13 @@ class Tape:
         return [self._entries[key] for key in sorted(self._entries)]
 
     def lookup(self, payload: dict[str, Any]) -> Exchange | None:
-        found = self._entries.get(exchange_key(payload))
+        key = exchange_key(payload)
+        found = self._entries.get(key)
         if found is None:
             self.misses += 1
         else:
             self.hits += 1
+            self.used.add(key)
         return found
 
     def require(self, payload: dict[str, Any]) -> Exchange:
@@ -253,3 +257,24 @@ def _as_response(exchange: Exchange) -> SimpleNamespace:
             completion_tokens=exchange.usage.get("completion_tokens", 0),
         ),
     )
+
+
+def prune(path: Path, used: set[str]) -> int:
+    """Drop every exchange the given run never asked for, and report how many remain.
+
+    A tape grows as prompts change: an edited instruction is a different question, so the old
+    answer stays behind, replayed by nothing. Shipping those makes the artefact bigger and harder
+    to read for no gain. Pruning is a separate, explicit step rather than something a recording
+    does on its own, because a recording that silently discarded what this run did not need would
+    destroy a second run's answers.
+    """
+    tape = Tape(path, mode="replay")
+    missing = used - set(tape._entries)
+    if missing:
+        raise KeyError(
+            f"{len(missing)} of the keys to keep are not on this tape; the run being pruned "
+            "against replayed a different recording, and emptying this one would hide that"
+        )
+    tape._entries = {key: value for key, value in tape._entries.items() if key in used}
+    tape.save()
+    return len(tape._entries)

@@ -221,6 +221,34 @@ def tape(
         console.print(f"  said:   {exchange.response[:400]}")
 
 
+@app.command("tape-prune")
+def tape_prune(
+    path: Path = typer.Option(Path("eval/tape.jsonl"), help="The recording to prune."),
+    used: list[Path] = typer.Option(
+        None, "--used", help="A tape_keys_used.json written by a replayed run. Repeatable."
+    ),
+) -> None:
+    """Drop exchanges no replayed run asks for.
+
+    A tape grows as prompts change: an edited instruction is a different question, so the old
+    answer stays behind and nothing replays it. Pruning is deliberate and takes the union of every
+    run that has to keep working, because a tape emptied against one run would silently break the
+    others.
+    """
+    from caliper.tape import prune
+
+    if not used:
+        raise typer.BadParameter(
+            "pass at least one --used file; run the evaluation and the trajectories in replay "
+            "first, and each writes one beside its output"
+        )
+    keys: set[str] = set()
+    for source in used:
+        keys |= set(json.loads(source.read_text(encoding="utf-8")))
+    remaining = prune(path, keys)
+    console.print(f"{remaining} exchanges kept in {path}")
+
+
 @app.command()
 def costs(run: Path) -> None:
     """Summarise what a recorded run cost, by agent and by model."""

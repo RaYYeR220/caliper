@@ -455,7 +455,15 @@ def load_patient_index(bundle: dict[str, Any]) -> PatientIndex:
 
 @dataclass(frozen=True)
 class NarrativeNote:
-    """Free text decoded out of a DocumentReference, with the pointer back to the resource."""
+    """Free text decoded out of a DocumentReference, with the pointer back to the resource.
+
+    The only caller is `scripts/summarise_patients.py`, which writes the chart summaries in
+    `eval/charts/` that the annotators labelled from. That makes this pair look unused from inside
+    the package and it is not: deleting it would leave the committed annotation artifacts with no
+    code that can regenerate them, and an annotation nobody can reproduce is an annotation nobody
+    can check. The pipeline itself takes narrative evidence from `caliper.notes` instead — see
+    `narrative_notes` below for why Synthea's own prose stays out of the index.
+    """
 
     resource_id: str
     fhir_path: str

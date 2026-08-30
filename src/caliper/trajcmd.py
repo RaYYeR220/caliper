@@ -13,6 +13,7 @@ with no key reproduces these too.
 
 from __future__ import annotations
 
+import json
 from datetime import date
 from pathlib import Path
 
@@ -82,6 +83,9 @@ def run(
         tape.save()
 
     out.mkdir(parents=True, exist_ok=True)
+    (out / "tape_keys_used.json").write_text(
+        json.dumps(sorted(tape.used), indent=2), encoding="utf-8"
+    )
     trajectory.write_jsonl(out / "run.jsonl")
     (out / "run.md").write_text(trajectory.to_markdown(), encoding="utf-8")
 

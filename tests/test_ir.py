@@ -16,6 +16,7 @@ from caliper.ir import (
     PresencePredicate,
     TemporalWindow,
     UnsupportedPredicate,
+    normalise_quote_text,
     quote_fidelity_problems,
 )
 
@@ -156,6 +157,84 @@ class TestQuoteFidelity:
             criteria=[a_criterion(source_quote="serum   creatinine <=  1.5 MG/DL")],
         )
         assert quote_fidelity_problems(cs) == []
+
+
+class TestConceptsOf:
+    """One walk over a predicate's concepts, shared rather than copied.
+
+    `uiexport` had a second copy of this, and said so in its own docstring. Two walks over a
+    recursive structure is two chances to handle a nesting depth differently, and the two answers
+    would have been the terminology count on the review screen and the resolver's lookup budget.
+    """
+
+    def test_it_descends_into_nested_composites(self):
+        from caliper.ir import CompositePredicate, concepts_in, concepts_of
+
+        inner = CompositePredicate(
+            type="any_of",
+            operands=[
+                PresencePredicate(
+                    type="condition", concept=Concept(text="COPD"), presence="present"
+                ),
+                PresencePredicate(
+                    type="condition", concept=Concept(text="asthma"), presence="present"
+                ),
+            ],
+        )
+        outer = CompositePredicate(
+            type="all_of",
+            operands=[
+                inner,
+                ObservationPredicate(concept=CREATININE, op="<=", value=1.5, unit="mg/dL"),
+            ],
+        )
+
+        assert [c.text for c in concepts_of(outer)] == ["COPD", "asthma", "serum creatinine"]
+
+        cs = CriteriaSet(
+            nct_id="NCT1",
+            source_text="Inclusion Criteria:\n- anything\n",
+            criteria=[a_criterion(source_quote="anything", predicate=outer)],
+        )
+        assert [c.text for c in concepts_in(cs)] == ["COPD", "asthma", "serum creatinine"]
+
+    def test_the_export_uses_this_walk_rather_than_its_own(self):
+        from caliper import uiexport
+        from caliper.ir import concepts_of
+
+        assert uiexport.concepts_of is concepts_of
+
+
+class TestNormaliseQuoteText:
+    """The single fold every quote comparison in the codebase goes through.
+
+    There were three of these, and they disagreed. `ir` folded with `lower`, the critic and the
+    compiler with `casefold`, which means the gate that downgrades a criterion to
+    `UnsupportedPredicate` and the coverage report that says which spans were claimed were answering
+    "is this the same text" differently about the same protocol. The German ß is the shortest case
+    where the two differ, and it is here so that a future edit cannot quietly separate them again.
+    """
+
+    def test_a_fold_that_changes_length_is_still_a_fold(self):
+        assert "STRASSE".lower() != "Straße".lower()
+        assert normalise_quote_text("STRASSE") == normalise_quote_text("Straße")
+
+    def test_a_quote_the_protocol_capitalised_differently_is_not_a_paraphrase(self):
+        cs = CriteriaSet(
+            nct_id="NCT1",
+            source_text="Inclusion Criteria:\n- Resident of MASSENSTRASSE district\n",
+            criteria=[a_criterion(source_quote="Resident of Massenstraße district")],
+        )
+        assert quote_fidelity_problems(cs) == []
+
+    def test_every_run_of_whitespace_collapses_to_one_space(self):
+        assert normalise_quote_text("  a\n\t b \r\n") == "a b"
+
+    def test_the_critic_folds_quotes_exactly_the_way_this_module_does(self):
+        """Not "mirrors", which was the old docstring's word for two functions that disagreed."""
+        from caliper.agents import critic
+
+        assert critic.normalise_quote_text is normalise_quote_text
 
 
 class TestPresenceAndDemographics:
