@@ -25,6 +25,7 @@ from caliper.ir import CriteriaSet, Criterion
 from caliper.logic import CriterionKind, ScreeningOutcome, Verdict
 from caliper.record import Evidence, PatientIndex
 from caliper.screen import ScreeningResult
+from caliper.settlements import Settlement
 
 if TYPE_CHECKING:  # Rendering a document must not require the model runtime to be importable.
     from caliper.agents.writer import RationaleSet
@@ -102,6 +103,9 @@ class CriterionRow:
     approximations: tuple[str, ...] = ()
     """Where this criterion's verdict rests on something evaluated inexactly."""
 
+    settled_by: Settlement | None = None
+    """Set where a person answered this criterion because the record could not."""
+
     evidence: tuple[EvidenceLine, ...] = ()
 
 
@@ -167,6 +171,9 @@ class Packet:
     at_visit: tuple[VisitCheck, ...]
     """Criteria the screening deliberately left to the visit. On an eligible packet, the caveat."""
 
+    settlements: tuple[Settlement, ...]
+    """Criteria a person answered because the record could not. Never presented as evidence."""
+
     rows: tuple[CriterionRow, ...]
     absence_policy: AbsencePolicy
     absence_policy_note: str
@@ -190,6 +197,21 @@ class Packet:
         if self.blocked_by is None:
             return None
         return f"Screening stopped before any criterion was evaluated, because {self.blocked_by}."
+
+    @property
+    def settlement_note(self) -> str | None:
+        """The line that qualifies the verdict where a person answered part of it."""
+        if not self.settlements:
+            return None
+        count = len(self.settlements)
+        noun = "criterion" if count == 1 else "criteria"
+        return f"{count} {noun} on this screening was answered by a person rather than from data."
+
+    def quote_of(self, criterion_id: str) -> str:
+        """The protocol's own words for one criterion, as the table prints them."""
+        return next(
+            (row.quote for row in self.rows if row.criterion_id == criterion_id), criterion_id
+        )
 
     @property
     def caveat_note(self) -> str | None:
@@ -299,6 +321,8 @@ def build_packet(
             for outcome in result.to_confirm_at_visit
         )
 
+    settlements = tuple(row.settled_by for row in rows if row.settled_by is not None)
+
     return Packet(
         patient_id=patient.patient_id,
         patient_summary=_patient_summary(patient, result.screened_on),
@@ -312,6 +336,7 @@ def build_packet(
         deciding=deciding,
         open_items=open_items,
         at_visit=at_visit,
+        settlements=settlements,
         rows=rows,
         absence_policy=result.absence_policy,
         absence_policy_note=ABSENCE_POLICY_NOTES[result.absence_policy],
@@ -348,6 +373,7 @@ def _row(
         engine_written=engine_written,
         decisive=outcome.criterion_id in decisive,
         approximations=outcome.approximations,
+        settled_by=outcome.settled_by,
         evidence=tuple(_evidence_line(e) for e in outcome.evidence),
     )
 
@@ -422,6 +448,7 @@ def render_markdown(packet: Packet) -> str:
     lines += _markdown_caveats(packet)
     lines += _markdown_deciding(packet)
     lines += _markdown_open_items(packet)
+    lines += _markdown_settlements(packet)
     lines += _markdown_at_visit(packet)
     lines += _markdown_criteria(packet)
     lines += _markdown_footer(packet)
@@ -474,6 +501,37 @@ def _markdown_open_items(packet: Packet) -> list[str]:
             f"- Missing: {item.missing}",
             f"- Where to look: {item.where_to_look}",
             f"- FHIR query: `{item.fhir_query}`" if item.fhir_query else "- FHIR query: none",
+            "",
+        ]
+    return lines
+
+
+def _markdown_settlements(packet: Packet) -> list[str]:
+    """Above the criteria table, because these qualify the verdict rather than sit inside it.
+
+    A settled criterion is the one row in the table with a confident sentence and no citation
+    under it. Printing the answers together, with the name and the date on each, is what stops a
+    reader from taking one for something the chart said.
+    """
+    if not packet.settlements:
+        return []
+    lines = [
+        "## Answered by a person, not by the record",
+        "",
+        (
+            f"{packet.settlement_note} Each was asked because no chart could settle it. The record "
+            "underneath is unchanged, and disagrees with none of them."
+        ),
+        "",
+    ]
+    for settlement in packet.settlements:
+        answer = "met" if settlement.verdict is Verdict.MET else "not met"
+        lines += [
+            f"**{settlement.criterion_id}** {packet.quote_of(settlement.criterion_id)}",
+            "",
+            f"- Answer: {answer}",
+            f"- Answered by: {settlement.answered_by} on {settlement.answered_on.isoformat()}",
+            f"- Reason given: {settlement.note}",
             "",
         ]
     return lines
@@ -569,6 +627,8 @@ def _tags(row: CriterionRow) -> list[str]:
         tags.append("decisive")
     if row.approximations:
         tags.append("approximated")
+    if row.settled_by is not None:
+        tags.append("settled by a person")
     return tags
 
 
@@ -590,9 +650,7 @@ _ENVIRONMENT = Environment(
 )
 
 _TEMPLATE = _ENVIRONMENT.from_string(
-    resources.files("caliper")
-    .joinpath("templates", "packet.html.j2")
-    .read_text(encoding="utf-8")
+    resources.files("caliper").joinpath("templates", "packet.html.j2").read_text(encoding="utf-8")
 )
 
 

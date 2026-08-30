@@ -404,6 +404,33 @@
   </section>
   {% endif %}
 
+  {% if packet.settlements %}
+  <section id="settlements">
+    <h2>Answered by a person, not by the record</h2>
+    <p class="lede">
+      {{ packet.settlement_note }}
+      Each was asked because no chart could settle it. The record underneath is unchanged, and
+      disagrees with none of them.
+    </p>
+    <ul class="visit-list">
+      {% for settlement in packet.settlements %}
+      <li>
+        <span class="cid">{{ settlement.criterion_id }}</span>
+        <blockquote>{{ packet.quote_of(settlement.criterion_id) }}</blockquote>
+        <dl class="detail">
+          <dt>Answer</dt>
+          <dd>{{ "met" if settlement.verdict.value == "met" else "not met" }}</dd>
+          <dt>Answered by</dt>
+          <dd>{{ settlement.answered_by }} on {{ settlement.answered_on.isoformat() }}</dd>
+          <dt>Reason given</dt>
+          <dd>{{ settlement.note }}</dd>
+        </dl>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
   {% if packet.at_visit %}
   <section id="at-visit">
     <h2>Confirm at the screening visit</h2>
