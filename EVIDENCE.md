@@ -35,6 +35,10 @@ Tiers:
 | Perturbing an input changes the verdict in the required direction | REPRODUCIBLE | `pytest tests/test_metamorphic.py` — relations true by construction |
 | Only a criterion the record was supposed to settle blocks a verdict | VERIFIED | `UnsupportedPredicate.settlement` in `caliper/ir.py`, `roll_up` in `logic.py`, `tests/test_settlement.py` |
 | A compiler that says nothing about settlement cannot unblock a verdict | VERIFIED | the default is `from_data`; asserted in `tests/test_settlement.py` |
+| A person's answer can close a criterion the record could not, and can never overturn one it did | VERIFIED | `evaluate_criterion` consults a settlement only after reaching UNKNOWN; `tests/test_settlements.py::TestASettlementCannotContradictTheRecord` |
+| A settlement refused because the record had already decided is recorded, not dropped | VERIFIED | `SettlementLog.refused`, printed by `caliper screen`; same test class |
+| A settlement applies to one named patient, never a cohort | VERIFIED | `Settlement.patient_id` is required and keyed on; `test_a_settlement_for_another_patient_is_not_applied` |
+| A settled criterion is never rendered as evidence | VERIFIED | `packet.VisitCheck` and the settlements section carry the name and date; `tests/test_packet_settlements.py` |
 | A constructed case is scored against the chart it describes | VERIFIED | `run_arm` takes the case, not the identifier; `tests/test_evalrun.py` |
 | Both systems are shown the same patient | VERIFIED | the chart summary states a recorded death; `tests/test_chart.py` |
 

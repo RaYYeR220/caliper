@@ -1,0 +1,23 @@
+{
+  "schema": "caliper.settlements/1",
+  "settlements": [
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8~CK-001",
+      "criterion_id": "INC-03",
+      "verdict": "met",
+      "answered_by": "r.okonkwo",
+      "answered_on": "2026-04-02",
+      "note": "The protocol does not enumerate its major cardiovascular risk factors. The investigator confirmed that documented ischaemic heart disease qualifies, and this chart records SNOMED 414545008 with onset 2025-06-03"
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8~CK-001",
+      "criterion_id": "EXC-01",
+      "verdict": "not_met",
+      "answered_by": "r.okonkwo",
+      "answered_on": "2026-04-02",
+      "note": "Reviewed the medication list with the prescriber. No antihyperglycemic change in the 12 weeks before screening; the chart carries no stop dates, which is why the criterion could not be settled from it"
+    }
+  ]
+}

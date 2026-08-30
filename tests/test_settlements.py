@@ -270,3 +270,60 @@ class TestTheLog:
 
         assert plain.decision is empty.decision
         assert [r.verdict for r in plain.criteria] == [r.verdict for r in empty.criteria]
+
+
+class TestReachableFromTheOutside:
+    """A mechanism a coordinator cannot invoke is a mechanism that does not exist.
+
+    The rules above are enforced in the evaluator, which is the right place for them, but nothing
+    outside Python could reach it. These tests hold the path open from a file on disk to a verdict.
+    """
+
+    def a_log_file(self, tmp_path):
+        path = tmp_path / "settlements.json"
+        path.write_text(
+            SettlementLog([a_settlement("INC-02", Verdict.MET)]).to_json(), encoding="utf-8"
+        )
+        return path
+
+    def test_a_log_read_from_disk_settles_the_screening(self, tmp_path):
+        log = SettlementLog.from_json(self.a_log_file(tmp_path).read_text(encoding="utf-8"))
+        result = screen(CRITERIA, patient("p", 8.1), SCREENING, settlements=log)
+
+        assert result.decision is ScreeningOutcome.ELIGIBLE
+        assert result.settled_criterion_ids == ("INC-02",)
+
+    def test_a_file_that_is_not_a_settlement_log_is_refused_by_name(self, tmp_path):
+        path = tmp_path / "wrong.json"
+        path.write_text('{"schema": "caliper.ui.screening/1"}', encoding="utf-8")
+
+        with pytest.raises(ValueError, match="not a settlement log"):
+            SettlementLog.from_json(path.read_text(encoding="utf-8"))
+
+    def test_the_pipeline_carries_the_log_to_the_evaluator(self, tmp_path):
+        from caliper.agents import AgentContext
+        from caliper.agents.compiler import CompileResult
+        from caliper.pipeline import CompiledTrial, PipelineConfig, screen_patient
+
+        from fakes import a_routed_client
+
+        trial = CompiledTrial(
+            nct_id=CRITERIA.nct_id,
+            criteria_set=CRITERIA,
+            compilation=CompileResult(
+                criteria_set=CRITERIA, units=(), rejected=(), failures=(), downgraded=()
+            ),
+            config=PipelineConfig(use_resolver=False, write_rationales=False),
+            resolved_codes={},
+        )
+        log = SettlementLog([a_settlement("INC-02", Verdict.MET)])
+        screening = screen_patient(
+            trial,
+            patient("p", 8.1),
+            SCREENING,
+            AgentContext(client=a_routed_client({})[0]),
+            PipelineConfig(use_resolver=False, write_rationales=False, use_narrative=False),
+            settlements=log,
+        )
+
+        assert screening.result.decision is ScreeningOutcome.ELIGIBLE

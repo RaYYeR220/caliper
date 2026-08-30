@@ -27,6 +27,7 @@ from caliper.ir import Code, CriteriaSet, concepts_in, with_codes
 from caliper.notes import DEFAULT_NOTES_ROOT, attach_notes
 from caliper.record import PatientIndex
 from caliper.screen import ScreeningResult, screen
+from caliper.settlements import SettlementLog
 from caliper.wire import DEFAULT_DEPTH
 
 
@@ -154,8 +155,13 @@ def screen_patient(
     as_of: date,
     ctx: AgentContext,
     config: PipelineConfig = DEFAULT_CONFIG,
+    settlements: SettlementLog | None = None,
 ) -> Screening:
     """Screen one patient against one compiled trial.
+
+    `settlements` carries answers a person gave for criteria no chart could settle. They reach the
+    evaluator, which applies them only where it reached UNKNOWN on its own — a settlement can close
+    a question the record could not answer and can never overturn one it did.
 
     The verdict is produced by `caliper.screen`, which no model can reach. Anything a model does
     here happens afterwards, to describe a decision that has already been made.
@@ -171,7 +177,9 @@ def screen_patient(
             # dropped the recorded death and screened a patient who could not be enrolled.
             patient = replace(patient, evidence=[*patient.evidence, *narrative.evidence])
 
-    result = screen(trial.criteria_set, patient, as_of, policy=config.absence_policy)
+    result = screen(
+        trial.criteria_set, patient, as_of, policy=config.absence_policy, settlements=settlements
+    )
 
     if config.write_rationales and trial.criteria_set.criteria:
         rationales = write_rationales(result, trial.criteria_set, ctx)

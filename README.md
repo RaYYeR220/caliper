@@ -11,7 +11,9 @@ three-valued logic in which `ELIGIBLE` is unreachable while any criterion the re
 settle is still unresolved.
 
 The interesting output is therefore not the eligible patients. It is the criteria the system refuses
-to decide, each one carrying the exact datum that would resolve it.
+to decide, each one carrying the exact datum that would resolve it — and, for the ones no chart was
+ever going to answer, a way for a person to answer them that cannot overturn what the record said.
+See [`examples/`](examples/).
 
 ---
 

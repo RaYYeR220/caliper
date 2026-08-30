@@ -22,6 +22,7 @@ from caliper.agents.base import AgentContext
 from caliper.config import load_env
 from caliper.llm import LLMClient, Trajectory, has_api_key, profile_from_env
 from caliper.pipeline import DEFAULT_CONFIG, PipelineConfig, compile_trial, screen_patient
+from caliper.settlements import SettlementLog
 
 
 def _use_utf8() -> None:
@@ -152,15 +153,25 @@ def screen(
     nct_id: str,
     patient_id: str,
     packet: Path = typer.Option(None, help="Write the screening packet here."),
+    settlements: Path = typer.Option(
+        None,
+        help="Answers a person gave for criteria no chart could settle. See examples/.",
+    ),
 ) -> None:
     """Screen one patient against one trial and print the verdict."""
     trial = corpus.load_trial(nct_id)
     patient = corpus.load_patient(patient_id)
     as_of = _screening_date()
 
+    # Read before anything expensive runs. A malformed log discovered after a five-minute
+    # compilation is a malformed log discovered too late to be worth reporting politely.
+    log = None
+    if settlements is not None:
+        log = SettlementLog.from_json(settlements.read_text(encoding="utf-8"))
+
     ctx = _context()
     compiled = compile_trial(nct_id, trial.criteria_text, ctx)
-    screening = screen_patient(compiled, patient, as_of, ctx)
+    screening = screen_patient(compiled, patient, as_of, ctx, settlements=log)
     result = screening.result
 
     console.print(f"[bold]{result.decision.value}[/bold]  {patient_id[:8]} against {nct_id}")
@@ -169,6 +180,13 @@ def screen(
         console.print(f"  open: {hint.blocks_criterion_id} needs {hint.missing}")
     for caveat in result.approximations:
         console.print(f"  caveat: {caveat}")
+    for criterion_id in result.settled_criterion_ids:
+        console.print(f"  settled by a person: {criterion_id}")
+    if log is not None:
+        for refusal in log.refused:
+            # Printed rather than swallowed: a settlement that was submitted and not applied is
+            # the one case where silence would let somebody believe they had answered something.
+            console.print(f"  settlement refused: {refusal.criterion_id} - {refusal.reason}")
 
     if packet is not None:
         from caliper.agents.writer import deterministic_rationales
