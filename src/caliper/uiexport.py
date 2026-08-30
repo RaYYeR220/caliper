@@ -110,7 +110,7 @@ def _critic(finding: Finding | None) -> dict[str, Any] | None:
 
 def _criterion(criterion: Criterion, finding: Finding | None) -> dict[str, Any]:
     predicate = criterion.predicate
-    unsupported = isinstance(predicate, UnsupportedPredicate)
+    unsupported = predicate if isinstance(predicate, UnsupportedPredicate) else None
     return {
         "id": criterion.id,
         "kind": criterion.kind,
@@ -118,8 +118,8 @@ def _criterion(criterion: Criterion, finding: Finding | None) -> dict[str, Any]:
         "notes": criterion.notes,
         "predicate_type": predicate.type,
         "compiled_as": render_predicate(predicate),
-        "unsupported": unsupported,
-        "unsupported_reason": predicate.reason if unsupported else None,
+        "unsupported": unsupported is not None,
+        "unsupported_reason": unsupported.reason if unsupported is not None else None,
         "codes": _codes_of(predicate),
         "critic": _critic(finding),
     }
@@ -294,7 +294,9 @@ def export_trial(trial: CompiledTrial, trial_title: str) -> dict[str, Any]:
     }
 
 
-def export_screening(screening: Screening, patient: PatientIndex, trial_title: str) -> dict[str, Any]:
+def export_screening(
+    screening: Screening, patient: PatientIndex, trial_title: str
+) -> dict[str, Any]:
     """One patient against one trial, as the packet screen reads it.
 
     `build_packet` decides what leads and what the open items are, so that the page cannot drift
@@ -332,6 +334,13 @@ def export_screening(screening: Screening, patient: PatientIndex, trial_title: s
         "coverage": result.coverage,
         "deciding_criterion_ids": list(result.deciding_criterion_ids),
         "approximations": list(result.approximations),
+        # The same approximations, each with the criteria that leaned on it. The packet groups them
+        # this way because "which verdict does this touch" is the reader's next question, and the
+        # page has no business answering it differently from the document.
+        "caveats": [
+            {"text": caveat.text, "criterion_ids": list(caveat.criterion_ids)}
+            for caveat in packet.caveats
+        ],
         "absence_policy": {
             "value": result.absence_policy.value,
             "note": ABSENCE_POLICY_NOTES[result.absence_policy],

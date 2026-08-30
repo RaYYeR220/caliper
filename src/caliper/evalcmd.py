@@ -68,7 +68,7 @@ def _context(tape: Tape) -> AgentContext:
     profile = profile_from_env()
     trajectory = Trajectory()
     upstream = None
-    if tape.mode == "record":
+    if tape.mode in ("record", "refresh"):
         from openai import OpenAI
 
         upstream = OpenAI(api_key=resolve_api_key(profile), base_url=profile.base_url)
@@ -105,10 +105,17 @@ def _baseline(name: str, ctx: AgentContext):
     return RandomOutcome(seed=20260601)
 
 
-def _run(key: AnswerKey, names: list[str], ctx: AgentContext) -> list[ArmReport]:
+def _run(
+    key: AnswerKey,
+    names: list[str],
+    ctx: AgentContext,
+    *,
+    tape: Tape | None = None,
+    save_every: int = 1,
+) -> list[ArmReport]:
     reports: list[ArmReport] = []
     cache: dict = {}
-    for name in names:
+    for index, name in enumerate(names, start=1):
         config = ARMS[name]
         before = ctx.trajectory.total_usd() or 0.0
         if config is None:
@@ -124,7 +131,12 @@ def _run(key: AnswerKey, names: list[str], ctx: AgentContext) -> list[ArmReport]
                 cost_usd=(ctx.trajectory.total_usd() or 0.0) - before,
             )
         )
-        console.print(f"[green]{name}[/green]: {reports[-1].summary.cases} cases")
+        console.print(
+            f"[green]{name}[/green]: {reports[-1].summary.cases} cases, "
+            f"{reports[-1].summary.unsafe} unsafe, {reports[-1].wall_seconds:.0f}s"
+        )
+        if tape is not None and index % save_every == 0:
+            tape.save()
     return reports
 
 
@@ -134,8 +146,10 @@ def run_eval(
     out: Path = typer.Option(DEFAULT_OUT, "--out", help="Where to write the per-arm results."),
     arms: str = typer.Option("all", help="Comma-separated arm names, or 'all'."),
     replay: bool = typer.Option(True, help="Replay recorded model responses. Needs no API key."),
-    record: bool = typer.Option(False, help="Call the provider and record the responses."),
+    record: bool = typer.Option(False, help="Call the provider for anything not already recorded."),
+    refresh: bool = typer.Option(False, help="Call the provider again even for recorded answers."),
     tape_path: Path = typer.Option(DEFAULT_TAPE, "--tape", help="The recording to use."),
+    save_every: int = typer.Option(1, help="Write the tape after this many arms."),
 ) -> None:
     """Run every arm over the answer key and write the results."""
     if not verify_frozen(key_path):
@@ -149,15 +163,16 @@ def run_eval(
     if unknown:
         raise typer.BadParameter(f"unknown arm(s): {', '.join(unknown)}")
 
-    tape = Tape(tape_path, mode="record" if record else "replay")
+    mode = "refresh" if refresh else ("record" if record else "replay")
+    tape = Tape(tape_path, mode=mode)
     if tape.mode == "replay" and len(tape) == 0:
         raise typer.BadParameter(
             f"{tape_path} is empty. Run with --record and a key to produce it, or check out the "
             "commit whose tape belongs to this code."
         )
     ctx = _context(tape)
-    reports = _run(key, names, ctx)
-    if record:
+    reports = _run(key, names, ctx, tape=tape if mode != "replay" else None, save_every=save_every)
+    if mode != "replay":
         tape.save()
         console.print(f"recorded {len(tape)} exchanges to {tape_path}")
     else:

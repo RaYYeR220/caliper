@@ -95,7 +95,23 @@ class CriterionRow:
     decisive: bool = False
     """Whether this criterion alone ended the screening."""
 
+    approximations: tuple[str, ...] = ()
+    """Where this criterion's verdict rests on something evaluated inexactly."""
+
     evidence: tuple[EvidenceLine, ...] = ()
+
+
+@dataclass(frozen=True)
+class Caveat:
+    """One approximation the screening rests on, and the criteria that leaned on it."""
+
+    text: str
+    criterion_ids: tuple[str, ...]
+
+    @property
+    def affected(self) -> str:
+        """The criteria this approximation touched, as both renderings name them."""
+        return ", ".join(self.criterion_ids)
 
 
 @dataclass(frozen=True)
@@ -121,6 +137,7 @@ class Packet:
     blocked_by: str | None
     """Why the screening stopped before any criterion was evaluated, if it did."""
 
+    caveats: tuple[Caveat, ...]
     deciding: tuple[CriterionRow, ...]
     open_items: tuple[OpenItem, ...]
     rows: tuple[CriterionRow, ...]
@@ -146,6 +163,22 @@ class Packet:
         if self.blocked_by is None:
             return None
         return f"Screening stopped before any criterion was evaluated, because {self.blocked_by}."
+
+    @property
+    def caveat_note(self) -> str | None:
+        """The line that qualifies the verdict, or None when nothing was approximated.
+
+        A verdict that leaned on an approximation and did not say so is a verdict that comes apart
+        in a monitoring visit with nothing on the page to explain why.
+        """
+        if not self.caveats:
+            return None
+        count = len(self.caveats)
+        noun = "approximation" if count == 1 else "approximations"
+        return (
+            f"This screening rests on {count} {noun}. The criteria affected are marked in the "
+            "table below."
+        )
 
     @property
     def coverage_note(self) -> str:
@@ -196,6 +229,14 @@ def build_packet(
     rows = tuple(_row(outcome, by_id, rationales, decisive) for outcome in result.criteria)
     rows_by_id = {row.criterion_id: row for row in rows}
 
+    caveats = tuple(
+        Caveat(
+            text=text,
+            criterion_ids=tuple(r.criterion_id for r in rows if text in r.approximations),
+        )
+        for text in result.approximations
+    )
+
     deciding: tuple[CriterionRow, ...] = ()
     if result.decision is ScreeningOutcome.INELIGIBLE:
         deciding = tuple(
@@ -226,6 +267,7 @@ def build_packet(
         decision=result.decision,
         verdict=DECISION_WORDS[result.decision],
         blocked_by=result.blocked_by,
+        caveats=caveats,
         deciding=deciding,
         open_items=open_items,
         rows=rows,
@@ -263,6 +305,7 @@ def _row(
         rationale=sentence,
         engine_written=engine_written,
         decisive=outcome.criterion_id in decisive,
+        approximations=outcome.approximations,
         evidence=tuple(_evidence_line(e) for e in outcome.evidence),
     )
 
@@ -287,20 +330,26 @@ def _quote_of(criterion: Criterion | None) -> str:
 def _patient_summary(patient: PatientIndex, as_of: date) -> str:
     """Age and recorded sex, for the coordinator checking they have the right chart open.
 
-    A death the chart records before the screening date belongs on this line too. "67 years old at
-    screening" is not something to print about someone who died four weeks earlier, whatever the
-    rest of the page goes on to say.
+    A death the chart records belongs on this line, and it decides how the age is worded. "67 years
+    old at screening" is not something to print about someone the chart already had as dead — which
+    includes a `deceasedBoolean` carrying no date, where there is nothing to compare against the
+    screening date. A death recorded *after* the screening is a different case: the age was true
+    when it was taken, so that line keeps "at screening" and reports the death beside it.
     """
-    died = patient.died_before(as_of)
+    dead_at_screening = patient.died_before(as_of) or patient.deceased_undated
     parts = []
     age = patient.age_at(as_of)
     if age is not None:
-        parts.append(f"{age:g} years old" if died else f"{age:g} years old at screening")
+        suffix = "" if dead_at_screening else " at screening"
+        parts.append(f"{age:g} years old{suffix}")
     if patient.sex:
         parts.append(f"recorded sex {patient.sex}")
-    if died:
-        assert patient.deceased is not None
-        parts.append(f"died {patient.deceased.isoformat()}")
+    if patient.is_deceased():
+        parts.append(
+            f"died {patient.deceased.isoformat()}"
+            if patient.deceased is not None
+            else "recorded as deceased, no date given"
+        )
     return ", ".join(parts) if parts else "no demographics on file"
 
 
@@ -323,11 +372,24 @@ def render_markdown(packet: Packet) -> str:
     ]
     if packet.stopped_note is not None:
         lines += [f"**{packet.stopped_note}**", ""]
+    lines += _markdown_caveats(packet)
     lines += _markdown_deciding(packet)
     lines += _markdown_open_items(packet)
     lines += _markdown_criteria(packet)
     lines += _markdown_footer(packet)
     return "\n".join(lines)
+
+
+def _markdown_caveats(packet: Packet) -> list[str]:
+    """Directly under the verdict, because it is the verdict that is qualified."""
+    if packet.caveat_note is None:
+        return []
+    lines = ["## Caveats", "", packet.caveat_note, ""]
+    for caveat in packet.caveats:
+        affected = f" ({caveat.affected})" if caveat.criterion_ids else ""
+        lines.append(f"- {caveat.text}{affected}")
+    lines.append("")
+    return lines
 
 
 def _markdown_deciding(packet: Packet) -> list[str]:
@@ -390,7 +452,8 @@ def _markdown_criteria(packet: Packet) -> list[str]:
     ]
     for row in packet.rows:
         evidence = "; ".join(line.citation for line in row.evidence) or "none on file"
-        identifier = f"{row.criterion_id} (decisive)" if row.decisive else row.criterion_id
+        tags = _tags(row)
+        identifier = f"{row.criterion_id} ({', '.join(tags)})" if tags else row.criterion_id
         lines.append(
             "| "
             + " | ".join(
@@ -422,6 +485,16 @@ def _markdown_footer(packet: Packet) -> list[str]:
         lines.append(f"- Rationale sentences: {packet.rationale_note}.")
     lines += ["", DISCLAIMER, ""]
     return lines
+
+
+def _tags(row: CriterionRow) -> list[str]:
+    """What a reader needs to see about a row beyond its verdict."""
+    tags = []
+    if row.decisive:
+        tags.append("decisive")
+    if row.approximations:
+        tags.append("approximated")
+    return tags
 
 
 def _cell(text: str) -> str:

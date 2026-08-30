@@ -24,8 +24,8 @@
   --muted: #575b63;
   --paper: #fffefb;        /* the protocol's substrate */
   --paper-rule: #e2ddd0;
-  --chassis: #e6e7e3;      /* the instrument's ground */
-  --panel: #f3f4f1;
+  --chassis: #e3e5e0;      /* the instrument's ground */
+  --panel: #eff1ec;
   --hair: #d2d4ce;
   --rule: #b4b7af;
   --accent: #2c3a8e;       /* action, and only action */
@@ -88,13 +88,27 @@ input {
   text-transform: uppercase;
 }
 
+/* A label that introduces the sentence beside it rather than sitting above it. */
+.micro--inline { display: inline; margin-right: 0.45em; }
+
 h1 {
-  margin: 0.5rem 0 0;
-  font-size: 1.7rem;
+  margin: 0.35rem 0 0;
+  font-size: 1.55rem;
   font-weight: 600;
   letter-spacing: -0.014em;
   line-height: 1.15;
 }
+
+/* The trial a screen is about, named once under its heading. Registry titles run to 120
+ * characters, which is a paragraph in an h1 and a line of reference text here. */
+.trial-line {
+  margin: 0.25rem 0 0;
+  max-width: 52rem;
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+}
+
+.trial-line .id { margin-right: 0.5rem; }
 
 h2 {
   margin: 2.5rem 0 0.9rem;
@@ -118,7 +132,7 @@ h3 {
 p { margin: 0 0 0.7rem; }
 p:last-child { margin-bottom: 0; }
 
-.lede { max-width: 44rem; color: var(--ink-soft); }
+.lede { max-width: 52rem; color: var(--ink-soft); }
 .note { color: var(--muted); font-size: 0.87rem; }
 
 code, .pointer, .query {
@@ -280,15 +294,21 @@ main { display: block; }
 .scale__ticks {
   display: flex;
   align-items: flex-end;
-  gap: 2px;
+  gap: 4px;
   margin: 0;
   padding: 0;
-  height: 30px;
+  height: 24px;
   list-style: none;
   border-bottom: 1px solid var(--ink);
 }
 
-.scale__ticks > li { flex: 1 1 0; min-width: 5px; height: 100%; display: flex; align-items: flex-end; }
+.scale__ticks > li {
+  display: flex;
+  align-items: flex-end;
+  flex: 1 1 0;
+  min-width: 5px;
+  height: 100%;
+}
 
 .tick {
   display: block;
@@ -352,6 +372,13 @@ main { display: block; }
 
 .mark svg { display: block; flex: none; }
 
+.mark--lg {
+  padding: 0.3em 0.65em;
+  font-size: 0.84rem;
+  letter-spacing: 0.09em;
+  gap: 0.45em;
+}
+
 .mark--met { background: var(--paper); }
 .mark--not-met { background: var(--ink); color: var(--paper); font-weight: 700; }
 .mark--unresolved { background: none; border-style: dashed; font-weight: 500; }
@@ -370,6 +397,10 @@ table {
   font-size: 0.85rem;
 }
 
+/* Below this the columns stop being readable, so the table scrolls inside its own container and
+ * the page does not scroll sideways with it. */
+.scroller table { min-width: 48rem; }
+
 caption {
   padding: 0 0 0.6rem;
   color: var(--muted);
@@ -377,10 +408,10 @@ caption {
   text-align: left;
 }
 
+/* Not sticky. `.scroller` sets `overflow-x`, which makes it a scroll container on both axes, so a
+ * sticky head would anchor to the scroller rather than to the viewport and sit on top of the first
+ * row. A twenty-four row queue does not need one badly enough to earn a nested scroll pane. */
 th {
-  position: sticky;
-  top: 0;
-  z-index: 1;
   padding: 0.45rem 0.7rem;
   background: var(--panel);
   border-bottom: 1px solid var(--rule);
@@ -395,7 +426,7 @@ th {
 }
 
 td {
-  padding: 0.6rem 0.7rem;
+  padding: 0.5rem 0.7rem;
   border-bottom: 1px solid var(--hair);
   vertical-align: top;
 }
@@ -444,6 +475,18 @@ td.protocol {
 
 .panel > h3:first-child { margin-top: 0; }
 
+summary {
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+summary:hover { text-decoration: underline; }
+
 .stack { margin: 0; padding: 0; list-style: none; }
 
 .stack > li {
@@ -451,6 +494,37 @@ td.protocol {
   border-top: 1px solid var(--hair);
 }
 .stack > li:first-child { border-top: 0; padding-top: 0.3rem; }
+
+/* A register: one ruled line per criterion, identifier and protocol text and reason in fixed
+ * columns. Thirteen criteria a person has to read is a list to work down, not thirteen cards. */
+.roster { margin: 0.4rem 0 0; padding: 0; list-style: none; }
+
+.roster > li {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(14rem, 1fr) 1.35fr;
+  gap: 0 1.1rem;
+  align-items: start;
+  padding: 0.4rem 0;
+  border-top: 1px solid var(--hair);
+  font-size: 0.86rem;
+}
+
+.roster > li:first-child { border-top: 0; }
+
+/* Span lists have no third column: there is no reason to give, only a span nobody quoted. */
+.roster--spans > li { grid-template-columns: 5.5rem 1fr; }
+
+.roster .quote {
+  padding: 0.15rem 0.55rem;
+  background: var(--paper);
+  border-left: 2px solid var(--paper-rule);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.roster .reason { margin: 0; }
+.roster .id { display: block; }
+.roster .kind { display: block; }
 
 .stack__head {
   display: flex;
@@ -616,8 +690,10 @@ th[aria-sort="descending"] button.sort::after { content: "\2193"; }
 .count-cell strong { font-size: 1.02rem; font-weight: 600; }
 .count-cell.is-zero { color: var(--muted); }
 
-.blocking { font-size: 0.83rem; max-width: 26rem; }
-.blocking .micro { color: var(--muted); display: block; }
+.blocking { font-size: 0.84rem; max-width: 24rem; }
+.blocking .micro:not(.micro--inline) { color: var(--muted); display: block; }
+.blocking .micro--inline { color: var(--muted); }
+.blocking .quiet { color: var(--muted); }
 
 .empty {
   padding: 1.6rem 1.1rem;
@@ -666,7 +742,12 @@ th[aria-sort="descending"] button.sort::after { content: "\2193"; }
 
 .facts dd { margin: 0; }
 
-.open-item { display: grid; grid-template-columns: max-content 1fr; gap: 0.22rem 1.2rem; margin: 0.45rem 0 0; }
+.open-item {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.22rem 1.2rem;
+  margin: 0.45rem 0 0;
+}
 .open-item dt {
   font-family: var(--sans);
   font-size: 0.62rem;
@@ -693,7 +774,15 @@ th[aria-sort="descending"] button.sort::after { content: "\2193"; }
 .evidence .when { font-family: var(--sans); color: var(--muted); }
 .evidence .pointer { display: block; color: var(--muted); }
 
-.rationale { min-width: 14rem; }
+.rationale { min-width: 15rem; }
+.citations { min-width: 13rem; }
+
+.needs { margin: 0.3rem 0 0.25rem; font-size: 0.83rem; color: var(--ink-soft); }
+.needs .micro, .caveat .micro { color: var(--muted); }
+
+/* An approximation is a fact about the verdict, not an alarm: stated plainly, in the instrument's
+ * voice, at the size of a footnote rather than the volume of a warning. */
+.caveat { margin: 0.3rem 0 0; font-family: var(--sans); font-size: 0.72rem; color: var(--muted); }
 
 .engine {
   display: block;
@@ -754,6 +843,5 @@ footer.about { margin-top: 2.5rem; }
   .chrome, .toolbar, .skip-link, .button, .scale__legend { display: none; }
   body { background: #fff; }
   .scroller { overflow: visible; }
-  th { position: static; }
   tr, .stack > li { break-inside: avoid; }
 }

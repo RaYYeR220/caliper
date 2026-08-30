@@ -74,7 +74,12 @@ function scale(coverage) {
       "ul",
       { class: "scale__legend" },
       h("li", {}, h("i", { class: "tick tick--direct" }), `${coverage.direct} quoted`),
-      h("li", {}, h("i", { class: "tick tick--inherited" }), `${coverage.inherited} through a parent`),
+      h(
+        "li",
+        {},
+        h("i", { class: "tick tick--inherited" }),
+        `${coverage.inherited} through a parent`,
+      ),
       h("li", {}, h("i", { class: "tick tick--unclaimed" }), `${coverage.unclaimed} unclaimed`),
     ),
   );
@@ -83,13 +88,18 @@ function scale(coverage) {
 function spanList(spans) {
   return h(
     "ul",
-    { class: "stack" },
+    { class: "roster roster--spans" },
     spans.map((span) =>
       h(
         "li",
         {},
-        h("span", { class: "micro" }, `Span ${span.index + 1} · ${span.section}`),
-        h("blockquote", {}, h("p", {}, span.text)),
+        h(
+          "span",
+          {},
+          h("span", { class: "id" }, `Span ${span.index + 1}`),
+          h("span", { class: "kind" }, capitalise(span.section)),
+        ),
+        h("span", { class: "quote" }, span.text),
       ),
     ),
   );
@@ -155,18 +165,18 @@ function unsupportedPanel(title, lede, criteria, modifier) {
     h("p", { class: "note" }, lede),
     h(
       "ul",
-      { class: "stack" },
+      { class: "roster" },
       criteria.map((criterion) =>
         h(
           "li",
           {},
           h(
-            "div",
-            { class: "stack__head" },
+            "span",
+            {},
             h("span", { class: "id" }, criterion.id),
             h("span", { class: "kind" }, capitalise(criterion.kind)),
           ),
-          h("blockquote", {}, h("p", {}, criterion.source_quote)),
+          h("span", { class: "quote" }, criterion.source_quote),
           h(
             "p",
             { class: "reason" },
@@ -231,8 +241,16 @@ function criticCell(criterion) {
   );
 }
 
+/* Why a criterion carries no codes matters more than the fact that it carries none. A criterion
+ * nobody formalised has no concept to resolve; age and sex are read off the patient resource and
+ * were never coded; and a concept the resolver could not place is the only one of the three that
+ * is a gap. */
 function codesCell(criterion) {
-  if (!criterion.codes.length) return h("td", { class: "none" }, "none attached");
+  if (criterion.unsupported) return h("td", { class: "none" }, "—");
+  if (criterion.predicate_type === "demographic") {
+    return h("td", { class: "none" }, "from the patient record");
+  }
+  if (!criterion.codes.length) return h("td", { class: "none" }, "none resolved");
   return h(
     "td",
     {},
@@ -303,8 +321,9 @@ export async function renderCriteria(nctId) {
     h(
       "header",
       { class: "page__head" },
-      h("p", { class: "eyebrow" }, `Criteria review · ${trial.nct_id}`),
-      h("h1", {}, trial.title),
+      h("p", { class: "eyebrow" }, "Criteria review"),
+      h("h1", {}, trial.nct_id),
+      h("p", { class: "trial-line" }, trial.title),
       h(
         "p",
         { class: "lede subtitle" },

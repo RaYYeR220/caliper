@@ -16,6 +16,15 @@ import { outcomeMark, tickBar } from "../lib/marks.js";
 
 const state = { verdict: "all", sort: "nearest", ascending: true, find: "" };
 
+/* The queue's own wording for the three outcomes. The packet says "Needs review before a decision"
+ * at the head of a document, where the sentence earns its width; twenty-four rows deep in a column
+ * it is noise, so the column shows the outcome and the mark's title carries the packet's phrase. */
+const SHORT_LABEL = {
+  eligible: "Eligible",
+  ineligible: "Not eligible",
+  needs_review: "Needs review",
+};
+
 const VERDICTS = [
   ["all", "All"],
   ["needs_review", "Needs review"],
@@ -69,12 +78,15 @@ function matches(row) {
   if (state.verdict !== "all" && row.decision !== state.verdict) return false;
   if (!state.find) return true;
   const needle = state.find.toLowerCase();
-  return (
-    row.patient_id.toLowerCase().includes(needle) ||
-    (row.blocking || "").toLowerCase().includes(needle) ||
-    (row.blocked_by || "").toLowerCase().includes(needle) ||
-    row.deciding_criterion_ids.join(" ").toLowerCase().includes(needle)
-  );
+  const haystack = [
+    row.patient_id,
+    row.patient_summary,
+    row.blocking,
+    row.blocked_by,
+    row.blocking_criterion_id,
+    ...row.deciding_criterion_ids,
+  ];
+  return haystack.some((field) => (field || "").toLowerCase().includes(needle));
 }
 
 function resolvedCell(row) {
@@ -107,7 +119,7 @@ function blockingCell(row) {
     return h(
       "td",
       { class: "blocking" },
-      h("span", { class: "micro" }, "Screening stopped"),
+      h("span", { class: "micro" }, "Stopped before any criterion"),
       row.blocked_by,
     );
   }
@@ -124,11 +136,11 @@ function blockingCell(row) {
     return h(
       "td",
       { class: "blocking" },
-      h("span", { class: "micro" }, `Decided by ${row.deciding_criterion_ids.join(", ")}`),
+      h("span", { class: "micro micro--inline" }, "Decided by"),
+      h("span", { class: "id" }, row.deciding_criterion_ids.join(", ")),
       unresolved
-        ? `${plural(unresolved, "criterion", "criteria")} still unresolved, and closing them ` +
-          "cannot change the outcome."
-        : "Every criterion resolved.",
+        ? h("span", { class: "quiet" }, ` · ${unresolved} left unresolved`)
+        : null,
     );
   }
   return h("td", { class: "blocking" }, h("span", { class: "micro" }, "Nothing outstanding"));
@@ -139,7 +151,11 @@ function row(entry) {
   return h(
     "tr",
     { class: `row--${entry.decision}` },
-    h("td", {}, outcomeMark(entry.decision, entry.decision_label)),
+    h(
+      "td",
+      {},
+      outcomeMark(entry.decision, SHORT_LABEL[entry.decision], { title: entry.decision_label }),
+    ),
     h(
       "td",
       {},
@@ -320,7 +336,9 @@ export async function renderQueue(index, nctId) {
       h(
         "p",
         { class: "note" },
-        `Showing ${rows.length} of ${plural(all.length, "screening")}.`,
+        `Showing ${rows.length} of ${plural(all.length, "screening")}. ` +
+          "A decided screening raises no worklist: its remaining criteria are recorded in the " +
+          "packet, but closing them could not change the outcome.",
       ),
     );
     if (options.keepFocus) {
@@ -341,8 +359,9 @@ export async function renderQueue(index, nctId) {
     h(
       "header",
       { class: "page__head" },
-      h("p", { class: "eyebrow" }, `Screening queue · ${trial.nct_id}`),
-      h("h1", {}, trial.title),
+      h("p", { class: "eyebrow" }, "Screening queue"),
+      h("h1", {}, trial.nct_id),
+      h("p", { class: "trial-line" }, trial.title),
       h(
         "p",
         { class: "lede subtitle" },

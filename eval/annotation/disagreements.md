@@ -1,15 +1,20 @@
 # Disagreements and adjudication
 
-Of 476 criterion labels, the two passes differed on 33, across 19 of the 33 cases. All 33 are listed
-here with the decision and the reason for it; the same decisions in machine-readable form, which
-`scripts/build_answer_key.py` requires to be exactly the set of differing criteria, are in
-`adjudication.json`.
+Of 491 criterion labels across the 36 annotated pairs, the two passes differed on 36, in 22 of those
+pairs. All 36 are listed here with the decision and the reason for it; the same decisions in
+machine-readable form, which `scripts/build_answer_key.py` requires to be exactly the set of
+differing criteria, are in `adjudication.json`.
 
 Adjudication was done by the maintainer, after both passes were complete, with both reasons visible
-and the chart summary and registry text open. Twelve decisions upheld pass 1 and twenty-one upheld
+and the chart summary and registry text open. Fifteen decisions upheld pass 1 and twenty-one upheld
 pass 2. **One changed a case-level outcome**: AK-026 moved from `needs_review` to `ineligible`. The
-other thirty-two changed a criterion label without changing the case, which is the pattern to expect
-if the disagreements are about how to read the protocol rather than about what the chart says.
+other thirty-five changed a criterion label without changing the case, which is the pattern to
+expect if the disagreements are about how to read the protocol rather than about what the chart
+says.
+
+The 15 constructed cases are not annotated and so appear nowhere in this document. Their criterion
+labels are the adjudicated labels below, carried forward with the perturbed criteria overridden; see
+`protocol.md` section 11.
 
 The disagreements fall into six themes. Nothing here is a clerical error; every one of them is a
 place where `protocol.md` was less specific than it needed to be, and each theme ends with the
@@ -58,7 +63,7 @@ against an age floor of 40.
 
 ---
 
-## Theme 2 — Undefined risk criteria (6 labels)
+## Theme 2 — Undefined risk criteria (9 labels)
 
 | Case | Criterion | pass 1 | pass 2 | Decided |
 |---|---|---|---|---|
@@ -68,6 +73,9 @@ against an age floor of 40.
 | AK-016 | NCT03315143-I3 | unknown | met | **met** |
 | AK-017 | NCT03315143-I3 | unknown | met | **unknown** |
 | AK-018 | NCT03315143-I3 | unknown | met | **unknown** |
+| AK-034 | NCT03315143-I3 | unknown | met | **unknown** |
+| AK-035 | NCT03315143-I3 | unknown | not_met | **unknown** |
+| AK-036 | NCT03315143-I3 | unknown | met | **unknown** |
 
 Two trials require a cardiovascular risk judgement and neither defines it. EMPA-REG's inclusion 7 is
 the three words "High cardiovascular risk". SCORED's inclusion 3 asks for "at least one major
@@ -81,11 +89,22 @@ definition gives the same answer, and abstains where the definition does the wor
 - **AK-016** is `met`. This patient has had ischemic heart disease since 2013-09-04. Established
   cardiovascular disease is a major risk factor under every published scheme, so no choice of
   definition changes the label.
-- The other five are `unknown`. Obesity is classified as a major risk factor by some schemes, a
+- The other eight are `unknown`. Obesity is classified as a major risk factor by some schemes, a
   minor one by others, and a risk marker rather than a factor by others again; metabolic syndrome is
-  a cluster of factors rather than a factor; and none of AK-001, AK-014, AK-015, AK-017 or AK-018
-  has established cardiovascular disease. Pass 2's answer is defensible and it is a choice the
-  registry text does not license.
+  a cluster of factors rather than a factor; hypertension (AK-034) is read both ways; and none of
+  AK-001, AK-014, AK-015, AK-017, AK-018, AK-034, AK-035 or AK-036 has established cardiovascular
+  disease. Pass 2's answers are defensible and they are choices the registry text does not license.
+
+AK-035 is the one case in the whole key where pass 2 resolved a criterion in the *restrictive*
+direction, ruling the patient out because it recognised no risk factor on the chart. The objection
+is unchanged: obesity and prediabetes are on that chart whether or not pass 2's list counts them, so
+the criterion is no more refutable than it is satisfiable. AK-036, at 61, is the only pair to reach
+the second branch — two minor risk factors — and it fails for the same reason, one level down.
+
+This criterion is also why `NCT03315143` carries nine of the key's 36 disagreements on 45 labels.
+It is the single least reliable criterion in the corpus, and the constructed cases built on this
+trial close it by supplying an established cardiovascular diagnosis rather than by adopting a
+definition.
 
 This is the disagreement that most directly tests what the key is for. A system that resolves
 "high cardiovascular risk" from a BMI is guessing, and if the key resolved it too the evaluation
@@ -244,4 +263,4 @@ Three sharpenings, all recorded above and all written into `protocol.md`:
    criterion `unknown`.
 
 None of the three was invented to reach a particular outcome. The first and second were adopted
-against pass 1, the third for it; between them they touched 19 cases and moved one.
+against pass 1, the third for it; between them they touched 22 cases and moved one.

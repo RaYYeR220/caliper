@@ -2614,6 +2614,102 @@
           "reason": "No investigational drug or device trial participation is recorded in the 4 weeks before screening in a chart followed through 2026-05-12."
         }
       ]
+    },
+    {
+      "case_id": "AK-034",
+      "patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "not_met",
+          "reason": "No type 2 diabetes diagnosis on a chart current to 2026-02-01 (the active list carries only Prediabetes from 2011-03-27 and Metabolic syndrome X from 2026-02-01), and the most recent HbA1c is 6.11% on 2026-02-01, below the >=7% bound."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "No eGFR result of any kind is on file; the only renal analyte is serum creatinine 1.23 mg/dL on 2026-02-01, and the criterion needs a reported eGFR in mL/min/1.73 m^2 to test the 25-60 window."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "met",
+          "reason": "Age 46 at 2026-06-01 (DOB 1980-01-13) satisfies the >=18 branch, and Essential hypertension (disorder) active since 2026-02-01 with blood pressure 148/88 mmHg on 2026-02-01 and lisinopril 10 mg ordered 2026-02-01 is a major cardiovascular risk factor."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "not_met",
+          "reason": "The chart is current (last encounter 2026-02-01) and records no antihyperglycemic medication at all, the most recent order of any kind being lisinopril 10 mg on 2026-02-01, before the 12-week window opening 2026-03-09, so antihyperglycemic treatment was unchanged."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "not_met",
+          "reason": "The current chart (encounters through 2026-02-01) records no skin ulcer, lower-limb infection, osteomyelitis or gangrene among its 9 active or 15 resolved conditions."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-035",
+      "patient_id": "cc3eac4a-34a7-9a15-1522-8087135631b7",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "not_met",
+          "reason": "No type 2 diabetes diagnosis on a chart current to 2026-02-09 (the active list carries Prediabetes from 2009-03-30), and the most recent HbA1c is 6.08% on 2026-02-09, below the >=7% bound."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "No eGFR result is on file anywhere in the 39 analytes; only serum creatinine 1.18 mg/dL on 2026-02-09 is recorded, and the criterion requires an eGFR in mL/min/1.73 m^2."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "not_met",
+          "reason": "Age 48 at 2026-06-01 (DOB 1978-01-16) leaves only the one-major-risk-factor branch available, and the current chart (through 2026-02-09) records no hypertension, diabetes, dyslipidaemia or atherosclerotic cardiovascular disease, with blood pressure 137/80 mmHg on 2026-02-09."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "not_met",
+          "reason": "The chart is current (last encounter 2026-02-09) and carries no antihyperglycemic medication; the most recent order is Amoxicillin 250 mg / Clavulanate 125 mg on 2025-11-29, before the 12-week window opening 2026-03-09, so antihyperglycemic treatment was unchanged."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "not_met",
+          "reason": "No skin ulcer, lower-limb infection, osteomyelitis or gangrene appears among the 9 active or 12 resolved conditions of a chart current to 2026-02-09."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-036",
+      "patient_id": "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "not_met",
+          "reason": "No type 2 diabetes diagnosis on a chart current to 2025-09-09 (the active list carries Prediabetes from 1998-09-08), and the most recent HbA1c is 6.21% on 2025-08-26, below the >=7% bound."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "No eGFR result is on file; the only renal analyte is serum creatinine 1.03 mg/dL on 2025-08-26, and the criterion requires an eGFR in mL/min/1.73 m^2 to test the 25-60 window."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "met",
+          "reason": "Age 61 at 2026-06-01 (DOB 1964-06-23) opens the >=55 branch, and the chart carries two active minor cardiovascular risk factors, Body mass index 30+ - obesity recorded 2006-07-04 and Prediabetes recorded 1998-09-08."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "not_met",
+          "reason": "The chart is current (last encounter 2025-09-09) and lists no antihyperglycemic medication; the most recent medication order of any kind is dated 2025-09-10, before the 12-week window opening 2026-03-09, so antihyperglycemic treatment was stable."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "not_met",
+          "reason": "The only lower-extremity entry is Laceration of foot (disorder), resolved on 2019-08-12, and the current chart (through 2025-09-09) shows no active skin ulcer, infection, osteomyelitis or gangrene requiring treatment."
+        }
+      ]
     }
   ]
 }

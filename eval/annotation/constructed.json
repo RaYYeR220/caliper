@@ -1,0 +1,216 @@
+{
+  "note": "Constructed cases. Each starts from an annotated pair, applies a recorded list of edits to the chart, and overrides only the criteria those edits close. The case-level outcome is NOT written here: scripts/build_answer_key.py derives it by applying caliper.logic.roll_up to the base case's adjudicated criterion labels with these overrides applied. Every label therefore still traces to a human criterion judgement plus the pre-registered rollup rule. See protocol.md section 11.",
+  "terminology_note": "Every code used below is lifted verbatim from the committed corpus, so nothing is invented: SNOMED 44054006 and 414545008 and LOINC 33914-3, 4548-4 and 38483-4 all already appear in data/patients/*.json. Supplied values are placed comfortably inside or outside the band, never on the boundary, except where the case is explicitly a near-miss.",
+  "cases": [
+    {
+      "case_id": "CK-001", "base_case_id": "AK-014", "trap": "none",
+      "note": "The eligible member of the 1be83f06 triple. This patient already satisfies the diabetes inclusion and both exclusions; the only two open criteria are a renal function far outside the band and an undefined cardiovascular-risk term. Supplying an eGFR inside the band and an established cardiovascular diagnosis closes both.",
+      "steps": [
+        {"op": "shift_value", "loinc": "33914-3", "to": 42.0},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2025-06-03"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I2", "verdict": "met", "reason": "MDRD eGFR restated as 42 mL/min/1.73 m2 on 2025-06-03, comfortably inside the 25 to 60 band."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2025-06-03; established cardiovascular disease is a major cardiovascular risk factor under every published scheme, which is the standard the adjudication applied to AK-016."}
+      ]
+    },
+    {
+      "case_id": "CK-002", "base_case_id": "AK-014", "trap": "threshold_edge",
+      "note": "The near-miss member of the 1be83f06 triple: identical to CK-001 except that the eGFR is 61 rather than 42, one unit above a bound the protocol writes as 60 or below. A system that rounds, or that reads an inclusive bound as exclusive, cannot tell this case from CK-001.",
+      "steps": [
+        {"op": "shift_value", "loinc": "33914-3", "to": 61.0},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2025-06-03"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I2", "verdict": "not_met", "reason": "MDRD eGFR restated as 61 mL/min/1.73 m2 on 2025-06-03, one unit above the inclusive upper bound of 60."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2025-06-03."}
+      ]
+    },
+    {
+      "case_id": "CK-003", "base_case_id": "AK-014", "trap": "missing_data",
+      "note": "The undecidable member of the 1be83f06 triple: every value CK-001 supplies except the renal one, which is removed outright. The correct answer is to abstain and to name the eGFR as the missing datum.",
+      "steps": [
+        {"op": "redact_analyte", "loinc": "33914-3"},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2025-06-03"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I2", "verdict": "unknown", "reason": "Every glomerular filtration rate result has been removed from the chart, so the 25 to 60 band cannot be checked; the criterion needs an eGFR."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2025-06-03."}
+      ]
+    },
+    {
+      "case_id": "CK-004", "base_case_id": "AK-016", "trap": "none",
+      "note": "The eligible member of the f870c432 triple. This patient already satisfies the cardiovascular-risk inclusion through his own ischaemic heart disease; what blocks him is the absence of diabetes and the contradiction between his creatinine and his reported eGFR. Both are closed, and the two renal numbers are restated so that they agree under MDRD.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2025-09-24"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.4},
+        {"op": "shift_value", "loinc": "38483-4", "to": 1.9},
+        {"op": "shift_value", "loinc": "33914-3", "to": 38.0}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2025-09-24 and HbA1c restated as 7.4% on 2025-09-24, above the 7% floor."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "met", "reason": "Creatinine restated as 1.90 mg/dL and eGFR as 38 mL/min/1.73 m2, both on 2025-09-25; the two now agree under MDRD (175 x 1.90^-1.154 x 56^-0.203 is about 37) so the contradiction that forced the original unknown is gone, and 38 is inside the 25 to 60 band."}
+      ]
+    },
+    {
+      "case_id": "CK-005", "base_case_id": "AK-016", "trap": "threshold_edge",
+      "note": "The near-miss member of the f870c432 triple, and the only one in the key that turns on a glycaemic bound. Identical to CK-004 except that HbA1c is 6.9% rather than 7.4%, one tenth of a point below a floor the protocol writes as 7% or above.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2025-09-24"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 6.9},
+        {"op": "shift_value", "loinc": "38483-4", "to": 1.9},
+        {"op": "shift_value", "loinc": "33914-3", "to": 38.0}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "not_met", "reason": "Type 2 diabetes is present from 2025-09-24 but HbA1c is restated as 6.9% on 2025-09-24, one tenth of a point below the 7% floor the criterion requires."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "met", "reason": "Creatinine 1.90 mg/dL and eGFR 38 mL/min/1.73 m2 on 2025-09-25, mutually consistent and inside the band."}
+      ]
+    },
+    {
+      "case_id": "CK-006", "base_case_id": "AK-016", "trap": "missing_data",
+      "note": "The undecidable member of the f870c432 triple. The diabetes inclusion is closed but every eGFR is removed, leaving a creatinine of 2.578 mg/dL on file and no filtration rate. A system that quietly computes an eGFR from the creatinine rather than abstaining is caught here.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2025-09-24"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.4},
+        {"op": "redact_analyte", "loinc": "33914-3"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2025-09-24 and HbA1c restated as 7.4% on 2025-09-24."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "unknown", "reason": "Every glomerular filtration rate result has been removed; the chart retains creatinine 2.578 mg/dL on 2025-09-25 but the criterion bounds an eGFR, and the protocol does not license computing one."}
+      ]
+    },
+    {
+      "case_id": "CK-007", "base_case_id": "AK-017", "trap": "none",
+      "note": "The eligible member of the 6c4283c9 triple. This chart carries a creatinine but has never carried a filtration rate, so the renal criterion is closed by supplying the observation rather than by moving one.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2025-12-06"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.5},
+        {"op": "add_observation", "loinc": "33914-3", "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M", "value": 45.0, "unit": "mL/min/{1.73_m2}", "date": "2025-12-06"},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2025-12-06"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2025-12-06 and HbA1c restated as 7.5% on 2025-12-06."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "met", "reason": "An MDRD eGFR of 45 mL/min/1.73 m2 dated 2025-12-06 supplied, inside the 25 to 60 band."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2025-12-06."}
+      ]
+    },
+    {
+      "case_id": "CK-008", "base_case_id": "AK-017", "trap": "threshold_edge",
+      "note": "The near-miss member of the 6c4283c9 triple, and the only one that fails at the bottom of a band rather than the top: an eGFR of 24 against a floor of 25. A system that checks only the upper bound passes this patient.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2025-12-06"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.5},
+        {"op": "add_observation", "loinc": "33914-3", "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M", "value": 24.0, "unit": "mL/min/{1.73_m2}", "date": "2025-12-06"},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2025-12-06"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2025-12-06 and HbA1c restated as 7.5% on 2025-12-06."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "not_met", "reason": "An MDRD eGFR of 24 mL/min/1.73 m2 dated 2025-12-06 supplied, one unit below the inclusive lower bound of 25."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2025-12-06."}
+      ]
+    },
+    {
+      "case_id": "CK-009", "base_case_id": "AK-017", "trap": "missing_data",
+      "note": "The undecidable member of the 6c4283c9 triple: the diabetes and cardiovascular-risk criteria are closed and the renal observation is simply not supplied, which returns the chart to the state most of this corpus is actually in.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2025-12-06"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.5},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2025-12-06"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2025-12-06 and HbA1c restated as 7.5% on 2025-12-06."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "unknown", "reason": "No glomerular filtration rate has ever been recorded for this patient and none is supplied; creatinine 1.83 mg/dL on 2025-12-06 remains the only renal chemistry."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2025-12-06."}
+      ]
+    },
+    {
+      "case_id": "CK-010", "base_case_id": "AK-018", "trap": "none",
+      "note": "The eligible member of the 8c5b83b2 triple, with an eGFR of 52 that sits inside the band but nearer its ceiling than CK-007's does.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2025-11-24"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.6},
+        {"op": "add_observation", "loinc": "33914-3", "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M", "value": 52.0, "unit": "mL/min/{1.73_m2}", "date": "2025-11-24"},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2025-11-24"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2025-11-24 and HbA1c restated as 7.6% on 2025-11-24."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "met", "reason": "An MDRD eGFR of 52 mL/min/1.73 m2 dated 2025-11-24 supplied, inside the 25 to 60 band."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2025-11-24."}
+      ]
+    },
+    {
+      "case_id": "CK-011", "base_case_id": "AK-018", "trap": "threshold_edge",
+      "note": "The near-miss member of the 8c5b83b2 triple: eGFR 61 against a ceiling of 60, the same bound as CK-002 but reached on a chart that had no filtration rate at all rather than one that had a normal value.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2025-11-24"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.6},
+        {"op": "add_observation", "loinc": "33914-3", "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M", "value": 61.0, "unit": "mL/min/{1.73_m2}", "date": "2025-11-24"},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2025-11-24"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2025-11-24 and HbA1c restated as 7.6% on 2025-11-24."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "not_met", "reason": "An MDRD eGFR of 61 mL/min/1.73 m2 dated 2025-11-24 supplied, one unit above the inclusive upper bound of 60."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2025-11-24."}
+      ]
+    },
+    {
+      "case_id": "CK-012", "base_case_id": "AK-018", "trap": "missing_data",
+      "note": "The undecidable member of the 8c5b83b2 triple. Two of the three inclusions are closed and the renal one is left open, so the difference between this case and CK-010 is exactly one observation.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2025-11-24"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.6},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2025-11-24"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2025-11-24 and HbA1c restated as 7.6% on 2025-11-24."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "unknown", "reason": "No glomerular filtration rate has ever been recorded for this patient and none is supplied; creatinine 1.2 mg/dL on 2025-11-24 remains the only renal chemistry."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2025-11-24."}
+      ]
+    },
+    {
+      "case_id": "CK-013", "base_case_id": "AK-034", "trap": "none",
+      "note": "An eligible case on a fourth chart, built to keep the eligible group from resting on three patients. This one is already hypertensive and on an ACE inhibitor, so the supplied diabetes and renal facts sit on a plausible metabolic picture.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2026-02-01"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.2},
+        {"op": "add_observation", "loinc": "33914-3", "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M", "value": 50.0, "unit": "mL/min/{1.73_m2}", "date": "2026-02-01"},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2026-02-01"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2026-02-01 and HbA1c restated as 7.2% on 2026-02-01."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "met", "reason": "An MDRD eGFR of 50 mL/min/1.73 m2 dated 2026-02-01 supplied, in the middle of the 25 to 60 band."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2026-02-01."}
+      ]
+    },
+    {
+      "case_id": "CK-014", "base_case_id": "AK-035", "trap": "none",
+      "note": "An eligible case with an eGFR near the lower end of the band rather than the middle, so that the eligible group is not clustered at one point of the interval.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2026-02-09"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.3},
+        {"op": "add_observation", "loinc": "33914-3", "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M", "value": 34.0, "unit": "mL/min/{1.73_m2}", "date": "2026-02-09"},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2026-02-09"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2026-02-09 and HbA1c restated as 7.3% on 2026-02-09."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "met", "reason": "An MDRD eGFR of 34 mL/min/1.73 m2 dated 2026-02-09 supplied, inside the 25 to 60 band."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2026-02-09."}
+      ]
+    },
+    {
+      "case_id": "CK-015", "base_case_id": "AK-036", "trap": "none",
+      "note": "The one eligible case where the patient is over 55, so the cardiovascular-risk criterion could be satisfied by either of its two branches. The supplied ischaemic heart disease satisfies the first, which is the branch the adjudication settled; the two-minor-factors branch remains undefined and is not relied on.",
+      "steps": [
+        {"op": "add_condition", "system": "SNOMED", "code": "44054006", "display": "Diabetes mellitus type 2 (disorder)", "onset": "2025-09-09"},
+        {"op": "shift_value", "loinc": "4548-4", "to": 7.1},
+        {"op": "add_observation", "loinc": "33914-3", "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M", "value": 58.0, "unit": "mL/min/{1.73_m2}", "date": "2025-08-26"},
+        {"op": "add_condition", "system": "SNOMED", "code": "414545008", "display": "Ischemic heart disease (disorder)", "onset": "2025-09-09"}
+      ],
+      "closes": [
+        {"criterion_id": "NCT03315143-I1", "verdict": "met", "reason": "Type 2 diabetes added with onset 2025-09-09 and HbA1c restated as 7.1% on 2025-08-26."},
+        {"criterion_id": "NCT03315143-I2", "verdict": "met", "reason": "An MDRD eGFR of 58 mL/min/1.73 m2 dated 2025-08-26 supplied, inside the 25 to 60 band."},
+        {"criterion_id": "NCT03315143-I3", "verdict": "met", "reason": "Ischemic heart disease added with onset 2025-09-09, which satisfies the age-18 branch of the criterion without relying on the undefined minor-risk-factor count."}
+      ]
+    }
+  ]
+}

@@ -3,7 +3,7 @@
  * The order is the printed packet's order, and it is the whole design. A coordinator opens this to
  * find out what to do next, so when a screening is still open the work comes before the evidence:
  * three actionable gaps buried under forty resolved criteria waste the only thing this tool saves.
- * A screening that is closed leads with the criterion that closed it and raises no worklist, because
+ * A screening that is closed leads with the criterion that closed it and raises no worklist:
  * finding that lab now could not change the answer.
  *
  * The open items are split in two. A gap with a FHIR query behind it is a request someone can send;
@@ -91,6 +91,19 @@ function openItem(item, index) {
   );
 }
 
+/* One line per criterion nobody can settle from data: the identifier, the protocol's words, and
+ * what would have to happen instead. The full treatment above is reserved for the gaps a query
+ * would close, which is where the coordinator's afternoon actually goes. */
+function humanItem(item) {
+  return h(
+    "li",
+    {},
+    h("span", { class: "id" }, item.criterion_id),
+    h("span", { class: "quote" }, item.quote),
+    h("p", { class: "reason" }, item.missing),
+  );
+}
+
 function openItems(screening) {
   if (screening.decision !== "needs_review") return [];
 
@@ -132,10 +145,18 @@ function openItems(screening) {
         h(
           "p",
           { class: "note" },
-          "No query closes these. They were never formalised, or the critic withdrew them, and " +
-            "they will read unresolved for every patient screened against this trial.",
+          "No query closes these. They were never formalised, or the critic withdrew them, so " +
+            "they read unresolved for every patient screened against this trial and are worth " +
+            "reading once on the criteria review rather than once per chart.",
         ),
-        h("ol", { class: "stack" }, human.map(openItem)),
+        // Folded away by default. They are a property of the protocol rather than of this chart,
+        // and expanded they would push the two gaps that are actually actionable off the screen.
+        h(
+          "details",
+          {},
+          h("summary", {}, `Read all ${human.length}`),
+          h("ul", { class: "roster" }, human.map(humanItem)),
+        ),
       ),
     );
   }
@@ -174,72 +195,82 @@ function decidingSection(screening) {
 }
 
 function approximations(screening) {
-  if (!screening.approximations.length) return [];
+  if (!screening.caveats.length) return [];
   return [
     h(
       "div",
       { class: "panel panel--dashed" },
-      h(
-        "h3",
-        {},
-        `${plural(screening.approximations.length, "approximation")} this verdict rests on`,
-      ),
+      h("h3", {}, `${plural(screening.caveats.length, "approximation")} this verdict rests on`),
       h(
         "p",
         { class: "note" },
-        "Recorded at the top of the packet rather than in one row of the table, because a verdict " +
-          "that leaned on an approximation is a different thing from one that did not.",
+        "At the top of the packet rather than in one row of the table, because a verdict that " +
+          "leaned on an approximation is a different thing from one that did not.",
       ),
       h(
         "ul",
-        { class: "stack" },
-        screening.approximations.map((caveat) => h("li", {}, caveat)),
+        { class: "roster roster--spans" },
+        screening.caveats.map((caveat) =>
+          h(
+            "li",
+            {},
+            h("span", { class: "id" }, caveat.criterion_ids.join(", ")),
+            h("span", {}, caveat.text),
+          ),
+        ),
       ),
     ),
   ];
 }
 
-function foundCell(criterion) {
+/* The row's account of itself, kept to a few lines. The worklist above already carries the full
+ * treatment of an open item; repeating it in every row of a forty-row table would push the table
+ * past the point where it can be read as one. */
+function foundCell(criterion, showProvenance) {
   const children = [h("span", {}, criterion.rationale)];
-  if (criterion.engine_written) {
-    children.push(h("span", { class: "engine" }, "Written by the screening engine"));
-  }
+
   if (criterion.resolution) {
     children.push(
       h(
-        "dl",
-        { class: "open-item" },
-        h("dt", {}, "Missing"),
-        h("dd", {}, criterion.resolution.missing),
-        h("dt", {}, "Where to look"),
-        h("dd", {}, criterion.resolution.where_to_look),
-        ...(criterion.resolution.retrievable
-          ? [
-              h("dt", {}, "Query"),
-              h(
-                "dd",
-                {},
-                h(
-                  "span",
-                  { class: "query-row" },
-                  h("code", { class: "query" }, criterion.resolution.fhir_query),
-                  copyButton(criterion.resolution.fhir_query, "Copy"),
-                ),
-              ),
-            ]
-          : []),
+        "p",
+        { class: "needs" },
+        h("span", { class: "micro micro--inline" }, "Needs"),
+        criterion.resolution.missing,
+      ),
+    );
+    if (criterion.resolution.retrievable) {
+      children.push(
+        h(
+          "span",
+          { class: "query-row" },
+          h("code", { class: "query" }, criterion.resolution.fhir_query),
+          copyButton(criterion.resolution.fhir_query, "Copy"),
+        ),
+      );
+    }
+  }
+
+  if (criterion.approximations.length) {
+    children.push(
+      h(
+        "p",
+        { class: "caveat" },
+        h("span", { class: "micro micro--inline" }, "Approximation"),
+        criterion.approximations.join("; "),
       ),
     );
   }
-  if (criterion.approximations.length) {
-    children.push(
-      h("span", { class: "engine" }, `Approximated: ${criterion.approximations.join("; ")}`),
-    );
+
+  if (showProvenance && criterion.engine_written) {
+    children.push(h("span", { class: "engine" }, "Written by the screening engine"));
   }
   return h("td", { class: "rationale" }, children);
 }
 
 function criteriaTable(screening) {
+  // The provenance badge marks an exception. When the engine wrote every sentence — which is what
+  // a run with no model consulted looks like — the footer says so once and the column stays clean.
+  const showProvenance = screening.rationales.engine_written < screening.rationales.total;
   return h(
     "div",
     { class: "scroller" },
@@ -275,12 +306,31 @@ function criteriaTable(screening) {
             ),
             h("td", {}, verdictMark(criterion.verdict, criterion.verdict_label)),
             h("td", { class: "protocol" }, criterion.quote),
-            foundCell(criterion),
-            h("td", {}, evidenceList(criterion.evidence)),
+            foundCell(criterion, showProvenance),
+            h("td", { class: "citations" }, evidenceList(criterion.evidence)),
           ),
         ),
       ),
     ),
+  );
+}
+
+/* Where the sentences beside each criterion came from. A packet that does not say is a packet that
+ * invites the reader to assume the most flattering answer. */
+function rationaleNote(rationales) {
+  if (!rationales.total) return "no criterion was evaluated, so none was written";
+  if (!rationales.engine_written) {
+    return "every sentence was checked against the record it describes";
+  }
+  if (rationales.engine_written === rationales.total) {
+    return (
+      `all ${rationales.total} were written by the screening engine, so every sentence is read ` +
+      "straight off the record rather than drafted and checked"
+    );
+  }
+  return (
+    `${rationales.engine_written} of ${rationales.total} were written by the screening engine, ` +
+    "because the drafted sentence could not be verified against the record"
   );
 }
 
@@ -301,18 +351,13 @@ function footer(screening) {
       h(
         "dd",
         {},
-        `${screening.criteria_resolved} of ${screening.criteria_total} criteria decided from the ` +
-          "patient record",
+        rationales.total
+          ? `${screening.criteria_resolved} of ${screening.criteria_total} criteria decided from ` +
+            "the patient record"
+          : "no criterion was evaluated",
       ),
       h("dt", {}, "Rationale sentences"),
-      h(
-        "dd",
-        {},
-        rationales.engine_written
-          ? `${rationales.engine_written} of ${rationales.total} were written by the screening ` +
-            "engine, because no drafted sentence could be verified against the record"
-          : "every sentence was checked against the record it describes",
-      ),
+      h("dd", {}, rationaleNote(rationales)),
     ),
     h("p", { class: "disclaimer" }, screening.disclaimer),
   );
@@ -345,7 +390,7 @@ export async function renderPacket(nctId, patientId) {
     h(
       "header",
       { class: "page__head" },
-      h("p", { class: "eyebrow" }, `Screening packet · ${screening.nct_id}`),
+      h("p", { class: "eyebrow" }, "Screening packet"),
       h("h1", {}, shortId(screening.patient.id)),
       h("p", { class: "subtitle" }, screening.patient.summary),
       h("p", { class: "pointer note" }, screening.patient.id),
@@ -373,7 +418,7 @@ export async function renderPacket(nctId, patientId) {
         h(
           "span",
           { class: "decision__value" },
-          outcomeMark(screening.decision, screening.decision_label),
+          outcomeMark(screening.decision, screening.decision_label, { large: true }),
         ),
         h("p", { class: "decision__note" }, decisionNote(screening)),
       ),

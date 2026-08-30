@@ -150,7 +150,10 @@ INFARCTION_ROW = Evidence(
 
 
 def a_patient(
-    patient_id: str, evidence: list[Evidence], deceased: date | None = None
+    patient_id: str,
+    evidence: list[Evidence],
+    deceased: date | None = None,
+    deceased_undated: bool = False,
 ) -> PatientIndex:
     return PatientIndex(
         patient_id=patient_id,
@@ -158,6 +161,7 @@ def a_patient(
         sex="female",
         evidence=evidence,
         deceased=deceased,
+        deceased_undated=deceased_undated,
     )
 
 
@@ -170,17 +174,80 @@ REVIEW_PATIENT = a_patient("P-003", [ENCOUNTER])
 DECEASED_PATIENT = a_patient(
     "P-004", [ENCOUNTER, CREATININE_ROW, HAEMOGLOBIN_ROW], deceased=date(2026, 5, 3)
 )
+# FHIR's deceasedBoolean: the chart says the patient died and gives no date at all.
+UNDATED_DEATH_PATIENT = a_patient(
+    "P-005", [ENCOUNTER, CREATININE_ROW, HAEMOGLOBIN_ROW], deceased_undated=True
+)
+# A death recorded after the screening: the age taken at screening was true when it was taken.
+LATER_DEATH_PATIENT = a_patient(
+    "P-006", [ENCOUNTER, CREATININE_ROW, HAEMOGLOBIN_ROW], deceased=date(2026, 7, 1)
+)
+
+# Windows the protocol anchors to something other than screening. Caliper has only the screening
+# date, so these criteria are decided approximately and have to say so on the page.
+AT_RANDOMISATION = TemporalWindow(
+    relation="within", amount=6, unit="months", anchor="randomisation"
+)
+AT_CONSENT = TemporalWindow(relation="within", amount=6, unit="months", anchor="consent")
+
+ANCHORED_CRITERIA = CriteriaSet(
+    nct_id="NCT04000000",
+    source_text=SOURCE,
+    criteria=[
+        Criterion(
+            id="INC-01",
+            kind="inclusion",
+            source_quote="Serum creatinine <= 1.5 mg/dL within 6 months",
+            predicate=ObservationPredicate(
+                concept=Concept(text="serum creatinine", codes=(CREATININE,)),
+                op="<=",
+                value=1.5,
+                unit="mg/dL",
+                window=AT_RANDOMISATION,
+            ),
+        ),
+        Criterion(
+            id="INC-02",
+            kind="inclusion",
+            source_quote="Age 18 years or older",
+            predicate=DemographicPredicate(field="age", op=">=", value=18, unit="years"),
+        ),
+        Criterion(
+            id="INC-03",
+            kind="inclusion",
+            source_quote="Haemoglobin >= 9 g/dL within 6 months",
+            predicate=ObservationPredicate(
+                concept=Concept(text="haemoglobin", codes=(HAEMOGLOBIN,)),
+                op=">=",
+                value=9.0,
+                unit="g/dL",
+                window=AT_RANDOMISATION,
+            ),
+        ),
+        Criterion(
+            id="EXC-01",
+            kind="exclusion",
+            source_quote="Myocardial infarction within 6 months",
+            predicate=PresencePredicate(
+                type="condition",
+                concept=Concept(text="myocardial infarction", codes=(INFARCTION,)),
+                presence="present",
+                window=AT_CONSENT,
+            ),
+        ),
+    ],
+)
 
 
 def a_screening(patient: PatientIndex) -> ScreeningResult:
     return screen(CRITERIA, patient, SCREENING)
 
 
-def a_packet(patient: PatientIndex) -> Packet:
+def a_packet(patient: PatientIndex, criteria: CriteriaSet = CRITERIA) -> Packet:
     """A packet whose every sentence is the evaluator's, which is the model-free floor."""
-    result = a_screening(patient)
+    result = screen(criteria, patient, SCREENING)
     return build_packet(
-        result, CRITERIA, patient, deterministic_rationales(result), trial_title=TRIAL_TITLE
+        result, criteria, patient, deterministic_rationales(result), trial_title=TRIAL_TITLE
     )
 
 
@@ -425,3 +492,98 @@ class TestBlockedScreening:
         assert packet.verdict in html
         assert markdown.count(packet.stopped_note) == html.count(packet.stopped_note) == 2
         assert markdown.count("FHIR query") == html.count("FHIR query") == 0
+
+
+ANCHOR_CAVEAT = (
+    "the protocol anchors this window to randomisation, which was evaluated against the "
+    "screening date"
+)
+
+
+class TestCaveats:
+    """Windows the protocol anchored elsewhere, which Caliper could only evaluate approximately.
+
+    A verdict that leaned on one and did not say so is the kind that comes apart in a monitoring
+    visit with nothing on the page to explain why, so the caveat sits with the verdict and the
+    rows it touched are marked.
+    """
+
+    def test_the_caveats_are_stated_near_the_verdict(self):
+        packet = a_packet(ELIGIBLE_PATIENT, ANCHORED_CRITERIA)
+
+        assert len(packet.caveats) == 2
+        assert packet.caveat_note is not None
+        assert "2 approximations" in packet.caveat_note
+
+        for rendered in (render_markdown(packet), render_html(packet)):
+            assert packet.caveat_note in rendered
+            assert ANCHOR_CAVEAT in rendered
+            assert rendered.index(packet.caveat_note) < rendered.index("Protocol text")
+
+    def test_a_caveat_names_the_criteria_that_leaned_on_it(self):
+        packet = a_packet(ELIGIBLE_PATIENT, ANCHORED_CRITERIA)
+        randomisation, consent = packet.caveats
+
+        assert randomisation.criterion_ids == ("INC-01", "INC-03")
+        assert consent.criterion_ids == ("EXC-01",)
+        for rendered in (render_markdown(packet), render_html(packet)):
+            assert randomisation.affected in rendered
+            assert consent.affected in rendered
+
+    def test_the_affected_rows_are_marked_in_the_table(self):
+        packet = a_packet(ELIGIBLE_PATIENT, ANCHORED_CRITERIA)
+        approximated = {row.criterion_id for row in packet.rows if row.approximations}
+
+        assert approximated == {"INC-01", "INC-03", "EXC-01"}
+        assert "INC-01 (approximated)" in render_markdown(packet)
+        assert render_html(packet).count("Approximated") == 3
+
+    def test_a_screening_with_no_approximations_renders_no_caveats(self):
+        for patient in (ELIGIBLE_PATIENT, INELIGIBLE_PATIENT, REVIEW_PATIENT, DECEASED_PATIENT):
+            packet = a_packet(patient)
+
+            assert packet.caveats == ()
+            assert packet.caveat_note is None
+            assert all(row.approximations == () for row in packet.rows)
+            assert "## Caveats" not in render_markdown(packet)
+            assert 'id="caveats"' not in render_html(packet)
+            assert "Approximated" not in render_html(packet)
+
+    def test_markdown_and_html_agree_on_the_caveats(self):
+        packet = a_packet(ELIGIBLE_PATIENT, ANCHORED_CRITERIA)
+        markdown = render_markdown(packet)
+        html = render_html(packet)
+
+        for caveat in packet.caveats:
+            assert markdown.count(caveat.text) == html.count(caveat.text) == 1
+        assert markdown.count("approximated") == html.count("Approximated") == 3
+
+
+class TestRecordedDeaths:
+    def test_a_death_before_screening_is_dated_and_drops_the_age_qualifier(self):
+        packet = a_packet(DECEASED_PATIENT)
+
+        assert packet.patient_summary == "67 years old, recorded sex female, died 2026-05-03"
+
+    def test_an_undated_death_is_stated_without_a_date(self):
+        packet = a_packet(UNDATED_DEATH_PATIENT)
+
+        assert packet.blocked_by is not None
+        assert "without giving a date" in packet.stopped_note
+        # The tripwire: nothing on this page may call a dead patient "67 years old at screening".
+        assert "at screening" not in packet.patient_summary
+        assert packet.patient_summary == (
+            "67 years old, recorded sex female, recorded as deceased, no date given"
+        )
+        for rendered in (render_markdown(packet), render_html(packet)):
+            assert "recorded as deceased, no date given" in rendered
+
+    def test_a_death_recorded_after_screening_keeps_the_age_it_was_taken_at(self):
+        packet = a_packet(LATER_DEATH_PATIENT)
+
+        # The screening ran: the patient was alive on the day it was taken.
+        assert packet.blocked_by is None
+        assert packet.rows != ()
+        assert packet.patient_summary == (
+            "67 years old at screening, recorded sex female, died 2026-07-01"
+        )

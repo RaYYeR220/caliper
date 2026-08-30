@@ -3,11 +3,11 @@
 This document describes how `eval/answer_key.json` was produced, in enough detail that someone
 with this repository and no other information could repeat the exercise and get the same labels.
 
-It was written before annotation began. Four things were added afterwards, and each is marked where
-it appears: the counts in section 9, the note on `family_history` in section 7, and three
-clarifications forced by the adjudication — two in section 4 and one in section 5 — each labelled
-*sharpened at adjudication* and each traceable to the disagreement that produced it. Nothing that was
-in the document before annotation was removed or reworded.
+It was written before annotation began. Five things were added afterwards, and each is marked where
+it appears: the counts in section 9, the note on `family_history` in section 7, three clarifications
+forced by the adjudication — two in section 4 and one in section 5 — each labelled *sharpened at
+adjudication*, and section 11, which describes the constructed cases added after the first build.
+Nothing that was in the document before annotation was removed or reworded.
 
 Everything here is an annotation of synthetic patient records by language models against real
 registry text. **No clinician reviewed these labels.** Section 8 says what that costs.
@@ -55,7 +55,10 @@ for any pair.** Doing so would have made the key circular.
 
 ## 2. Choosing the pairs
 
-33 pairs over 8 trials and 14 patients, listed in `pairs.json`. Trials were chosen first, for
+36 annotated pairs over 8 trials and 14 patients, listed in `pairs.json`. Thirty-three were fixed
+before annotation began; AK-034, AK-035 and AK-036 were added after the first build to widen the
+base for the constructed cases of section 11, and were put through both passes and the adjudication
+under this same protocol before any perturbation was written. Trials were chosen first, for
 range: six cardiometabolic (`NCT01131676`, `NCT02545049`, `NCT03036124`, `NCT03315143`,
 `NCT03819153`, `NCT06717698`), one respiratory (`NCT07252908`) and one oncology
 (`NCT05748834`). Two of the ten committed trials were not used at all: `NCT05763121` and
@@ -72,7 +75,7 @@ flatters:
   criteria turn on.
 - **Charts that are stale.** `2211f478` (last encounter 2016-06-13), `8d91c36a` (2015-09-26),
   `fb56f051` (1991-06-08) and `30889246` (1961-08-25) carry the right analytes at the wrong dates.
-  Ten of the 33 pairs are against one of those four charts.
+  Ten of the 36 annotated pairs are against one of those four charts.
 - **Charts where a unit or a formula does not match the protocol.** `8d91c36a`, `fb56f051` and
   `f870c432` report eGFR by the MDRD formula in bare `mL/min`, where three of the trials ask for
   CKD-EPI in `mL/min/1.73 m^2`; `cbd1dd48` reports FEV1/FVC as `66.607 %` where `NCT07252908`
@@ -107,7 +110,7 @@ eight trials, 130 are in scope and 23 are not.
 | NCT06717698 | 15 | 15 |
 | NCT07252908 | 42 | 34 |
 
-The 33 pairs therefore carry 476 criterion labels per pass.
+The 36 annotated pairs therefore carry 491 criterion labels per pass.
 
 A criterion is **in scope** when it asserts something about the patient that is true or false at
 the screening date and that a clinical record could in principle carry: a diagnosis, a medication,
@@ -210,8 +213,8 @@ Where a criterion states no window:
 
 The 24-month bound is ours; the protocols do not state one. It was chosen before annotation and
 applied uniformly. It is the rule most likely to move labels if a reader disagrees with it: ten of
-the 33 pairs are against charts whose most recent measurement predates screening by more than two
-years, and six of those are `needs_review` for that reason alone and would become decided outcomes
+the 36 annotated pairs are against charts whose most recent measurement predates screening by more
+than two years, and six of those are `needs_review` for that reason alone and would become decided outcomes
 if the bound were removed. Cases where it is decisive are marked `trap: temporal`.
 
 *Sharpened at adjudication (see `disagreements.md`, theme 6).* Recency is not the only way a
@@ -264,11 +267,12 @@ Every pair was annotated twice.
   JSON itself from the repository. Independence here is structural — a fresh context per pass —
   rather than merely procedural.
 
-The two passes agreed on 443 of 476 criterion labels, giving **Cohen's kappa 0.886** (95% interval
-0.849 to 0.924). All 33 disagreements are listed criterion by criterion in `disagreements.md` with
+The two passes agreed on 455 of 491 criterion labels, giving **Cohen's kappa 0.879** (95% interval
+0.841 to 0.917). All 36 disagreements are listed criterion by criterion in `disagreements.md` with
 the adjudication and the reason for it, and the contingency table and arithmetic are in `kappa.md`.
-Twelve adjudications upheld pass 1, twenty-one upheld pass 2, and exactly one changed a case-level
-outcome. Adjudication was done by the maintainer, and `adjudicated_by` on every case says
+Fifteen adjudications upheld pass 1, twenty-one upheld pass 2, and exactly one changed a case-level
+outcome. The constructed cases of section 11 carry no annotator labels of their own and are not part
+of this statistic. Adjudication was done by the maintainer, and `adjudicated_by` on every case says
 `maintainer`.
 
 Every disagreement ran the same way — pass 1 abstained or pass 1 was the stricter of the two, never
@@ -290,44 +294,70 @@ reader can mistake them for people.
 
 ## 9. What the key contains
 
-33 cases, all `provenance: annotated`, all with two annotators and an adjudicator.
+51 cases: **36 annotated** and **15 constructed**. Every count in this document, in the key's own
+`notes`, and in the summary `scripts/build_answer_key.py` prints is reported for the two provenances
+separately, so a constructed case cannot be read as an observed one.
 
-| Outcome | Cases |
+| Outcome | Annotated | Constructed | Total |
+|---|---:|---:|---:|
+| `ineligible` | 25 | 4 | 29 |
+| `needs_review` | 11 | 4 | 15 |
+| `eligible` | **0** | 7 | 7 |
+
+### No patient in this corpus is eligible for any of these protocols
+
+This is the key's central finding and it survived the addition of the constructed cases, which exist
+precisely because of it. Not one of the 36 annotated pairs reaches `eligible`, and the reason is not
+that these patients are sick in the wrong ways. It is that **every one of the eight protocols bounds
+at least one quantity that no chart in this corpus carries at all**, and under section 4 a test not
+done is `unknown` rather than normal, and `unknown` propagates.
+
+| Trial | The quantity no chart carries |
 |---|---|
-| `ineligible` | 22 |
-| `needs_review` | 11 |
-| `eligible` | 0 |
+| NCT01131676 | a liver panel (ALT, AST, alkaline phosphatase) on any patient who also has a recent chart; and the sub-type of a recorded "Anemia (disorder)" |
+| NCT02545049 | a UACR on any patient with type 2 diabetes and an ACE inhibitor or ARB at a labelled maximum dose |
+| NCT03036124 | an NYHA functional class, which no Synthea chart records |
+| NCT03315143 | an eGFR on most charts — and this is the one trial where nothing else is missing |
+| NCT03819153 | a UACR, and a fundus examination inside the 90-day window the criterion names |
+| NCT05748834 | ECOG performance status, RECIST measurable disease, and a screening contrast brain MRI |
+| NCT06717698 | a cystatin C-based eGFR; no cystatin C is measured anywhere in the corpus |
+| NCT07252908 | mMRC dyspnoea grade, pack-years, and FEV1 percent-predicted |
 
-**There are no `eligible` cases, and that is a finding rather than an oversight.** We looked for
-one. Reaching `eligible` requires every in-scope criterion to resolve `met` or `not_met`, and every
-one of these eight protocols bounds at least one laboratory quantity that no chart in the corpus
-carries at all — a liver panel for `NCT01131676`, a UACR for `NCT02545049`, `NCT03819153` and
-`NCT06717698`, an eGFR for most of them, spirometry percent-predicted and pack-years for
-`NCT07252908`. Under section 4's rule that a test not done is not a normal result, those criteria
-are `unknown`, and `unknown` propagates. This is the same structural property the README claims for
-the system — that `ELIGIBLE` is unreachable while any criterion is unresolved — showing up in the
-ground truth as well.
+That table is a fact about the data and about routine care, not about the screening logic, and it is
+more interesting than any score computed on top of it. It is also the reason the eligible cases had
+to be constructed rather than found: `NCT03315143` is the only trial in the set whose every in-scope
+criterion can be closed with terminology the committed corpus already uses, so all 15 constructed
+cases are on it. Section 11 says what was done and section 11's last paragraph says what that costs.
 
-The consequence for scoring should be stated plainly: this key cannot measure whether a system
-correctly identifies an eligible patient, because it contains no eligible patient. It measures
-whether a system correctly rules patients out, and whether it abstains where the chart is silent.
-A system that answered `needs_review` to all 33 pairs would commit no unsafe error and would be
-wrong on 22 of them; a system that answered `ineligible` to all 33 would be wrong on 11, in the
-direction that quietly loses enrolments. Both baselines are worth running against this key for
-exactly that reason.
+### What the key can and cannot measure
+
+With seven eligible cases the key can now separate a system that finds eligible patients from one
+that does not, and the degenerate baselines are all beaten:
+
+- answering `needs_review` everywhere is wrong on 36 of 51 and finds nothing;
+- answering `ineligible` everywhere is wrong on 22 of 51, and 7 of those errors are missed
+  enrolments — the direction nobody ever audits;
+- answering `eligible` everywhere is wrong on 44 of 51 and commits 44 unsafe errors.
+
+What the key still cannot do is measure eligible-detection on a chart nobody edited. All seven
+eligible cases are constructed, all seven are on one trial, and four of the seven were built by
+supplying an observation that the patient's real chart never contained. A system could in principle
+learn the shape of our perturbations rather than the shape of eligibility. The mitigation is that
+the perturbations are published in full, in the key itself, so that anyone can check what was
+supplied and re-derive the label.
 
 Cases by trap:
 
-| Trap | Cases |
-|---|---|
-| `none` | 14 |
-| `temporal` | 6 |
-| `unit` | 4 |
-| `missing_data` | 4 |
-| `unsupported` | 3 |
-| `negation` | 1 |
-| `threshold_edge` | 1 |
-| `family_history` | 0 |
+| Trap | Annotated | Constructed | Total |
+|---|---:|---:|---:|
+| `none` | 17 | 7 | 24 |
+| `missing_data` | 4 | 4 | 8 |
+| `temporal` | 6 | 0 | 6 |
+| `threshold_edge` | 1 | 4 | 5 |
+| `unit` | 4 | 0 | 4 |
+| `unsupported` | 3 | 0 | 3 |
+| `negation` | 1 | 0 | 1 |
+| `family_history` | 0 | 0 | 0 |
 
 ---
 
@@ -337,15 +367,83 @@ Cases by trap:
 |---|---|
 | `protocol.md` | this document |
 | `criteria.json` | the criterion decomposition and the scope decisions, fixed before annotation |
-| `pairs.json` | the 33 pairs |
+| `pairs.json` | the 36 annotated pairs |
 | `cases.json` | per case, the trap it probes and the note that opens its rationale |
 | `pass1.json` | pass 1 labels, one verdict and one reason per criterion per pair |
 | `pass2.json` | pass 2 labels, produced independently |
 | `adjudication.json` | every criterion where the passes differed, with the decision and why |
 | `disagreements.md` | the same, in prose |
 | `kappa.md` | Cohen's kappa, the contingency table, and the working |
+| `constructed.json` | the 15 constructed cases: base pair, chart edits, and the criteria they close |
 
 `scripts/build_answer_key.py` reads all of these, applies `caliper.logic.roll_up`, validates
 through `caliper.answerkey.load_key`, and freezes the result. It refuses to build if either pass is
-missing a criterion, if a disagreement is not decided in `adjudication.json`, or if
-`adjudication.json` decides a criterion the passes agreed on.
+missing a criterion, if a disagreement is not decided in `adjudication.json`, if `adjudication.json`
+decides a criterion the passes agreed on, if a constructed case overrides a criterion its base pair
+had already satisfied, or if any chart edit is not visible in the finished chart when read back.
+
+---
+
+## 11. Constructed cases
+
+*Added after the first build. The 36 annotated pairs and their labels were complete and frozen
+before any of this was written.*
+
+Section 9 explains why the annotated half of the key contains no `eligible` case. That is an honest
+finding and a broken measurement: with no eligible case, calling a patient eligible is never right,
+"coverage at zero unsafe errors" degenerates, and a system that answers `ineligible` to everything
+looks respectable. The constructed cases close that hole without anybody eyeballing a case.
+
+**The method.** Take an annotated pair. Read its adjudicated criterion labels and find the criteria
+that block `eligible` — an inclusion that is not `met`, or an exclusion that is. Apply a recorded
+list of edits to the chart that supply exactly what those criteria ask for. Override only those
+criteria, carrying every other label forward untouched. Then derive the outcome with the same
+`caliper.logic.roll_up` used everywhere else. The label is not a judgement about the constructed
+patient; it is the pre-registered rollup rule applied to human criterion labels plus a value chosen
+to be plainly inside or plainly outside a stated band.
+
+Three properties make this non-circular:
+
+1. **Nothing about the system is consulted.** The edits are chosen from the registry text and the
+   chart, exactly as the annotation was.
+2. **The base labels are the annotated ones.** For a 5-criterion trial, an eligible constructed case
+   carries 2 or 3 labels straight from the two passes and overrides the rest.
+3. **The edits are verified against the finished chart.** `build_answer_key.py` applies every step
+   and then reads each one back off the resulting `PatientIndex`; a step that silently did nothing
+   is a build error, not a case.
+
+**What was edited, and with what.** `caliper.perturb` supplies `shift_value`, `redact_analyte` and
+`add_condition`, and those do most of the work. It has **no function that adds an observation**, and
+this build was not permitted to add one to that module, so `add_observation` is implemented in
+`scripts/build_answer_key.py` instead: it builds an `Evidence` row with `dataclasses.replace` and
+records an equivalent `Perturbation`, so the case documents the change in the same form as every
+other. Four of the 15 constructed cases use it. If `perturb.py` ever gains an observation helper,
+that local function should be deleted in its favour.
+
+Every code used is lifted verbatim from the committed corpus — SNOMED 44054006 and 414545008, LOINC
+33914-3, 4548-4 and 38483-4 — so no terminology is invented. Values are placed comfortably inside or
+outside the band except in the four `threshold_edge` cases, where the whole point is to sit one unit
+the wrong side of a bound.
+
+**The shape of the set.** Four base patients carry a full triple — eligible, ineligible by a hair,
+and undecidable — on the same patient and trial, differing only in the supplied value:
+
+| Patient | eligible | near miss | undecidable | The bound that separates them |
+|---|---|---|---|---|
+| `1be83f06` | CK-001 | CK-002 | CK-003 | eGFR 42 / 61 / removed, against 25-60 |
+| `f870c432` | CK-004 | CK-005 | CK-006 | HbA1c 7.4% / 6.9% / eGFR removed, against 7% |
+| `6c4283c9` | CK-007 | CK-008 | CK-009 | eGFR 45 / 24 / absent, against 25-60 |
+| `8c5b83b2` | CK-010 | CK-011 | CK-012 | eGFR 52 / 61 / absent, against 25-60 |
+
+CK-013, CK-014 and CK-015 are three further eligible cases on three more patients, added so that the
+eligible group does not rest on four charts.
+
+**What is wrong with this set, stated plainly.** All 15 are on one trial, `NCT03315143`. The brief
+asked for at least three, and three is not reachable: section 9's table shows that every other trial
+in the key needs at least one datum that cannot be supplied without inventing a LOINC or RxNorm code
+this build cannot verify offline, or without asserting an investigator's opinion. Two near misses
+were possible in principle on other trials but would have been decided by an unrelated criterion,
+which teaches nothing. Widening the constructed set past one trial needs one of two decisions that
+are not the annotator's to make: a small, verified terminology addition to the corpus (a cystatin C
+eGFR, an NYHA class, a fundus finding, a maximum-dose ACE inhibitor product), or acceptance that
+constructed eligibility is demonstrated on one trial only.

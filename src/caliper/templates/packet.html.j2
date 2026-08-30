@@ -209,13 +209,28 @@
   .id { font-family: var(--sans); font-size: 0.78rem; white-space: nowrap; }
   .kind { font-family: var(--sans); font-size: 0.72rem; color: var(--muted); }
 
-  .decisive {
+  .tag {
     margin-top: 0.45rem;
     font-family: var(--sans);
     font-size: 0.62rem;
-    font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+  }
+
+  .tag--decisive { font-weight: 600; }
+  .tag--approximated { color: var(--muted); }
+
+  .caveat-note { margin: 0 0 1.5rem; }
+  .caveat-list { margin: 0; padding-left: 1.1rem; }
+  .caveat-list li { margin-bottom: 0.75rem; }
+
+  .affected {
+    display: block;
+    margin-top: 0.15rem;
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
   }
 
   .quote { font-style: italic; min-width: 10rem; }
@@ -322,6 +337,23 @@
     </div>
   </header>
 
+  {% if packet.caveat_note %}
+  <section id="caveats">
+    <h2>Caveats</h2>
+    <p class="caveat-note">{{ packet.caveat_note }}</p>
+    <ul class="caveat-list">
+      {% for caveat in packet.caveats %}
+      <li>
+        {{ caveat.text }}
+        {% if caveat.criterion_ids %}
+        <span class="affected">{{ caveat.affected }}</span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
   {% if packet.deciding %}
   <section id="deciding">
     <h2>Why this patient is not eligible</h2>
@@ -393,7 +425,10 @@
               <div class="id">{{ row.criterion_id }}</div>
               <div class="kind">{{ row.kind }}</div>
               {% if row.decisive %}
-              <div class="decisive">Decisive</div>
+              <div class="tag tag--decisive">Decisive</div>
+              {% endif %}
+              {% if row.approximations %}
+              <div class="tag tag--approximated">Approximated</div>
               {% endif %}
             </td>
             <td><span class="verdict verdict--{{ row.verdict_slug }}">{{ row.verdict }}</span></td>

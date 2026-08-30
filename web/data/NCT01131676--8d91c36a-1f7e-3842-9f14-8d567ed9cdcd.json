@@ -18,6 +18,7 @@
   "coverage": 1.0,
   "deciding_criterion_ids": [],
   "approximations": [],
+  "caveats": [],
   "absence_policy": {
     "value": "coverage_gated",
     "note": "coverage-gated, meaning a finding absent from the chart counts as absent only where an encounter documents the window"

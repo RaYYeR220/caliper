@@ -2614,6 +2614,102 @@
           "reason": "No research participation in the chart; the encounter on 2026-05-12 falls inside the four-week window."
         }
       ]
+    },
+    {
+      "case_id": "AK-034",
+      "patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "not_met",
+          "reason": "Prediabetes from 2011-03-27 and HbA1c 6.11% on 2026-02-01; no type 2 diabetes diagnosis, with encounters through 2026-02-01."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "No glomerular filtration rate has ever been recorded; creatinine 1.23 mg/dL on 2026-02-01 is the only renal chemistry on file."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "unknown",
+          "reason": "The registry text does not define major or minor cardiovascular risk factors, and at 46 the patient does not reach the age-55 branch."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "not_met",
+          "reason": "No antihyperglycaemic medication has ever been ordered; the four orders on file are lisinopril, ciprofloxacin and two unlabelled requests."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "not_met",
+          "reason": "No lower-extremity ulcer, infection, osteomyelitis or gangrene in the chart; encounters through 2026-02-01."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-035",
+      "patient_id": "cc3eac4a-34a7-9a15-1522-8087135631b7",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "not_met",
+          "reason": "Prediabetes from 2009-03-30 and HbA1c 6.08% on 2026-02-09; no type 2 diabetes diagnosis, with encounters through 2026-02-09."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "No glomerular filtration rate has ever been recorded; creatinine 1.18 mg/dL on 2026-02-09 is the only renal chemistry on file."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "unknown",
+          "reason": "The registry text does not define major or minor cardiovascular risk factors, and at 48 the patient does not reach the age-55 branch."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "not_met",
+          "reason": "No antihyperglycaemic medication has ever been ordered; the most recent order is amoxicillin on 2025-11-29."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "not_met",
+          "reason": "No lower-extremity ulcer, infection, osteomyelitis or gangrene in the chart; encounters through 2026-02-09."
+        }
+      ]
+    },
+    {
+      "case_id": "AK-036",
+      "patient_id": "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4",
+      "nct_id": "NCT03315143",
+      "labels": [
+        {
+          "criterion_id": "NCT03315143-I1",
+          "verdict": "not_met",
+          "reason": "Prediabetes from 1998-09-08 and HbA1c 6.21% on 2025-08-26; no type 2 diabetes diagnosis, with encounters through 2025-09-09."
+        },
+        {
+          "criterion_id": "NCT03315143-I2",
+          "verdict": "unknown",
+          "reason": "No glomerular filtration rate has ever been recorded; creatinine 1.03 mg/dL on 2025-08-26 is the only renal chemistry on file."
+        },
+        {
+          "criterion_id": "NCT03315143-I3",
+          "verdict": "unknown",
+          "reason": "At 61 the patient reaches the age-55 branch, which asks for at least two minor cardiovascular risk factors, but the registry text does not say which factors are minor and the patient has no established cardiovascular disease."
+        },
+        {
+          "criterion_id": "NCT03315143-E1",
+          "verdict": "not_met",
+          "reason": "No antihyperglycaemic medication has ever been ordered; the seven orders on file are oxycodone, ibuprofen, vitamin B12 and four unlabelled requests."
+        },
+        {
+          "criterion_id": "NCT03315143-E3",
+          "verdict": "not_met",
+          "reason": "No lower-extremity ulcer, infection, osteomyelitis or gangrene in the chart; encounters through 2025-09-09."
+        }
+      ]
     }
   ]
 }

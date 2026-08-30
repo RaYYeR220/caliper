@@ -24,7 +24,8 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any, Literal
 
-TapeMode = Literal["replay", "record"]
+TapeMode = Literal["replay", "record", "refresh"]
+"""`record` asks only for what it does not already have; `refresh` asks again regardless."""
 
 DEFAULT_TAPE = Path("eval/tape.jsonl")
 
@@ -222,6 +223,14 @@ class TapeTransport:
     def _create(self, **payload: Any) -> SimpleNamespace:
         if self.tape.mode == "replay":
             return _as_response(self.tape.require(payload))
+
+        if self.tape.mode == "record":
+            # Recording a full evaluation takes over an hour of provider round trips. Asking again
+            # for something already on the tape would make a crash halfway through cost the whole
+            # run, so a recording resumes rather than restarting.
+            known = self.tape.lookup(payload)
+            if known is not None:
+                return _as_response(known)
 
         if self.upstream is None:
             raise RuntimeError("recording needs an upstream transport to record from")

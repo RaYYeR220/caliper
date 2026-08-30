@@ -2497,10 +2497,2426 @@
       "rationale": "An asthma diagnosis fires this COPD trial's concurrent-respiratory-disease exclusion, and the BMI ceiling and the COPD inclusions fail as well. Together with AK-026 it is one of only two cases in the key where an exclusion criterion fires at all. Derived ineligible by roll_up on the adjudicated labels; decided by NCT07252908-I4 (inclusion not met), NCT07252908-I7 (inclusion not met), NCT07252908-I8 (inclusion not met), NCT07252908-I11 (inclusion not met), NCT07252908-E5 (exclusion met).",
       "screening_date": "2026-06-01",
       "trap": "none"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "not_met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "unknown",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "unknown",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "ineligible",
+      "id": "AK-034",
+      "nct_id": "NCT03315143",
+      "patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1",
+      "perturbations": [],
+      "provenance": "annotated",
+      "rationale": "Added after the first build to widen the base for the constructed cases, and annotated by both passes under the same protocol before any perturbation was written. Prediabetes rather than type 2 diabetes decides it, on a chart that has never carried a glomerular filtration rate. Derived ineligible by roll_up on the adjudicated labels; decided by NCT03315143-I1 (inclusion not met).",
+      "screening_date": "2026-06-01",
+      "trap": "none"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "not_met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "unknown",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "unknown",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "ineligible",
+      "id": "AK-035",
+      "nct_id": "NCT03315143",
+      "patient_id": "cc3eac4a-34a7-9a15-1522-8087135631b7",
+      "perturbations": [],
+      "provenance": "annotated",
+      "rationale": "Added after the first build to widen the base for the constructed cases, and annotated by both passes under the same protocol before any perturbation was written. Prediabetes rather than type 2 diabetes decides it, on a chart that has never carried a glomerular filtration rate. Derived ineligible by roll_up on the adjudicated labels; decided by NCT03315143-I1 (inclusion not met).",
+      "screening_date": "2026-06-01",
+      "trap": "none"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "not_met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "unknown",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "unknown",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "ineligible",
+      "id": "AK-036",
+      "nct_id": "NCT03315143",
+      "patient_id": "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4",
+      "perturbations": [],
+      "provenance": "annotated",
+      "rationale": "Added after the first build to widen the base for the constructed cases, and annotated by both passes under the same protocol before any perturbation was written. Prediabetes rather than type 2 diabetes decides it, on a chart that has never carried a glomerular filtration rate. Derived ineligible by roll_up on the adjudicated labels; decided by NCT03315143-I1 (inclusion not met).",
+      "screening_date": "2026-06-01",
+      "trap": "none"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "eligible",
+      "id": "CK-001",
+      "nct_id": "NCT03315143",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "1be83f06-48ef-7bac-0b60-f1086d8bfe02"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-06-03",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[448].resource",
+              "kind": "observation",
+              "resource_id": "1be83f06-48ef-7bac-0b60-f1086d8bfe02",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 42.0
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-06-03",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[448].resource",
+              "kind": "observation",
+              "resource_id": "1be83f06-48ef-7bac-0b60-f1086d8bfe02",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 141.3
+            }
+          ],
+          "description": "moved the most recent LOINC 33914-3 result from 141.3 to 42.0 mL/min/{1.73_m2}",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-06-03",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-06-03",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The eligible member of the 1be83f06 triple. This patient already satisfies the diabetes inclusion and both exclusions; the only two open criteria are a renal function far outside the band and an undefined cardiovascular-risk term. Supplying an eGFR inside the band and an established cardiovascular diagnosis closes both. Constructed from AK-014 by 2 recorded edits; 3 criterion labels are carried forward unchanged from the two annotation passes and 2 are overridden by those edits. Derived eligible by roll_up on the adjudicated labels; all 5 criteria resolved and none is disqualifying.",
+      "screening_date": "2026-06-01",
+      "trap": "none"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "ineligible",
+      "id": "CK-002",
+      "nct_id": "NCT03315143",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "1be83f06-48ef-7bac-0b60-f1086d8bfe02"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-06-03",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[448].resource",
+              "kind": "observation",
+              "resource_id": "1be83f06-48ef-7bac-0b60-f1086d8bfe02",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 61.0
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-06-03",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[448].resource",
+              "kind": "observation",
+              "resource_id": "1be83f06-48ef-7bac-0b60-f1086d8bfe02",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 141.3
+            }
+          ],
+          "description": "moved the most recent LOINC 33914-3 result from 141.3 to 61.0 mL/min/{1.73_m2}",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-06-03",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-06-03",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The near-miss member of the 1be83f06 triple: identical to CK-001 except that the eGFR is 61 rather than 42, one unit above a bound the protocol writes as 60 or below. A system that rounds, or that reads an inclusive bound as exclusive, cannot tell this case from CK-001. Constructed from AK-014 by 2 recorded edits; 3 criterion labels are carried forward unchanged from the two annotation passes and 2 are overridden by those edits. Derived ineligible by roll_up on the adjudicated labels; decided by NCT03315143-I2 (inclusion not met).",
+      "screening_date": "2026-06-01",
+      "trap": "threshold_edge"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "unknown",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "needs_review",
+      "id": "CK-003",
+      "nct_id": "NCT03315143",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "1be83f06-48ef-7bac-0b60-f1086d8bfe02"
+          ],
+          "after": [],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-06-03",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[448].resource",
+              "kind": "observation",
+              "resource_id": "1be83f06-48ef-7bac-0b60-f1086d8bfe02",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 141.3
+            }
+          ],
+          "description": "removed all 1 results coded LOINC 33914-3",
+          "kind": "redact_analyte"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-06-03",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-06-03",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The undecidable member of the 1be83f06 triple: every value CK-001 supplies except the renal one, which is removed outright. The correct answer is to abstain and to name the eGFR as the missing datum. Constructed from AK-014 by 2 recorded edits; 3 criterion labels are carried forward unchanged from the two annotation passes and 2 are overridden by those edits. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 1 of 5 are unresolved: NCT03315143-I2.",
+      "screening_date": "2026-06-01",
+      "trap": "missing_data"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "eligible",
+      "id": "CK-004",
+      "nct_id": "NCT03315143",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-09-24",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-09-24",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "f870c432-0887-125e-1de6-46a3d2c015ac"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[461].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-1de6-46a3d2c015ac",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.4
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[461].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-1de6-46a3d2c015ac",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.02
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.02 to 7.4 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "f870c432-0887-125e-727b-6a93cf977c3c"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "38483-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-25",
+              "display": "Creatinine [Mass/volume] in Blood",
+              "fhir_path": "Bundle.entry[500].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-727b-6a93cf977c3c",
+              "resource_type": "Observation",
+              "unit": "mg/dL",
+              "value": 1.9
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "38483-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-25",
+              "display": "Creatinine [Mass/volume] in Blood",
+              "fhir_path": "Bundle.entry[500].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-727b-6a93cf977c3c",
+              "resource_type": "Observation",
+              "unit": "mg/dL",
+              "value": 2.578
+            }
+          ],
+          "description": "moved the most recent LOINC 38483-4 result from 2.578 to 1.9 mg/dL",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "f870c432-0887-125e-e3e1-340ad2982948"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-25",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[506].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-e3e1-340ad2982948",
+              "resource_type": "Observation",
+              "unit": "mL/min",
+              "value": 38.0
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-25",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[506].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-e3e1-340ad2982948",
+              "resource_type": "Observation",
+              "unit": "mL/min",
+              "value": 84.289
+            }
+          ],
+          "description": "moved the most recent LOINC 33914-3 result from 84.289 to 38.0 mL/min",
+          "kind": "shift_value"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The eligible member of the f870c432 triple. This patient already satisfies the cardiovascular-risk inclusion through his own ischaemic heart disease; what blocks him is the absence of diabetes and the contradiction between his creatinine and his reported eGFR. Both are closed, and the two renal numbers are restated so that they agree under MDRD. Constructed from AK-016 by 4 recorded edits; 3 criterion labels are carried forward unchanged from the two annotation passes and 2 are overridden by those edits. Derived eligible by roll_up on the adjudicated labels; all 5 criteria resolved and none is disqualifying.",
+      "screening_date": "2026-06-01",
+      "trap": "none"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "not_met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "ineligible",
+      "id": "CK-005",
+      "nct_id": "NCT03315143",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-09-24",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-09-24",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "f870c432-0887-125e-1de6-46a3d2c015ac"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[461].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-1de6-46a3d2c015ac",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.9
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[461].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-1de6-46a3d2c015ac",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.02
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.02 to 6.9 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "f870c432-0887-125e-727b-6a93cf977c3c"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "38483-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-25",
+              "display": "Creatinine [Mass/volume] in Blood",
+              "fhir_path": "Bundle.entry[500].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-727b-6a93cf977c3c",
+              "resource_type": "Observation",
+              "unit": "mg/dL",
+              "value": 1.9
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "38483-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-25",
+              "display": "Creatinine [Mass/volume] in Blood",
+              "fhir_path": "Bundle.entry[500].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-727b-6a93cf977c3c",
+              "resource_type": "Observation",
+              "unit": "mg/dL",
+              "value": 2.578
+            }
+          ],
+          "description": "moved the most recent LOINC 38483-4 result from 2.578 to 1.9 mg/dL",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "f870c432-0887-125e-e3e1-340ad2982948"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-25",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[506].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-e3e1-340ad2982948",
+              "resource_type": "Observation",
+              "unit": "mL/min",
+              "value": 38.0
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-25",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[506].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-e3e1-340ad2982948",
+              "resource_type": "Observation",
+              "unit": "mL/min",
+              "value": 84.289
+            }
+          ],
+          "description": "moved the most recent LOINC 33914-3 result from 84.289 to 38.0 mL/min",
+          "kind": "shift_value"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The near-miss member of the f870c432 triple, and the only one in the key that turns on a glycaemic bound. Identical to CK-004 except that HbA1c is 6.9% rather than 7.4%, one tenth of a point below a floor the protocol writes as 7% or above. Constructed from AK-016 by 4 recorded edits; 3 criterion labels are carried forward unchanged from the two annotation passes and 2 are overridden by those edits. Derived ineligible by roll_up on the adjudicated labels; decided by NCT03315143-I1 (inclusion not met).",
+      "screening_date": "2026-06-01",
+      "trap": "threshold_edge"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "unknown",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "needs_review",
+      "id": "CK-006",
+      "nct_id": "NCT03315143",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-09-24",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-09-24",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "f870c432-0887-125e-1de6-46a3d2c015ac"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[461].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-1de6-46a3d2c015ac",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.4
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[461].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-1de6-46a3d2c015ac",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.02
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.02 to 7.4 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "f870c432-0887-125e-e3e1-340ad2982948",
+            "f870c432-0887-125e-ae3c-42f0ccf0695b",
+            "f870c432-0887-125e-0e68-25aa2d448474",
+            "f870c432-0887-125e-da46-3d91ce658ea0",
+            "f870c432-0887-125e-270e-e1d610b071d4",
+            "f870c432-0887-125e-f352-3937cf3b52fa"
+          ],
+          "after": [],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-09-25",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[506].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-e3e1-340ad2982948",
+              "resource_type": "Observation",
+              "unit": "mL/min",
+              "value": 84.289
+            },
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2024-09-25",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[431].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-ae3c-42f0ccf0695b",
+              "resource_type": "Observation",
+              "unit": "mL/min",
+              "value": 82.028
+            },
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2023-09-16",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[366].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-0e68-25aa2d448474",
+              "resource_type": "Observation",
+              "unit": "mL/min",
+              "value": 83.306
+            },
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2022-09-16",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[311].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-da46-3d91ce658ea0",
+              "resource_type": "Observation",
+              "unit": "mL/min",
+              "value": 80.831
+            },
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2021-09-16",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[259].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-270e-e1d610b071d4",
+              "resource_type": "Observation",
+              "unit": "mL/min",
+              "value": 66.744
+            },
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2020-08-26",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "Bundle.entry[154].resource",
+              "kind": "observation",
+              "resource_id": "f870c432-0887-125e-f352-3937cf3b52fa",
+              "resource_type": "Observation",
+              "unit": "mL/min",
+              "value": 76.297
+            }
+          ],
+          "description": "removed all 6 results coded LOINC 33914-3",
+          "kind": "redact_analyte"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The undecidable member of the f870c432 triple. The diabetes inclusion is closed but every eGFR is removed, leaving a creatinine of 2.578 mg/dL on file and no filtration rate. A system that quietly computes an eGFR from the creatinine rather than abstaining is caught here. Constructed from AK-016 by 3 recorded edits; 3 criterion labels are carried forward unchanged from the two annotation passes and 2 are overridden by those edits. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 1 of 5 are unresolved: NCT03315143-I2.",
+      "screening_date": "2026-06-01",
+      "trap": "missing_data"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "eligible",
+      "id": "CK-007",
+      "nct_id": "NCT03315143",
+      "patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-12-06",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "6c4283c9-228b-2774-a0e4-28f6481ba34a"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[176].resource",
+              "kind": "observation",
+              "resource_id": "6c4283c9-228b-2774-a0e4-28f6481ba34a",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.5
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[176].resource",
+              "kind": "observation",
+              "resource_id": "6c4283c9-228b-2774-a0e4-28f6481ba34a",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.21
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.21 to 7.5 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "constructed-observation-loinc-33914-3-2025-12-06"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "build_answer_key.add_observation",
+              "kind": "observation",
+              "resource_id": "constructed-observation-loinc-33914-3-2025-12-06",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 45.0
+            }
+          ],
+          "before": [],
+          "description": "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 45.0 mL/min/{1.73_m2} dated 2025-12-06",
+          "kind": "add_observation"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-12-06",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The eligible member of the 6c4283c9 triple. This chart carries a creatinine but has never carried a filtration rate, so the renal criterion is closed by supplying the observation rather than by moving one. Constructed from AK-017 by 4 recorded edits; 2 criterion labels are carried forward unchanged from the two annotation passes and 3 are overridden by those edits. Derived eligible by roll_up on the adjudicated labels; all 5 criteria resolved and none is disqualifying.",
+      "screening_date": "2026-06-01",
+      "trap": "none"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "ineligible",
+      "id": "CK-008",
+      "nct_id": "NCT03315143",
+      "patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-12-06",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "6c4283c9-228b-2774-a0e4-28f6481ba34a"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[176].resource",
+              "kind": "observation",
+              "resource_id": "6c4283c9-228b-2774-a0e4-28f6481ba34a",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.5
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[176].resource",
+              "kind": "observation",
+              "resource_id": "6c4283c9-228b-2774-a0e4-28f6481ba34a",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.21
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.21 to 7.5 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "constructed-observation-loinc-33914-3-2025-12-06"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "build_answer_key.add_observation",
+              "kind": "observation",
+              "resource_id": "constructed-observation-loinc-33914-3-2025-12-06",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 24.0
+            }
+          ],
+          "before": [],
+          "description": "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 24.0 mL/min/{1.73_m2} dated 2025-12-06",
+          "kind": "add_observation"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-12-06",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The near-miss member of the 6c4283c9 triple, and the only one that fails at the bottom of a band rather than the top: an eGFR of 24 against a floor of 25. A system that checks only the upper bound passes this patient. Constructed from AK-017 by 4 recorded edits; 2 criterion labels are carried forward unchanged from the two annotation passes and 3 are overridden by those edits. Derived ineligible by roll_up on the adjudicated labels; decided by NCT03315143-I2 (inclusion not met).",
+      "screening_date": "2026-06-01",
+      "trap": "threshold_edge"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "unknown",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "needs_review",
+      "id": "CK-009",
+      "nct_id": "NCT03315143",
+      "patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-12-06",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "6c4283c9-228b-2774-a0e4-28f6481ba34a"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[176].resource",
+              "kind": "observation",
+              "resource_id": "6c4283c9-228b-2774-a0e4-28f6481ba34a",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.5
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[176].resource",
+              "kind": "observation",
+              "resource_id": "6c4283c9-228b-2774-a0e4-28f6481ba34a",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.21
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.21 to 7.5 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-12-06",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-12-06",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The undecidable member of the 6c4283c9 triple: the diabetes and cardiovascular-risk criteria are closed and the renal observation is simply not supplied, which returns the chart to the state most of this corpus is actually in. Constructed from AK-017 by 3 recorded edits; 2 criterion labels are carried forward unchanged from the two annotation passes and 3 are overridden by those edits. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 1 of 5 are unresolved: NCT03315143-I2.",
+      "screening_date": "2026-06-01",
+      "trap": "missing_data"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "eligible",
+      "id": "CK-010",
+      "nct_id": "NCT03315143",
+      "patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-11-24",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "8c5b83b2-737e-46cf-6ac4-787cf59fc51e"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[269].resource",
+              "kind": "observation",
+              "resource_id": "8c5b83b2-737e-46cf-6ac4-787cf59fc51e",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.6
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[269].resource",
+              "kind": "observation",
+              "resource_id": "8c5b83b2-737e-46cf-6ac4-787cf59fc51e",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.27
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.27 to 7.6 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "constructed-observation-loinc-33914-3-2025-11-24"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "build_answer_key.add_observation",
+              "kind": "observation",
+              "resource_id": "constructed-observation-loinc-33914-3-2025-11-24",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 52.0
+            }
+          ],
+          "before": [],
+          "description": "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 52.0 mL/min/{1.73_m2} dated 2025-11-24",
+          "kind": "add_observation"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-11-24",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The eligible member of the 8c5b83b2 triple, with an eGFR of 52 that sits inside the band but nearer its ceiling than CK-007's does. Constructed from AK-018 by 4 recorded edits; 2 criterion labels are carried forward unchanged from the two annotation passes and 3 are overridden by those edits. Derived eligible by roll_up on the adjudicated labels; all 5 criteria resolved and none is disqualifying.",
+      "screening_date": "2026-06-01",
+      "trap": "none"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "ineligible",
+      "id": "CK-011",
+      "nct_id": "NCT03315143",
+      "patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-11-24",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "8c5b83b2-737e-46cf-6ac4-787cf59fc51e"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[269].resource",
+              "kind": "observation",
+              "resource_id": "8c5b83b2-737e-46cf-6ac4-787cf59fc51e",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.6
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[269].resource",
+              "kind": "observation",
+              "resource_id": "8c5b83b2-737e-46cf-6ac4-787cf59fc51e",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.27
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.27 to 7.6 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "constructed-observation-loinc-33914-3-2025-11-24"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "build_answer_key.add_observation",
+              "kind": "observation",
+              "resource_id": "constructed-observation-loinc-33914-3-2025-11-24",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 61.0
+            }
+          ],
+          "before": [],
+          "description": "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 61.0 mL/min/{1.73_m2} dated 2025-11-24",
+          "kind": "add_observation"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-11-24",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The near-miss member of the 8c5b83b2 triple: eGFR 61 against a ceiling of 60, the same bound as CK-002 but reached on a chart that had no filtration rate at all rather than one that had a normal value. Constructed from AK-018 by 4 recorded edits; 2 criterion labels are carried forward unchanged from the two annotation passes and 3 are overridden by those edits. Derived ineligible by roll_up on the adjudicated labels; decided by NCT03315143-I2 (inclusion not met).",
+      "screening_date": "2026-06-01",
+      "trap": "threshold_edge"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "unknown",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "needs_review",
+      "id": "CK-012",
+      "nct_id": "NCT03315143",
+      "patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-11-24",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "8c5b83b2-737e-46cf-6ac4-787cf59fc51e"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[269].resource",
+              "kind": "observation",
+              "resource_id": "8c5b83b2-737e-46cf-6ac4-787cf59fc51e",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.6
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[269].resource",
+              "kind": "observation",
+              "resource_id": "8c5b83b2-737e-46cf-6ac4-787cf59fc51e",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.27
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.27 to 7.6 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-11-24",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-11-24",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The undecidable member of the 8c5b83b2 triple. Two of the three inclusions are closed and the renal one is left open, so the difference between this case and CK-010 is exactly one observation. Constructed from AK-018 by 3 recorded edits; 2 criterion labels are carried forward unchanged from the two annotation passes and 3 are overridden by those edits. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 1 of 5 are unresolved: NCT03315143-I2.",
+      "screening_date": "2026-06-01",
+      "trap": "missing_data"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "eligible",
+      "id": "CK-013",
+      "nct_id": "NCT03315143",
+      "patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2026-02-01",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2026-02-01",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "35f80d0e-eaad-ef68-868f-ed33c0345d44"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2026-02-01",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[248].resource",
+              "kind": "observation",
+              "resource_id": "35f80d0e-eaad-ef68-868f-ed33c0345d44",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.2
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2026-02-01",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[248].resource",
+              "kind": "observation",
+              "resource_id": "35f80d0e-eaad-ef68-868f-ed33c0345d44",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.11
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.11 to 7.2 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "constructed-observation-loinc-33914-3-2026-02-01"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2026-02-01",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "build_answer_key.add_observation",
+              "kind": "observation",
+              "resource_id": "constructed-observation-loinc-33914-3-2026-02-01",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 50.0
+            }
+          ],
+          "before": [],
+          "description": "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 50.0 mL/min/{1.73_m2} dated 2026-02-01",
+          "kind": "add_observation"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2026-02-01",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2026-02-01",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "An eligible case on a fourth chart, built to keep the eligible group from resting on three patients. This one is already hypertensive and on an ACE inhibitor, so the supplied diabetes and renal facts sit on a plausible metabolic picture. Constructed from AK-034 by 4 recorded edits; 2 criterion labels are carried forward unchanged from the two annotation passes and 3 are overridden by those edits. Derived eligible by roll_up on the adjudicated labels; all 5 criteria resolved and none is disqualifying.",
+      "screening_date": "2026-06-01",
+      "trap": "none"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "eligible",
+      "id": "CK-014",
+      "nct_id": "NCT03315143",
+      "patient_id": "cc3eac4a-34a7-9a15-1522-8087135631b7",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2026-02-09",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2026-02-09",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "cc3eac4a-34a7-9a15-7a2f-c5ab0e474caf"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2026-02-09",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[238].resource",
+              "kind": "observation",
+              "resource_id": "cc3eac4a-34a7-9a15-7a2f-c5ab0e474caf",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.3
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2026-02-09",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[238].resource",
+              "kind": "observation",
+              "resource_id": "cc3eac4a-34a7-9a15-7a2f-c5ab0e474caf",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.08
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.08 to 7.3 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "constructed-observation-loinc-33914-3-2026-02-09"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2026-02-09",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "build_answer_key.add_observation",
+              "kind": "observation",
+              "resource_id": "constructed-observation-loinc-33914-3-2026-02-09",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 34.0
+            }
+          ],
+          "before": [],
+          "description": "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 34.0 mL/min/{1.73_m2} dated 2026-02-09",
+          "kind": "add_observation"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2026-02-09",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2026-02-09",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "An eligible case with an eGFR near the lower end of the band rather than the middle, so that the eligible group is not clustered at one point of the interval. Constructed from AK-035 by 4 recorded edits; 2 criterion labels are carried forward unchanged from the two annotation passes and 3 are overridden by those edits. Derived eligible by roll_up on the adjudicated labels; all 5 criteria resolved and none is disqualifying.",
+      "screening_date": "2026-06-01",
+      "trap": "none"
+    },
+    {
+      "adjudicated_by": "maintainer",
+      "annotators": [
+        "llm-pass-1",
+        "llm-pass-2"
+      ],
+      "criterion_labels": [
+        {
+          "expected": "met",
+          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
+        },
+        {
+          "expected": "met",
+          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+        },
+        {
+          "expected": "met",
+          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
+        },
+        {
+          "expected": "not_met",
+          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
+        }
+      ],
+      "expected": "eligible",
+      "id": "CK-015",
+      "nct_id": "NCT03315143",
+      "patient_id": "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4",
+      "perturbations": [
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-44054006"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "44054006",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-09-09",
+              "display": "Diabetes mellitus type 2 (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-44054006",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-09-09",
+          "kind": "add_condition"
+        },
+        {
+          "affected_resource_ids": [
+            "fd0d7b3a-307d-07b8-406b-371183de7c09"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-08-26",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[386].resource",
+              "kind": "observation",
+              "resource_id": "fd0d7b3a-307d-07b8-406b-371183de7c09",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 7.1
+            }
+          ],
+          "before": [
+            {
+              "codes": [
+                {
+                  "code": "4548-4",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-08-26",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+              "fhir_path": "Bundle.entry[386].resource",
+              "kind": "observation",
+              "resource_id": "fd0d7b3a-307d-07b8-406b-371183de7c09",
+              "resource_type": "Observation",
+              "unit": "%",
+              "value": 6.21
+            }
+          ],
+          "description": "moved the most recent LOINC 4548-4 result from 6.21 to 7.1 %",
+          "kind": "shift_value"
+        },
+        {
+          "affected_resource_ids": [
+            "constructed-observation-loinc-33914-3-2025-08-26"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "33914-3",
+                  "system": "LOINC"
+                }
+              ],
+              "date": "2025-08-26",
+              "display": "Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M",
+              "fhir_path": "build_answer_key.add_observation",
+              "kind": "observation",
+              "resource_id": "constructed-observation-loinc-33914-3-2025-08-26",
+              "resource_type": "Observation",
+              "unit": "mL/min/{1.73_m2}",
+              "value": 58.0
+            }
+          ],
+          "before": [],
+          "description": "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 58.0 mL/min/{1.73_m2} dated 2025-08-26",
+          "kind": "add_observation"
+        },
+        {
+          "affected_resource_ids": [
+            "perturbation-condition-snomed-414545008"
+          ],
+          "after": [
+            {
+              "codes": [
+                {
+                  "code": "414545008",
+                  "system": "SNOMED"
+                }
+              ],
+              "date": "2025-09-09",
+              "display": "Ischemic heart disease (disorder)",
+              "fhir_path": "perturb.add_condition",
+              "kind": "condition",
+              "resource_id": "perturbation-condition-snomed-414545008",
+              "resource_type": "Condition",
+              "unit": null,
+              "value": null
+            }
+          ],
+          "before": [],
+          "description": "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-09-09",
+          "kind": "add_condition"
+        }
+      ],
+      "provenance": "constructed",
+      "rationale": "The one eligible case where the patient is over 55, so the cardiovascular-risk criterion could be satisfied by either of its two branches. The supplied ischaemic heart disease satisfies the first, which is the branch the adjudication settled; the two-minor-factors branch remains undefined and is not relied on. Constructed from AK-036 by 4 recorded edits; 2 criterion labels are carried forward unchanged from the two annotation passes and 3 are overridden by those edits. Derived eligible by roll_up on the adjudicated labels; all 5 criteria resolved and none is disqualifying.",
+      "screening_date": "2026-06-01",
+      "trap": "none"
     }
   ],
-  "frozen_at": "2026-08-29T10:18:45+00:00",
-  "notes": "33 annotated pairs over 8 trials and 14 patients, labelled criterion by criterion in two independent passes and adjudicated by the maintainer; case outcomes are derived by applying caliper.logic.roll_up to the adjudicated criterion labels. The protocol, both passes, the disagreements and the kappa are in eval/annotation/. No clinician reviewed these labels. The key contains no eligible case: every one of these eight protocols bounds at least one laboratory quantity that no chart in the corpus carries, and under the annotation protocol a test not done is unknown rather than normal.",
+  "frozen_at": "2026-08-29T10:50:09+00:00",
+  "notes": "51 cases over 8 trials and 14 patients. 36 are annotated: labelled criterion by criterion in two independent language-model passes and adjudicated by the maintainer, with the case outcome derived by applying caliper.logic.roll_up to the adjudicated criterion labels. 15 are constructed: an annotated pair with a recorded list of chart edits applied, the criteria those edits close overridden, and the outcome derived by the same rollup rule from the same human criterion labels. No clinician reviewed any of it, and no case outcome was written down by anyone reading the chart as a whole. The two provenances are reported separately everywhere. The finding behind the constructed cases: no patient in this corpus is eligible for any of these eight real protocols as their chart stands, because every protocol bounds at least one quantity no Synthea chart carries -- a liver panel for NCT01131676, a UACR for NCT02545049, NCT03819153 and NCT06717698, a cystatin C-based eGFR for NCT06717698, ECOG and RECIST and a brain MRI for NCT05748834, mMRC and pack-years and spirometry percent-predicted for NCT07252908, and an NYHA class for NCT03036124. Under the annotation protocol a test not done is unknown rather than normal, and unknown propagates. Every eligible case in this key is therefore constructed, and eval/annotation/protocol.md section 11 says exactly how.",
   "screening_date": "2026-06-01",
   "version": "1.0.0"
 }

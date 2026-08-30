@@ -23,6 +23,15 @@
   "approximations": [
     "the protocol anchors this window to consent, which was evaluated against the screening date"
   ],
+  "caveats": [
+    {
+      "text": "the protocol anchors this window to consent, which was evaluated against the screening date",
+      "criterion_ids": [
+        "INC-01",
+        "EXC-15"
+      ]
+    }
+  ],
   "absence_policy": {
     "value": "coverage_gated",
     "note": "coverage-gated, meaning a finding absent from the chart counts as absent only where an encounter documents the window"

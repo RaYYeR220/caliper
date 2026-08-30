@@ -243,3 +243,49 @@ class TestAgentAttribution:
         tape.record(request(user="b"), response="x", agent="compiler")
         tape.record(request(user="c"), response="x", agent="critic")
         assert tape.agents == {"compiler": 2, "critic": 1}
+
+
+class TestRecordingIsResumable:
+    """A recording run is long. Losing it to a crash halfway would be its own kind of bug."""
+
+    def test_recording_reuses_an_answer_it_already_has(self, tmp_path):
+        first, upstream = a_client([Reply("first")])
+        tape = Tape(tmp_path / "t.jsonl", mode="record")
+        transport = TapeTransport(tape, upstream=upstream, agent="compiler")
+        transport.chat.completions.create(**request())
+        transport.chat.completions.create(**request())
+        assert len(upstream.requests) == 1
+        assert first is not None
+
+    def test_a_new_question_is_still_asked(self, tmp_path):
+        _, upstream = a_client([Reply("a"), Reply("b")])
+        tape = Tape(tmp_path / "t.jsonl", mode="record")
+        transport = TapeTransport(tape, upstream=upstream, agent="compiler")
+        transport.chat.completions.create(**request(user="a"))
+        transport.chat.completions.create(**request(user="b"))
+        assert len(upstream.requests) == 2
+
+    def test_a_resumed_run_asks_only_what_is_missing(self, tmp_path):
+        seed = Tape(tmp_path / "t.jsonl", mode="record")
+        seed.record(request(user="a"), response="a", agent="compiler")
+        seed.save()
+
+        _, upstream = a_client([Reply("b")])
+        resumed = Tape(tmp_path / "t.jsonl", mode="record")
+        transport = TapeTransport(resumed, upstream=upstream, agent="compiler")
+        transport.chat.completions.create(**request(user="a"))
+        transport.chat.completions.create(**request(user="b"))
+        assert len(upstream.requests) == 1
+        assert len(resumed) == 2
+
+    def test_refresh_asks_again_even_when_the_answer_is_known(self, tmp_path):
+        seed = Tape(tmp_path / "t.jsonl", mode="record")
+        seed.record(request(), response="stale", agent="compiler")
+        seed.save()
+
+        _, upstream = a_client([Reply("fresh")])
+        refreshing = Tape(tmp_path / "t.jsonl", mode="refresh")
+        transport = TapeTransport(refreshing, upstream=upstream, agent="compiler")
+        reply = transport.chat.completions.create(**request())
+        assert len(upstream.requests) == 1
+        assert reply.choices[0].message.content == "fresh"

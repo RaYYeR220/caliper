@@ -151,7 +151,9 @@ STROKE = Concept(
 )
 TIA = Concept(
     text="transient ischaemic attack",
-    codes=(Code(system="SNOMED", code="266257000", display="Transient ischemic attack (disorder)"),),
+    codes=(
+        Code(system="SNOMED", code="266257000", display="Transient ischemic attack (disorder)"),
+    ),
 )
 
 

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -18,8 +19,28 @@ from rich.table import Table
 
 from caliper import corpus, evalcmd
 from caliper.agents.base import AgentContext
+from caliper.config import load_env
 from caliper.llm import LLMClient, Trajectory, has_api_key, profile_from_env
 from caliper.pipeline import DEFAULT_CONFIG, PipelineConfig, compile_trial, screen_patient
+
+
+def _use_utf8() -> None:
+    """Print protocol text without losing characters to a legacy console codepage.
+
+    Eligibility criteria are full of the unicode operators the registry stores them with, and a
+    Windows console defaults to a national codepage that cannot encode them. Without this, showing
+    a compiled criterion raises rather than printing.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            reconfigure(encoding="utf-8", errors="replace")
+
+
+_use_utf8()
+
+# Read `.env` before anything resolves a provider profile from the environment.
+load_env()
 
 app = typer.Typer(add_completion=False, help="Evidence-bound pre-screening for clinical trials.")
 data_app = typer.Typer(help="Inspect and verify the committed fixtures.")
