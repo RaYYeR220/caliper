@@ -117,9 +117,11 @@ what pre-screening is. [`LIMITS.md`](LIMITS.md) states the cost of that precisel
 Every unresolved criterion carries a **resolution hint**: the missing datum, where a coordinator
 would find it, the FHIR query that would close it, and which criterion it blocks.
 
-This is not decoration. A 2025 study of 259 clinicians found that a system abstaining without
-explanation did not remove errors so much as move them — missed diagnoses rose 18% and missed
-treatments 35% on the cases where the AI declined. Silence is not safety. A packet that says "I
+This is not decoration. "On the Limits of Selective AI Prediction: A Case Study in Clinical Decision
+Making" ([arXiv:2508.07617](https://arxiv.org/abs/2508.07617), 2025) put 259 clinicians in front of
+a system that abstained and said so, and found it did not remove errors so much as move them —
+missed diagnoses rose 18% and missed treatments 35% against no AI at all. Selective prediction
+assumes a clinician told "no answer" falls back to how they would have worked unaided. They do not. Silence is not safety. A packet that says "I
 cannot tell" and stops has handed the coordinator back the whole job; one that says "I cannot tell,
 because there is no creatinine result after 2025-11-14, and here is the query" has handed back a
 task.
@@ -253,8 +255,11 @@ novel. Saying so is cheaper than being told.
 - **TrialGPT** (Jin et al., *Nature Communications* 2024) already labels criteria
   `Included / Not included / Not enough information / Not applicable`, and reports 87.3% criterion-level
   accuracy with a 42.6% reduction in screening time.
-- **RECTIFIER** (Unlu et al., *NEJM AI* 2024) went further than any of this and ran a randomised
-  trial, roughly doubling enrolment rate against manual screening.
+- **RECTIFIER** (Unlu et al., *NEJM AI* 2024 — "Retrieval-Augmented Generation-Enabled GPT-4 for
+  Clinical Trial Screening", [doi:10.1056/AIoa2400181](https://ai.nejm.org/doi/full/10.1056/AIoa2400181))
+  went further than any of this: a RAG question-answering system over clinical notes, then a
+  randomised trial of 4,476 patients reporting roughly double the enrolment rate of manual
+  screening. Anyone claiming novelty in this area should read it first.
 - **TREC Clinical Trials** has used a three-way judgment separating "excluded" from "insufficient
   information" since 2021, and **n2c2 2018 Track 1** established the dual-expert annotation standard
   for cohort selection.

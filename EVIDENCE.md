@@ -76,7 +76,8 @@ Tiers:
 | Per-criterion abstention is not novel | VERIFIED | TrialGPT (Nat Commun 2024) labels criteria including "not enough information"; TREC Clinical Trials has separated "excluded" from "insufficient information" since 2021 |
 | Compiling criteria to executable form is not novel | VERIFIED | Criteria2Query (JAMIA 2019), OHDSI ATLAS cohort expressions compiled by `circe-be` |
 | Three-valued logic with null propagation is not novel | VERIFIED | the CQL logical specification; our evaluator implements the same semantics deliberately |
-| Abstention without explanation shifts errors rather than removing them | MODELLED | a 2025 study of 259 clinicians, described in `README.md`. We read it during design and did not re-verify it while offline; it carries no author or venue here, so treat it as the reasoning behind a design choice rather than as a checked citation |
+| Abstention without explanation shifts errors rather than removing them | VERIFIED | "On the Limits of Selective AI Prediction", [arXiv:2508.07617](https://arxiv.org/abs/2508.07617) — 259 clinicians, 18% more missed diagnoses and 35% more missed treatments when the AI abstained, against no AI at all |
+| A randomised trial has already roughly doubled enrolment rate with an LLM screener | VERIFIED | RECTIFIER, Unlu et al., *NEJM AI* 2024, [doi:10.1056/AIoa2400181](https://ai.nejm.org/doi/full/10.1056/AIoa2400181); 4,476 patients randomised. Cited so the prior art is not understated — we have measured nothing comparable |
 
 ## Claims the hot take makes
 

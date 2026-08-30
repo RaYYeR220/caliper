@@ -100,7 +100,7 @@ On the packet, the things worth looking at:
 
 - **The open items come first.** Every unresolved criterion names the missing datum, where to find
   it, and the FHIR query that would close it. Abstention that does not say what is missing has not
-  reduced the work, it has moved it — and a 2025 study of 259 clinicians found that abstention
+  reduced the work, it has moved it — and a 2025 study of 259 clinicians ([arXiv:2508.07617](https://arxiv.org/abs/2508.07617)) found that abstention
   without explanation shifted errors rather than removing them.
 - **Every value carries its pointer.** Value, unit, date, and the FHIR path it came from.
 - **The verdicts are distinguishable without colour.**
