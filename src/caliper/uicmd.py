@@ -103,6 +103,7 @@ def ui() -> None:
     collapsing into a bare `caliper ui` once it is mounted on the main CLI.
     """
 
+
 FIXTURE_NCT = "NCT01131676"
 
 CONSTRUCTED_NCT = "NCT03315143"
@@ -273,7 +274,8 @@ def _criteria_nct01131676(source_text: str) -> CriteriaSet:
             kind="inclusion",
             source_quote="Signed and dated informed consent",
             predicate=UnsupportedPredicate(
-                reason="consent is a site procedure and leaves no finding in the patient record"
+                reason="consent is a site procedure and leaves no finding in the patient record",
+                settlement="at_visit",
             ),
         ),
         Criterion(
@@ -312,7 +314,8 @@ def _criteria_nct01131676(source_text: str) -> CriteriaSet:
             kind="exclusion",
             source_quote="Planned cardiac surgery or angioplasty within 3 months",
             predicate=UnsupportedPredicate(
-                reason="a planned procedure is an intention, and the chart records events"
+                reason="a planned procedure is an intention, and the chart records events",
+                settlement="at_visit",
             ),
         ),
         Criterion(
@@ -388,7 +391,8 @@ def _criteria_nct01131676(source_text: str) -> CriteriaSet:
             kind="exclusion",
             source_quote="Contraindications to background therapy according to the local label",
             predicate=UnsupportedPredicate(
-                reason="the local label is not part of the patient record"
+                reason="the local label is not part of the patient record",
+                settlement="at_visit",
             ),
         ),
         Criterion(
@@ -457,7 +461,8 @@ def _criteria_nct01131676(source_text: str) -> CriteriaSet:
                 "to informed consent"
             ),
             predicate=UnsupportedPredicate(
-                reason="participation in another trial is not recorded in the chart"
+                reason="participation in another trial is not recorded in the chart",
+                settlement="at_visit",
             ),
         ),
         Criterion(
@@ -468,7 +473,8 @@ def _criteria_nct01131676(source_text: str) -> CriteriaSet:
                 "participating in this clinical trial"
             ),
             predicate=UnsupportedPredicate(
-                reason="the criterion is a catch-all reserved for the investigator"
+                reason="the criterion is a catch-all reserved for the investigator",
+                settlement="at_visit",
             ),
         ),
         Criterion(
@@ -603,7 +609,8 @@ def _criteria_nct03315143(source_text: str) -> CriteriaSet:
             kind="inclusion",
             source_quote="Signed written informed consent.",
             predicate=UnsupportedPredicate(
-                reason="consent is a site procedure and leaves no finding in the patient record"
+                reason="consent is a site procedure and leaves no finding in the patient record",
+                settlement="at_visit",
             ),
         ),
         Criterion(
@@ -625,7 +632,8 @@ def _criteria_nct03315143(source_text: str) -> CriteriaSet:
             kind="exclusion",
             source_quote="Planned coronary procedure or surgery after randomization.",
             predicate=UnsupportedPredicate(
-                reason="a planned procedure is an intention, and the chart records events"
+                reason="a planned procedure is an intention, and the chart records events",
+                settlement="at_visit",
             ),
         ),
         Criterion(
@@ -652,7 +660,8 @@ def _criteria_nct03315143(source_text: str) -> CriteriaSet:
             ),
             predicate=UnsupportedPredicate(
                 reason="starting a drug during the study is an intention, and the chart records "
-                "events"
+                "events",
+                settlement="at_visit",
             ),
         ),
     ]
@@ -1000,9 +1009,7 @@ def demo(
     charts = constructed_charts(CONSTRUCTED_NCT)
     constructed_records = screen_charts(second, [c.chart for c in charts], screening_date)
 
-    written = write_ui_bundle(
-        [*fixture_records, *second_records, *constructed_records], root=root
-    )
+    written = write_ui_bundle([*fixture_records, *second_records, *constructed_records], root=root)
     _annotate_bundle(
         root,
         {(CONSTRUCTED_NCT, chart.chart.patient_id): _provenance(chart) for chart in charts},

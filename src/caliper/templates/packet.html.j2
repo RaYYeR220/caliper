@@ -149,6 +149,12 @@
 
   .lede { margin: 0 0 1.75rem; color: var(--muted); }
 
+  .visit-list { margin: 0; padding: 0; list-style: none; }
+  .visit-list > li { border-top: 1px solid var(--rule); padding: 0.6rem 0; }
+  .visit-list > li:first-child { border-top: 0; padding-top: 0; }
+  .visit-list .cid { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+  .visit-list blockquote { margin: 0.2rem 0 0; }
+  .visit-list .warn { margin: 0.3rem 0 0; font-size: 0.85rem; color: var(--muted); }
   .open-list { margin: 0; padding: 0; list-style: none; counter-reset: item; }
 
   .open-list > li {
@@ -294,7 +300,7 @@
     body { padding: 0; background: #fff; }
     .packet { max-width: none; padding: 0; border: 0; background: #fff; }
     h2 { margin-top: 2rem; }
-    .open-list > li, tr { break-inside: avoid; }
+    .open-list > li, .visit-list > li, tr { break-inside: avoid; }
   }
 </style>
 </head>
@@ -395,6 +401,29 @@
       </li>
       {% endfor %}
     </ol>
+  </section>
+  {% endif %}
+
+  {% if packet.at_visit %}
+  <section id="at-visit">
+    <h2>Confirm at the screening visit</h2>
+    <p class="lede">
+      The decision above does not cover
+      {{ packet.at_visit|length }}
+      {{ "criterion" if packet.at_visit|length == 1 else "criteria" }},
+      because no record could answer them. Put each one to the patient in person.
+    </p>
+    <ul class="visit-list">
+      {% for check in packet.at_visit %}
+      <li>
+        <span class="cid">{{ check.criterion_id }}</span>
+        <blockquote>{{ check.quote }}</blockquote>
+        {% if check.can_still_exclude %}
+        <p class="warn">An exclusion: a yes here can still rule this patient out.</p>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
   </section>
   {% endif %}
 

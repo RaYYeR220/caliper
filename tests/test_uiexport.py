@@ -13,6 +13,7 @@ from "this run did not record open items" will get it wrong.
 
 from __future__ import annotations
 
+import dataclasses
 import json
 from datetime import date
 from pathlib import Path
@@ -45,7 +46,13 @@ from caliper.logic import ScreeningOutcome
 from caliper.pipeline import CompiledTrial, PipelineConfig, Screening
 from caliper.record import Evidence, PatientIndex
 from caliper.screen import screen
-from caliper.uiexport import ScreeningRecord, export_screening, export_trial, write_ui_bundle
+from caliper.uiexport import (
+    ScreeningRecord,
+    _screening_entry,
+    export_screening,
+    export_trial,
+    write_ui_bundle,
+)
 
 SCREENING = date(2026, 6, 1)
 TRIAL_TITLE = "A trial of something, in patients with something else"
@@ -525,3 +532,65 @@ def test_a_constructed_chart_carries_the_value_the_answer_key_says_was_supplied(
     assert egfr(near_miss.chart) == [24.0]
     assert near_miss.chart.patient_id != near_miss.case.patient_id
     assert any("33914-3" in edit for edit in near_miss.edits)
+
+
+# ------------------------------------------------------------------------------------------------
+# The questions the record was never going to answer
+# ------------------------------------------------------------------------------------------------
+
+
+def a_visit_screening() -> tuple[Screening, PatientIndex]:
+    """The same open screening, with two criteria only the screening visit can settle."""
+    trial = a_trial()
+    criteria = CriteriaSet(
+        nct_id=trial.criteria_set.nct_id,
+        source_text=trial.criteria_set.source_text,
+        criteria=[
+            *trial.criteria_set.criteria,
+            Criterion(
+                id="INC-90",
+                kind="inclusion",
+                source_quote="Signed written informed consent",
+                predicate=UnsupportedPredicate(reason="given at the visit", settlement="at_visit"),
+            ),
+            Criterion(
+                id="EXC-90",
+                kind="exclusion",
+                source_quote="Planning to start an SGLT2 inhibitor",
+                predicate=UnsupportedPredicate(reason="an intention", settlement="at_visit"),
+            ),
+        ],
+    )
+    patient = a_patient("visit-1", born=date(1970, 3, 2), hba1c=8.1)
+    trial = dataclasses.replace(trial, criteria_set=criteria)
+    return a_screening(trial, patient), patient
+
+
+def test_the_visit_questions_are_exported_with_their_quotes_and_kind() -> None:
+    screening, patient = a_visit_screening()
+    payload = export_screening(screening, patient, TRIAL_TITLE)
+
+    assert [item["criterion_id"] for item in payload["at_visit"]] == ["INC-90", "EXC-90"]
+    assert payload["at_visit"][0]["quote"] == "Signed written informed consent"
+    assert payload["at_visit"][1]["kind"] == "exclusion"
+
+
+def test_an_exclusion_left_to_the_visit_is_flagged_as_one_that_can_still_exclude() -> None:
+    screening, patient = a_visit_screening()
+    payload = export_screening(screening, patient, TRIAL_TITLE)
+
+    assert payload["at_visit"][0]["can_still_exclude"] is False
+    assert payload["at_visit"][1]["can_still_exclude"] is True
+
+
+def test_a_screening_with_no_visit_questions_exports_an_empty_list() -> None:
+    screening, patient = an_open_screening()
+
+    assert export_screening(screening, patient, TRIAL_TITLE)["at_visit"] == []
+
+
+def test_the_queue_entry_counts_them_so_a_coordinator_can_sort_on_it() -> None:
+    screening, patient = a_visit_screening()
+    payload = export_screening(screening, patient, TRIAL_TITLE)
+
+    assert _screening_entry(payload)["at_visit"] == 2

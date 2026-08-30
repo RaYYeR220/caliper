@@ -35,7 +35,14 @@ from caliper.ir import (
     UnsupportedPredicate,
     concepts_of,
 )
-from caliper.packet import ABSENCE_POLICY_NOTES, DISCLAIMER, VERDICT_LABELS, OpenItem, build_packet
+from caliper.packet import (
+    ABSENCE_POLICY_NOTES,
+    DISCLAIMER,
+    VERDICT_LABELS,
+    OpenItem,
+    VisitCheck,
+    build_packet,
+)
 from caliper.pipeline import CompiledTrial, Screening
 from caliper.record import Evidence, PatientIndex
 
@@ -239,6 +246,16 @@ def _open_item(item: OpenItem) -> dict[str, Any]:
 # ------------------------------------------------------------------------------------------------
 
 
+def _visit_check(check: VisitCheck) -> dict[str, Any]:
+    return {
+        "criterion_id": check.criterion_id,
+        "kind": check.kind,
+        "quote": check.quote,
+        "reason": check.reason,
+        "can_still_exclude": check.can_still_exclude,
+    }
+
+
 def export_trial(trial: CompiledTrial, trial_title: str) -> dict[str, Any]:
     """One trial's compilation, as the criteria review screen reads it.
 
@@ -337,6 +354,10 @@ def export_screening(
             "note": ABSENCE_POLICY_NOTES[result.absence_policy],
         },
         "open_items": [_open_item(item) for item in packet.open_items],
+        # Not open items. A question no chart was ever going to answer has nowhere to look and no
+        # query behind it, and putting it in the worklist would send a coordinator hunting a
+        # consent form through the record.
+        "at_visit": [_visit_check(check) for check in packet.at_visit],
         "criteria": [_result(r, by_id, rationales, decisive) for r in result.criteria],
         "rationales": {"total": result.criteria_total, "engine_written": packet.engine_written},
         "disclaimer": DISCLAIMER,
@@ -398,6 +419,7 @@ def _screening_entry(payload: dict[str, Any]) -> dict[str, Any]:
         "blocking_criterion_id": blocking["criterion_id"] if blocking else None,
         "deciding_criterion_ids": payload["deciding_criterion_ids"],
         "approximations": len(payload["approximations"]),
+        "at_visit": len(payload["at_visit"]),
     }
 
 

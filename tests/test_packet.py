@@ -28,6 +28,7 @@ from caliper.ir import (
     ObservationPredicate,
     PresencePredicate,
     TemporalWindow,
+    UnsupportedPredicate,
 )
 from caliper.logic import ScreeningOutcome
 from caliper.packet import (
@@ -609,3 +610,98 @@ class TestRecordedDeaths:
         assert packet.patient_summary == (
             "67 years old at screening, recorded sex female, died 2026-07-01"
         )
+
+
+# ------------------------------------------------------------------------------------------------
+# The questions the record was never going to answer
+# ------------------------------------------------------------------------------------------------
+
+CONSENT = Criterion(
+    id="INC-04",
+    kind="inclusion",
+    source_quote="Signed written informed consent",
+    predicate=UnsupportedPredicate(
+        reason="consent is given at the screening visit", settlement="at_visit"
+    ),
+)
+SGLT2 = Criterion(
+    id="EXC-02",
+    kind="exclusion",
+    source_quote="Planning to start an SGLT2 inhibitor during the study",
+    predicate=UnsupportedPredicate(reason="an intention, not a record", settlement="at_visit"),
+)
+UNFORMALISED = Criterion(
+    id="INC-05",
+    kind="inclusion",
+    source_quote="At least one major cardiovascular risk factor",
+    predicate=UnsupportedPredicate(reason="the protocol does not enumerate the category"),
+)
+
+
+def with_criteria(*extra: Criterion) -> CriteriaSet:
+    return CriteriaSet(
+        nct_id="NCT04000000", source_text=SOURCE, criteria=[*CRITERIA.criteria, *extra]
+    )
+
+
+class TestVisitChecks:
+    """A criterion no chart could settle is not a gap in the record. It is a question for the visit.
+
+    `ELIGIBLE` is only honest if the document says which questions are still open, so this section
+    is the one part of the packet that matters more on an eligible screening than on any other.
+    """
+
+    def a_visit_packet(self, criteria: CriteriaSet) -> Packet:
+        patient = a_patient("p-visit", [ENCOUNTER, CREATININE_ROW, HAEMOGLOBIN_ROW])
+        result = screen(criteria, patient, SCREENING)
+        return build_packet(
+            result, criteria, patient, deterministic_rationales(result), trial_title=TRIAL_TITLE
+        )
+
+    def test_a_question_only_the_visit_can_answer_is_listed_as_one(self):
+        packet = self.a_visit_packet(with_criteria(CONSENT, SGLT2))
+        assert [check.criterion_id for check in packet.at_visit] == ["INC-04", "EXC-02"]
+
+    def test_it_quotes_the_protocol_rather_than_paraphrasing_the_question(self):
+        packet = self.a_visit_packet(with_criteria(CONSENT))
+        assert packet.at_visit[0].quote == "Signed written informed consent"
+
+    def test_such_a_criterion_does_not_hold_the_verdict_open(self):
+        packet = self.a_visit_packet(with_criteria(CONSENT, SGLT2))
+        assert packet.decision is ScreeningOutcome.ELIGIBLE
+
+    def test_a_criterion_the_record_should_have_settled_is_not_a_visit_question(self):
+        packet = self.a_visit_packet(with_criteria(CONSENT, UNFORMALISED))
+        assert [check.criterion_id for check in packet.at_visit] == ["INC-04"]
+        assert packet.decision is ScreeningOutcome.NEEDS_REVIEW
+
+    def test_the_section_is_rendered_where_an_eligible_verdict_is_read(self):
+        markdown = render_markdown(self.a_visit_packet(with_criteria(CONSENT, SGLT2)))
+        assert "Confirm at the screening visit" in markdown
+        assert "Signed written informed consent" in markdown
+
+    def test_the_reader_is_told_the_verdict_does_not_cover_these(self):
+        markdown = render_markdown(self.a_visit_packet(with_criteria(CONSENT, SGLT2)))
+        heading = markdown.index("Confirm at the screening visit")
+        assert "no record could answer" in markdown[heading : heading + 400]
+
+    def test_an_exclusion_says_it_can_still_rule_the_patient_out(self):
+        markdown = render_markdown(self.a_visit_packet(with_criteria(SGLT2)))
+        assert "rule this patient out" in markdown
+
+    def test_a_screening_with_no_such_criterion_renders_no_section(self):
+        assert "Confirm at the screening visit" not in render_markdown(a_packet(ELIGIBLE_PATIENT))
+
+    def test_both_renderings_agree(self):
+        packet = self.a_visit_packet(with_criteria(CONSENT, SGLT2))
+        html = render_html(packet)
+        for check in packet.at_visit:
+            assert check.quote in html
+
+    def test_an_ineligible_patient_is_not_given_a_list_of_questions_to_ask(self):
+        patient = a_patient("p-visit", [ENCOUNTER, CREATININE_ROW, HAEMOGLOBIN_ROW, INFARCTION_ROW])
+        criteria = with_criteria(CONSENT)
+        result = screen(criteria, patient, SCREENING)
+        packet = build_packet(result, criteria, patient, deterministic_rationales(result))
+        assert result.decision is ScreeningOutcome.INELIGIBLE
+        assert packet.at_visit == ()

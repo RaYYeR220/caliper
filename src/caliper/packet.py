@@ -22,7 +22,7 @@ from jinja2 import Environment, StrictUndefined
 
 from caliper.evaluate import AbsencePolicy, CriterionResult
 from caliper.ir import CriteriaSet, Criterion
-from caliper.logic import ScreeningOutcome, Verdict
+from caliper.logic import CriterionKind, ScreeningOutcome, Verdict
 from caliper.record import Evidence, PatientIndex
 from caliper.screen import ScreeningResult
 
@@ -130,6 +130,26 @@ class OpenItem:
 
 
 @dataclass(frozen=True)
+class VisitCheck:
+    """One criterion no record was ever going to settle, put to the patient at the visit instead.
+
+    This is not an open item. An open item is a gap in the chart with somewhere to look; this is a
+    question that has no answer until a person is asked it, and chasing the record for it would be
+    a coordinator wasting an afternoon on a consent form.
+    """
+
+    criterion_id: str
+    kind: CriterionKind
+    quote: str
+    reason: str
+
+    @property
+    def can_still_exclude(self) -> bool:
+        """An exclusion settled at the visit can still rule the patient out after printing."""
+        return self.kind == "exclusion"
+
+
+@dataclass(frozen=True)
 class Packet:
     patient_id: str
     patient_summary: str
@@ -144,6 +164,9 @@ class Packet:
     caveats: tuple[Caveat, ...]
     deciding: tuple[CriterionRow, ...]
     open_items: tuple[OpenItem, ...]
+    at_visit: tuple[VisitCheck, ...]
+    """Criteria the screening deliberately left to the visit. On an eligible packet, the caveat."""
+
     rows: tuple[CriterionRow, ...]
     absence_policy: AbsencePolicy
     absence_policy_note: str
@@ -262,6 +285,20 @@ def build_packet(
             for hint in result.resolution_worklist
         )
 
+    # A patient the record already excludes is not going to be asked anything, so listing the
+    # visit questions on their packet would be busywork dressed as diligence.
+    at_visit: tuple[VisitCheck, ...] = ()
+    if result.decision is not ScreeningOutcome.INELIGIBLE:
+        at_visit = tuple(
+            VisitCheck(
+                criterion_id=outcome.criterion_id,
+                kind=outcome.kind,
+                quote=_quote_of(by_id.get(outcome.criterion_id)),
+                reason=outcome.rationale,
+            )
+            for outcome in result.to_confirm_at_visit
+        )
+
     return Packet(
         patient_id=patient.patient_id,
         patient_summary=_patient_summary(patient, result.screened_on),
@@ -274,6 +311,7 @@ def build_packet(
         caveats=caveats,
         deciding=deciding,
         open_items=open_items,
+        at_visit=at_visit,
         rows=rows,
         absence_policy=result.absence_policy,
         absence_policy_note=ABSENCE_POLICY_NOTES[result.absence_policy],
@@ -384,6 +422,7 @@ def render_markdown(packet: Packet) -> str:
     lines += _markdown_caveats(packet)
     lines += _markdown_deciding(packet)
     lines += _markdown_open_items(packet)
+    lines += _markdown_at_visit(packet)
     lines += _markdown_criteria(packet)
     lines += _markdown_footer(packet)
     return "\n".join(lines)
@@ -437,6 +476,33 @@ def _markdown_open_items(packet: Packet) -> list[str]:
             f"- FHIR query: `{item.fhir_query}`" if item.fhir_query else "- FHIR query: none",
             "",
         ]
+    return lines
+
+
+def _markdown_at_visit(packet: Packet) -> list[str]:
+    """The questions the verdict does not cover.
+
+    Printed after the open items and before the table, because a coordinator holding an eligible
+    packet needs to know what they still have to ask before they read forty settled criteria.
+    """
+    if not packet.at_visit:
+        return []
+    count = len(packet.at_visit)
+    subject = "criterion" if count == 1 else "criteria"
+    lines = [
+        "## Confirm at the screening visit",
+        "",
+        (
+            f"The decision above does not cover {count} {subject}, because no record could answer "
+            "them. Put each one to the patient in person."
+        ),
+        "",
+    ]
+    for check in packet.at_visit:
+        lines.append(f"- **{check.criterion_id}** {check.quote}")
+        if check.can_still_exclude:
+            lines.append("  - An exclusion: a yes here can still rule this patient out.")
+    lines.append("")
     return lines
 
 
