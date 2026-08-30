@@ -96,6 +96,16 @@ accepts absence only where an encounter documents the relevant window; the open-
 closed-world alternatives are implemented, measured, and reported side by side, because the size of
 that assumption belongs in the results rather than in a footnote.
 
+**A gap in the record is not the same as a question the record was never asked.** Every one of the
+ten protocols here contains a criterion no chart could ever answer — signed written informed consent,
+a procedure planned after randomisation, the investigator's judgement of the patient in person.
+Treating those as unresolved data made `ELIGIBLE` unreachable for all ten: one consent criterion and
+the screening abstains, whoever the patient is. So the compiler records which kind of unanswerable a
+criterion is. A question the record was supposed to settle still blocks; a question only the
+screening visit can settle is listed on the packet instead. `ELIGIBLE` therefore means *nothing in
+the record rules this patient out, and here are the N things to confirm when they come in* — which is
+what pre-screening is. [`LIMITS.md`](LIMITS.md) states the cost of that precisely.
+
 ### Abstention that does something
 
 Every unresolved criterion carries a **resolution hint**: the missing datum, where a coordinator

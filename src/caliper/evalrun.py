@@ -156,7 +156,7 @@ def run_arm(
     key: AnswerKey,
     arm: Arm,
     *,
-    load_patient: Callable[[str], PatientIndex],
+    load_patient: Callable[[Case], PatientIndex],
     load_criteria_text: Callable[[str], str] | None = None,
     cost_usd: float | None = None,
 ) -> ArmReport:
@@ -168,7 +168,10 @@ def run_arm(
 
     for case in key.cases:
         try:
-            patient = load_patient(case.patient_id)
+            # The whole case, not just the identifier: a constructed case is scored against the
+            # chart its perturbations describe, and loading the base chart instead would answer a
+            # question nobody asked, silently and plausibly.
+            patient = load_patient(case)
         except Exception as error:  # a chart that will not load is a failure, not an abstention
             failures.append(CaseFailure(case.id, "load_patient", str(error)))
             continue

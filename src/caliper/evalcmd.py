@@ -18,13 +18,21 @@ from rich.table import Table
 
 from caliper import corpus, report
 from caliper.agents.base import AgentContext
-from caliper.answerkey import AnswerKey, key_fingerprint, load_key, verify_frozen
+from caliper.answerkey import (
+    AnswerKey,
+    Case,
+    key_fingerprint,
+    load_key,
+    rebuild_patient,
+    verify_frozen,
+)
 from caliper.baselines import AlwaysEligible, AlwaysNeedsReview, RandomOutcome, SinglePrompt
 from caliper.evalrun import Arm, ArmReport, run_arm
 from caliper.evaluate import AbsencePolicy
 from caliper.ir import CriteriaSet
 from caliper.llm import LLMClient, Trajectory, profile_from_env, resolve_api_key
 from caliper.pipeline import PipelineConfig, compile_trial
+from caliper.record import PatientIndex
 from caliper.tape import DEFAULT_TAPE, Tape, TapeTransport
 
 app = typer.Typer(help="Run the evaluation and rebuild the results.")
@@ -95,6 +103,12 @@ def _compiler(
     return compile_for
 
 
+def _chart_for(case: Case) -> PatientIndex:
+    """The chart a case is about: the committed one, or the edited one it describes."""
+    base = corpus.load_patient(case.patient_id)
+    return rebuild_patient(case, base) if case.perturbations else base
+
+
 def _baseline(name: str, ctx: AgentContext):
     if name == "single_prompt":
         return SinglePrompt(ctx.client)
@@ -126,7 +140,7 @@ def _run(
             run_arm(
                 key,
                 arm,
-                load_patient=corpus.load_patient,
+                load_patient=_chart_for,
                 load_criteria_text=lambda nct: corpus.load_trial(nct).criteria_text,
                 cost_usd=(ctx.trajectory.total_usd() or 0.0) - before,
             )

@@ -258,3 +258,58 @@ class TestVerdictsAreNotSilentlyCoerced:
         result = screen(criteria(), patient(a1c=None), SCREENING)
         recorded = {c.criterion_id: c.verdict for c in result.criteria}
         assert recorded["INC-01"] is Verdict.UNKNOWN
+
+
+class TestConstructedCases:
+    """A case whose chart was edited must be scored against the edited chart.
+
+    Loading the base chart instead is silent: every constructed case still runs, still produces a
+    verdict, and the verdict answers a question nobody asked.
+    """
+
+    def a_case(self, case_id: str, patient_id: str = "p-1", **overrides) -> Case:
+        base = dict(
+            id=case_id,
+            patient_id=patient_id,
+            nct_id="NCT1",
+            screening_date=SCREENING,
+            expected=ScreeningOutcome.ELIGIBLE,
+            provenance="constructed",
+            trap="none",
+            rationale="because",
+            perturbations=({"kind": "add_observation", "description": "supplied HbA1c 8.1"},),
+        )
+        return Case(**{**base, **overrides})
+
+    def key(self, *cases: Case) -> AnswerKey:
+        return AnswerKey(
+            version="1", screening_date=SCREENING, cases=tuple(cases), frozen_at=None, notes=""
+        )
+
+    def test_the_loader_is_given_the_case_not_only_the_patient_id(self):
+        seen: list[str] = []
+
+        def load(case: Case) -> PatientIndex:
+            seen.append(case.id)
+            return patient(a1c=8.1)
+
+        arm = Arm(name="caliper", config=PipelineConfig(), compile_trial=lambda n: criteria())
+        run_arm(self.key(self.a_case("CK-001")), arm, load_patient=load)
+        assert seen == ["CK-001"]
+
+    def test_an_edited_chart_reaches_the_screening(self):
+        def load(case: Case) -> PatientIndex:
+            return patient(a1c=8.1 if case.perturbations else None)
+
+        arm = Arm(name="caliper", config=PipelineConfig(), compile_trial=lambda n: criteria())
+        report = run_arm(self.key(self.a_case("CK-001")), arm, load_patient=load)
+        assert report.scores[0].decision is ScreeningOutcome.ELIGIBLE
+
+    def test_a_chart_that_cannot_be_rebuilt_is_a_failure_not_a_verdict(self):
+        def load(case: Case) -> PatientIndex:
+            raise ValueError("a recorded edit did not apply")
+
+        arm = Arm(name="caliper", config=PipelineConfig(), compile_trial=lambda n: criteria())
+        report = run_arm(self.key(self.a_case("CK-001")), arm, load_patient=load)
+        assert report.scores == []
+        assert report.failures[0].stage == "load_patient"

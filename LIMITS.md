@@ -20,6 +20,33 @@ Caliper produces a pre-screening packet for a research coordinator. It never enr
 writes to a record, and has no path to any system that could. Eligibility is determined by the
 investigator. Every packet says so, and the design assumes a qualified human reads it.
 
+## What `ELIGIBLE` means, precisely
+
+Not "this patient is eligible for this trial". It means:
+
+> Nothing in this patient's record rules them out, every criterion the record was supposed to settle
+> has been settled with cited evidence, and these N criteria remain — each of which is settled at the
+> screening visit for every patient, and each of which is listed.
+
+That distinction is deliberate and it was forced on us by the data. Every one of the ten protocols in
+the corpus contains at least one criterion no chart could ever answer: signed written informed
+consent, a procedure planned after randomisation, the investigator's own judgement of the patient in
+person. Treating those as unresolved data made `ELIGIBLE` unreachable for all ten — one consent
+criterion and the screening abstains, whoever the patient is. That is not caution; it is a system
+that never says anything.
+
+So the compiler now records **which kind of unanswerable** a criterion is. A question the record was
+supposed to answer and we failed to formalise is a gap, and it still blocks. A question that only the
+screening visit can answer does not block, and appears on the packet under its own heading.
+
+The cost of this is real and worth stating: an exclusion settled at the visit — "planning to start an
+SGLT2 inhibitor during the study" — can still rule a patient out after Caliper has said `ELIGIBLE`.
+That is what pre-screening is. The packet exists so the coordinator knows exactly which questions are
+still open when the patient walks in.
+
+The default is the conservative one. A compiler that says nothing about which kind a criterion is
+cannot thereby unblock a verdict.
+
 ## Things Caliper genuinely cannot do
 
 - **Read a criterion that depends on judgement.** "Adequate organ function", "clinically
