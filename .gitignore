@@ -56,3 +56,9 @@ runs/*/raw/
 # --- os ---
 .DS_Store
 Thumbs.db
+
+# The second scoring run's trajectory. Both runs replay the same tape, so this file is byte-for-byte
+# the other one apart from timing — 42 MB saying nothing the first copy does not. `make eval`
+# regenerates it; `eval/results/trajectory.jsonl` is the one the cost figures and the trajectory
+# renderer are pointed at, and that one is committed.
+eval/results-v1/trajectory.jsonl
