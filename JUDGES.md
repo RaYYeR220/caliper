@@ -32,7 +32,9 @@ operating point on a risk-coverage curve, and the curve is printed underneath it
 Then look at two rows in the same table before believing any of it:
 
 - **`always_needs_review`** — a system that abstains on everything. It commits no unsafe error at
-  all, which is exactly why that number alone proves nothing.
+  all, which is exactly why that number alone proves nothing. Its coverage is 0%, and it reads 0%
+  only because an audit of our own documentation caught the metric counting a correct abstention as
+  an answer. It said 8% before that, and our own headline was eight points higher.
 - **the false-abstention column** — how often Caliper sent a *decidable* case to a human anyway.
   That is what abstaining on everything is bad at, and it is what stops the safety number from being
   free.
@@ -47,7 +49,8 @@ Two things to check, both fast.
 nothing from `caliper/agents/` or `caliper/llm/`. The dependency runs one way and a test asserts it.
 `grep -n "^from\|^import" src/caliper/evaluate.py` takes ten seconds.
 
-**`ELIGIBLE` is unreachable while anything is unresolved.** The rule is nineteen lines in
+**`ELIGIBLE` is unreachable while any criterion the record should have settled is unresolved.** The
+rule is nineteen lines in
 [`src/caliper/logic.py`](src/caliper/logic.py), in the `roll_up` function, and it is ordinary
 Python.
 
@@ -116,7 +119,7 @@ On the packet, the things worth looking at:
 |---|---|
 | What is real and what is simulated? | [`LIMITS.md`](LIMITS.md) |
 | What backs each claim in the README? | [`EVIDENCE.md`](EVIDENCE.md) |
-| Which design choice bought which number? | [`CHANGELOG.md`](CHANGELOG.md) |
+| Which design choice bought which number — including the two that bought nothing | [`CHANGELOG.md`](CHANGELOG.md) |
 | What did the agents actually do? | [`AGENTS.md`](AGENTS.md), [`trajectories/`](trajectories/) |
 | Where did the data come from? | [`data/DATA_SOURCE.md`](data/DATA_SOURCE.md) |
 | What did we get wrong? | The "What went wrong" section of [`AGENTS.md`](AGENTS.md), and the failure mode at the end of [`README.md`](README.md) |
@@ -136,3 +139,14 @@ On the packet, the things worth looking at:
 3. **Synthetic charts are tidier than real ones.** Synthea's laboratory values are drawn from
    distributions rather than tracking disease severity, and its own notes are templates — which is
    why the narrative cases use notes we wrote and label as such.
+
+## And two we found ourselves, which are in the table rather than in a footnote
+
+**Removing the critic improved the numbers.** 73% accuracy to 80%, 65% coverage to 73%, no unsafe
+errors either way. It is kept for a failure this key does not contain, and `CHANGELOG.md` says that
+in those words rather than claiming a benefit the run does not show.
+
+**Per-span compilation is refuted by its own evidence.** The argument was that compiling a whole
+protocol at once silently drops criteria — something accuracy cannot see, because a criterion nobody
+compiled is a criterion nobody gets wrong. The `Protocol claimed` column exists to see it. Both arms
+claim 100% of the spans in all eight protocols.
