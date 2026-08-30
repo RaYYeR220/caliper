@@ -60,6 +60,9 @@ Tiers:
 | Clinical notes are hand-authored for this project | VERIFIED | `data/notes/README.md` and `data/notes/manifest.json`; a test asserts every manifest quote appears verbatim in its note |
 | The fixtures are the ones the report was built from | REPRODUCIBLE | `caliper data verify` |
 | The result reproduces with no API key | REPRODUCIBLE | `caliper eval --replay`, from `eval/tape.jsonl` |
+| The result reproduces identically in a clean container | REPRODUCIBLE | `docker build -t caliper . && docker run --rm caliper`; every one of the eleven arms matches the host, checked after this claim was found to be false — see `CHANGELOG.md` |
+| A replay that cannot find its recording stops rather than answering | VERIFIED | `TapeMiss` propagates through the retry ladder; `tests/test_tape.py::TestAMissDuringReplayIsNotADegradation` |
+| The terminology store the run used is committed | VERIFIED | `.caliper/concepts.json`, un-ignored deliberately; a cold store made the container disagree with the host on eleven cases |
 | No credential is present in the recording | VERIFIED | the tape records the conversation and never the transport; `tests/test_tape.py` asserts a header cannot reach it |
 
 ## Claims about prior art

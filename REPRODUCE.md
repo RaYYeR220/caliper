@@ -19,6 +19,12 @@ docker run --rm caliper
 
 That prints the results table. It takes about a minute, most of it building the image.
 
+The container is the check, not a convenience. Every arm in it reports figures identical to a host
+run — which was **not** true the first time it was tried: a cold terminology store made the same
+tape produce eleven different verdicts with nothing on stdout to say so. `CHANGELOG.md` records
+what that was and what now makes it loud instead of silent. If your container disagrees with this
+table, that is a bug and we would like to hear about it.
+
 ---
 
 ## Without Docker
