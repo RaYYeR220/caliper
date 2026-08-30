@@ -248,14 +248,25 @@ it is expensive, once per patient.
 
 ## Hot take
 
-**Put the frontier model where it can be checked, and the checking will matter more than the
-model.** We ran the same evaluation with the full harness on a mid-tier open-weight model and with a
-frontier model answering the question directly, and the numbers are in [`RESULTS.md`](RESULTS.md).
-The general lesson we would carry into the next build: a system's reliability is set by how much of
-its output is verifiable by something other than another model, and every design decision that
-converts a judgement into a check buys more than upgrading the model does. The corollary is
-uncomfortable — most of what makes Caliper work is not the agentic part. It is the part that
-prevents the agent from being consulted.
+**A system's reliability is set by how much of its output is checkable by something that is not a
+model, and the agentic part is not where the reliability comes from.** The same frontier model,
+asked the question directly, is *more accurate* than Caliper on this key — 80% against 73% — and it
+sent two ineligible patients forward. Nothing about the agents produced that difference. What
+produced it is an evaluator with no import path to a provider and a rollup in which `ELIGIBLE` is
+unreachable while a criterion the record should have settled is open. The agents are there to turn
+prose into something that machinery can be wrong about *legibly*.
+
+The uncomfortable corollary is in our own ablations, and we published them rather than the story:
+removing the critic — an agent whose entire job is checking another agent — **improved** accuracy
+and coverage, and cost nothing in unsafe errors. Model-checks-model is the part of this design that
+paid least. The parts that paid were three-valued logic, a verbatim quote check, and refusing to
+convert a unit we had not vetted: three pieces of ordinary code, none of them agentic, all of them
+things a reviewer can read in an afternoon and disagree with.
+
+We would carry that forward as a rule. Spend the agent budget on getting a *reviewable artifact* out
+of the model — a predicate, a code, a quote — and spend everything after that on cheap deterministic
+checks against it. An extra agent in the loop is the most expensive check money can buy and, on the
+evidence here, not the best one.
 
 ---
 

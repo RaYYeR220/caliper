@@ -71,6 +71,16 @@ Tiers:
 | Three-valued logic with null propagation is not novel | VERIFIED | the CQL logical specification; our evaluator implements the same semantics deliberately |
 | Abstention without explanation shifts errors rather than removing them | VERIFIED | a 2025 study of 259 clinicians, cited in `README.md` |
 
+## Claims the hot take makes
+
+| Claim | Tier | Check it |
+|---|---|---|
+| The baseline is more accurate than Caliper on this key | MEASURED | `RESULTS.md`, arm table: 80% against 73% |
+| The baseline sent two ineligible patients forward and Caliper sent none | MEASURED | same table, unsafe-error column |
+| Removing the critic improved accuracy and coverage | MEASURED | `caliper-no-critic` row; the four cases it moved are named in `CHANGELOG.md` |
+| Neither difference is larger than the confidence interval | MEASURED | the CI column spans ~26 points at n=51 |
+| No cross-provider or open-weight comparison was run | NOT CLAIMED | there is no such arm in `evalcmd.ARMS`, and none in `RESULTS.md` |
+
 ---
 
 ## Not claimed
