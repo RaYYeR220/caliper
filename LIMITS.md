@@ -119,9 +119,12 @@ What we did about it:
   clinicians and we do not claim clinician review. The annotation protocol, the disagreements and
   the adjudication decisions are published with the key.
 - **The key is frozen and hashed.** `caliper eval` refuses to score against a key whose digest does
-  not match its sidecar. What that proves is narrower than it sounds: the sidecar lives in the same
-  tree and is written by the same script, so it shows the file has not been hand-edited since it was
-  frozen, not that it predates the results. The git history is what orders them.
+  not match its sidecar. What that proves is narrower than it sounds, in two ways. The digest covers
+  canonicalised content — `frozen_at` dropped, cases and object keys sorted — so it catches any
+  change to a label, a case or a perturbation, and deliberately ignores reformatting. And the
+  sidecar lives in the same tree and is written by the same script, so it shows nothing has been
+  edited since the freeze, not that the freeze predates the results. The git history is what orders
+  them.
 - **The key was corrected after the first scored run, and both versions ship.** That is the
   circumstance in which a correction is least trustworthy, so version one is kept unchanged and
   scored alongside version two, and every changed label is published in
