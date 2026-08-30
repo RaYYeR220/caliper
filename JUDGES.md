@@ -63,8 +63,16 @@ stop resolving under the default policy but keep resolving under the closed-worl
 true by construction and owe nothing to our judgement. The suite includes a deliberately broken case
 to prove the runner catches failures.
 
-**The answer key is frozen and hashed.** `caliper eval` refuses to score against a key whose digest
-does not match its sidecar (`eval/answer_key.json.sha256`), so the key demonstrably predates the results.
+**Two keys ship and both are scored.** The first scored run found errors in the first key — vital
+status was missing from the annotation protocol, and twenty of fifty-one cases are on patients who
+had died before the screening date. Version one is kept unchanged;
+[`eval/annotation/corrections.md`](eval/annotation/corrections.md) lists every changed label with the
+chart value that forced it. Correcting a key after seeing a run is exactly when a correction deserves
+least trust, which is why nothing was quietly replaced.
+
+`caliper eval` refuses to score against a key whose digest does not match its sidecar. That proves
+the file has not been hand-edited since freezing, not that it predates the results — the git history
+is what orders those, and we say so rather than implying more.
 [`eval/annotation/`](eval/annotation/) holds the annotation protocol, both independent passes, every
 disagreement with how it was decided, and the inter-annotator agreement. It is model-assisted dual
 annotation with human adjudication, and it says so — there was no clinician review and we do not
@@ -113,9 +121,12 @@ On the packet, the things worth looking at:
 
 ## The three things we would attack if this were someone else's
 
-1. **The answer key is ours.** Mitigated by the metamorphic suite, by freezing, and by deriving case
-   labels from criterion labels — but at fifty-odd cases the confidence intervals span roughly
-   thirteen percentage points, and differences smaller than that are not differences.
+1. **The answer key is ours, and we corrected it after seeing a run.** Mitigated by the metamorphic
+   suite, by publishing both versions and both tables, and by deriving case labels from criterion
+   labels rather than asserting them. But at fifty-odd cases the confidence intervals are wide, and
+   the corrected key expects `ineligible` for forty-one of fifty-one — which is why an
+   `always_ineligible` arm is in the results table beating real systems on raw accuracy, and why the
+   accuracy column is the least informative one there.
 2. **The trust moved rather than disappearing.** The evaluator cannot hallucinate, but it evaluates
    what the compiler gave it. Every guard narrows that surface without closing it. The honest
    mitigation is that compiled criteria are a small reviewable artifact approved once per protocol,

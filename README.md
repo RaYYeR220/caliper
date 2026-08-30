@@ -133,9 +133,17 @@ look first. This is one operating point on a risk-coverage curve in the sense of
 on everything. The **false-abstention rate** and an explicit always-abstain baseline are in the same
 table so that trade is visible rather than implied.
 
-The answer key was frozen and hashed before the first scored run; its digest is in
-[`eval/answer_key.json.sha256`](eval/) and `caliper eval` refuses to score against a key that no longer
-matches it.
+**Two answer keys ship, and both are scored.** The first scored run found errors in the first key —
+the annotation protocol had never mentioned vital status, and twenty of fifty-one cases are on
+patients who died before the screening date. Version one is kept unchanged, version two carries the
+corrections, and [`eval/annotation/corrections.md`](eval/annotation/corrections.md) records every
+changed label, the chart value that forced it, and the rule that bounded the change: a label moves
+only where the chart refutes it, never where the system merely disagreed. Correcting a key after
+seeing a run is the least trustworthy moment to correct one, which is why both ship.
+
+`caliper eval` refuses to score against a key whose digest does not match its sidecar. That proves
+the file has not been hand-edited since it was frozen — not that it predates the results. The git
+history is what orders those.
 
 ---
 
