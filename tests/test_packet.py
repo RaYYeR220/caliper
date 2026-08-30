@@ -8,6 +8,7 @@ network or escapes into markup: a packet is printed, filed, and read on machines
 
 from __future__ import annotations
 
+import dataclasses
 import json
 from datetime import date
 
@@ -608,7 +609,7 @@ class TestRecordedDeaths:
         assert packet.blocked_by is None
         assert packet.rows != ()
         assert packet.patient_summary == (
-            "67 years old at screening, recorded sex female, died 2026-07-01"
+            "67 years old at screening, recorded sex female, died 2026-07-01, after this screening"
         )
 
 
@@ -705,3 +706,39 @@ class TestVisitChecks:
         packet = build_packet(result, criteria, patient, deterministic_rationales(result))
         assert result.decision is ScreeningOutcome.INELIGIBLE
         assert packet.at_visit == ()
+
+
+class TestADeathAfterTheScreening:
+    """A date the reader should not have to compare against another date themselves.
+
+    Several charts in the corpus record a death weeks after the screening date. The patient was
+    alive and screenable on the day, and the packet is right to evaluate them — but a summary
+    reading "46 years old at screening, died 2026-05-03" beside a screening dated 2026-04-01 makes
+    the reader do the arithmetic, and the wrong answer is "this system screened a dead man".
+    """
+
+    def a_summary(self, deceased: date | None, *, undated: bool = False) -> str:
+        patient = a_patient(
+            "p-late", [ENCOUNTER, CREATININE_ROW, HAEMOGLOBIN_ROW], deceased=deceased
+        )
+        if undated:
+            patient = dataclasses.replace(patient, deceased_undated=True)
+        result = screen(CRITERIA, patient, SCREENING)
+        return build_packet(
+            result, CRITERIA, patient, deterministic_rationales(result)
+        ).patient_summary
+
+    def test_it_says_the_death_came_after_the_screening(self):
+        summary = self.a_summary(date(2026, 7, 3))
+
+        assert "died 2026-07-03, after this screening" in summary
+        assert "at screening" in summary
+
+    def test_a_death_before_the_screening_is_not_softened(self):
+        summary = self.a_summary(date(2026, 5, 3))
+
+        assert "died 2026-05-03" in summary
+        assert "after this screening" not in summary
+
+    def test_a_living_patient_is_not_given_a_date(self):
+        assert "died" not in self.a_summary(None)

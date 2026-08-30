@@ -413,11 +413,15 @@ def _patient_summary(patient: PatientIndex, as_of: date) -> str:
     if patient.sex:
         parts.append(f"recorded sex {patient.sex}")
     if patient.is_deceased():
-        parts.append(
-            f"died {patient.deceased.isoformat()}"
-            if patient.deceased is not None
-            else "recorded as deceased, no date given"
-        )
+        if patient.deceased is None:
+            parts.append("recorded as deceased, no date given")
+        elif dead_at_screening:
+            parts.append(f"died {patient.deceased.isoformat()}")
+        else:
+            # Said in words rather than left as two dates to compare. Several charts in the corpus
+            # record a death weeks after the screening date; the patient was screenable on the day,
+            # and a reader doing the arithmetic wrongly concludes we screened a dead man.
+            parts.append(f"died {patient.deceased.isoformat()}, after this screening")
     return ", ".join(parts) if parts else "no demographics on file"
 
 
