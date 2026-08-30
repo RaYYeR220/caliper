@@ -70,6 +70,12 @@ cannot thereby unblock a verdict.
 
 ## Where the absence rule can be wrong
 
+**On this corpus the choice makes no difference at all, which is its own limitation.** Scored against
+the answer key, coverage-gated and closed-world produce identical decisions on all fifty-one cases:
+every chart that could have separated them carries an encounter documenting the window, because
+Synthea patients attend regularly. So the assumption below is load-bearing in argument and inert in
+measurement, and this evaluation cannot tell you whether it is right.
+
 The default `AbsencePolicy.COVERAGE_GATED` accepts "the patient does not have this condition" when
 an encounter documents the relevant window, on the theory that a chart being maintained is evidence
 someone was looking. That is a modelling assumption, not a fact. A patient can attend a visit for an

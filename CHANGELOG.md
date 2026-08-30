@@ -72,6 +72,44 @@ corpus contains exactly one genuinely diabetic patient with an HbA1c over seven,
 weeks before the screening date.** No edit fixes that, and no unedited chart in this corpus is
 eligible for this trial.
 
+## What the ablations actually said
+
+The table above reads as a series of components that earned their place. The run does not support
+that reading for all of them, and the arms are in `RESULTS.md` precisely so nobody has to take the
+narrative's word for it. Comparing each ablation against `caliper` case by case, out of 51:
+
+| Arm | Cases it decided differently | Which way | What it did to the numbers |
+|---|---:|---|---|
+| `caliper-whole-protocol` | 2 | one each way | Nothing. Same accuracy, same coverage, same zero unsafe errors. |
+| `caliper-no-critic` | 4 | all `needs_review` → `ineligible` | **Removing the critic improved accuracy**, 73% to 80%, and coverage, 73% to 80%. No unsafe errors either way. |
+| `caliper-no-resolver` | 11 | all `needs_review` → `ineligible` | Coverage 73% to 88%, accuracy 73% to 71%. No unsafe errors either way. |
+| `caliper-closed-world` | **0** | — | Nothing at all. Not one of the 51 decisions moved. |
+| `caliper-open-world` | 4 | all `ineligible` → `needs_review` | Coverage 73% to 65%, accuracy 73% to 65%. |
+
+Three of those deserve to be said in words rather than left in a table.
+
+**The critic costs accuracy on this key and buys nothing measurable.** It downgrades four criteria
+that would otherwise have decided their case, and every one of those four cases was decided
+correctly without it. The honest reading is that the critic is insurance against a failure mode this
+answer key does not contain — a compiled predicate with a plausible wrong threshold, which our
+constructed cases perturb the *chart* to create rather than the predicate. It is kept because the
+failure it guards against is the expensive one and because a 7-point gap at n=51 sits well inside a
+26-point interval, but "kept on principle" is what that is, and entry 8 above should be read with
+this paragraph beside it.
+
+**Per-span compilation is unfalsified here, not vindicated.** Two cases moved, one in each
+direction. The argument for it — that whole-protocol compilation silently drops criteria — is
+measured by the span-coverage number rather than by accuracy, and this key is not the instrument for
+it.
+
+**The absence policy made no difference whatever.** `COVERAGE_GATED` and `CLOSED_WORLD` produced
+identical decisions on all 51 cases. `LIMITS.md` spends a section on how load-bearing the
+coverage-gated assumption is, and on this corpus it is load-bearing in theory only: every patient
+whose chart could have distinguished the two policies has an encounter documenting the window, so
+the gate never fires against a chart that would otherwise have gone closed-world. That is a fact
+about the corpus — Synthea patients attend regularly — and it means our safest-looking design choice
+is the one this evaluation has the least to say about.
+
 ## Bugs the process found
 
 None of these were visible from outside the layer they lived in. All four came from reading one
