@@ -10,6 +10,18 @@ export function shortId(id) {
   return String(id).split("-")[0];
 }
 
+/** What a chart is called wherever it is named.
+ *
+ * A constructed chart is three things at once — a real chart, a recorded case, and the edits
+ * between them — and a reader who sees only the first would be reading an edited chart as an
+ * observed one. So the case identifier is part of the name, everywhere, and not a badge that a
+ * narrow column or a sorted table could drop.
+ */
+export function chartName(patientId, constructed) {
+  if (!constructed) return shortId(patientId);
+  return `${shortId(constructed.base_patient_id)} · ${constructed.case_id}`;
+}
+
 export function plural(count, singular, many) {
   return `${count} ${count === 1 ? singular : many || `${singular}s`}`;
 }

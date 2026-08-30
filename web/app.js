@@ -7,7 +7,7 @@
  */
 
 import { announce, h, replace } from "./lib/dom.js";
-import { shortId } from "./lib/format.js";
+import { chartName } from "./lib/format.js";
 import { DataError, loadIndex } from "./lib/store.js";
 import { renderCriteria } from "./views/criteria.js";
 import { renderPacket } from "./views/packet.js";
@@ -25,32 +25,58 @@ function navLink(href, label, current) {
   return h("a", { href, ...(current ? { "aria-current": "page" } : {}) }, label);
 }
 
-function renderChrome(index, route) {
-  const trial = index.trials[0];
-  if (!trial) return replace(chrome);
+/* The trials in the bundle, as links to the same screen on another protocol. A packet is about one
+ * patient of one trial and has no counterpart under another, so switching from one falls back to
+ * that trial's queue rather than to a patient who may not be in it. */
+function trialLinks(index, route, current) {
+  if (index.trials.length < 2) return null;
+  const screen = route.screen === "trial" ? "trial" : "queue";
+  return h(
+    "nav",
+    { class: "nav", "aria-label": "Trials" },
+    index.trials.map((trial) =>
+      navLink(`#/${screen}/${trial.nct_id}`, trial.nct_id, trial.nct_id === current.nct_id),
+    ),
+  );
+}
 
-  const nct = route.params[0] || trial.nct_id;
+function renderChrome(index, route) {
+  if (!index.trials.length) return replace(chrome);
+
+  const nct = route.params[0] || index.trials[0].nct_id;
+  const trial = index.trials.find((t) => t.nct_id === nct) || index.trials[0];
   const links = [
-    navLink(`#/trial/${nct}`, "Criteria review", route.screen === "trial"),
-    navLink(`#/queue/${nct}`, "Screening queue", route.screen === "queue"),
+    navLink(`#/trial/${trial.nct_id}`, "Criteria review", route.screen === "trial"),
+    navLink(`#/queue/${trial.nct_id}`, "Screening queue", route.screen === "queue"),
   ];
   // The packet is a document about one patient, so it appears in the navigation only once a
   // patient is in hand. A third tab that guessed one would be a link to somebody arbitrary.
   if (route.screen === "packet" && route.params[1]) {
-    links.push(navLink(window.location.hash, `Packet · ${shortId(route.params[1])}`, true));
+    // Named from the index rather than from the route, so that a constructed chart carries its
+    // case here too. The identifier alone would read as the chart it was built from.
+    const entry = index.screenings.find(
+      (s) => s.nct_id === trial.nct_id && s.patient_id === route.params[1],
+    );
+    const name = chartName(route.params[1], entry && entry.constructed);
+    links.push(navLink(window.location.hash, `Packet · ${name}`, true));
   }
+
+  // The screening date is in the chrome rather than on one screen because it qualifies every
+  // number in the bundle, and it is not the date the rest of this repository uses.
+  const screenedOn = index.demo ? `screened ${index.demo.screened_on} · ` : "";
 
   replace(
     chrome,
     h(
       "div",
       { class: "chrome__inner" },
-      h("a", { class: "wordmark", href: `#/queue/${nct}` }, "Caliper"),
+      h("a", { class: "wordmark", href: `#/queue/${trial.nct_id}` }, "Caliper"),
       h("nav", { class: "nav", "aria-label": "Screens" }, links),
+      trialLinks(index, route, trial),
       h(
         "p",
         { class: "chrome__meta" },
-        `${trial.nct_id} · criteria fingerprint `,
+        `${screenedOn}criteria fingerprint `,
         h("span", { class: "pointer", title: trial.criteria_fingerprint },
           trial.criteria_fingerprint.slice(0, 12)),
       ),

@@ -8,13 +8,19 @@
  *
  * Filter and sort state outlives navigation. Opening a packet and coming back to a queue that had
  * forgotten its filter is the fastest way to make a working tool feel like a demo.
+ *
+ * Some cohorts mix charts as they were recorded with charts that were edited to supply a
+ * measurement the patient never had. That mark sits inside the identity cell, beside the
+ * identifier, so it survives every filter, every sort and every column this screen may ever grow.
+ * A badge that lived in a column of its own could be sorted away from the chart it qualifies, and
+ * an edited chart read as a recorded one is the one mistake this interface must not permit.
  */
 
 import { h, replace } from "../lib/dom.js";
-import { plural, shortId } from "../lib/format.js";
+import { chartName, plural, shortId } from "../lib/format.js";
 import { outcomeMark, tickBar } from "../lib/marks.js";
 
-const state = { verdict: "all", sort: "nearest", ascending: true, find: "" };
+const state = { verdict: "all", chart: "all", sort: "nearest", ascending: true, find: "" };
 
 /* The queue's own wording for the three outcomes. The packet says "Needs review before a decision"
  * at the head of a document, where the sentence earns its width; twenty-four rows deep in a column
@@ -32,13 +38,22 @@ const VERDICTS = [
   ["eligible", "Eligible"],
 ];
 
+/* Provenance is a filter of its own, because "show me only the charts nobody edited" is the
+ * question a reader asks the moment they learn that some of them were. */
+const CHARTS = [
+  ["all", "All"],
+  ["observed", "As recorded"],
+  ["constructed", "Constructed"],
+];
+
 const SORTS = {
   nearest: { label: "Nearest to a decision", ascending: true },
-  patient: { label: "Patient", ascending: true },
+  patient: { label: "Chart", ascending: true },
   verdict: { label: "Verdict", ascending: true },
   resolved: { label: "Criteria resolved", ascending: false },
   retrievable: { label: "Gaps a query would close", ascending: true },
   person: { label: "Gaps needing a person", ascending: true },
+  source: { label: "Constructed beneath its source chart", ascending: true, constructed: true },
 };
 
 /* How much work stands between this screening and a decision. Screenings a query could advance
@@ -52,6 +67,11 @@ function distance(row) {
   return [row.decision === "eligible" ? 2 : 3, 0, 0];
 }
 
+/** The chart a row is about: for a constructed screening, the chart it was built from. */
+function sourceId(row) {
+  return row.constructed ? row.constructed.base_patient_id : row.patient_id;
+}
+
 const KEYS = {
   nearest: distance,
   patient: (row) => [row.patient_id],
@@ -59,6 +79,9 @@ const KEYS = {
   resolved: (row) => [row.criteria_total ? row.criteria_resolved / row.criteria_total : -1],
   retrievable: (row) => [row.open_retrievable, ...distance(row)],
   person: (row) => [row.open_needing_a_person, ...distance(row)],
+  // The source chart first, then its constructed derivatives in case order. This is the ordering
+  // that brings a triple together inside the queue, with the unedited chart at the head of it.
+  source: (row) => [sourceId(row), row.constructed ? 1 : 0, row.constructed?.case_id || ""],
 };
 
 function compare(a, b, key, ascending) {
@@ -76,6 +99,8 @@ function compare(a, b, key, ascending) {
 
 function matches(row) {
   if (state.verdict !== "all" && row.decision !== state.verdict) return false;
+  if (state.chart === "constructed" && !row.constructed) return false;
+  if (state.chart === "observed" && row.constructed) return false;
   if (!state.find) return true;
   const needle = state.find.toLowerCase();
   const haystack = [
@@ -85,6 +110,7 @@ function matches(row) {
     row.blocked_by,
     row.blocking_criterion_id,
     ...row.deciding_criterion_ids,
+    ...(row.constructed ? [row.constructed.case_id, ...row.constructed.edits] : []),
   ];
   return haystack.some((field) => (field || "").toLowerCase().includes(needle));
 }
@@ -146,8 +172,29 @@ function blockingCell(row) {
   return h("td", { class: "blocking" }, h("span", { class: "micro" }, "Nothing outstanding"));
 }
 
-function row(entry) {
+/* The identity cell, and the only place a constructed chart could pass for a recorded one. The
+ * name carries the case, the hatched edge carries it without being read, and the line beneath says
+ * how far this chart is from the one it was built from. */
+function chartCell(entry) {
   const href = `#/packet/${entry.nct_id}/${encodeURIComponent(entry.patient_id)}`;
+  const built = entry.constructed;
+  return h(
+    "td",
+    { class: built ? "chart chart--constructed" : "chart" },
+    h("a", { class: "patient", href }, chartName(entry.patient_id, built)),
+    h("div", { class: "summary" }, entry.patient_summary),
+    built
+      ? h(
+          "div",
+          { class: "built" },
+          h("span", { class: "micro micro--inline" }, "Constructed"),
+          `${plural(built.edits.length, "edit")} to ${shortId(built.base_patient_id)}`,
+        )
+      : null,
+  );
+}
+
+function row(entry) {
   return h(
     "tr",
     { class: `row--${entry.decision}` },
@@ -156,12 +203,7 @@ function row(entry) {
       {},
       outcomeMark(entry.decision, SHORT_LABEL[entry.decision], { title: entry.decision_label }),
     ),
-    h(
-      "td",
-      {},
-      h("a", { class: "patient", href }, shortId(entry.patient_id)),
-      h("div", { class: "summary" }, entry.patient_summary),
-    ),
+    chartCell(entry),
     resolvedCell(entry),
     gapCell(entry.open_retrievable, "gaps a query would close"),
     gapCell(entry.open_needing_a_person, "gaps needing a person"),
@@ -206,7 +248,7 @@ function table(rows, rerender) {
           "tr",
           {},
           header("verdict", "Verdict", rerender),
-          header("patient", "Patient", rerender),
+          header("patient", "Chart", rerender),
           header("resolved", "Criteria resolved", rerender),
           header("retrievable", "Gaps a query would close", rerender),
           header("person", "Gaps needing a person", rerender),
@@ -240,6 +282,7 @@ function empty(rerender) {
         class: "button",
         onclick: () => {
           state.verdict = "all";
+          state.chart = "all";
           state.find = "";
           rerender();
         },
@@ -249,31 +292,40 @@ function empty(rerender) {
   );
 }
 
-function toolbar(all, rerender) {
-  const counts = { all: all.length };
-  VERDICTS.slice(1).forEach(([value]) => {
-    counts[value] = all.filter((r) => r.decision === value).length;
-  });
-
-  const filter = h(
+function segmented(label, options, counts, selected, choose) {
+  return h(
     "div",
-    { class: "segmented", role: "group", "aria-label": "Filter by verdict" },
-    VERDICTS.map(([value, label]) =>
-      h(
-        "button",
-        {
-          type: "button",
-          "aria-pressed": String(state.verdict === value),
-          onclick: () => {
-            state.verdict = value;
-            rerender();
+    { class: "field" },
+    h("span", { class: "micro" }, label),
+    h(
+      "div",
+      { class: "segmented", role: "group", "aria-label": `Filter by ${label.toLowerCase()}` },
+      options.map(([value, text]) =>
+        h(
+          "button",
+          {
+            type: "button",
+            "aria-pressed": String(selected === value),
+            onclick: () => choose(value),
           },
-        },
-        label,
-        h("span", { class: "count" }, String(counts[value])),
+          text,
+          h("span", { class: "count" }, String(counts[value])),
+        ),
       ),
     ),
   );
+}
+
+function toolbar(all, sorts, rerender) {
+  const verdicts = { all: all.length };
+  VERDICTS.slice(1).forEach(([value]) => {
+    verdicts[value] = all.filter((r) => r.decision === value).length;
+  });
+  const charts = {
+    all: all.length,
+    observed: all.filter((r) => !r.constructed).length,
+    constructed: all.filter((r) => r.constructed).length,
+  };
 
   const sort = h(
     "select",
@@ -285,7 +337,7 @@ function toolbar(all, rerender) {
         rerender();
       },
     },
-    Object.entries(SORTS).map(([value, meta]) =>
+    sorts.map(([value, meta]) =>
       h("option", { value, ...(state.sort === value ? { selected: true } : {}) }, meta.label),
     ),
   );
@@ -294,7 +346,7 @@ function toolbar(all, rerender) {
     id: "queue-find",
     type: "search",
     value: state.find,
-    placeholder: "patient, criterion or missing datum",
+    placeholder: "chart, case, criterion or missing datum",
     oninput: (event) => {
       state.find = event.target.value;
       rerender({ keepFocus: "queue-find" });
@@ -304,27 +356,204 @@ function toolbar(all, rerender) {
   return h(
     "div",
     { class: "toolbar" },
-    h("div", { class: "field" }, h("span", { class: "micro" }, "Verdict"), filter),
-    h(
-      "div",
-      { class: "field" },
-      h("label", { class: "micro", for: "queue-sort" }, "Order"),
-      sort,
-    ),
+    segmented("Verdict", VERDICTS, verdicts, state.verdict, (value) => {
+      state.verdict = value;
+      rerender();
+    }),
+    // Offered only where there is something to tell apart, so a cohort nobody edited does not
+    // grow a control that can never change what it shows.
+    charts.constructed
+      ? segmented("Chart", CHARTS, charts, state.chart, (value) => {
+          state.chart = value;
+          rerender();
+        })
+      : null,
+    h("div", { class: "field" }, h("label", { class: "micro", for: "queue-sort" }, "Order"), sort),
     h("div", { class: "field" }, h("label", { class: "micro", for: "queue-find" }, "Find"), find),
   );
+}
+
+/* Why no row says eligible, stated rather than left to be found by filtering to a verdict that
+ * never appears. The counts come from the compilation: a protocol whose every criterion could be
+ * formalised would drop this panel of its own accord. */
+function finding(trial, all) {
+  if (all.some((entry) => entry.decision === "eligible")) return null;
+  const built = all.filter((e) => e.constructed && e.constructed.key_outcome === "eligible");
+  return h(
+    "div",
+    { class: "panel panel--dashed" },
+    h("h3", {}, "Nothing in this cohort is eligible, and that is a finding"),
+    h(
+      "p",
+      { class: "note" },
+      `Eligible needs every criterion resolved. ${trial.unsupported} of this protocol's ` +
+        `${trial.criteria} could not be formalised from a record at all, so they read unresolved ` +
+        "against every chart and no chart can clear them. That is a fact about the protocol " +
+        "rather than about these patients.",
+    ),
+    built.length
+      ? h(
+          "p",
+          { class: "note" },
+          `${built.length} of the charts below were edited until the frozen answer key calls them ` +
+            "eligible on the criteria it scopes in, and Caliper still stops at needs review. Each " +
+            "of those packets names the criteria that stopped it.",
+        )
+      : null,
+  );
+}
+
+/** Which of a group's edits belong to one member alone: the number the comparison turns on. */
+function separator(entries) {
+  const shared = new Map();
+  entries.forEach((entry) =>
+    entry.constructed.edits.forEach((edit) => shared.set(edit, (shared.get(edit) || 0) + 1)),
+  );
+  return (entry) => entry.constructed.edits.filter((edit) => shared.get(edit) < entries.length);
+}
+
+/* An edit the whole group makes tells a reader nothing about why the group's members differ, so
+ * the column carries only the edits that are not common to all of them. Where that leaves nothing,
+ * the row says so: an absent measurement is a difference too, and is the point of a third case. */
+function differenceCell(entry, edits) {
+  if (!entry.constructed) {
+    return h(
+      "td",
+      { class: "separator" },
+      h("span", { class: "quiet" }, "not edited: the chart as the corpus records it"),
+    );
+  }
+  if (!edits.length) {
+    return h(
+      "td",
+      { class: "separator" },
+      h("span", { class: "quiet" }, "nothing: it makes only the edits the whole group makes"),
+    );
+  }
+  return h("td", { class: "separator" }, edits.map((edit) => h("p", {}, edit)));
+}
+
+function comparisonRow(entry, edits) {
+  return h(
+    "tr",
+    { class: `row--${entry.decision}` },
+    h(
+      "td",
+      { class: entry.constructed ? "chart chart--constructed" : "chart" },
+      h(
+        "a",
+        {
+          class: "patient",
+          href: `#/packet/${entry.nct_id}/${encodeURIComponent(entry.patient_id)}`,
+        },
+        chartName(entry.patient_id, entry.constructed),
+      ),
+    ),
+    differenceCell(entry, edits),
+    h(
+      "td",
+      {},
+      outcomeMark(entry.decision, SHORT_LABEL[entry.decision], { title: entry.decision_label }),
+    ),
+    blockingCell(entry),
+  );
+}
+
+/* The comparison the queue cannot make while it is also a worklist: one chart, screened two or
+ * three times, one supplied number apart, with the unedited chart at the head of each group. Every
+ * value here is already in the index, so the whole section costs no request. */
+function comparisons(all) {
+  const byChart = new Map();
+  all.forEach((entry) => {
+    if (!entry.constructed) return;
+    const source = entry.constructed.base_patient_id;
+    if (!byChart.has(source)) byChart.set(source, []);
+    byChart.get(source).push(entry);
+  });
+
+  const groups = [...byChart.entries()]
+    .filter(([, entries]) => entries.length > 1)
+    .map(([source, entries]) => ({
+      source,
+      recorded: all.find((e) => !e.constructed && e.patient_id === source),
+      entries: entries.slice().sort((a, b) =>
+        a.constructed.case_id < b.constructed.case_id ? -1 : 1,
+      ),
+    }));
+  if (!groups.length) return [];
+
+  return [
+    h("h2", {}, "The same chart, one number apart"),
+    h(
+      "p",
+      { class: "lede" },
+      "Each group is one chart screened against this trial more than once, the members differing " +
+        "only in the value supplied for a single measurement. Reading down a group shows the " +
+        "bound being evaluated rather than approximated: inside it, one unit outside it, and " +
+        "absent.",
+    ),
+    h(
+      "div",
+      { class: "scroller" },
+      h(
+        "table",
+        { class: "queue" },
+        h(
+          "thead",
+          {},
+          h(
+            "tr",
+            {},
+            h("th", { scope: "col" }, "Chart"),
+            h("th", { scope: "col" }, "Where this row differs from the rest of its group"),
+            h("th", { scope: "col" }, "Verdict"),
+            h("th", { scope: "col" }, "What happens next"),
+          ),
+        ),
+        groups.map((group) => {
+          const separating = separator(group.entries);
+          return h(
+            "tbody",
+            {},
+            h(
+              "tr",
+              { class: "group" },
+              h(
+                "th",
+                { scope: "rowgroup", colspan: "4" },
+                `Chart ${shortId(group.source)}`,
+                h(
+                  "span",
+                  { class: "quiet" },
+                  ` · ${plural(group.entries.length, "constructed screening")}` +
+                    (group.recorded ? ", and the chart they were built from" : ""),
+                ),
+              ),
+            ),
+            group.recorded ? comparisonRow(group.recorded, []) : null,
+            group.entries.map((entry) => comparisonRow(entry, separating(entry))),
+          );
+        }),
+      ),
+    ),
+  ];
 }
 
 export async function renderQueue(index, nctId) {
   const trial = index.trials.find((t) => t.nct_id === nctId) || index.trials[0];
   const all = index.screenings.filter((s) => s.nct_id === trial.nct_id);
+  const constructed = all.some((s) => s.constructed);
+  const sorts = Object.entries(SORTS).filter(([, meta]) => constructed || !meta.constructed);
+  // A sort carried over from a cohort that had constructed charts would leave the select showing
+  // no selection at all on one that does not.
+  if (!sorts.some(([value]) => value === state.sort)) state.sort = "nearest";
   const body = h("div", {});
 
   const rerender = (options = {}) => {
     const rows = all.filter(matches).sort((a, b) => compare(a, b, state.sort, state.ascending));
     replace(
       body,
-      toolbar(all, rerender),
+      toolbar(all, sorts, rerender),
       h(
         "p",
         { class: "note" },
@@ -369,8 +598,11 @@ export async function renderQueue(index, nctId) {
           `against ${plural(trial.criteria, "compiled criterion", "compiled criteria")}. ` +
           `${open === 1 ? "One screening is" : `${open} screenings are`} still open.`,
       ),
+      index.demo ? h("p", { class: "lede note" }, index.demo.screening_date_note) : null,
+      finding(trial, all),
     ),
     body,
+    ...comparisons(all),
   );
 
   return { title: `Screening queue · ${trial.nct_id}`, content };

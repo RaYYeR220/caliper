@@ -12,13 +12,47 @@ python -m caliper.cli ui demo          # write web/data from the committed fixtu
 python -m http.server --directory web  # then open the address it prints
 ```
 
-`ui demo` needs no API key, no network and no model call. It compiles NCT01131676 from a
-hand-written `CriteriaSet` standing in for the compiler's output, runs the real critic machinery,
-the real evaluator and the real packet builder over the committed FHIR bundles, and writes one JSON
-file per screening plus an index. Everything on screen is a value the system produced.
+`ui demo` needs no API key, no network and no model call. It compiles NCT01131676 and NCT03315143
+from hand-written `CriteriaSet`s standing in for the compiler's output, runs the real critic
+machinery, the real evaluator and the real packet builder over the committed FHIR bundles, and
+writes one JSON file per screening plus an index. Everything on screen is a value the system
+produced.
+
+The bundle is screened on **2026-04-01**, not the 2026-06-01 that the answer key and the rest of
+this repository use. The corpus's only patient with a type 2 diabetes diagnosis is recorded as
+having died on 2026-05-03, so screening on the later date closes that screening on the death before
+a criterion is read and leaves the cohort with no open work in it at all. Every screen states the
+date and the reason; `caliper ui demo --as-of 2026-06-01` reproduces the other reading.
 
 Opening `index.html` from the file system will not work: ES modules and `fetch` are both blocked on
 `file://`, and the page says so rather than rendering blank.
+
+## Two cohorts, and why some of the charts were edited
+
+**No chart in this corpus is eligible for any of these real protocols as it stands, and none can
+be.** That is two findings stacked on each other. The annotation found that every one of the eight
+protocols in the answer key bounds at least one quantity no Synthea chart carries — a liver panel
+for NCT01131676, a UACR, an NYHA class, an ECOG score — and a test that was not done is unresolved
+rather than normal. The compiler adds the sharper half: sixteen of NCT01131676's twenty-two criteria
+and six of NCT03315143's eight cannot be formalised from a record at all, and `ELIGIBLE` is
+unreachable while any criterion is unresolved. The queue says so on both trials rather than leaving
+it to be discovered by filtering to a verdict that never appears.
+
+So the demo carries a second cohort, and marks it everywhere. The fifteen screenings on NCT03315143
+whose identifier carries a `CK-` case number are **constructed**: charts from
+[`eval/answer_key.json`](../eval/answer_key.json) that were edited to supply a measurement the
+patient never had, so that a bound the protocol states could be crossed on purpose. Seven of them
+the key derives as eligible on the criteria it scopes in; four are ineligible by one unit; four are
+undecidable because the measurement was removed instead. Caliper still stops at needs review on all
+seven of the eligible ones, and each of those packets names the criteria that stopped it.
+
+Every constructed screening carries its case number in its name, a hatched edge in the queue and on
+the packet, and — above the verdict, before anything derived from the chart — the frozen key's own
+list of what was changed. The queue filters and sorts on the distinction, and its last section puts
+each edited chart beside the two or three siblings that differ from it by one supplied number, with
+the unedited chart at the head of the group. The construction method, the perturbation vocabulary
+and what the whole device costs are in
+[`eval/annotation/protocol.md`](../eval/annotation/protocol.md), section 11.
 
 ## Why there is no build step
 
@@ -43,7 +77,9 @@ verdict, how many criteria resolved out of how many, and what stands between the
 decision. It sorts and filters by verdict, and its default order is an opinion: nearest to a
 decision first, ranked by the gaps a FHIR query would close. A patient blocked by one missing lab is
 a phone call; a patient blocked by nine is not; and a patient blocked only by criteria that need a
-person reading the protocol is neither, which is why those are counted in their own column.
+person reading the protocol is neither, which is why those are counted in their own column. Where a
+cohort mixes recorded charts with constructed ones it also filters on that, and sorts constructed
+screenings directly beneath the chart they were built from.
 
 **Screening packet** (`#/packet/<nct>/<patient>`) — one patient. The verdict, any approximation the
 verdict rests on, and then the open items before anything else, each with the missing datum, where
@@ -64,6 +100,10 @@ The three criterion verdicts differ in shape, fill and border, never in colour:
 
 Screening outcomes use the printed packet's border vocabulary: a solid rule for eligible, a double
 rule for not eligible, a dashed rule for a screening still open.
+
+A chart that was edited before it was screened is hatched — the notation a drawing uses for
+material that has been cut into. It is a texture rather than a colour or an icon, so it survives a
+greyscale printout, and it never sits on the edge that carries the verdict.
 
 ## Layout of the source
 
