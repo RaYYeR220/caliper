@@ -3,6 +3,10 @@
 A guided path through the parts worth checking, in the order that makes them checkable. Every claim
 below links to the thing that backs it, so nothing has to be taken on trust.
 
+If you have five minutes and no terminal: the **[demo video](https://youtu.be/CTto-zN2oMk)** covers
+the problem, one screening end to end, the comparison, and the experiment we removed. The
+**[live interface](https://rayyer220.github.io/caliper/)** needs nothing installed.
+
 ---
 
 ## One minute — does it run, and is it the same code that produced the numbers?

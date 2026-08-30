@@ -15,6 +15,9 @@ to decide, each one carrying the exact datum that would resolve it — and, for 
 ever going to answer, a way for a person to answer them that cannot overturn what the record said.
 See [`examples/`](examples/).
 
+**[Five-minute demo](https://youtu.be/CTto-zN2oMk)** · **[the interface, live](https://rayyer220.github.io/caliper/)** ·
+**[results](RESULTS.md)** · **[how to check all of it](JUDGES.md)**
+
 ---
 
 ## Who this is for
@@ -226,8 +229,10 @@ make data-verify     # every fixture matches its committed digest
 make eval            # the headline result, from recorded responses
 ```
 
-The coordinator interface is published at **<https://rayyer220.github.io/caliper/>** — the same
-static files as `web/` in this repository, with no build step and no external request. `caliper ui
+There is a **[five-minute walkthrough](https://youtu.be/CTto-zN2oMk)** if you would rather watch
+than run anything. The coordinator interface is published at
+**<https://rayyer220.github.io/caliper/>** — the same static files as `web/` in this repository,
+with no build step and no external request. `caliper ui
 demo` regenerates its data locally.
 
 Full instructions, including the live path and what it costs, are in
