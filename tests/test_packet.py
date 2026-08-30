@@ -379,6 +379,28 @@ class TestHtmlSafety:
         assert "<link" not in html
 
 
+class TestTheVerdictSlug:
+    """`CriterionRow.verdict_slug` is read only by the Jinja template, never from Python.
+
+    Which makes it look unused to anything that greps the `.py` files, and it is not: the stylesheet
+    colours a row by its class. This is the test that says so, so the next reader who goes looking
+    for dead code finds the answer rather than removing the column and the colour with it.
+    """
+
+    def test_each_verdict_reaches_the_page_as_a_class_a_stylesheet_can_match(self):
+        html = render_html(a_packet(REVIEW_PATIENT))
+
+        assert 'class="row--met"' in html
+        assert "verdict--unresolved" in html
+
+    def test_the_slug_is_an_identifier_rather_than_the_printed_label(self):
+        packet = a_packet(REVIEW_PATIENT)
+        slugs = {row.verdict_slug for row in packet.rows}
+
+        assert slugs <= {"met", "not-met", "unresolved"}
+        assert not any(" " in slug for slug in slugs)
+
+
 class TestAgreement:
     def test_markdown_and_html_agree_on_the_verdict_and_the_open_items(self):
         for patient in (ELIGIBLE_PATIENT, INELIGIBLE_PATIENT, REVIEW_PATIENT):

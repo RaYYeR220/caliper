@@ -27,7 +27,13 @@ from caliper.answerkey import (
     rebuild_patient,
     verify_frozen,
 )
-from caliper.baselines import AlwaysEligible, AlwaysNeedsReview, RandomOutcome, SinglePrompt
+from caliper.baselines import (
+    AlwaysEligible,
+    AlwaysIneligible,
+    AlwaysNeedsReview,
+    RandomOutcome,
+    SinglePrompt,
+)
 from caliper.evalrun import Arm, ArmReport, run_arm
 from caliper.evaluate import AbsencePolicy
 from caliper.ir import CriteriaSet
@@ -52,10 +58,11 @@ ARMS: dict[str, PipelineConfig | None] = {
     "single_prompt": None,
     "always_needs_review": None,
     "always_eligible": None,
+    "always_ineligible": None,
     "random": None,
 }
 
-BASELINE_ARMS = ("single_prompt", "always_needs_review", "always_eligible", "random")
+
 
 
 def _compile_key(config: PipelineConfig) -> tuple[int, bool, bool, bool]:
@@ -117,6 +124,8 @@ def _baseline(name: str, ctx: AgentContext):
         return AlwaysNeedsReview()
     if name == "always_eligible":
         return AlwaysEligible()
+    if name == "always_ineligible":
+        return AlwaysIneligible()
     return RandomOutcome(seed=20260601)
 
 

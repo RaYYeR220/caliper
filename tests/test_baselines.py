@@ -120,3 +120,27 @@ class TestTrivialBaselines:
         }
         assert len(names) == 4
         assert all(names)
+
+
+class TestTheMajorityBaseline:
+    """The key expects `ineligible` for forty-one of fifty-one cases after the vital-status
+    correction, so a system that answers only that scores well without doing anything. It is in the
+    table for the same reason `always_needs_review` is: a degenerate arm that beats a real one is a
+    fact about the metric, and hiding it would make the metric look better than it is."""
+
+    def test_it_answers_ineligible_to_everything(self):
+        from caliper.baselines import AlwaysIneligible
+
+        assert AlwaysIneligible().decide(CRITERIA, patient(), SCREENING).outcome is (
+            ScreeningOutcome.INELIGIBLE
+        )
+
+    def test_it_costs_nothing(self):
+        from caliper.baselines import AlwaysIneligible
+
+        assert AlwaysIneligible().decide(CRITERIA, patient(), SCREENING).cost_usd == 0.0
+
+    def test_it_has_its_own_name(self):
+        from caliper.baselines import AlwaysEligible, AlwaysIneligible
+
+        assert AlwaysIneligible().name != AlwaysEligible().name

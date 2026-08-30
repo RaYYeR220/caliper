@@ -112,6 +112,17 @@ def AlwaysEligible() -> _Fixed:  # noqa: N802
     return _Fixed(ScreeningOutcome.ELIGIBLE, "always_eligible")
 
 
+def AlwaysIneligible() -> _Fixed:  # noqa: N802
+    """The majority answer, and the reason accuracy is the weakest column in the table.
+
+    Most patients are not eligible for most trials, and the corrected key expects `ineligible` for
+    forty-one of fifty-one cases. A system that answers only that scores well while deciding
+    nothing, so it belongs beside the real arms where a reader can see it — the same argument that
+    puts `always_needs_review` there.
+    """
+    return _Fixed(ScreeningOutcome.INELIGIBLE, "always_ineligible")
+
+
 class RandomOutcome:
     """A seeded coin, so the floor of the results table is reproducible."""
 
