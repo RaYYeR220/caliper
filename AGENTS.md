@@ -108,9 +108,11 @@ is where the judgement belongs. It found twenty-two, including the two most dama
 submission — a metric whose name and definition had drifted apart, and three required files an
 unanchored `.gitignore` rule had kept out of every clone. `CHANGELOG.md` has the full account.
 
-It also refuted two claims that had been written *about the agents themselves*, which is the right
-way round: the process description is a claim like any other, and it was checked against the git
-history rather than taken on trust.
+It went at this file too, which is the right way round: a process description is a claim like any
+other. One claim here was refuted — the sentence above pointing at `trajectories/` for the coding
+agents, which was true of the working tree and false of every clone. One was confirmed the hard way:
+"one commit whose test suite did not parse", below, was checked by parsing every test file at all
+sixty-one commits, and there is exactly one.
 
 ### Discipline that was enforced, not hoped for
 
