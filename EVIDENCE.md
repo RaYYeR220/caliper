@@ -33,6 +33,10 @@ Tiers:
 | A patient recorded as deceased before screening is never eligible | VERIFIED | `screen` in `caliper/screen.py`, `tests/test_screen.py` |
 | Every unresolved criterion carries what would resolve it | VERIFIED | `ResolutionHint`, asserted for every predicate type in `tests/test_evaluate.py` |
 | Perturbing an input changes the verdict in the required direction | REPRODUCIBLE | `pytest tests/test_metamorphic.py` — relations true by construction |
+| Only a criterion the record was supposed to settle blocks a verdict | VERIFIED | `UnsupportedPredicate.settlement` in `caliper/ir.py`, `roll_up` in `logic.py`, `tests/test_settlement.py` |
+| A compiler that says nothing about settlement cannot unblock a verdict | VERIFIED | the default is `from_data`; asserted in `tests/test_settlement.py` |
+| A constructed case is scored against the chart it describes | VERIFIED | `run_arm` takes the case, not the identifier; `tests/test_evalrun.py` |
+| Both systems are shown the same patient | VERIFIED | the chart summary states a recorded death; `tests/test_chart.py` |
 
 ## Claims about the numbers
 
@@ -43,6 +47,7 @@ Tiers:
 | Every ablation's effect | MEASURED | one row per arm in `RESULTS.md`; the arms are defined in `caliper/evalcmd.py` |
 | The answer key predates the results | VERIFIED | `eval/answer_key.json.sha256`; `caliper eval` refuses a key whose digest does not match |
 | Inter-annotator agreement | MEASURED | `eval/annotation/kappa.md`, with its contingency table |
+| The key was corrected after the first scored run | VERIFIED | `eval/annotation/corrections.md`, with the run, the rule and every changed label; version one ships unchanged as `eval/answer_key.v1.json` and is scored alongside |
 | Confidence intervals | VERIFIED | exact Clopper-Pearson, `caliper/metrics.py`, checked against a textbook value in `tests/test_metrics.py` |
 | Cost per run | MEASURED | `caliper costs eval/results/trajectory.jsonl` |
 
@@ -95,3 +100,11 @@ Written out because a claims list is only as useful as the things it excludes.
   not cover. The oncology trial is included to show a limit honestly, not to be scored well.
 - **No claim that the coverage-gated absence rule is correct.** It is a modelling assumption. The
   alternatives are implemented and reported beside it so the size of the assumption is visible.
+- **No claim that the corrected answer key is right, only that it is less wrong.** The corrections
+  were made after seeing a scored run, which is the circumstance in which a correction is least
+  trustworthy. Both keys ship, both are scored, and the rule that bounded every change — a label
+  moved only where the chart refutes it, with the refuting value quoted — is published so a reader
+  can disagree line by line.
+- **No claim that `ELIGIBLE` means the patient is eligible.** It means nothing in the record rules
+  them out and the criteria that remain are settled at the screening visit. An exclusion settled at
+  the visit can still rule them out afterwards. `LIMITS.md` states the cost precisely.

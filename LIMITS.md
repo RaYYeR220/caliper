@@ -102,8 +102,17 @@ What we did about it:
 - **Annotated cases are labelled by model-assisted dual annotation with adjudication.** We are not
   clinicians and we do not claim clinician review. The annotation protocol, the disagreements and
   the adjudication decisions are published with the key.
-- **The key is frozen and hashed before the first scored run.** The digest is in `README.md` and
-  `caliper eval` refuses to score against a key whose digest does not match its sidecar.
+- **The key is frozen and hashed.** `caliper eval` refuses to score against a key whose digest does
+  not match its sidecar. What that proves is narrower than it sounds: the sidecar lives in the same
+  tree and is written by the same script, so it shows the file has not been hand-edited since it was
+  frozen, not that it predates the results. The git history is what orders them.
+- **The key was corrected after the first scored run, and both versions ship.** That is the
+  circumstance in which a correction is least trustworthy, so version one is kept unchanged and
+  scored alongside version two, and every changed label is published in
+  `eval/annotation/corrections.md` with the chart value that refutes the old one. The rule was: a
+  label moves only where the chart refutes it, never where the system merely disagreed. Two things
+  forced it — the annotation protocol never mentioned vital status, and every constructed eligible
+  case rested on a diabetes criterion the charts underneath contradict.
 - **Fifty-odd cases is a small sample.** Every proportion is reported with an exact Clopper-Pearson
   interval, and at this n the interval is roughly ±13 percentage points. Differences smaller than
   that are not differences.
