@@ -7,7 +7,8 @@ Caliper reads a trial's eligibility criteria as the registry publishes them, com
 an executable predicate, and evaluates those predicates against a patient's record with ordinary
 Python. A language model never issues the verdict. It cannot: the module that produces a screening
 decision has no import path to the module that talks to a provider, and the decision itself runs on
-three-valued logic in which `ELIGIBLE` is unreachable while any criterion is unresolved.
+three-valued logic in which `ELIGIBLE` is unreachable while any criterion the record was supposed to
+settle is still unresolved.
 
 The interesting output is therefore not the eligible patients. It is the criteria the system refuses
 to decide, each one carrying the exact datum that would resolve it.
@@ -52,7 +53,7 @@ flowchart TB
     subgraph code["Code alone decides this"]
         direction TB
         E["<b>Retrieve</b><br/>FHIR bundle → evidence rows<br/>with units, dates, pointers"] --> F["<b>Evaluate</b><br/>Kleene three-valued logic<br/>MET / NOT_MET / UNKNOWN"]
-        F --> G["<b>Roll up</b><br/>UNKNOWN propagates:<br/>ELIGIBLE needs every criterion"]
+        F --> G["<b>Roll up</b><br/>UNKNOWN propagates: ELIGIBLE needs<br/>every criterion the record can settle"]
     end
 
     D --> E
