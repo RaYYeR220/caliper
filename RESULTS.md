@@ -12,19 +12,19 @@ At this sample size an exact binomial interval spans about 26 percentage points.
 
 ## Every arm
 
-| Arm | Cases | Accuracy | Balanced | 95% CI | Coverage | Unsafe errors | False abstention | Coverage at 0 unsafe | Cost |
-|---|---:|---:|---:|---|---:|---:|---:|---:|---:|
-| `caliper` | 51 | 73% | 60% | 58%–84% | 65% | 0 | 30% | 65% | $6.54 |
-| `caliper-whole-protocol` | 51 | 73% | 60% | 58%–84% | 65% | 0 | 30% | 65% | $2.60 |
-| `caliper-no-critic` | 51 | 80% | 63% | 67%–90% | 73% | 0 | 21% | 73% | $5.96 |
-| `caliper-no-resolver` | 51 | 71% | 37% | 56%–83% | 86% | 0 | 13% | 86% | $6.54 |
-| `caliper-closed-world` | 51 | 73% | 60% | 58%–84% | 65% | 0 | 30% | 65% | $0.00 |
-| `caliper-open-world` | 51 | 65% | 57% | 50%–78% | 57% | 0 | 38% | 57% | $0.00 |
-| `single_prompt` | 51 | 80% | 60% | 67%–90% | 84% | 2 | 15% | 0% | $0.96 |
-| `always_needs_review` | 51 | 8% | 33% | 2%–19% | 0% | 0 | 100% | 0% | $0.00 |
-| `always_eligible` | 51 | 12% | 33% | 4%–24% | 100% | 45 | 0% | 0% | $0.00 |
-| `always_ineligible` | 51 | 80% | 33% | 67%–90% | 100% | 0 | 0% | 100% | $0.00 |
-| `random` | 51 | 29% | 24% | 17%–44% | 71% | 18 | 30% | 0% | $0.00 |
+| Arm | Cases | Accuracy | Balanced | 95% CI | Coverage | Unsafe errors | False abstention | Coverage at 0 unsafe | Protocol claimed | Cost |
+|---|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|
+| `caliper` | 51 | 73% | 60% | 58%–84% | 65% | 0 | 30% | 65% | 100% | $6.54 |
+| `caliper-whole-protocol` | 51 | 73% | 60% | 58%–84% | 65% | 0 | 30% | 65% | 100% | $2.60 |
+| `caliper-no-critic` | 51 | 80% | 63% | 67%–90% | 73% | 0 | 21% | 73% | 100% | $5.96 |
+| `caliper-no-resolver` | 51 | 71% | 37% | 56%–83% | 86% | 0 | 13% | 86% | 100% | $6.54 |
+| `caliper-closed-world` | 51 | 73% | 60% | 58%–84% | 65% | 0 | 30% | 65% | 100% | $0.00 |
+| `caliper-open-world` | 51 | 65% | 57% | 50%–78% | 57% | 0 | 38% | 57% | 100% | $0.00 |
+| `single_prompt` | 51 | 80% | 60% | 67%–90% | 84% | 2 | 15% | 0% | — | $0.96 |
+| `always_needs_review` | 51 | 8% | 33% | 2%–19% | 0% | 0 | 100% | 0% | — | $0.00 |
+| `always_eligible` | 51 | 12% | 33% | 4%–24% | 100% | 45 | 0% | 0% | — | $0.00 |
+| `always_ineligible` | 51 | 80% | 33% | 67%–90% | 100% | 0 | 0% | 100% | — | $0.00 |
+| `random` | 51 | 29% | 24% | 17%–44% | 71% | 18 | 30% | 0% | — | $0.00 |
 
 The `Coverage at 0 unsafe` column is the operating point: the share of cases an arm decided by itself, or nothing at all if it committed an unsafe error. Safety is a precondition there rather than something to trade coverage against.
 

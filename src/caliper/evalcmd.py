@@ -322,4 +322,5 @@ def _load_arm(path: Path) -> ArmReport:
         cost_usd=payload.get("cost_usd"),
         blockers=[Blocker(**row) for row in payload.get("blockers", [])],
         screenings=payload.get("screenings", 0),
+        span_coverage=tuple(payload.get("span_coverage", (0, 0))),
     )

@@ -495,3 +495,34 @@ class TestTheDocument:
 
 def table_rows(table: str) -> list[str]:
     return table.splitlines()
+
+
+class TestSpanCoverageInTheTable:
+    """The per-span argument's own evidence, printed where the arms are compared.
+
+    Accuracy cannot see a criterion that went missing during compilation — nobody gets a criterion
+    wrong that nobody compiled — so the column that separates `caliper` from
+    `caliper-whole-protocol` is the share of protocol text some criterion claims, and it belongs in
+    the table rather than in a command's stdout.
+    """
+
+    def an_arm(self, name: str, coverage: tuple[int, int]) -> ArmReport:
+        return ArmReport(
+            arm=name, scores=[], summary=summarise([], arm=name), span_coverage=coverage
+        )
+
+    def test_the_column_appears_when_an_arm_compiled_something(self):
+        table = arm_table([self.an_arm("caliper", (58, 60))])
+
+        assert "Protocol claimed" in table
+        assert "97%" in table
+
+    def test_an_arm_that_compiled_nothing_gets_a_dash_rather_than_a_zero(self):
+        table = arm_table([self.an_arm("single_prompt", (0, 0))])
+
+        assert "| — |" in table
+
+    def test_the_column_is_dropped_when_no_arm_has_the_figure(self):
+        table = arm_table([self.an_arm("always_eligible", (0, 0))])
+
+        assert "Protocol claimed" not in table

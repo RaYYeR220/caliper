@@ -15,10 +15,11 @@ from __future__ import annotations
 
 import json
 import time
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from caliper.agents.critic import coverage_report
 from caliper.answerkey import AnswerKey, Case
 from caliper.baselines import Baseline
 from caliper.blockers import Blocker, blocking_criteria
@@ -117,6 +118,15 @@ class ArmReport:
     screenings: int = 0
     """How many screenings the blocker counts are out of, so a share can be worked out from them."""
 
+    span_coverage: tuple[int, int] = (0, 0)
+    """Spans of protocol text some criterion claims, over spans segmented. `(0, 0)` for an arm that
+    compiled nothing — a baseline, which is handed the protocol whole and produces no criteria.
+
+    This is the figure the per-span argument actually turns on. Accuracy cannot see a criterion that
+    went missing during compilation, because a criterion nobody compiled is a criterion nobody gets
+    wrong; the only way it shows is as a piece of the protocol no criterion claims.
+    """
+
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -145,6 +155,7 @@ class ArmReport:
                 for expected, group in by_expected(self.scores).items()
             },
             "screenings": self.screenings,
+            "span_coverage": list(self.span_coverage),
             "blockers": [
                 {
                     "nct_id": b.nct_id,
@@ -187,6 +198,20 @@ class ArmReport:
     def write_json(self, path: Path) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(self.to_dict(), indent=2, sort_keys=True), encoding="utf-8")
+
+
+def span_coverage(criteria_sets: Sequence[CriteriaSet]) -> tuple[int, int]:
+    """Spans some criterion claims, over spans segmented, across every trial an arm compiled.
+
+    Summed across trials rather than averaged: a protocol with sixty spans and one with eight are
+    not two equally-weighted opinions about how well compilation went.
+    """
+    claimed = total = 0
+    for criteria_set in criteria_sets:
+        coverage = coverage_report(criteria_set)
+        claimed += len(coverage.claimed_span_indices)
+        total += coverage.total_spans
+    return claimed, total
 
 
 def run_arm(
@@ -249,4 +274,5 @@ def run_arm(
         cost_usd=cost_usd,
         blockers=blocking_criteria(screenings, criteria_sets=list(compiled.values())),
         screenings=len(screenings),
+        span_coverage=span_coverage(list(compiled.values())),
     )

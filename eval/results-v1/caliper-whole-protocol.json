@@ -1605,6 +1605,10 @@
   ],
   "screenings": 51,
   "selective_risk": 0.36363636363636365,
+  "span_coverage": [
+    193,
+    193
+  ],
   "unsafe": 0,
-  "wall_seconds": 1.874
+  "wall_seconds": 1.207
 }

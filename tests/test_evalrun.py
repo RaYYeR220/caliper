@@ -11,7 +11,14 @@ from datetime import date
 
 from caliper.answerkey import AnswerKey, Case
 from caliper.blockers import Blocker
-from caliper.evalrun import Arm, ArmReport, forced_outcome, run_arm, score_screening
+from caliper.evalrun import (
+    Arm,
+    ArmReport,
+    forced_outcome,
+    run_arm,
+    score_screening,
+    span_coverage,
+)
 from caliper.evaluate import AbsencePolicy
 from caliper.ir import (
     Code,
@@ -21,6 +28,7 @@ from caliper.ir import (
     DemographicPredicate,
     ObservationPredicate,
     PresencePredicate,
+    UnsupportedPredicate,
 )
 from caliper.logic import ScreeningOutcome, Verdict
 from caliper.metrics import summarise
@@ -339,3 +347,56 @@ def test_a_blocker_keeps_its_own_trial_denominator_through_the_json() -> None:
     row = report.to_dict()["blockers"][0]
     assert row["trial_screenings"] == 24
     assert Blocker(**row).trial_screenings == 24
+
+
+class TestSpanCoverage:
+    """How much of the protocol text some criterion actually claims, per arm.
+
+    `CHANGELOG.md` entry 4 argues that compiling one span at a time beats handing a model the whole
+    eligibility blob, and says the evidence is spans no criterion claims rather than accuracy —
+    which was true, and the figure was in no committed artifact. A claim whose evidence exists only
+    in a command's stdout is a claim a reader has to take on trust.
+    """
+
+    def a_criteria_set(self, quotes: list[str]) -> CriteriaSet:
+        return CriteriaSet(
+            nct_id="NCT1",
+            source_text="Inclusion Criteria:\n- Age 18 years or older\n- HbA1c >= 7%\n",
+            criteria=[
+                Criterion(
+                    id=f"INC-{i:02d}",
+                    kind="inclusion",
+                    source_quote=quote,
+                    predicate=UnsupportedPredicate(reason="not the point of this test"),
+                )
+                for i, quote in enumerate(quotes, start=1)
+            ],
+        )
+
+    def test_an_arm_that_claims_every_span_reports_none_unclaimed(self):
+        report = ArmReport(
+            arm="caliper",
+            scores=[],
+            summary=summarise([], arm="caliper"),
+            span_coverage=span_coverage(
+                [self.a_criteria_set(["Age 18 years or older", "HbA1c >= 7%"])]
+            ),
+        )
+
+        assert report.span_coverage == (2, 2)
+
+    def test_a_span_no_criterion_quotes_is_counted_as_unclaimed(self):
+        covered, total = span_coverage([self.a_criteria_set(["Age 18 years or older"])])
+
+        assert (covered, total) == (1, 2)
+
+    def test_it_survives_the_json_round_trip(self):
+        report = ArmReport(
+            arm="caliper", scores=[], summary=summarise([], arm="caliper"), span_coverage=(7, 9)
+        )
+        payload = report.to_dict()
+
+        assert payload["span_coverage"] == [7, 9]
+
+    def test_an_arm_that_compiled_nothing_reports_nothing_rather_than_a_ratio(self):
+        assert span_coverage([]) == (0, 0)

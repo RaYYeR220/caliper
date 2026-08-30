@@ -88,7 +88,7 @@ Tiers:
 | Neither difference is larger than the confidence interval | MEASURED | the CI column spans ~26 points at n=51 |
 | No cross-provider or open-weight comparison was run | NOT CLAIMED | there is no such arm in `evalcmd.ARMS`, and none in `RESULTS.md` |
 | Three-valued logic, the quote check and the unit refusal are what "paid" | NOT CLAIMED | no arm removes any of the three. The hot take says which parts we would keep and why; only the critic, the resolver, per-span compilation and the absence policy are ablated |
-| The span-coverage figure comparing per-span to whole-protocol compilation | NOT CLAIMED | `caliper compile` prints it per trial, and nothing in `RESULTS.md` compares the two arms on it. `CHANGELOG.md` names it as the evidence that would settle entry 4 and says it is not the accuracy column |
+| Per-span compilation claims more of the protocol than whole-protocol compilation | REFUTED BY OUR OWN RUN | the `Protocol claimed` column in `RESULTS.md`: both arms reach 100% on all eight protocols. `CHANGELOG.md` entry 4 is corrected to say so rather than to keep asserting the benefit |
 
 ---
 

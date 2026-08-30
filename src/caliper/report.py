@@ -154,19 +154,28 @@ def ordered_arms(arms: list[ArmReport]) -> list[ArmReport]:
 
 
 def arm_table(arms: list[ArmReport]) -> str:
+    # "Protocol claimed" only appears when some arm compiled something. On a run of baselines alone
+    # it would be a column of dashes implying a measurement nobody made.
+    spans = any(report.span_coverage[1] for report in arms)
     header = (
         "| Arm | Cases | Accuracy | Balanced | 95% CI | Coverage | Unsafe errors | "
-        "False abstention | Coverage at 0 unsafe | Cost |\n"
-        "|---|---:|---:|---:|---|---:|---:|---:|---:|---:|"
+        "False abstention | Coverage at 0 unsafe |"
+        + (" Protocol claimed |" if spans else "")
+        + " Cost |\n|---|---:|---:|---:|---|---:|---:|---:|---:|"
+        + ("---:|" if spans else "")
+        + "---:|"
     )
     rows = []
     for report in ordered_arms(arms):
         s = report.summary
+        claimed, total = report.span_coverage
+        span_cell = f" {_pct(claimed / total)} |" if total else " — |"
         rows.append(
             f"| `{report.arm}` | {s.cases} | {_pct(s.accuracy)} | {_pct(s.balanced_accuracy)} | "
             f"{_ci(s.accuracy_ci)} | {_pct(s.coverage)} | {s.unsafe} | "
-            f"{_pct(s.false_abstention)} | {_pct(s.coverage_at_zero_unsafe)} | "
-            f"{_cost(report.cost_usd)} |"
+            f"{_pct(s.false_abstention)} | {_pct(s.coverage_at_zero_unsafe)} |"
+            + (span_cell if spans else "")
+            + f" {_cost(report.cost_usd)} |"
         )
     return "\n".join([header, *rows])
 

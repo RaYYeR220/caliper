@@ -22,7 +22,7 @@ by hand, so nothing here can go stale against the run.
 | 1 | **Compile to an executable IR, evaluate in code.** The premise: if the model produces a predicate rather than a verdict, the verdict becomes reviewable. | it worked, and immediately exposed entry 2 | Kept. This is the spine. |
 | 2 | **Boolean logic was wrong, not merely incomplete.** With two values, "no creatinine on file" and "creatinine above the ceiling" both came out as *not met*, and the patient was screened out for a lab nobody had ordered. | every case with a missing value produced a confident exclusion | Replaced with three-valued logic. `Verdict.UNKNOWN` is a first-class outcome, following CQL's null-propagation semantics rather than inventing our own. |
 | 3 | **Propagation.** Three values are only worth having if `UNKNOWN` cannot be rounded away. | `roll_up` in `logic.py`; asserted in `tests/test_logic.py` | Kept. `ELIGIBLE` is unreachable while any criterion is unresolved. This is the design, and everything else is in service of making it survivable. |
-| 4 | **Whole-protocol compilation → per-span compilation.** The obvious implementation hands the model the whole eligibility blob. Criteria went missing, and nothing noticed. | `caliper-whole-protocol` arm: the count of protocol spans no criterion claims | Kept per-span. The alternative is still in the repository and still measured, because "we chose the expensive one" is only worth saying with a number attached. |
+| 4 | **Whole-protocol compilation → per-span compilation.** The obvious implementation hands the model the whole eligibility blob. Criteria went missing during development, and nothing noticed. | the `Protocol claimed` column in `RESULTS.md`, which is the span figure this entry always claimed as its evidence — **both arms reach 100%** | Kept per-span, and the evidence does not support it on this corpus. See below: neither the span figure nor accuracy separates the two, and the honest statement is that we chose the expensive one for a failure this corpus does not contain. |
 | 5 | **Quote fidelity.** A compiler that paraphrases before formalising leaves no way to tell which version the predicate encodes. | `test_a_paraphrasing_compiler_is_caught_on_real_text` | Kept. A criterion whose quote is not verbatim in the protocol is downgraded to unresolved rather than trusted. |
 | 6 | **Composite predicates.** Coverage was collapsing: "eGFR ≥25 and ≤60", "on an ACE inhibitor or an ARB" and every sub-bulleted criterion was being recorded as unformalisable. | the share of criteria compiled as `unsupported`, before and after | Kept, with a caveat. The IR is recursive; the schema sent to the model is the same structure unrolled to a fixed depth, because strict JSON-schema modes handle reference cycles badly and Venice reports one as a timeout rather than an error. |
 | 7 | **Terminology resolution, with a store that remembers.** Nothing matches evidence without a code, and a trial mentioning creatinine six times should cost one lookup. | `caliper-no-resolver` arm; the store's own hit rate across trials | Kept. The confidence gate matters more than the cache: a candidate below high confidence is discarded, because an uncoded concept still falls back to wording while a *wrong* code silently matches the wrong evidence. |
@@ -98,10 +98,18 @@ failure it guards against is the expensive one and because a 7-point gap at n=51
 26-point interval, but "kept on principle" is what that is, and entry 8 above should be read with
 this paragraph beside it.
 
-**Per-span compilation is unfalsified here, not vindicated.** Two cases moved, one in each
-direction. The argument for it — that whole-protocol compilation silently drops criteria — is
-measured by the span-coverage number rather than by accuracy, and this key is not the instrument for
-it.
+**Per-span compilation is refuted here, not merely unfalsified.** Two cases moved, one in each
+direction, so accuracy says nothing. The argument for it was always that whole-protocol compilation
+silently drops criteria, and that is not an accuracy question — it is measured by how much of the
+protocol text some criterion claims. That figure is now published as the `Protocol claimed` column,
+and **both arms claim 100% of the spans in all eight protocols.** Whole-protocol compilation dropped
+nothing here.
+
+So the entry stands corrected. Per-span compilation is kept for a reason this evaluation does not
+support: the failure it prevents was real during development, on protocols with forty-odd criteria
+and nested sub-bullets, and the corpus that ended up in the answer key does not contain a protocol
+long enough to reproduce it. That is an argument from anecdote, and the arm is in the table so a
+reader can see the argument fail rather than take our account of it.
 
 **The absence policy made no difference whatever.** `COVERAGE_GATED` and `CLOSED_WORLD` produced
 identical decisions on all 51 cases. `LIMITS.md` spends a section on how load-bearing the
