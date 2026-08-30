@@ -1,0 +1,61 @@
+# Publish the coordinator interface so it can be looked at without installing anything.
+#
+# `web/` is committed static files — HTML, CSS, ES modules and the JSON that `caliper ui demo`
+# wrote next to them. There is no build step here on purpose: the page has no bundler, no package
+# manager, no CDN and no web font, so "deploy" is a file copy and the thing served is byte for byte
+# the thing in the repository.
+#
+# The data is generated, not hand-made. To change what the site shows, run `caliper ui demo` and
+# commit the result; this workflow will never regenerate it, because a site built from a fresh run
+# would stop matching the committed fixtures the rest of the evaluation is checked against.
+
+name: Publish the interface
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "web/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+# Read the repository, mint the Pages token, nothing else.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time, and never cancel one that is mid-flight: a half-published site is
+# worse than a stale one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the bundle is self-contained
+        # The page claims to make no external request, and that claim is worth more if something
+        # enforces it. Any http(s) reference outside the SVG namespace fails the build rather
+        # than shipping a page whose README overstates it.
+        run: |
+          set -euo pipefail
+          if grep -rEho "https?://[^\"' )]*" web --include='*.html' --include='*.css' --include='*.js' \
+             | grep -v '^http://www\.w3\.org/2000/svg$' | sort -u | grep . ; then
+            echo "::error::the interface references a remote origin; it is meant to be self-contained"
+            exit 1
+          fi
+          echo "no external references"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+      - id: deploy
+        uses: actions/deploy-pages@v4
