@@ -111,8 +111,8 @@ unanchored `.gitignore` rule had kept out of every clone. `CHANGELOG.md` has the
 It went at this file too, which is the right way round: a process description is a claim like any
 other. One claim here was refuted — the sentence above pointing at `trajectories/` for the coding
 agents, which was true of the working tree and false of every clone. One was confirmed the hard way:
-"one commit whose test suite did not parse", below, was checked by parsing every test file at all
-sixty-one commits, and there is exactly one.
+"one commit whose test suite did not parse", below, was checked by parsing every test file at every
+commit in the history, and there is exactly one.
 
 ### Discipline that was enforced, not hoped for
 
