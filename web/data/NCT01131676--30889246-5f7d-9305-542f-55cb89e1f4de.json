@@ -24,6 +24,7 @@
     "note": "coverage-gated, meaning a finding absent from the chart counts as absent only where an encounter documents the window"
   },
   "open_items": [],
+  "at_visit": [],
   "criteria": [],
   "rationales": {
     "total": 0,

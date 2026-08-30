@@ -9,11 +9,16 @@
  * The open items are split in two. A gap with a FHIR query behind it is a request someone can send;
  * a gap without one is a criterion that needs a person to read the protocol. Presenting them as one
  * list of eighteen would hide the two that are actually actionable.
+ *
+ * Where the chart was edited before it was screened, that is said on the identity line and again
+ * in full above the verdict, because every value below it inherits the qualification. It cannot
+ * wait until the evidence table: by then a reader has already read a supplied measurement as a
+ * measured one.
  */
 
 import { copyText, h } from "../lib/dom.js";
-import { capitalise, evidenceValue, plural, shortId } from "../lib/format.js";
-import { loadScreening } from "../lib/store.js";
+import { capitalise, chartName, evidenceValue, plural, shortId } from "../lib/format.js";
+import { loadIndex, loadScreening } from "../lib/store.js";
 import { outcomeMark, verdictMark } from "../lib/marks.js";
 
 function copyButton(value, label) {
@@ -162,6 +167,53 @@ function openItems(screening) {
   }
 
   return blocks;
+}
+
+/* The questions no chart was ever going to answer.
+ *
+ * Deliberately not folded into the open items. An open item is a gap with somewhere to look; this
+ * is a question with no answer until a person is asked it, and a coordinator who mixes the two
+ * spends an afternoon hunting a consent form through a record that never held one. On an eligible
+ * packet this section IS the caveat on the verdict, so it is rendered before the criteria table
+ * rather than under it. */
+function visitChecks(screening) {
+  const checks = screening.at_visit || [];
+  if (!checks.length || screening.decision === "ineligible") return [];
+
+  return [
+    h("h2", {}, "Confirm at the screening visit"),
+    h(
+      "p",
+      { class: "lede" },
+      `The decision above does not cover ${plural(checks.length, "criterion", "criteria")}, ` +
+        "because no record could answer them. Put each one to the patient in person.",
+    ),
+    h(
+      "ul",
+      { class: "stack visit-list" },
+      checks.map((check) =>
+        h(
+          "li",
+          { class: "panel panel--visit" },
+          h(
+            "p",
+            { class: "cid" },
+            check.criterion_id,
+            h("span", { class: `kind kind--${check.kind}` }, capitalise(check.kind)),
+          ),
+          h("blockquote", {}, check.quote),
+          check.can_still_exclude
+            ? h(
+                "p",
+                { class: "note note--warn" },
+                "An exclusion: a yes here can still rule this patient out after the packet is " +
+                  "signed.",
+              )
+            : null,
+        ),
+      ),
+    ),
+  ];
 }
 
 function decidingSection(screening) {
@@ -380,9 +432,60 @@ function decisionNote(screening) {
   return "Every criterion resolved from the record.";
 }
 
+/* What was done to this chart, in the frozen key's own words, above the verdict it produced.
+ *
+ * The comparison link is the point of the panel as much as the list is: the chart this one was
+ * built from is screened against the same trial in the same bundle, so the difference between a
+ * supplied measurement and no measurement at all is one click away. */
+function constructedPanel(screening, index) {
+  const built = screening.constructed;
+  if (!built) return null;
+
+  const source = index.screenings.find(
+    (entry) => entry.nct_id === screening.nct_id && entry.patient_id === built.base_patient_id,
+  );
+  return h(
+    "div",
+    { class: "panel panel--constructed" },
+    h("h3", {}, "This chart was edited before it was screened"),
+    h(
+      "p",
+      { class: "note" },
+      `Case ${built.case_id} of the answer key: chart ${shortId(built.base_patient_id)} with ` +
+        `${plural(built.edits.length, "recorded edit")} applied, so that a bound the protocol ` +
+        "states could be crossed deliberately. The values below are therefore partly supplied " +
+        "rather than measured, and the evidence rows for them point at the perturbation that " +
+        "created them rather than at a bundle entry.",
+    ),
+    h("ul", { class: "roster roster--edits" }, built.edits.map((edit) => h("li", {}, edit))),
+    h(
+      "p",
+      { class: "note" },
+      `The key derives ${built.key_outcome_label} for this case from the criterion labels its ` +
+        "annotation recorded. The verdict below is Caliper's own, reached from the compiled " +
+        `criteria alone. Documented in ${built.documented_in}, and published in ${built.key}.`,
+    ),
+    source
+      ? h(
+          "p",
+          {},
+          h(
+            "a",
+            {
+              class: "button",
+              href: `#/packet/${screening.nct_id}/${encodeURIComponent(source.patient_id)}`,
+            },
+            `Open ${shortId(built.base_patient_id)} as recorded`,
+          ),
+        )
+      : null,
+  );
+}
+
 export async function renderPacket(nctId, patientId) {
-  const screening = await loadScreening(nctId, patientId);
+  const [screening, index] = await Promise.all([loadScreening(nctId, patientId), loadIndex()]);
   const stopped = Boolean(screening.blocked_by);
+  const built = screening.constructed;
 
   const content = h(
     "div",
@@ -391,16 +494,34 @@ export async function renderPacket(nctId, patientId) {
       "header",
       { class: "page__head" },
       h("p", { class: "eyebrow" }, "Screening packet"),
-      h("h1", {}, shortId(screening.patient.id)),
-      h("p", { class: "subtitle" }, screening.patient.summary),
+      h("h1", {}, chartName(screening.patient.id, built)),
+      // The same line, and the same register, that carries "died 2026-05-03".
+      h(
+        "p",
+        { class: "subtitle" },
+        screening.patient.summary,
+        built
+          ? h(
+              "span",
+              { class: "built" },
+              ` · constructed chart, ${plural(built.edits.length, "edit")} applied`,
+            )
+          : null,
+      ),
       h("p", { class: "pointer note" }, screening.patient.id),
+      constructedPanel(screening, index),
       h(
         "dl",
         { class: "facts" },
         h("dt", {}, "Trial"),
         h("dd", {}, `${screening.nct_id} — ${screening.trial_title}`),
         h("dt", {}, "Screened on"),
-        h("dd", {}, screening.screened_on),
+        h(
+          "dd",
+          {},
+          screening.screened_on,
+          index.demo ? h("p", { class: "note" }, index.demo.screening_date_note) : null,
+        ),
         h("dt", {}, "Criteria"),
         h(
           "dd",
@@ -438,6 +559,7 @@ export async function renderPacket(nctId, patientId) {
         ]
       : [
           ...openItems(screening),
+          ...visitChecks(screening),
           ...decidingSection(screening),
           h("h2", {}, "Criteria"),
           h(
@@ -452,7 +574,7 @@ export async function renderPacket(nctId, patientId) {
   );
 
   return {
-    title: `Packet · ${shortId(screening.patient.id)} · ${screening.nct_id}`,
+    title: `Packet · ${chartName(screening.patient.id, built)} · ${screening.nct_id}`,
     content,
   };
 }

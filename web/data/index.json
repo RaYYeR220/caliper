@@ -10,6 +10,16 @@
       "unsupported": 16,
       "downgraded": 3,
       "coverage": 1.0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "title": "Effect of Sotagliflozin on Cardiovascular and Renal Events in Participants With Type 2 Diabetes and Moderate Renal Impairment Who Are at Cardiovascular Risk",
+      "file": "NCT03315143.trial.json",
+      "criteria_fingerprint": "f53b0f0965907680405b33d902ae6da8eea9e68578b9d39ad444a01d0a19c7e1",
+      "criteria": 8,
+      "unsupported": 6,
+      "downgraded": 0,
+      "coverage": 1.0
     }
   ],
   "screenings": [
@@ -22,15 +32,16 @@
       "decision": "needs_review",
       "decision_label": "Needs review before a decision",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
-      "open_items": 18,
+      "open_items": 13,
       "open_retrievable": 2,
-      "open_needing_a_person": 16,
+      "open_needing_a_person": 11,
       "blocking": "glomerular filtration rate in mL/min (the chart reports mL/min/{1.73_m2}, which we cannot convert)",
       "blocking_criterion_id": "EXC-04",
       "deciding_criterion_ids": [],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 5
     },
     {
       "nct_id": "NCT01131676",
@@ -41,7 +52,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -52,7 +63,8 @@
         "INC-01",
         "INC-04"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -71,7 +83,8 @@
       "blocking": null,
       "blocking_criterion_id": null,
       "deciding_criterion_ids": [],
-      "approximations": 0
+      "approximations": 0,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -82,7 +95,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -92,7 +105,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -111,7 +125,8 @@
       "blocking": null,
       "blocking_criterion_id": null,
       "deciding_criterion_ids": [],
-      "approximations": 0
+      "approximations": 0,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -122,7 +137,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 5,
       "open_items": 0,
       "open_retrievable": 0,
@@ -132,7 +147,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -143,7 +159,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -153,7 +169,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -164,7 +181,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -174,7 +191,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -185,7 +203,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -195,7 +213,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -206,7 +225,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -216,7 +235,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -235,7 +255,8 @@
       "blocking": null,
       "blocking_criterion_id": null,
       "deciding_criterion_ids": [],
-      "approximations": 0
+      "approximations": 0,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -246,7 +267,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -256,7 +277,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -267,7 +289,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -277,7 +299,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -288,7 +311,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 3,
       "open_items": 0,
       "open_retrievable": 0,
@@ -299,7 +322,8 @@
         "INC-01",
         "INC-04"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -310,7 +334,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 5,
       "open_items": 0,
       "open_retrievable": 0,
@@ -320,7 +344,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -331,7 +356,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 5,
       "open_items": 0,
       "open_retrievable": 0,
@@ -342,7 +367,8 @@
         "INC-01",
         "INC-04"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -353,7 +379,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -363,7 +389,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -374,7 +401,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -384,7 +411,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -395,7 +423,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 5,
       "open_items": 0,
       "open_retrievable": 0,
@@ -405,7 +433,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -416,7 +445,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 1,
       "open_items": 0,
       "open_retrievable": 0,
@@ -426,7 +455,8 @@
       "deciding_criterion_ids": [
         "INC-04"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -437,7 +467,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -447,7 +477,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -458,7 +489,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 5,
       "open_items": 0,
       "open_retrievable": 0,
@@ -468,7 +499,8 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -487,7 +519,8 @@
       "blocking": null,
       "blocking_criterion_id": null,
       "deciding_criterion_ids": [],
-      "approximations": 0
+      "approximations": 0,
+      "at_visit": 0
     },
     {
       "nct_id": "NCT01131676",
@@ -498,7 +531,7 @@
       "decision": "ineligible",
       "decision_label": "Not eligible",
       "blocked_by": null,
-      "criteria_total": 22,
+      "criteria_total": 17,
       "criteria_resolved": 4,
       "open_items": 0,
       "open_retrievable": 0,
@@ -508,8 +541,1072 @@
       "deciding_criterion_ids": [
         "INC-01"
       ],
-      "approximations": 1
+      "approximations": 1,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+      "file": "NCT03315143--1be83f06-48ef-7bac-7097-b9e0644aeaf8.json",
+      "patient_summary": "46 years old at screening, recorded sex male, died 2026-05-03",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 2,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-02"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "1e32a1a3-3638-cb8c-7253-ff98a97dc0fe",
+      "file": "NCT03315143--1e32a1a3-3638-cb8c-7253-ff98a97dc0fe.json",
+      "patient_summary": "13 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b",
+      "file": "NCT03315143--2211f478-b7b4-7711-16cf-84ffb52b9d2b.json",
+      "patient_summary": "41 years old, recorded sex female, died 2016-06-03",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": "the chart records that the patient died on 2016-06-03, before the screening date",
+      "criteria_total": 0,
+      "criteria_resolved": 0,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "23da8e71-dfb9-9773-1bc1-7b5e31d085b5",
+      "file": "NCT03315143--23da8e71-dfb9-9773-1bc1-7b5e31d085b5.json",
+      "patient_summary": "63 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "30889246-5f7d-9305-542f-55cb89e1f4de",
+      "file": "NCT03315143--30889246-5f7d-9305-542f-55cb89e1f4de.json",
+      "patient_summary": "66 years old, recorded sex male, died 1961-08-23",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": "the chart records that the patient died on 1961-08-23, before the screening date",
+      "criteria_total": 0,
+      "criteria_resolved": 0,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1",
+      "file": "NCT03315143--35f80d0e-eaad-ef68-b762-3a1c12a872c1.json",
+      "patient_summary": "46 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "3fa46c70-b194-f14c-3d51-e06cfa4bb9e2",
+      "file": "NCT03315143--3fa46c70-b194-f14c-3d51-e06cfa4bb9e2.json",
+      "patient_summary": "31 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "5dae1e9e-46fb-5537-54f4-8837a56dd3d5",
+      "file": "NCT03315143--5dae1e9e-46fb-5537-54f4-8837a56dd3d5.json",
+      "patient_summary": "31 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b",
+      "file": "NCT03315143--6c4283c9-228b-2774-7d25-fbb5a14bdc1b.json",
+      "patient_summary": "40 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7",
+      "file": "NCT03315143--8c5b83b2-737e-46cf-953b-414e07ed78e7.json",
+      "patient_summary": "52 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd",
+      "file": "NCT03315143--8d91c36a-1f7e-3842-9f14-8d567ed9cdcd.json",
+      "patient_summary": "45 years old, recorded sex male, died 2015-09-24",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": "the chart records that the patient died on 2015-09-24, before the screening date",
+      "criteria_total": 0,
+      "criteria_resolved": 0,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "97e39468-6488-ca8f-fac2-235a80b4dcf7",
+      "file": "NCT03315143--97e39468-6488-ca8f-fac2-235a80b4dcf7.json",
+      "patient_summary": "41 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "a406f356-c8b4-54ad-e79c-54a5e15ffc19",
+      "file": "NCT03315143--a406f356-c8b4-54ad-e79c-54a5e15ffc19.json",
+      "patient_summary": "34 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "a6d0791e-4c15-58e6-c30a-ec25e285ace9",
+      "file": "NCT03315143--a6d0791e-4c15-58e6-c30a-ec25e285ace9.json",
+      "patient_summary": "2 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "afb99eee-0bd5-8853-8a32-fad74da7b103",
+      "file": "NCT03315143--afb99eee-0bd5-8853-8a32-fad74da7b103.json",
+      "patient_summary": "27 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "babc4b97-d859-0fe4-2874-fb6fe493ae6b",
+      "file": "NCT03315143--babc4b97-d859-0fe4-2874-fb6fe493ae6b.json",
+      "patient_summary": "3 years old at screening, recorded sex female",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "bd4e49cb-391b-d08a-c7ab-b585e7bd5758",
+      "file": "NCT03315143--bd4e49cb-391b-d08a-c7ab-b585e7bd5758.json",
+      "patient_summary": "41 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "cbd1dd48-89c3-3fdb-434e-3f0802738abf",
+      "file": "NCT03315143--cbd1dd48-89c3-3fdb-434e-3f0802738abf.json",
+      "patient_summary": "36 years old at screening, recorded sex female",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "cc3eac4a-34a7-9a15-1522-8087135631b7",
+      "file": "NCT03315143--cc3eac4a-34a7-9a15-1522-8087135631b7.json",
+      "patient_summary": "48 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "ee4b7339-ca58-b6af-c199-04b6d5761c73",
+      "file": "NCT03315143--ee4b7339-ca58-b6af-c199-04b6d5761c73.json",
+      "patient_summary": "0 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 0,
+      "open_items": 5,
+      "open_retrievable": 2,
+      "open_needing_a_person": 3,
+      "blocking": "confirmation that type 2 diabetes mellitus is genuinely absent rather than merely unrecorded",
+      "blocking_criterion_id": "INC-01",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "f67eaca3-2366-7ee2-6887-a5bd449b54a6",
+      "file": "NCT03315143--f67eaca3-2366-7ee2-6887-a5bd449b54a6.json",
+      "patient_summary": "36 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+      "file": "NCT03315143--f870c432-0887-125e-f778-cf5110d3de1d.json",
+      "patient_summary": "56 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "fb56f051-a2cd-ac10-dcb0-e0738295fc1f",
+      "file": "NCT03315143--fb56f051-a2cd-ac10-dcb0-e0738295fc1f.json",
+      "patient_summary": "58 years old, recorded sex female, died 1991-06-06",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": "the chart records that the patient died on 1991-06-06, before the screening date",
+      "criteria_total": 0,
+      "criteria_resolved": 0,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4",
+      "file": "NCT03315143--fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4.json",
+      "patient_summary": "61 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8~CK-001",
+      "file": "NCT03315143--1be83f06-48ef-7bac-7097-b9e0644aeaf8~CK-001.json",
+      "patient_summary": "46 years old at screening, recorded sex male, died 2026-05-03",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 2,
+      "open_items": 3,
+      "open_retrievable": 0,
+      "open_needing_a_person": 3,
+      "blocking": "human judgement: the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
+      "blocking_criterion_id": "INC-03",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-001",
+        "base_patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+        "trap": "none",
+        "edits": [
+          "moved the most recent LOINC 33914-3 result from 141.3 to 42.0 mL/min/{1.73_m2}",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-06-03"
+        ],
+        "key_outcome": "ineligible",
+        "key_outcome_label": "Not eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8~CK-002",
+      "file": "NCT03315143--1be83f06-48ef-7bac-7097-b9e0644aeaf8~CK-002.json",
+      "patient_summary": "46 years old at screening, recorded sex male, died 2026-05-03",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 2,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-02"
+      ],
+      "approximations": 0,
+      "at_visit": 0,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-002",
+        "base_patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+        "trap": "threshold_edge",
+        "edits": [
+          "moved the most recent LOINC 33914-3 result from 141.3 to 61.0 mL/min/{1.73_m2}",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-06-03"
+        ],
+        "key_outcome": "ineligible",
+        "key_outcome_label": "Not eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8~CK-003",
+      "file": "NCT03315143--1be83f06-48ef-7bac-7097-b9e0644aeaf8~CK-003.json",
+      "patient_summary": "46 years old at screening, recorded sex male, died 2026-05-03",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 4,
+      "open_retrievable": 1,
+      "open_needing_a_person": 3,
+      "blocking": "a glomerular filtration rate result",
+      "blocking_criterion_id": "INC-02",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-003",
+        "base_patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
+        "trap": "missing_data",
+        "edits": [
+          "removed all 1 results coded LOINC 33914-3",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-06-03"
+        ],
+        "key_outcome": "ineligible",
+        "key_outcome_label": "Not eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d~CK-004",
+      "file": "NCT03315143--f870c432-0887-125e-f778-cf5110d3de1d~CK-004.json",
+      "patient_summary": "56 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 4,
+      "open_retrievable": 1,
+      "open_needing_a_person": 3,
+      "blocking": "glomerular filtration rate in mL/min/{1.73_m2} (the chart reports mL/min, which we cannot convert)",
+      "blocking_criterion_id": "INC-02",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-004",
+        "base_patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+        "trap": "none",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-09-24",
+          "moved the most recent LOINC 4548-4 result from 6.02 to 7.4 %",
+          "moved the most recent LOINC 38483-4 result from 2.578 to 1.9 mg/dL",
+          "moved the most recent LOINC 33914-3 result from 84.289 to 38.0 mL/min"
+        ],
+        "key_outcome": "eligible",
+        "key_outcome_label": "Eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d~CK-005",
+      "file": "NCT03315143--f870c432-0887-125e-f778-cf5110d3de1d~CK-005.json",
+      "patient_summary": "56 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-01"
+      ],
+      "approximations": 0,
+      "at_visit": 0,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-005",
+        "base_patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+        "trap": "threshold_edge",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-09-24",
+          "moved the most recent LOINC 4548-4 result from 6.02 to 6.9 %",
+          "moved the most recent LOINC 38483-4 result from 2.578 to 1.9 mg/dL",
+          "moved the most recent LOINC 33914-3 result from 84.289 to 38.0 mL/min"
+        ],
+        "key_outcome": "ineligible",
+        "key_outcome_label": "Not eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "f870c432-0887-125e-f778-cf5110d3de1d~CK-006",
+      "file": "NCT03315143--f870c432-0887-125e-f778-cf5110d3de1d~CK-006.json",
+      "patient_summary": "56 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 4,
+      "open_retrievable": 1,
+      "open_needing_a_person": 3,
+      "blocking": "a glomerular filtration rate result",
+      "blocking_criterion_id": "INC-02",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-006",
+        "base_patient_id": "f870c432-0887-125e-f778-cf5110d3de1d",
+        "trap": "missing_data",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-09-24",
+          "moved the most recent LOINC 4548-4 result from 6.02 to 7.4 %",
+          "removed all 6 results coded LOINC 33914-3"
+        ],
+        "key_outcome": "needs_review",
+        "key_outcome_label": "Needs review before a decision",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b~CK-007",
+      "file": "NCT03315143--6c4283c9-228b-2774-7d25-fbb5a14bdc1b~CK-007.json",
+      "patient_summary": "40 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 2,
+      "open_items": 3,
+      "open_retrievable": 0,
+      "open_needing_a_person": 3,
+      "blocking": "human judgement: the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
+      "blocking_criterion_id": "INC-03",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-007",
+        "base_patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b",
+        "trap": "none",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-12-06",
+          "moved the most recent LOINC 4548-4 result from 6.21 to 7.5 %",
+          "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 45.0 mL/min/{1.73_m2} dated 2025-12-06",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-12-06"
+        ],
+        "key_outcome": "eligible",
+        "key_outcome_label": "Eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b~CK-008",
+      "file": "NCT03315143--6c4283c9-228b-2774-7d25-fbb5a14bdc1b~CK-008.json",
+      "patient_summary": "40 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 2,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-02"
+      ],
+      "approximations": 0,
+      "at_visit": 0,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-008",
+        "base_patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b",
+        "trap": "threshold_edge",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-12-06",
+          "moved the most recent LOINC 4548-4 result from 6.21 to 7.5 %",
+          "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 24.0 mL/min/{1.73_m2} dated 2025-12-06",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-12-06"
+        ],
+        "key_outcome": "ineligible",
+        "key_outcome_label": "Not eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b~CK-009",
+      "file": "NCT03315143--6c4283c9-228b-2774-7d25-fbb5a14bdc1b~CK-009.json",
+      "patient_summary": "40 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 4,
+      "open_retrievable": 1,
+      "open_needing_a_person": 3,
+      "blocking": "a glomerular filtration rate result",
+      "blocking_criterion_id": "INC-02",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-009",
+        "base_patient_id": "6c4283c9-228b-2774-7d25-fbb5a14bdc1b",
+        "trap": "missing_data",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-12-06",
+          "moved the most recent LOINC 4548-4 result from 6.21 to 7.5 %",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-12-06"
+        ],
+        "key_outcome": "needs_review",
+        "key_outcome_label": "Needs review before a decision",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7~CK-010",
+      "file": "NCT03315143--8c5b83b2-737e-46cf-953b-414e07ed78e7~CK-010.json",
+      "patient_summary": "52 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 2,
+      "open_items": 3,
+      "open_retrievable": 0,
+      "open_needing_a_person": 3,
+      "blocking": "human judgement: the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
+      "blocking_criterion_id": "INC-03",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-010",
+        "base_patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7",
+        "trap": "none",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-11-24",
+          "moved the most recent LOINC 4548-4 result from 6.27 to 7.6 %",
+          "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 52.0 mL/min/{1.73_m2} dated 2025-11-24",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-11-24"
+        ],
+        "key_outcome": "eligible",
+        "key_outcome_label": "Eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7~CK-011",
+      "file": "NCT03315143--8c5b83b2-737e-46cf-953b-414e07ed78e7~CK-011.json",
+      "patient_summary": "52 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "ineligible",
+      "decision_label": "Not eligible",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 2,
+      "open_items": 0,
+      "open_retrievable": 0,
+      "open_needing_a_person": 0,
+      "blocking": null,
+      "blocking_criterion_id": null,
+      "deciding_criterion_ids": [
+        "INC-02"
+      ],
+      "approximations": 0,
+      "at_visit": 0,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-011",
+        "base_patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7",
+        "trap": "threshold_edge",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-11-24",
+          "moved the most recent LOINC 4548-4 result from 6.27 to 7.6 %",
+          "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 61.0 mL/min/{1.73_m2} dated 2025-11-24",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-11-24"
+        ],
+        "key_outcome": "ineligible",
+        "key_outcome_label": "Not eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7~CK-012",
+      "file": "NCT03315143--8c5b83b2-737e-46cf-953b-414e07ed78e7~CK-012.json",
+      "patient_summary": "52 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 1,
+      "open_items": 4,
+      "open_retrievable": 1,
+      "open_needing_a_person": 3,
+      "blocking": "a glomerular filtration rate result",
+      "blocking_criterion_id": "INC-02",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-012",
+        "base_patient_id": "8c5b83b2-737e-46cf-953b-414e07ed78e7",
+        "trap": "missing_data",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-11-24",
+          "moved the most recent LOINC 4548-4 result from 6.27 to 7.6 %",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-11-24"
+        ],
+        "key_outcome": "needs_review",
+        "key_outcome_label": "Needs review before a decision",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1~CK-013",
+      "file": "NCT03315143--35f80d0e-eaad-ef68-b762-3a1c12a872c1~CK-013.json",
+      "patient_summary": "46 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 2,
+      "open_items": 3,
+      "open_retrievable": 0,
+      "open_needing_a_person": 3,
+      "blocking": "human judgement: the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
+      "blocking_criterion_id": "INC-03",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-013",
+        "base_patient_id": "35f80d0e-eaad-ef68-b762-3a1c12a872c1",
+        "trap": "none",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2026-02-01",
+          "moved the most recent LOINC 4548-4 result from 6.11 to 7.2 %",
+          "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 50.0 mL/min/{1.73_m2} dated 2026-02-01",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2026-02-01"
+        ],
+        "key_outcome": "eligible",
+        "key_outcome_label": "Eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "cc3eac4a-34a7-9a15-1522-8087135631b7~CK-014",
+      "file": "NCT03315143--cc3eac4a-34a7-9a15-1522-8087135631b7~CK-014.json",
+      "patient_summary": "48 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 2,
+      "open_items": 3,
+      "open_retrievable": 0,
+      "open_needing_a_person": 3,
+      "blocking": "human judgement: the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
+      "blocking_criterion_id": "INC-03",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-014",
+        "base_patient_id": "cc3eac4a-34a7-9a15-1522-8087135631b7",
+        "trap": "none",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2026-02-09",
+          "moved the most recent LOINC 4548-4 result from 6.08 to 7.3 %",
+          "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 34.0 mL/min/{1.73_m2} dated 2026-02-09",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2026-02-09"
+        ],
+        "key_outcome": "eligible",
+        "key_outcome_label": "Eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
+    },
+    {
+      "nct_id": "NCT03315143",
+      "patient_id": "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4~CK-015",
+      "file": "NCT03315143--fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4~CK-015.json",
+      "patient_summary": "61 years old at screening, recorded sex male",
+      "screened_on": "2026-04-01",
+      "decision": "needs_review",
+      "decision_label": "Needs review before a decision",
+      "blocked_by": null,
+      "criteria_total": 5,
+      "criteria_resolved": 2,
+      "open_items": 3,
+      "open_retrievable": 0,
+      "open_needing_a_person": 3,
+      "blocking": "human judgement: the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
+      "blocking_criterion_id": "INC-03",
+      "deciding_criterion_ids": [],
+      "approximations": 0,
+      "at_visit": 3,
+      "constructed": {
+        "kind": "constructed",
+        "case_id": "CK-015",
+        "base_patient_id": "fd0d7b3a-307d-07b8-9d7e-2424e1feb9e4",
+        "trap": "none",
+        "edits": [
+          "added condition SNOMED 44054006 (Diabetes mellitus type 2 (disorder)) with onset 2025-09-09",
+          "moved the most recent LOINC 4548-4 result from 6.21 to 7.1 %",
+          "added observation LOINC 33914-3 (Glomerular filtration rate [Volume Rate/Area] in Serum or Plasma by Creatinine-based formula (MDRD)/1.73 sq M) with value 58.0 mL/min/{1.73_m2} dated 2025-08-26",
+          "added condition SNOMED 414545008 (Ischemic heart disease (disorder)) with onset 2025-09-09"
+        ],
+        "key_outcome": "eligible",
+        "key_outcome_label": "Eligible",
+        "key": "eval/answer_key.json",
+        "documented_in": "eval/annotation/protocol.md, section 11"
+      }
     }
   ],
-  "disclaimer": "This packet is decision support for pre-screening. Eligibility is determined by the investigator."
+  "disclaimer": "This packet is decision support for pre-screening. Eligibility is determined by the investigator.",
+  "demo": {
+    "screened_on": "2026-04-01",
+    "corpus_screening_date": "2026-06-01",
+    "screening_date_note": "Screened on 2026-04-01, not the 2026-06-01 that the answer key and every other artefact in this repository use. The corpus's only patient with a type 2 diabetes diagnosis is recorded as having died on 2026-05-03, so on 2026-06-01 that screening closes on the death before a criterion is read and the cohort has no open work left in it at all. Two months earlier the same charts still support a live decision, and caliper ui demo --as-of 2026-06-01 reproduces the other reading.",
+    "constructed": 15
+  }
 }

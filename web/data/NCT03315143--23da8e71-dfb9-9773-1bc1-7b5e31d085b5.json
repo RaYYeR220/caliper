@@ -1,0 +1,221 @@
+{
+  "schema": "caliper.ui.screening/1",
+  "nct_id": "NCT03315143",
+  "trial_title": "Effect of Sotagliflozin on Cardiovascular and Renal Events in Participants With Type 2 Diabetes and Moderate Renal Impairment Who Are at Cardiovascular Risk",
+  "criteria_fingerprint": "f53b0f0965907680405b33d902ae6da8eea9e68578b9d39ad444a01d0a19c7e1",
+  "patient": {
+    "id": "23da8e71-dfb9-9773-1bc1-7b5e31d085b5",
+    "summary": "63 years old at screening, recorded sex male",
+    "age": 63,
+    "sex": "male"
+  },
+  "screened_on": "2026-04-01",
+  "decision": "ineligible",
+  "decision_label": "Not eligible",
+  "blocked_by": null,
+  "criteria_total": 5,
+  "criteria_resolved": 1,
+  "coverage": 0.2,
+  "deciding_criterion_ids": [
+    "INC-01"
+  ],
+  "approximations": [],
+  "caveats": [],
+  "absence_policy": {
+    "value": "coverage_gated",
+    "note": "coverage-gated, meaning a finding absent from the chart counts as absent only where an encounter documents the window"
+  },
+  "open_items": [],
+  "at_visit": [],
+  "criteria": [
+    {
+      "id": "INC-01",
+      "kind": "inclusion",
+      "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) ≥7%.",
+      "unsupported": false,
+      "verdict": "not_met",
+      "verdict_label": "Not met",
+      "decisive": true,
+      "rationale": "type 2 diabetes mellitus is not documented in a window the chart covers and 6 % on 2025-05-24 against >= 7.0 %",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [
+        {
+          "resource": "Observation/23da8e71-dfb9-9773-1baf-dad7bc2a6c8e",
+          "resource_type": "Observation",
+          "resource_id": "23da8e71-dfb9-9773-1baf-dad7bc2a6c8e",
+          "kind": "observation",
+          "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+          "value": 6.0,
+          "unit": "%",
+          "date": "2025-05-24",
+          "fhir_path": "Bundle.entry[374].resource",
+          "source": "structured",
+          "narrative_quote": null,
+          "codes": [
+            {
+              "system": "LOINC",
+              "code": "4548-4",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+            }
+          ]
+        }
+      ],
+      "resolution": null
+    },
+    {
+      "id": "INC-02",
+      "kind": "inclusion",
+      "quote": "Estimated glomerular filtration rate (eGFR) ≥25 and ≤60 milliliter/minute (mL/min)/1.73 square meter (m^2).",
+      "unsupported": false,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "no glomerular filtration rate result is on file for the required window",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "a glomerular filtration rate result",
+        "where_to_look": "the laboratory result system or the most recent panel in the chart",
+        "fhir_query": "Observation?patient=23da8e71-dfb9-9773-1bc1-7b5e31d085b5&code=33914-3",
+        "retrievable": true
+      }
+    },
+    {
+      "id": "INC-03",
+      "kind": "inclusion",
+      "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors.",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "INC-04",
+      "kind": "inclusion",
+      "quote": "Signed written informed consent.",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion is settled at the screening visit, not from the record",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "confirmation at the screening visit: consent is a site procedure and leaves no finding in the patient record",
+        "where_to_look": "the screening visit itself",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-01",
+      "kind": "exclusion",
+      "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening.",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: the chart records prescriptions, not whether antihyperglycaemic therapy was unchanged over the 12 weeks before screening",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-02",
+      "kind": "exclusion",
+      "quote": "Planned coronary procedure or surgery after randomization.",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion is settled at the screening visit, not from the record",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "confirmation at the screening visit: a planned procedure is an intention, and the chart records events",
+        "where_to_look": "the screening visit itself",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-03",
+      "kind": "exclusion",
+      "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization.",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "human judgement: 'such as' leaves the list of lower extremity complications open, and the criterion turns on treatment being required at randomisation, which has not happened when a chart is screened",
+        "where_to_look": "the protocol and the investigator",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    },
+    {
+      "id": "EXC-04",
+      "kind": "exclusion",
+      "quote": "Planning to start a sodium-glucose linked transporter-2 (SGLT2) inhibitor during the study.",
+      "unsupported": true,
+      "verdict": "unknown",
+      "verdict_label": "Unresolved",
+      "decisive": false,
+      "rationale": "this criterion is settled at the screening visit, not from the record",
+      "rationale_source": "fallback",
+      "fallback_reason": "no model was consulted",
+      "engine_written": true,
+      "approximations": [],
+      "evidence": [],
+      "resolution": {
+        "missing": "confirmation at the screening visit: starting a drug during the study is an intention, and the chart records events",
+        "where_to_look": "the screening visit itself",
+        "fhir_query": "",
+        "retrievable": false
+      }
+    }
+  ],
+  "rationales": {
+    "total": 5,
+    "engine_written": 8
+  },
+  "disclaimer": "This packet is decision support for pre-screening. Eligibility is determined by the investigator."
+}

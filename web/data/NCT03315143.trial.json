@@ -1,0 +1,251 @@
+{
+  "schema": "caliper.ui.trial/1",
+  "nct_id": "NCT03315143",
+  "title": "Effect of Sotagliflozin on Cardiovascular and Renal Events in Participants With Type 2 Diabetes and Moderate Renal Impairment Who Are at Cardiovascular Risk",
+  "criteria_fingerprint": "f53b0f0965907680405b33d902ae6da8eea9e68578b9d39ad444a01d0a19c7e1",
+  "source_text": "Inclusion criteria :\n\n* Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) ≥7%.\n* Estimated glomerular filtration rate (eGFR) ≥25 and ≤60 milliliter/minute (mL/min)/1.73 square meter (m^2).\n* Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors.\n* Signed written informed consent.\n\nExclusion criteria:\n\n* Antihyperglycemic treatment has not been stable within 12 weeks prior to screening.\n* Planned coronary procedure or surgery after randomization.\n* Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization.\n* Planning to start a sodium-glucose linked transporter-2 (SGLT2) inhibitor during the study.\n\nThe above information is not intended to contain all considerations relevant to a participant's potential participation in a clinical trial.",
+  "counts": {
+    "criteria": 8,
+    "inclusion": 4,
+    "exclusion": 4,
+    "unsupported": 6,
+    "reviewed": 2,
+    "downgraded": 0
+  },
+  "critic_ran": true,
+  "criteria": [
+    {
+      "id": "INC-01",
+      "kind": "inclusion",
+      "source_quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) ≥7%.",
+      "notes": null,
+      "predicate_type": "all_of",
+      "compiled_as": "a documented diagnosis of type 2 diabetes mellitus and HbA1c at least 7%",
+      "unsupported": false,
+      "unsupported_reason": null,
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "44054006",
+          "display": "Diabetes mellitus type 2 (disorder)"
+        },
+        {
+          "system": "LOINC",
+          "code": "4548-4",
+          "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+        }
+      ],
+      "critic": {
+        "severity": "equivalent",
+        "reason": "Both require a recorded diagnosis of type 2 diabetes mellitus together with a glycosylated haemoglobin of 7% or more.",
+        "downgraded": false,
+        "reviewed_rendering": "a documented diagnosis of type 2 diabetes mellitus and HbA1c at least 7%",
+        "reviewed_quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) ≥7%."
+      }
+    },
+    {
+      "id": "INC-02",
+      "kind": "inclusion",
+      "source_quote": "Estimated glomerular filtration rate (eGFR) ≥25 and ≤60 milliliter/minute (mL/min)/1.73 square meter (m^2).",
+      "notes": null,
+      "predicate_type": "observation",
+      "compiled_as": "glomerular filtration rate between 25 and 60 mL/min/{1.73_m2} inclusive",
+      "unsupported": false,
+      "unsupported_reason": null,
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "33914-3",
+          "display": "Glomerular filtration rate by Creatinine-based formula (MDRD)/1.73 sq M"
+        }
+      ],
+      "critic": {
+        "severity": "equivalent",
+        "reason": "Both admit an estimated glomerular filtration rate from 25 to 60 mL/min/1.73 m2 with both bounds included.",
+        "downgraded": false,
+        "reviewed_rendering": "glomerular filtration rate between 25 and 60 mL/min/{1.73_m2} inclusive",
+        "reviewed_quote": "Estimated glomerular filtration rate (eGFR) ≥25 and ≤60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
+      }
+    },
+    {
+      "id": "INC-03",
+      "kind": "inclusion",
+      "source_quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors.",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
+      "unsupported": true,
+      "unsupported_reason": "the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "INC-04",
+      "kind": "inclusion",
+      "source_quote": "Signed written informed consent.",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: consent is a site procedure and leaves no finding in the patient record",
+      "unsupported": true,
+      "unsupported_reason": "consent is a site procedure and leaves no finding in the patient record",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-01",
+      "kind": "exclusion",
+      "source_quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening.",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: the chart records prescriptions, not whether antihyperglycaemic therapy was unchanged over the 12 weeks before screening",
+      "unsupported": true,
+      "unsupported_reason": "the chart records prescriptions, not whether antihyperglycaemic therapy was unchanged over the 12 weeks before screening",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-02",
+      "kind": "exclusion",
+      "source_quote": "Planned coronary procedure or surgery after randomization.",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: a planned procedure is an intention, and the chart records events",
+      "unsupported": true,
+      "unsupported_reason": "a planned procedure is an intention, and the chart records events",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-03",
+      "kind": "exclusion",
+      "source_quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization.",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: 'such as' leaves the list of lower extremity complications open, and the criterion turns on treatment being required at randomisation, which has not happened when a chart is screened",
+      "unsupported": true,
+      "unsupported_reason": "'such as' leaves the list of lower extremity complications open, and the criterion turns on treatment being required at randomisation, which has not happened when a chart is screened",
+      "codes": [],
+      "critic": null
+    },
+    {
+      "id": "EXC-04",
+      "kind": "exclusion",
+      "source_quote": "Planning to start a sodium-glucose linked transporter-2 (SGLT2) inhibitor during the study.",
+      "notes": null,
+      "predicate_type": "unsupported",
+      "compiled_as": "not formalised: starting a drug during the study is an intention, and the chart records events",
+      "unsupported": true,
+      "unsupported_reason": "starting a drug during the study is an intention, and the chart records events",
+      "codes": [],
+      "critic": null
+    }
+  ],
+  "coverage": {
+    "total": 8,
+    "claimed": 8,
+    "direct": 8,
+    "inherited": 0,
+    "unclaimed": 0,
+    "ratio": 1.0,
+    "spans": [
+      {
+        "index": 0,
+        "section": "inclusion",
+        "text": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) ≥7%.",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 1,
+        "section": "inclusion",
+        "text": "Estimated glomerular filtration rate (eGFR) ≥25 and ≤60 milliliter/minute (mL/min)/1.73 square meter (m^2).",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 2,
+        "section": "inclusion",
+        "text": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors.",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 3,
+        "section": "inclusion",
+        "text": "Signed written informed consent.",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 4,
+        "section": "exclusion",
+        "text": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening.",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 5,
+        "section": "exclusion",
+        "text": "Planned coronary procedure or surgery after randomization.",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 6,
+        "section": "exclusion",
+        "text": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization.",
+        "parent_index": null,
+        "claim": "direct"
+      },
+      {
+        "index": 7,
+        "section": "exclusion",
+        "text": "Planning to start a sodium-glucose linked transporter-2 (SGLT2) inhibitor during the study.",
+        "parent_index": null,
+        "claim": "direct"
+      }
+    ],
+    "quote_problems": []
+  },
+  "terminology": [
+    {
+      "text": "HbA1c",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "4548-4",
+          "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+        }
+      ]
+    },
+    {
+      "text": "glomerular filtration rate",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "33914-3",
+          "display": "Glomerular filtration rate by Creatinine-based formula (MDRD)/1.73 sq M"
+        }
+      ]
+    },
+    {
+      "text": "type 2 diabetes mellitus",
+      "codes": [
+        {
+          "system": "SNOMED",
+          "code": "44054006",
+          "display": "Diabetes mellitus type 2 (disorder)"
+        }
+      ]
+    }
+  ],
+  "spans_unaccounted": [],
+  "config": {
+    "label": "caliper-no-resolver-no-rationales",
+    "resolver": false,
+    "critic": true,
+    "rationales": false,
+    "narrative": false,
+    "absence_policy": "coverage_gated"
+  }
+}

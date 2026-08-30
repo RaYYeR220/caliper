@@ -632,6 +632,7 @@ input[type="search"] { min-width: 14rem; }
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.06em;
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -703,6 +704,68 @@ th[aria-sort="descending"] button.sort::after { content: "\2193"; }
 }
 
 .empty h3 { margin-top: 0; }
+
+/* --------------------------------------------------------------------- constructed charts -- */
+
+/* A chart that was edited before it was screened belongs to neither substrate: it is not the
+ * protocol's words and it is not the instrument's reading of a record. It is marked with a hatch,
+ * which is what a drawing uses for material that has been cut into — not a colour, because colour
+ * is not available for meaning on this page, and not a symbol, because the mark has to survive the
+ * queue being printed in grey. The wording beside it does the work; the hatch only makes sure
+ * nobody scrolls past the wording.
+ *
+ * The verdict's own left rule is left alone. It carries the outcome, it is the device a reader
+ * learns first, and a second meaning on the same edge would cost more than it bought.
+ */
+.chart--constructed,
+.queue tbody tr:hover td.chart--constructed {
+  background-image: repeating-linear-gradient(45deg, var(--rule) 0 1px, transparent 1px 4px);
+}
+
+.built { font-family: var(--sans); font-size: 0.68rem; color: var(--muted); }
+.built .micro { color: var(--ink-soft); }
+
+.panel--constructed { position: relative; border-left-color: transparent; }
+
+.panel--constructed::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: -8px;
+  width: 8px;
+  background: repeating-linear-gradient(45deg, var(--ink) 0 1.5px, transparent 1.5px 5px);
+}
+
+/* One edit per line, in the instrument's voice: these are the key's own descriptions of what was
+ * done, and they are read as a list rather than scanned as a table. */
+.roster--edits > li {
+  grid-template-columns: 1fr;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+/* The comparison table's group heads: one chart, with everything built from it underneath. The
+ * left rule is cleared rather than inherited, because in this table that edge carries the verdict
+ * and a group head has none. */
+tr.group { border-left-color: transparent; }
+
+tr.group th {
+  background: var(--chassis);
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+tr.group .quiet { font-family: var(--sans); color: var(--muted); }
+
+.separator { font-family: var(--sans); font-size: 0.78rem; max-width: 26rem; }
+.separator p { margin: 0 0 0.25rem; }
+.separator .quiet { color: var(--muted); }
 
 /* ---------------------------------------------------------------------------------- packet -- */
 
@@ -845,3 +908,11 @@ footer.about { margin-top: 2.5rem; }
   .scroller { overflow: visible; }
   tr, .stack > li { break-inside: avoid; }
 }
+
+/* Confirm at the screening visit -----------------------------------------------------------------
+   Quieter than an open item on purpose: nothing here is a gap someone failed to fill, so it must
+   not read with the same urgency as a query waiting to be sent. */
+.panel--visit { border-left: 3px solid var(--rule); }
+.visit-list blockquote { margin: 0.35rem 0 0; }
+.visit-list .cid { display: flex; align-items: baseline; gap: 0.5rem; margin: 0; }
+.note--warn { color: var(--warn, var(--muted)); }

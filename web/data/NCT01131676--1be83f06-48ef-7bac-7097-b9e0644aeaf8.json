@@ -13,9 +13,9 @@
   "decision": "needs_review",
   "decision_label": "Needs review before a decision",
   "blocked_by": null,
-  "criteria_total": 22,
+  "criteria_total": 17,
   "criteria_resolved": 4,
-  "coverage": 0.18181818181818182,
+  "coverage": 0.23529411764705882,
   "deciding_criterion_ids": [],
   "approximations": [
     "the protocol anchors this window to consent, which was evaluated against the screening date"
@@ -51,14 +51,6 @@
       "retrievable": false
     },
     {
-      "criterion_id": "INC-06",
-      "quote": "Signed and dated informed consent",
-      "missing": "human judgement: consent is a site procedure and leaves no finding in the patient record",
-      "where_to_look": "the protocol and the investigator",
-      "fhir_query": "",
-      "retrievable": false
-    },
-    {
       "criterion_id": "INC-07",
       "quote": "High cardiovascular risk",
       "missing": "human judgement: the protocol defines high cardiovascular risk in a table the registry record does not carry",
@@ -83,14 +75,6 @@
       "retrievable": false
     },
     {
-      "criterion_id": "EXC-03",
-      "quote": "Planned cardiac surgery or angioplasty within 3 months",
-      "missing": "human judgement: a planned procedure is an intention, and the chart records events",
-      "where_to_look": "the protocol and the investigator",
-      "fhir_query": "",
-      "retrievable": false
-    },
-    {
       "criterion_id": "EXC-04",
       "quote": "Impaired renal function, defined as Glomerular Filtration Rate <30 ml/min (severe renal impairment, Modification of Diet in Renal Disease formula) during screening or run in.",
       "missing": "glomerular filtration rate in mL/min (the chart reports mL/min/{1.73_m2}, which we cannot convert)",
@@ -110,14 +94,6 @@
       "criterion_id": "EXC-06",
       "quote": "Blood dyscrasias or any disorders causing haemolysis or unstable Red Blood Cell (e.g. malaria, babesiosis, haemolytic anemia)",
       "missing": "human judgement: the criterion names three examples of an open class of disorders, and compiling the examples would exclude fewer patients than the protocol does",
-      "where_to_look": "the protocol and the investigator",
-      "fhir_query": "",
-      "retrievable": false
-    },
-    {
-      "criterion_id": "EXC-08",
-      "quote": "Contraindications to background therapy according to the local label",
-      "missing": "human judgement: the local label is not part of the patient record",
       "where_to_look": "the protocol and the investigator",
       "fhir_query": "",
       "retrievable": false
@@ -155,28 +131,49 @@
       "retrievable": false
     },
     {
-      "criterion_id": "EXC-13",
-      "quote": "Participation in another trial with an investigational drug within 30 days prior to informed consent",
-      "missing": "human judgement: participation in another trial is not recorded in the chart",
-      "where_to_look": "the protocol and the investigator",
-      "fhir_query": "",
-      "retrievable": false
-    },
-    {
-      "criterion_id": "EXC-14",
-      "quote": "Any other clinical condition that would jeopardize patients safety while participating in this clinical trial",
-      "missing": "human judgement: the criterion is a catch-all reserved for the investigator",
-      "where_to_look": "the protocol and the investigator",
-      "fhir_query": "",
-      "retrievable": false
-    },
-    {
       "criterion_id": "EXC-15",
       "quote": "Acute coronary syndrome, stroke or TIA within 2 months prior to informed consent",
       "missing": "confirmation that acute coronary syndrome is genuinely absent rather than merely unrecorded",
       "where_to_look": "the problem list and recent discharge summaries",
       "fhir_query": "Condition?patient=1be83f06-48ef-7bac-7097-b9e0644aeaf8&code=394659003,22298006&date=ge2026-02-01",
       "retrievable": true
+    }
+  ],
+  "at_visit": [
+    {
+      "criterion_id": "INC-06",
+      "kind": "inclusion",
+      "quote": "Signed and dated informed consent",
+      "reason": "this criterion is settled at the screening visit, not from the record",
+      "can_still_exclude": false
+    },
+    {
+      "criterion_id": "EXC-03",
+      "kind": "exclusion",
+      "quote": "Planned cardiac surgery or angioplasty within 3 months",
+      "reason": "this criterion is settled at the screening visit, not from the record",
+      "can_still_exclude": true
+    },
+    {
+      "criterion_id": "EXC-08",
+      "kind": "exclusion",
+      "quote": "Contraindications to background therapy according to the local label",
+      "reason": "this criterion is settled at the screening visit, not from the record",
+      "can_still_exclude": true
+    },
+    {
+      "criterion_id": "EXC-13",
+      "kind": "exclusion",
+      "quote": "Participation in another trial with an investigational drug within 30 days prior to informed consent",
+      "reason": "this criterion is settled at the screening visit, not from the record",
+      "can_still_exclude": true
+    },
+    {
+      "criterion_id": "EXC-14",
+      "kind": "exclusion",
+      "quote": "Any other clinical condition that would jeopardize patients safety while participating in this clinical trial",
+      "reason": "this criterion is settled at the screening visit, not from the record",
+      "can_still_exclude": true
     }
   ],
   "criteria": [
@@ -322,15 +319,15 @@
       "verdict": "unknown",
       "verdict_label": "Unresolved",
       "decisive": false,
-      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale": "this criterion is settled at the screening visit, not from the record",
       "rationale_source": "fallback",
       "fallback_reason": "no model was consulted",
       "engine_written": true,
       "approximations": [],
       "evidence": [],
       "resolution": {
-        "missing": "human judgement: consent is a site procedure and leaves no finding in the patient record",
-        "where_to_look": "the protocol and the investigator",
+        "missing": "confirmation at the screening visit: consent is a site procedure and leaves no finding in the patient record",
+        "where_to_look": "the screening visit itself",
         "fhir_query": "",
         "retrievable": false
       }
@@ -406,15 +403,15 @@
       "verdict": "unknown",
       "verdict_label": "Unresolved",
       "decisive": false,
-      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale": "this criterion is settled at the screening visit, not from the record",
       "rationale_source": "fallback",
       "fallback_reason": "no model was consulted",
       "engine_written": true,
       "approximations": [],
       "evidence": [],
       "resolution": {
-        "missing": "human judgement: a planned procedure is an intention, and the chart records events",
-        "where_to_look": "the protocol and the investigator",
+        "missing": "confirmation at the screening visit: a planned procedure is an intention, and the chart records events",
+        "where_to_look": "the screening visit itself",
         "fhir_query": "",
         "retrievable": false
       }
@@ -527,15 +524,15 @@
       "verdict": "unknown",
       "verdict_label": "Unresolved",
       "decisive": false,
-      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale": "this criterion is settled at the screening visit, not from the record",
       "rationale_source": "fallback",
       "fallback_reason": "no model was consulted",
       "engine_written": true,
       "approximations": [],
       "evidence": [],
       "resolution": {
-        "missing": "human judgement: the local label is not part of the patient record",
-        "where_to_look": "the protocol and the investigator",
+        "missing": "confirmation at the screening visit: the local label is not part of the patient record",
+        "where_to_look": "the screening visit itself",
         "fhir_query": "",
         "retrievable": false
       }
@@ -632,15 +629,15 @@
       "verdict": "unknown",
       "verdict_label": "Unresolved",
       "decisive": false,
-      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale": "this criterion is settled at the screening visit, not from the record",
       "rationale_source": "fallback",
       "fallback_reason": "no model was consulted",
       "engine_written": true,
       "approximations": [],
       "evidence": [],
       "resolution": {
-        "missing": "human judgement: participation in another trial is not recorded in the chart",
-        "where_to_look": "the protocol and the investigator",
+        "missing": "confirmation at the screening visit: participation in another trial is not recorded in the chart",
+        "where_to_look": "the screening visit itself",
         "fhir_query": "",
         "retrievable": false
       }
@@ -653,15 +650,15 @@
       "verdict": "unknown",
       "verdict_label": "Unresolved",
       "decisive": false,
-      "rationale": "this criterion was not formalised because it cannot be decided from data",
+      "rationale": "this criterion is settled at the screening visit, not from the record",
       "rationale_source": "fallback",
       "fallback_reason": "no model was consulted",
       "engine_written": true,
       "approximations": [],
       "evidence": [],
       "resolution": {
-        "missing": "human judgement: the criterion is a catch-all reserved for the investigator",
-        "where_to_look": "the protocol and the investigator",
+        "missing": "confirmation at the screening visit: the criterion is a catch-all reserved for the investigator",
+        "where_to_look": "the screening visit itself",
         "fhir_query": "",
         "retrievable": false
       }
@@ -693,7 +690,7 @@
     }
   ],
   "rationales": {
-    "total": 22,
+    "total": 17,
     "engine_written": 22
   },
   "disclaimer": "This packet is decision support for pre-screening. Eligibility is determined by the investigator."
