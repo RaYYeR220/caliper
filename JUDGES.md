@@ -92,12 +92,26 @@ have been biased toward it.
 
 ## One minute — is the output something a person would sign?
 
+**<https://rayyer220.github.io/caliper/>** — the interface, published from `web/` in this
+repository. Nothing to install.
+
+Or locally, which serves the same files:
+
 ```bash
 caliper ui demo && cd web && python -m http.server 8000
 ```
 
 Three screens: criteria review, the screening queue, one patient's packet. No build step, nothing
-fetched from a CDN.
+fetched from a CDN — a workflow check fails the deploy if any file in `web/` grows a reference to a
+remote origin, because that claim is worth more when something enforces it.
+
+Two packets worth opening, if you only open two:
+
+- [a constructed chart's packet](https://rayyer220.github.io/caliper/#/packet/NCT03315143/1be83f06-48ef-7bac-7097-b9e0644aeaf8~CK-001)
+  — needs review, with the three criteria that stopped it and the three left for the visit.
+- [the screening queue](https://rayyer220.github.io/caliper/#/queue/NCT03315143) — thirty-nine
+  charts, why nothing in the cohort is eligible, and each edited chart beside the sibling that
+  differs from it by one supplied number.
 
 On the packet, the things worth looking at:
 

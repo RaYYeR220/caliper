@@ -226,6 +226,10 @@ make data-verify     # every fixture matches its committed digest
 make eval            # the headline result, from recorded responses
 ```
 
+The coordinator interface is published at **<https://rayyer220.github.io/caliper/>** — the same
+static files as `web/` in this repository, with no build step and no external request. `caliper ui
+demo` regenerates its data locally.
+
 Full instructions, including the live path and what it costs, are in
 [`REPRODUCE.md`](REPRODUCE.md). A guided five-minute path for reviewers is in
 [`JUDGES.md`](JUDGES.md).

@@ -1,5 +1,7 @@
 # The coordinator's interface
 
+Published at <https://rayyer220.github.io/caliper/>, straight from this directory.
+
 Three screens over one run: what the compiler made of a protocol, a cohort screened against it, and
 the packet for one patient. It is the interactive sibling of the printed packet that
 `caliper screen --packet` produces, and it shows the same document — the screening export calls
