@@ -51,10 +51,26 @@ evaluation, and with the system, that nothing else had surfaced.
 | Found | What it was | What happened |
 |---|---|---|
 | **The key was wrong about the dead** | Twenty of fifty-one cases are on patients who died before the screening date. The annotation protocol never mentioned vital status — an omission in the brief, not in the annotation — so eleven were labelled "needs review" and one "eligible". Caliper screens them out and was penalised for it on twelve cases. | Vital status is now a rule that precedes every criterion. The corrections are published in `eval/annotation/corrections.md` with the run that prompted them. |
-| **The key was wrong about diabetes** | Every constructed `eligible` case rested on a criterion reading "Type 2 Diabetes Mellitus with HbA1c ≥7%" being met. The three charts underneath carry **prediabetes** and an HbA1c of 6.08–6.21%. | The refutation check now reads the raw FHIR directly — never through Caliper's own matching, which would be circular — and refuses to build a key over a label the chart contradicts. |
+| **A wrong diagnosis, caught by the check built to catch it** | The constructed `eligible` cases rest on a criterion reading "Type 2 Diabetes Mellitus with HbA1c ≥7%", and the charts underneath carry **prediabetes** with an HbA1c of 6.08–6.21%. That looked conclusive, and it was written up as a second error in the key. It was not one: the annotated cases on those charts already label that criterion `not_met`, and the `met` labels belong to constructed cases *after* an edit that supplies the diagnosis and moves the HbA1c — both declared in the case's own `perturbations`. | The refutation pass, which reads the raw committed FHIR and never Caliper's own matching, checked 64 `met` labels and refuted none. It is the reason this entry says what it says instead of what we first believed. The real cause of those disagreements was the runner bug in the row below. |
 | **Constructed cases were scored against the wrong chart** | The runner loaded each case's *base* chart and ignored the edits the case describes, so fifteen cases produced confident verdicts answering a question nobody had asked. Silent: every case ran, every case scored. | The runner is handed the case, not the identifier, and there is now one shared implementation of replaying a case's edits instead of three. |
 | **The baseline could not see a death** | The chart summary is the whole record to whoever reads it, and it omitted a recorded death — so the baseline was shown a patient who had died four weeks earlier as an ordinary candidate, while Caliper read the date directly. The comparison was measuring our plumbing. | The summary states it. The baseline's brief was also rewritten to set it the same task Caliper works to, rather than a slightly different one. |
 | **The provider will not compile our schema** | Venice answers a strict schema with more than sixteen union-typed parameters with a 400 naming the figure. The depth-2 criteria schema has thirty-seven, because strict mode turns every optional field into a null union. The three-tier ladder recovered on its own, every time, which is exactly what it is for — but it spent a round trip per call doing it. | A profile now declares the limit and the rung is skipped, with the arithmetic written into the trajectory. |
+
+### What the corrected key cost
+
+Correcting for vital status moved twelve cases to `ineligible` and left the key with 41 of 51
+expecting that answer. **That makes accuracy against version two a weak statistic**: rescoring the
+same recorded decisions, a system that answers "ineligible" to everything scores 80%, beating every
+real arm. It is in the results table for exactly that reason, next to `always_needs_review`, which
+collapses from 29% to 8% under the same correction. Read coverage, unsafe errors and the per-outcome
+breakdown; the single accuracy figure is the least informative column in the table.
+
+The six remaining `eligible` cases all rest on a diabetes diagnosis supplied to a chart that records
+prediabetes. That is declared per case and it is not a label we asserted — the edit is published and
+the label follows from it — but it is worth saying plainly why it had to be done that way: **the
+corpus contains exactly one genuinely diabetic patient with an HbA1c over seven, and he died four
+weeks before the screening date.** No edit fixes that, and no unedited chart in this corpus is
+eligible for this trial.
 
 ## Bugs the process found
 
