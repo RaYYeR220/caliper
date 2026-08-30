@@ -13,9 +13,9 @@ from __future__ import annotations
 
 import pytest
 
+from caliper.evalrun import ArmReport
 from caliper.logic import ScreeningOutcome
 from caliper.metrics import CaseScore, summarise
-from caliper.evalrun import ArmReport
 from caliper.report import ReportInputs, comparison_note, comparison_table, render
 
 ELIGIBLE = ScreeningOutcome.ELIGIBLE
