@@ -30,7 +30,12 @@ from caliper.llm.cost import CostLedger, CostRecord, Usage, estimate_cost
 from caliper.llm.errors import LLMError
 from caliper.llm.parsing import JSONExtractionError, extract_json_object
 from caliper.llm.provider import ProviderProfile, StructuredOutput, resolve_api_key
-from caliper.llm.schema import StrictSchemaError, strict_schema_problems, to_strict_schema
+from caliper.llm.schema import (
+    StrictSchemaError,
+    count_union_parameters,
+    strict_schema_problems,
+    to_strict_schema,
+)
 from caliper.llm.trace import Attempt, TraceStep, Trajectory
 
 DEFAULT_AGENT = "compiler"
@@ -141,7 +146,7 @@ class LLMClient:
             user_prompt=user,
         )
         try:
-            for tier in self._tiers():
+            for tier in self._tiers(step, model_cls):
                 value = self._run_tier(tier, step, system, user, model_cls)
                 if value is not None:
                     return Completion(value=value, cost=step.cost_record(), step=step)
@@ -150,8 +155,35 @@ class LLMClient:
             self.trajectory.append(step)
             self.ledger.add(step.cost_record())
 
-    def _tiers(self) -> tuple[Tier, ...]:
-        return _LADDER[_STARTING_RUNG[self.profile.structured_output] :]
+    def _tiers[T: BaseModel](self, step: TraceStep, model_cls: type[T]) -> tuple[Tier, ...]:
+        """The rungs worth attempting for this model on this provider.
+
+        A provider that declares a union-parameter budget is taken at its word: a schema over the
+        limit is refused deterministically, so sending it wastes a round trip on every call and
+        leaves a 400 in the trajectory for a reader to interpret. The rung is skipped instead, with
+        the arithmetic recorded.
+        """
+        tiers = _LADDER[_STARTING_RUNG[self.profile.structured_output] :]
+        budget = self.profile.max_union_parameters
+        if budget is None or "json_schema" not in tiers:
+            return tiers
+
+        try:
+            schema = to_strict_schema(model_cls, inline_refs=self.profile.inline_schema_refs)
+        except StrictSchemaError:
+            return tiers
+        unions = count_union_parameters(schema)
+        if unions <= budget:
+            return tiers
+
+        step.skipped_tiers.append(
+            (
+                "json_schema",
+                f"{self.profile.name} compiles at most {budget} union-typed parameters and this "
+                f"schema has {unions}; strict mode would refuse it",
+            )
+        )
+        return tuple(t for t in tiers if t != "json_schema")
 
     def _run_tier[T: BaseModel](
         self,

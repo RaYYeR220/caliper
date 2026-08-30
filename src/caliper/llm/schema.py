@@ -278,3 +278,19 @@ def _inspect(node: Any, root: dict[str, Any], path: str, problems: list[str]) ->
         if key in {"required", "enum"}:
             continue
         _inspect(value, root, f"{path}.{key}", problems)
+
+
+def count_union_parameters(schema: Any) -> int:
+    """How many parameters in a strict schema carry a union type.
+
+    Strict modes compile a schema before generating against it, and a union multiplies the states
+    that compilation has to consider. Providers therefore cap the count — Venice at sixteen — and
+    strict mode makes the number worse than it looks, because every optional field becomes a null
+    union. Counting it lets a profile decline a rung it knows will be refused.
+    """
+    if isinstance(schema, dict):
+        here = 1 if isinstance(schema.get("type"), list) or "anyOf" in schema else 0
+        return here + sum(count_union_parameters(v) for v in schema.values())
+    if isinstance(schema, list):
+        return sum(count_union_parameters(v) for v in schema)
+    return 0

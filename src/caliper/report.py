@@ -4,14 +4,22 @@ Everything here is generated. No number in `RESULTS.md` is typed by hand, which 
 keep a report honest across a dozen edits — a hand-copied figure is a figure that will eventually be
 stale, and nobody will notice because it looks fine.
 
-The layout is deliberate. Coverage at zero unsafe errors goes first because it is the headline, then
-immediately the two things that stop it being a magic trick: the trivial baselines that reach it by
+The layout is deliberate. The operating point goes first because it is the headline — the share of
+cases the system decided by itself, and the unsafe errors it committed doing so — then immediately
+the two things that stop it being a magic trick: the trivial baselines that reach perfect safety by
 refusing to answer, and the false-abstention rate that shows what refusing costs.
+
+No sentence here may be able to contradict a figure printed beside it. That rules out two habits in
+particular: describing an arm's behaviour in words the arm's own numbers can falsify ("answered
+every case", when its coverage column says 94%), and stating a quantity as prose when it can be
+computed ("roughly thirteen percentage points", when the intervals in the table span twenty-eight).
+Every claim below is either derived from the run or is true by construction of the arm it names.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from statistics import median
 
 from caliper.evalrun import ArmReport
 from caliper.metrics import CurvePoint
@@ -35,23 +43,37 @@ class ReportInputs:
     key_digest: str
     key_cases: int
     metamorphic: str | None = None
-    changelog_note: str | None = None
+
+
+def _errors(count: int) -> str:
+    """The unsafe-error count as words that stay true at zero and at one."""
+    if count == 0:
+        return "no unsafe error"
+    return f"**{count}** unsafe error" + ("" if count == 1 else "s")
 
 
 def headline(arms: list[ArmReport]) -> str:
+    """The operating point: what the system decided, and what that cost in unsafe errors.
+
+    Both halves are read off the same arm's realised behaviour, so the sentence cannot congratulate
+    the system on a safety record it did not have, nor report a coverage it reached only in a
+    counterfactual sweep.
+    """
     caliper = next((a for a in arms if a.arm == "caliper"), None)
     baseline = next((a for a in arms if a.arm == "single_prompt"), None)
     if caliper is None:
         return "No Caliper arm was run."
 
+    summary = caliper.summary
     lines = [
-        f"Caliper decided **{_pct(caliper.summary.coverage_at_zero_unsafe)}** of cases without a "
-        "human while committing no unsafe error.",
+        f"Caliper decided **{_pct(summary.coverage)}** of its {summary.cases} cases without a "
+        f"human, committing {_errors(summary.unsafe)} in doing so.",
     ]
     if baseline is not None:
+        other = baseline.summary
         lines.append(
-            f"The single-prompt baseline answered every case and committed "
-            f"**{baseline.summary.unsafe}** unsafe errors out of {baseline.summary.cases}."
+            f"The single-prompt baseline decided **{_pct(other.coverage)}** of the same "
+            f"{other.cases} cases and committed {_errors(other.unsafe)}."
         )
     return " ".join(lines)
 
@@ -71,6 +93,25 @@ def arm_table(arms: list[ArmReport]) -> str:
             f"{_pct(s.coverage_at_zero_unsafe)} | {_cost(report.cost_usd)} |"
         )
     return "\n".join([header, *rows])
+
+
+def interval_note(arms: list[ArmReport]) -> str:
+    """How wide the accuracy intervals in this run actually are, in the run's own numbers.
+
+    Computed rather than described. A sentence naming a width the table beside it contradicts is
+    worse than no sentence at all, and a hand-written one goes stale the first time the key grows.
+    """
+    widths = [high - low for a in arms for low, high in (a.summary.accuracy_ci,)]
+    if not widths:
+        return (
+            "No arm was run, so there is no interval to report and nothing below is a measurement."
+        )
+    typical = median(widths)
+    return (
+        f"At this sample size an exact binomial interval spans about "
+        f"{typical * 100:.0f} percentage points. Differences narrower than that are not "
+        "differences, and the intervals are printed so that is checkable rather than asserted."
+    )
 
 
 def curve_table(points: list[CurvePoint]) -> str:
@@ -130,19 +171,26 @@ def render(inputs: ReportInputs) -> str:
         "",
         headline(inputs.arms),
         "",
-        "At this sample size an exact binomial interval spans roughly thirteen percentage points. "
-        "Differences narrower than that are not differences, and the intervals are printed so that "
-        "is checkable rather than asserted.",
+        interval_note(inputs.arms),
         "",
         "## Every arm",
         "",
         arm_table(inputs.arms),
         "",
-        "`always_needs_review` is in this table on purpose. It commits no unsafe error at all and "
-        "is useless, which is the whole reason coverage and false abstention are reported beside "
-        "the safety number rather than behind it.",
+        "The `Coverage at 0 unsafe` column is the operating point: the share of cases an arm "
+        "decided by itself, or nothing at all if it committed an unsafe error. Safety is a "
+        "precondition there rather than something to trade coverage against.",
         "",
     ]
+
+    if any(a.arm == "always_needs_review" for a in inputs.arms):
+        sections += [
+            "`always_needs_review` is in this table on purpose. It can never commit an unsafe "
+            "error, because it never sends anyone forward, and it is useless — which is the whole "
+            "reason coverage and false abstention are reported beside the safety number rather "
+            "than behind it.",
+            "",
+        ]
 
     if caliper is not None and caliper.summary.curve:
         sections += [
@@ -150,7 +198,9 @@ def render(inputs: ReportInputs) -> str:
             "",
             "Each row answers the cases whose criteria resolved at least this far, reading an "
             "unresolved criterion the way a system with no notion of abstention would: an unknown "
-            "inclusion assumed met, an unknown exclusion assumed untriggered.",
+            "inclusion assumed met, an unknown exclusion assumed untriggered. Every row is "
+            "therefore a counterfactual — what answering would have cost — and not a record of "
+            "what this run did. The headline above is the record.",
             "",
             curve_table(caliper.summary.curve),
             "",
@@ -179,8 +229,5 @@ def render(inputs: ReportInputs) -> str:
             inputs.metamorphic,
             "",
         ]
-
-    if inputs.changelog_note:
-        sections += [inputs.changelog_note, ""]
 
     return "\n".join(sections)

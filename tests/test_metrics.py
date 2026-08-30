@@ -1,9 +1,10 @@
 """Scoring a run.
 
-The headline number is coverage at zero unsafe errors, which is one point on a risk-coverage curve.
-Reporting only that point would be a way of hiding: any system can reach zero unsafe errors by
-abstaining on everything. So the curve, the false-abstention rate and the trivial baselines all have
-to be in the same table.
+The headline number is the operating point: the share of cases the system decided by itself, and
+nothing at all if it committed an unsafe error along the way. Any system can reach zero unsafe
+errors by abstaining on everything, so the tests below pin the property that makes the number worth
+printing — abstention lowers it, and cannot win it. The risk-coverage curve, the false-abstention
+rate and the trivial baselines all stay in the same table for the same reason.
 """
 
 import math
@@ -144,7 +145,18 @@ class TestRiskCoverageCurve:
         scores = [score(Outcome.ELIGIBLE, Outcome.ELIGIBLE, criteria_coverage=0.75)]
         assert risk_coverage_curve(scores)[0].threshold <= 0.75
 
-    def test_coverage_at_zero_unsafe_is_the_widest_threshold_with_no_unsafe_error(self):
+
+class TestTheOperatingPoint:
+    """`coverage_at_zero_unsafe` has to describe what the system did, not what it might have done.
+
+    The bug these pin: the number used to be read off the risk-coverage curve, which is drawn over
+    `forced_decision`. A system that abstains on everything then scored a perfect 100% — it never
+    answers, so it is never unsafe — while a system that really decided most of its cases with a
+    clean safety record scored zero, because every curve point carried the errors it would have
+    made had it answered.
+    """
+
+    def test_it_is_the_share_of_cases_the_system_really_decided(self):
         scores = [
             score(Outcome.ELIGIBLE, Outcome.ELIGIBLE, criteria_coverage=1.0),
             score(
@@ -156,6 +168,74 @@ class TestRiskCoverageCurve:
             ),
         ]
         assert coverage_at_zero_unsafe(scores) == 0.5
+
+    def test_a_case_it_abstained_on_is_not_scored_against_it_as_an_unsafe_error(self):
+        """The whole point of abstaining: the answer it did not give cannot be held against it."""
+        scores = [
+            score(Outcome.ELIGIBLE, Outcome.ELIGIBLE, criteria_coverage=1.0),
+            score(
+                Outcome.INELIGIBLE,
+                Outcome.NEEDS_REVIEW,
+                forced=Outcome.ELIGIBLE,
+                criteria_coverage=0.0,
+                case_id="C-002",
+            ),
+        ]
+        assert unsafe_errors(scores) == []
+        assert coverage_at_zero_unsafe(scores) == 0.5
+
+    def test_one_unsafe_error_costs_the_whole_number(self):
+        """Safety is a precondition, not a term traded against coverage."""
+        scores = [
+            score(Outcome.ELIGIBLE, Outcome.ELIGIBLE, case_id=f"C-{i:03d}") for i in range(9)
+        ]
+        scores.append(score(Outcome.INELIGIBLE, Outcome.ELIGIBLE, case_id="C-009"))
+        assert empirical_coverage(scores) == 1.0
+        assert coverage_at_zero_unsafe(scores) == 0.0
+
+    def test_abstaining_on_everything_cannot_outrank_a_system_that_answers_safely(self):
+        """`always_needs_review` answers nothing. It must not come first on the headline number.
+
+        Both arms score zero unsafe errors, so the safety precondition alone cannot separate them.
+        What separates them is coverage of the decisions actually made — which is the work a
+        coordinator no longer has to do, and which abstaining on everything does not do at all.
+        """
+        cases = [
+            (Outcome.ELIGIBLE, "C-001"),
+            (Outcome.INELIGIBLE, "C-002"),
+            (Outcome.ELIGIBLE, "C-003"),
+            (Outcome.INELIGIBLE, "C-004"),
+            (Outcome.NEEDS_REVIEW, "C-005"),
+        ]
+        answers_safely = [
+            score(expected, expected, case_id=case_id) for expected, case_id in cases
+        ]
+        abstains_on_everything = [
+            score(
+                expected,
+                Outcome.NEEDS_REVIEW,
+                # The curve reading gave this arm full width at every threshold, which is what let
+                # it win. Full criteria coverage here keeps that escape route open under the test.
+                forced=Outcome.ELIGIBLE,
+                criteria_coverage=1.0,
+                case_id=case_id,
+            )
+            for expected, case_id in cases
+        ]
+
+        good = summarise(answers_safely, arm="caliper")
+        trivial = summarise(abstains_on_everything, arm="always_needs_review")
+
+        assert good.unsafe == 0 and trivial.unsafe == 0
+        assert trivial.coverage_at_zero_unsafe < good.coverage_at_zero_unsafe
+        assert trivial.false_abstention == 1.0
+
+    def test_a_system_that_answers_everything_unsafely_scores_nothing(self):
+        scores = [
+            score(Outcome.INELIGIBLE, Outcome.ELIGIBLE, case_id="C-001"),
+            score(Outcome.NEEDS_REVIEW, Outcome.ELIGIBLE, case_id="C-002"),
+        ]
+        assert coverage_at_zero_unsafe(scores) == 0.0
 
 
 class TestConfidenceIntervals:

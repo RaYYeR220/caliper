@@ -79,6 +79,8 @@ class TraceStep:
     system_prompt: str
     user_prompt: str
     attempts: list[Attempt] = field(default_factory=list)
+    skipped_tiers: list[tuple[str, str]] = field(default_factory=list)
+    """Rungs never attempted, with the reason. A reader should not have to infer an absence."""
     parsed: Any | None = None
     timestamp: str = field(default_factory=utc_now)
 
@@ -146,6 +148,7 @@ class TraceStep:
             "usage": self.usage.to_dict(),
             "usd": self.usd,
             "attempts": [a.to_dict() for a in self.attempts],
+            "skipped_tiers": [list(pair) for pair in self.skipped_tiers],
         }
 
     @classmethod
@@ -157,6 +160,7 @@ class TraceStep:
             system_prompt=payload["system_prompt"],
             user_prompt=payload["user_prompt"],
             attempts=[Attempt.from_dict(a) for a in payload.get("attempts", [])],
+            skipped_tiers=[tuple(pair) for pair in payload.get("skipped_tiers", [])],
             parsed=payload.get("parsed"),
             timestamp=payload["timestamp"],
         )
@@ -209,12 +213,33 @@ class Trajectory:
         lines = Path(path).read_text(encoding="utf-8").splitlines()
         return cls(TraceStep.from_dict(json.loads(line)) for line in lines if line.strip())
 
-    def to_markdown(self) -> str:
-        """Render the trajectory for a human reader, in the order events happened."""
+    def to_markdown(self, *, repeat_instructions: bool = True) -> str:
+        """Render the trajectory for a human reader, in the order events happened.
+
+        With `repeat_instructions=False`, standing instructions shared by every step are
+        printed once at the top rather than before each call. An agent's instructions do not
+        change between calls, and a compiler making one call per criterion otherwise buries
+        the run in copies of its own brief.
+        """
         totals = self.cost_ledger().totals()
         out: list[str] = ["# Trajectory", "", _headline(totals), "", _overview(self.steps), ""]
+
+        shared = None
+        if not repeat_instructions:
+            prompts = {step.system_prompt for step in self.steps}
+            if len(prompts) == 1:
+                shared = prompts.pop()
+                out += [
+                    "## Standing instructions",
+                    "",
+                    "Identical on every call below, so printed once rather than before each.",
+                    "",
+                    _fence(shared),
+                    "",
+                ]
+
         for number, step in enumerate(self.steps, 1):
-            out.extend(_render_step(number, step))
+            out.extend(_render_step(number, step, hide_instructions=shared is not None))
         out += ["## Cost", "", self.cost_ledger().summary_table(), ""]
         return "\n".join(out)
 
@@ -241,7 +266,7 @@ def _overview(steps: list[TraceStep]) -> str:
     return "\n".join(rows)
 
 
-def _render_step(number: int, step: TraceStep) -> list[str]:
+def _render_step(number: int, step: TraceStep, *, hide_instructions: bool = False) -> list[str]:
     out = [
         f"## {number}. {step.agent} on {step.provider}/{step.model}",
         "",
@@ -252,15 +277,18 @@ def _render_step(number: int, step: TraceStep) -> list[str]:
         f"- **Estimated cost:** {_usd(step.usd)}",
         f"- **Outcome:** {'validated' if step.succeeded else 'no valid response'}",
         "",
-        "### Instructions",
-        "",
-        _fence(step.system_prompt),
-        "",
+    ]
+    if not hide_instructions:
+        out += ["### Instructions", "", _fence(step.system_prompt), ""]
+    out += [
         "### Request",
         "",
         _fence(step.user_prompt),
         "",
     ]
+
+    for tier, reason in step.skipped_tiers:
+        out += [f"### Tier `{tier}` not attempted", "", reason, ""]
 
     previous: Attempt | None = None
     for index, attempt in enumerate(step.attempts, 1):

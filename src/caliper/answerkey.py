@@ -19,12 +19,14 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any, Literal
 
+from caliper.ir import Code
 from caliper.logic import ScreeningOutcome, Verdict
+from caliper.record import Evidence, PatientIndex
 
 # The failure modes the evaluation is designed to separate. "none" is a case with no trap: an
 # honest pair that should simply come out right, without which the key would only measure traps.
@@ -89,6 +91,104 @@ class AnswerKey:
     cases: tuple[Case, ...] = ()
     frozen_at: datetime | None = None
     notes: str = ""
+
+
+# ------------------------------------------------------------------------------------------------
+# Rebuilding a constructed chart
+# ------------------------------------------------------------------------------------------------
+
+
+def _rehydrate(snapshot: dict[str, Any], where: str) -> Evidence:
+    """One evidence row rebuilt from the record a case publishes.
+
+    The synthetic `fhir_path` travels with it. A row that came from a perturbation says so — it
+    points at `perturb.add_condition` rather than at a bundle entry — and a viewer that showed a
+    plausible-looking pointer resolving to nothing would be worse than one that shows this.
+    """
+    try:
+        when = snapshot["date"]
+        return Evidence(
+            kind=snapshot["kind"],
+            resource_type=snapshot["resource_type"],
+            resource_id=snapshot["resource_id"],
+            display=snapshot["display"],
+            fhir_path=snapshot["fhir_path"],
+            codes=tuple(Code(system=c["system"], code=c["code"]) for c in snapshot["codes"]),
+            value=snapshot["value"],
+            unit=snapshot["unit"],
+            date=date.fromisoformat(when) if when else None,
+        )
+    except (KeyError, TypeError, ValueError) as exc:
+        raise AnswerKeyError(f"{where}: an added row is not a usable evidence record: {exc}") from exc
+
+
+def _is(row: Evidence, snapshot: dict[str, Any]) -> bool:
+    """Whether this row is the one the record says was removed or replaced.
+
+    A FHIR panel flattens into one row per component, all carrying the same `resource_id`, so the
+    identifier alone does not pick a row out. The value, unit, date and codes together do.
+    """
+    return bool(
+        row.resource_id == snapshot.get("resource_id")
+        and row.value == snapshot.get("value")
+        and row.unit == snapshot.get("unit")
+        and (row.date.isoformat() if row.date else None) == snapshot.get("date")
+        and [{"system": c.system, "code": c.code} for c in row.codes] == snapshot.get("codes")
+    )
+
+
+def _replay(rows: list[Evidence], record: dict[str, Any], where: str) -> list[Evidence]:
+    """Apply one recorded perturbation to a chart, or refuse to.
+
+    `caliper.perturb` raises rather than returning a chart unchanged, because a constructed case
+    whose label asserts an edit that never happened is a wrong answer in the answer key. Replaying
+    a published record is held to the same standard: every row the record says it removed has to be
+    on the chart exactly once, or this is not the chart the key describes.
+    """
+    remaining = list(rows)
+    for snapshot in record.get("before") or ():
+        matched = [row for row in remaining if _is(row, snapshot)]
+        if len(matched) != 1:
+            raise AnswerKeyError(
+                f"{where}: the recorded {record.get('kind')} names "
+                f"{snapshot.get('resource_id')} ({snapshot.get('value')} {snapshot.get('unit')}), "
+                f"which the chart carries {len(matched)} times"
+            )
+        remaining.remove(matched[0])
+    return [*remaining, *(_rehydrate(snapshot, where) for snapshot in record.get("after") or ())]
+
+
+def rebuild_patient(case: Case, base: PatientIndex) -> PatientIndex:
+    """The chart a case is actually about: `base` with the case's recorded perturbations replayed.
+
+    This is the one implementation. A constructed case's labels describe the edited chart, so
+    anything that scores, renders or re-derives such a case has to reproduce the same edits from
+    the same record, and three implementations of that is three chances to disagree about what a
+    case says.
+
+    An annotated case has no perturbations and is returned unchanged, which is the whole reason the
+    caller does not need to know which provenance it is holding. A constructed case is rebuilt only
+    if every recorded edit applies exactly as recorded: a `before` row that the chart does not
+    carry, or carries twice, means this is not the chart the key describes, and continuing would
+    produce a plausible chart that no published record accounts for.
+
+    Only `evidence` changes. Demographics and vital status are carried over untouched, because no
+    perturbation in this key edits them and silently resurrecting a deceased patient by rebuilding
+    the index field by field is a bug this project has already had once.
+    """
+    where = f"case {case.id}"
+    if case.patient_id and base.patient_id and case.patient_id != base.patient_id:
+        raise AnswerKeyError(
+            f"{where}: expects the chart of patient {case.patient_id}, "
+            f"got {base.patient_id}"
+        )
+    if not case.perturbations:
+        return base
+
+    rows = list(base.evidence)
+    for record in case.perturbations:
+        rows = _replay(rows, dict(record), where)
+    return replace(base, evidence=rows)
 
 
 def _case_payload(case: Case) -> dict[str, Any]:

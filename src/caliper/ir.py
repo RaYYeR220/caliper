@@ -9,12 +9,10 @@ A criterion the model cannot faithfully formalise is not guessed at — it is re
 from __future__ import annotations
 
 import hashlib
-import re
 from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, computed_field, model_validator
 
-NUMERIC_OPS = ("<", "<=", ">", ">=", "==", "!=", "between")
 EQUALITY_OPS = ("==", "!=")
 
 
@@ -231,14 +229,20 @@ def concepts_in(criteria_set: CriteriaSet) -> list[Concept]:
     """
     seen: dict[str, Concept] = {}
     for criterion in criteria_set.criteria:
-        for concept in _concepts_of(criterion.predicate):
+        for concept in concepts_of(criterion.predicate):
             seen.setdefault(concept.text, concept)
     return list(seen.values())
 
 
-def _concepts_of(predicate: Predicate) -> list[Concept]:
+def concepts_of(predicate: Predicate) -> list[Concept]:
+    """Every concept one predicate mentions, composites included, in the order they are written.
+
+    Public because the review interface asks this per criterion while `concepts_in` asks it per
+    trial. One walk, so a composite shape that this one handles and a copy of it did not cannot
+    exist.
+    """
     if isinstance(predicate, CompositePredicate):
-        return [c for operand in predicate.operands for c in _concepts_of(operand)]
+        return [c for operand in predicate.operands for c in concepts_of(operand)]
     concept = getattr(predicate, "concept", None)
     return [concept] if concept is not None else []
 
@@ -273,8 +277,20 @@ class QuoteProblem(_Frozen):
     reason: str
 
 
-def _normalise(text: str) -> str:
-    return re.sub(r"\s+", " ", text).strip().lower()
+def normalise_quote_text(text: str) -> str:
+    """Fold a quote and the text it is checked against into one comparable form.
+
+    Public, and the only normalisation in the codebase, because the answer to "is this the same
+    text" decides whether a criterion survives as a predicate or is downgraded to
+    `UnsupportedPredicate`. Two implementations of that question are two different corpora.
+
+    `casefold` rather than `lower`: `lower` is a per-character mapping and leaves the cases where a
+    fold changes length alone, so German `ß` never equals `SS`. A protocol that writes *Straße* and
+    a heading that writes *STRASSE* are the same word, and a check that downgrades a criterion over
+    that has failed at the one job it has. Whitespace is collapsed and stripped for the same reason:
+    a line break inside a registry bullet is not a paraphrase.
+    """
+    return " ".join(text.split()).casefold()
 
 
 def quote_fidelity_problems(criteria_set: CriteriaSet) -> list[QuoteProblem]:
@@ -283,10 +299,10 @@ def quote_fidelity_problems(criteria_set: CriteriaSet) -> list[QuoteProblem]:
     Case and whitespace are forgiven; wording is not. A model that paraphrases the protocol has
     already lost the thread, and we would rather catch it here than at the bedside.
     """
-    haystack = _normalise(criteria_set.source_text)
+    haystack = normalise_quote_text(criteria_set.source_text)
     problems = []
     for criterion in criteria_set.criteria:
-        if _normalise(criterion.source_quote) not in haystack:
+        if normalise_quote_text(criterion.source_quote) not in haystack:
             problems.append(
                 QuoteProblem(
                     criterion_id=criterion.id,

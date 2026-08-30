@@ -17,6 +17,9 @@ import json
 from datetime import date
 from pathlib import Path
 
+from typer.testing import CliRunner
+
+from caliper import corpus, uicmd
 from caliper.agents.compiler import CompileResult
 from caliper.agents.critic import (
     CriticReport,
@@ -450,3 +453,75 @@ def test_the_bundle_is_written_as_utf8_with_newline_endings(tmp_path: Path) -> N
     raw = (tmp_path / "data" / "index.json").read_bytes()
     assert b"\r\n" not in raw
     assert raw.endswith(b"\n")
+
+
+# ------------------------------------------------------------------------------------------------
+# The demo bundle
+#
+# `caliper ui demo` is the only producer of a bundle in this repository, and it screens two cohorts:
+# the corpus as it stands, and charts the answer key edited to put a value on the far side of a
+# stated threshold. The export has no field for that distinction and `uicmd` writes one onto the
+# bundle itself, so these tests are about the mark surviving — a viewer that let an edited chart
+# pass for an observed one would be lying in the one place nobody would think to check.
+# ------------------------------------------------------------------------------------------------
+
+
+def test_the_demo_bundle_marks_every_constructed_screening_and_only_those(tmp_path: Path) -> None:
+    result = CliRunner().invoke(uicmd.app, ["demo", "--root", str(tmp_path)])
+    assert result.exit_code == 0, result.output
+
+    index = json.loads((tmp_path / "data" / "index.json").read_text(encoding="utf-8"))
+    corpus_ids = set(corpus.patient_ids())
+    marked = [row for row in index["screenings"] if "constructed" in row]
+    assert len(marked) == len(uicmd.constructed_charts(uicmd.CONSTRUCTED_NCT))
+
+    for row in index["screenings"]:
+        # An unmarked row must be a chart the corpus actually contains. Anything else would be a
+        # constructed chart the interface would draw as an observed one.
+        assert ("constructed" in row) is (row["patient_id"] not in corpus_ids)
+
+    for row in marked:
+        built = row["constructed"]
+        assert built["kind"] == "constructed"
+        assert built["base_patient_id"] in corpus_ids
+        assert built["edits"], "a constructed chart has to say what was changed"
+        # The queue reads the index and the packet reads the document; both have to carry it.
+        document = json.loads(
+            (tmp_path / "data" / f"{row['nct_id']}--{row['patient_id']}.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        assert document["constructed"] == built
+
+
+def test_the_demo_bundle_states_the_screening_date_it_departed_from(tmp_path: Path) -> None:
+    result = CliRunner().invoke(uicmd.app, ["demo", "--root", str(tmp_path)])
+    assert result.exit_code == 0, result.output
+
+    demo = json.loads((tmp_path / "data" / "index.json").read_text(encoding="utf-8"))["demo"]
+    assert demo["screened_on"] == uicmd.DEMO_SCREENING_DATE.isoformat()
+    assert demo["screened_on"] != demo["corpus_screening_date"]
+    # A date that differs from every other figure in the repository has to arrive with its reason,
+    # or the two will disagree later with nobody able to say why.
+    assert demo["corpus_screening_date"] in demo["screening_date_note"]
+    assert "2026-05-03" in demo["screening_date_note"]
+
+
+def test_a_constructed_chart_carries_the_value_the_answer_key_says_was_supplied() -> None:
+    charts = {c.case.id: c for c in uicmd.constructed_charts(uicmd.CONSTRUCTED_NCT)}
+    near_miss = charts["CK-008"]
+
+    def egfr(patient: PatientIndex) -> list[float | None]:
+        return [
+            row.value
+            for row in patient.evidence
+            if row.kind == "observation"
+            and any(code.system == "LOINC" and code.code == "33914-3" for code in row.codes)
+        ]
+
+    # The chart this case was built from has never carried a filtration rate, which is why the
+    # case had to supply one rather than move one.
+    assert egfr(corpus.load_patient(near_miss.case.patient_id)) == []
+    assert egfr(near_miss.chart) == [24.0]
+    assert near_miss.chart.patient_id != near_miss.case.patient_id
+    assert any("33914-3" in edit for edit in near_miss.edits)

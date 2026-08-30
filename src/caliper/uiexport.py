@@ -29,12 +29,11 @@ from caliper.criteria_text import CriterionSpan, segment
 from caliper.evaluate import CriterionResult
 from caliper.ir import (
     Code,
-    CompositePredicate,
-    Concept,
     CriteriaSet,
     Criterion,
     Predicate,
     UnsupportedPredicate,
+    concepts_of,
 )
 from caliper.packet import ABSENCE_POLICY_NOTES, DISCLAIMER, VERDICT_LABELS, OpenItem, build_packet
 from caliper.pipeline import CompiledTrial, Screening
@@ -72,22 +71,14 @@ def _code(code: Code) -> dict[str, Any]:
     return {"system": code.system, "code": code.code, "display": code.display}
 
 
-def _concepts_of(predicate: Predicate) -> list[Concept]:
-    """Every concept one predicate mentions, composites included.
-
-    `ir.concepts_in` answers this for a whole criteria set. The review screen asks it per criterion,
-    so the walk is repeated here rather than reaching into that module's private helper.
-    """
-    if isinstance(predicate, CompositePredicate):
-        return [c for operand in predicate.operands for c in _concepts_of(operand)]
-    concept = getattr(predicate, "concept", None)
-    return [concept] if concept is not None else []
-
-
 def _codes_of(predicate: Predicate) -> list[dict[str, Any]]:
-    """The terminology attached to a predicate, de-duplicated, in the order it was resolved."""
+    """The terminology attached to a predicate, de-duplicated, in the order it was resolved.
+
+    `ir.concepts_of` does the walk. It used to be copied into this module, which meant the review
+    screen and the terminology count could disagree about what a nested composite mentions.
+    """
     seen: dict[tuple[str, str], Code] = {}
-    for concept in _concepts_of(predicate):
+    for concept in concepts_of(predicate):
         for code in concept.codes:
             seen.setdefault((code.system, code.code), code)
     return [_code(code) for code in seen.values()]

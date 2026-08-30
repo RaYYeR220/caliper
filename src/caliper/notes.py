@@ -26,10 +26,15 @@ from __future__ import annotations
 import json
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import date
 from pathlib import Path
 from typing import Any
 
+# A note's date is written the way FHIR writes one, and has to be read back the same way: the same
+# refusal to invent a day for a partial date, the same discarding of the offset. There was a second
+# copy of that parser here, identical line for line, which is one place for the two readings to
+# drift apart the next time either is touched.
+from caliper.fhir import parse_date
 from caliper.record import Evidence, PatientIndex
 
 DEFAULT_NOTES_ROOT = Path("data/notes")
@@ -148,17 +153,7 @@ def _row(path: Path, note: Mapping[str, Any]) -> Evidence:
         resource_id=str(note["note_id"]),
         display=str(note["type"]),
         fhir_path=note_pointer(path, str(note["note_id"])),
-        date=_parse_date(note["date"]),
+        date=parse_date(note["date"]),
         source="narrative",
         narrative_quote=str(note["text"]),
     )
-
-
-def _parse_date(value: Any) -> date | None:
-    """A note's date, or None if it was not written as one. Partial dates invent precision."""
-    if not isinstance(value, str):
-        return None
-    try:
-        return datetime.fromisoformat(value.strip()).date()
-    except ValueError:
-        return None

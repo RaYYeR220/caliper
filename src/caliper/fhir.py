@@ -110,7 +110,7 @@ def _dig(node: Any, *path: str) -> Any:
     return node
 
 
-def _parse_date(value: Any) -> date | None:
+def parse_date(value: Any) -> date | None:
     """A FHIR date or dateTime as the calendar day it was written on, or None if unreadable.
 
     The UTC offset is discarded rather than applied: the day as recorded is the day a coordinator
@@ -127,7 +127,7 @@ def _parse_date(value: Any) -> date | None:
 
 def _first_date(*values: Any) -> date | None:
     for value in values:
-        parsed = _parse_date(value)
+        parsed = parse_date(value)
         if parsed is not None:
             return parsed
     return None
@@ -324,7 +324,7 @@ def _medications(entry: _Entry, references: _References) -> list[Evidence]:
             "medication",
             display=_display(concept, fallback=fallback),
             codes=_codes(concept),
-            when=_parse_date(resource.get("authoredOn")),
+            when=parse_date(resource.get("authoredOn")),
         )
     ]
 
@@ -358,7 +358,7 @@ def _encounters(entry: _Entry, _references: _References) -> list[Evidence]:
             "encounter",
             display=labels[0] if labels else "encounter",
             codes=tuple(code for concept in types for code in _codes(concept)),
-            when=_parse_date(_dig(resource, "period", "start")),
+            when=parse_date(_dig(resource, "period", "start")),
         )
     ]
 
@@ -427,7 +427,7 @@ def load_patient_index(bundle: dict[str, Any]) -> PatientIndex:
     patient_id = patients[0].resource_id
     demographics = patients[0].resource
     gender = demographics.get("gender")
-    deceased = _parse_date(demographics.get("deceasedDateTime"))
+    deceased = parse_date(demographics.get("deceasedDateTime"))
 
     # `deceasedBoolean` is legal FHIR and says the patient is dead without saying when. No date is
     # invented for it: `screen.py` prints a date of death straight into the coordinator's
@@ -439,7 +439,7 @@ def load_patient_index(bundle: dict[str, Any]) -> PatientIndex:
 
     index = PatientIndex(
         patient_id=patient_id,
-        birth_date=_parse_date(demographics.get("birthDate")),
+        birth_date=parse_date(demographics.get("birthDate")),
         sex=gender.strip() if isinstance(gender, str) and gender.strip() else None,
         deceased=deceased,
         deceased_undated=undated_death,
@@ -503,7 +503,7 @@ def narrative_notes(bundle: dict[str, Any]) -> list[NarrativeNote]:
             NarrativeNote(
                 resource_id=entry.resource_id,
                 fhir_path=entry.fhir_path,
-                date=_parse_date(entry.resource.get("date")),
+                date=parse_date(entry.resource.get("date")),
                 text="\n\n".join(paragraphs),
             )
         )

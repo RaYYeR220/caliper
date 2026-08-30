@@ -17,7 +17,7 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-from caliper import corpus, evalcmd, uicmd
+from caliper import corpus, evalcmd, trajcmd, uicmd
 from caliper.agents.base import AgentContext
 from caliper.config import load_env
 from caliper.llm import LLMClient, Trajectory, has_api_key, profile_from_env
@@ -47,6 +47,7 @@ data_app = typer.Typer(help="Inspect and verify the committed fixtures.")
 app.add_typer(data_app, name="data")
 app.add_typer(evalcmd.app, name="")
 app.add_typer(uicmd.app, name="ui")
+app.add_typer(trajcmd.app, name="trajectories")
 
 console = Console()
 

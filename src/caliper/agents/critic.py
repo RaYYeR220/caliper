@@ -47,6 +47,7 @@ from caliper.ir import (
     QuoteProblem,
     TemporalWindow,
     UnsupportedPredicate,
+    normalise_quote_text,
     quote_fidelity_problems,
 )
 
@@ -479,11 +480,11 @@ def _claim_spans(
     the two sets separately is how the generosity stays honest: the report can say which spans rest
     on nothing but their parent without promoting them to failures.
     """
-    quotes = [_normalise(criterion.source_quote) for criterion in criteria_set.criteria]
+    quotes = [normalise_quote_text(criterion.source_quote) for criterion in criteria_set.criteria]
     direct = {
         span.index
         for span in spans
-        if span.text.strip() and any(_normalise(span.text) in quote for quote in quotes)
+        if span.text.strip() and any(normalise_quote_text(span.text) in quote for quote in quotes)
     }
     # Spans are in document order and a parent always precedes its children, so one forward pass
     # propagates a claim down an arbitrarily deep nesting.
@@ -494,11 +495,6 @@ def _claim_spans(
         if span.parent_index in direct or span.parent_index in inherited:
             inherited.add(span.index)
     return direct, inherited
-
-
-def _normalise(text: str) -> str:
-    """Forgive whitespace and case, forgive nothing else. Mirrors `ir.quote_fidelity_problems`."""
-    return " ".join(text.split()).casefold()
 
 
 def _cell(text: str) -> str:

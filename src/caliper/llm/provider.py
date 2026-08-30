@@ -19,6 +19,7 @@ from typing import Any
 from caliper.llm.errors import LLMError
 
 VENICE_BASE_URL = "https://api.venice.ai/api/v1"
+VENICE_UNION_LIMIT = 16
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
 # Venice prepends a persona system prompt unless it is switched off. A clinical compiler that has
@@ -65,6 +66,14 @@ class ProviderProfile:
     # Inlining `$defs` costs a few hundred tokens and buys compatibility with providers whose
     # strict mode does not resolve references. Turn it off only for recursive models.
     inline_schema_refs: bool = True
+    max_union_parameters: int | None = None
+    """How many union-typed parameters this provider's strict mode will compile, if it says.
+
+    Venice answers a schema over its limit with a 400 naming the number, so the ladder recovers on
+    its own; declaring the limit means the request is never sent and the trajectory records the
+    reason instead of a rejection the reader has to interpret.
+    """
+
     notes: str = ""
 
     @property
@@ -113,6 +122,9 @@ def _venice(
         base_url=VENICE_BASE_URL,
         api_key_env="VENICE_API_KEY",
         structured_output=structured_output,
+        # Measured against the live endpoint: a schema with more union-typed parameters is
+        # answered with a 400 naming this figure.
+        max_union_parameters=VENICE_UNION_LIMIT,
         input_usd_per_mtok=input_usd,
         output_usd_per_mtok=output_usd,
         extra_body=VENICE_EXTRA_BODY,

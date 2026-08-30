@@ -736,3 +736,83 @@ def test_the_gate_is_pydantic_not_the_provider():
     with pytest.raises(ValidationError):
         Sample.model_validate({"name": "", "count": 2})
     assert result.value == Sample(name="aspirin", count=2)
+
+
+class TestSharedInstructions:
+    """An agent's instructions are the same on every call, and repeating them buries the run.
+
+    The compiler makes one call per criterion; printed in full each time, its standing instructions
+    accounted for nine tenths of a 12,000-line trajectory, and the thing a reader came for — what
+    was asked, what came back, what was retried — was scattered through it.
+    """
+
+    def a_step(self, system: str, user: str) -> TraceStep:
+        client, _ = a_client([Reply(VALID_SAMPLE)])
+        done = client.complete(system=system, user=user, model_cls=Sample, agent="compiler")
+        return done.step
+
+    def two_steps(self, system: str = "standing orders") -> Trajectory:
+        return Trajectory([self.a_step(system, "one"), self.a_step(system, "two")])
+
+    def test_shared_instructions_are_printed_once(self):
+        text = self.two_steps().to_markdown(repeat_instructions=False)
+        assert text.count("standing orders") == 1
+
+    def test_the_reader_is_told_where_they_went(self):
+        text = self.two_steps().to_markdown(repeat_instructions=False)
+        assert "Standing instructions" in text
+
+    def test_every_request_is_still_there(self):
+        text = self.two_steps().to_markdown(repeat_instructions=False)
+        assert "one" in text and "two" in text
+
+    def test_differing_instructions_are_still_printed_per_step(self):
+        """Two agents in one trajectory have nothing to share, so nothing is hoisted."""
+        traj = Trajectory([self.a_step("orders A", "one"), self.a_step("orders B", "two")])
+        text = traj.to_markdown(repeat_instructions=False)
+        assert "orders A" in text and "orders B" in text
+
+    def test_the_default_still_repeats_them(self):
+        assert self.two_steps().to_markdown().count("standing orders") == 2
+
+
+class TestUnionBudget:
+    """Strict schema modes cap how many union-typed parameters they will compile.
+
+    Venice rejects a schema with more than sixteen, and Caliper's depth-2 criteria schema has
+    thirty-seven, because strict mode expresses every optional field as a null union. The ladder
+    already handles the rejection; a profile that declares the limit means the request is never
+    sent, and the trajectory says why rather than showing a 400 the reader has to interpret.
+    """
+
+    def test_a_schema_within_budget_still_starts_at_the_top(self):
+        profile = a_profile(max_union_parameters=100)
+        client, transport = a_client([Reply(VALID_SAMPLE)], profile=profile)
+        step = client.complete(system="s", user="u", model_cls=Sample, agent="a").step
+        assert step.attempts[0].tier == "json_schema"
+        assert "response_format" in transport.requests[0]
+
+    def test_a_schema_over_budget_skips_the_strict_rung(self):
+        profile = a_profile(max_union_parameters=0)
+        client, transport = a_client([Reply(VALID_SAMPLE)], profile=profile)
+        step = client.complete(system="s", user="u", model_cls=Sample, agent="a").step
+        assert step.attempts[0].tier == "json_object"
+        assert len(transport.requests) == 1
+
+    def test_the_trajectory_says_why_the_rung_was_skipped(self):
+        profile = a_profile(max_union_parameters=0)
+        client, _ = a_client([Reply(VALID_SAMPLE)], profile=profile)
+        step = client.complete(system="s", user="u", model_cls=Sample, agent="a").step
+        assert step.skipped_tiers
+        reason = step.skipped_tiers[0][1]
+        assert "union" in reason and "0" in reason
+
+    def test_no_declared_budget_means_no_limit(self):
+        client, transport = a_client([Reply(VALID_SAMPLE)], profile=a_profile())
+        client.complete(system="s", user="u", model_cls=Sample, agent="a")
+        assert "response_format" in transport.requests[0]
+
+    def test_counting_matches_the_schema_the_provider_would_have_seen(self):
+        from caliper.llm.schema import count_union_parameters, to_strict_schema
+
+        assert count_union_parameters(to_strict_schema(Sample)) >= 1
