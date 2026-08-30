@@ -55,6 +55,16 @@ cannot thereby unblock a verdict.
   protocol was written rather than by how good the system is.
 - **Resolve "above the upper limit of normal".** Reference ranges are laboratory-specific and are
   not in the record we are given. Any criterion phrased that way abstains.
+- **Reconcile `mL/min` with `mL/min/1.73m^2`.** This is worth naming separately because it is the
+  single most expensive refusal we measured: on the headline trial it is the top blocker, holding up
+  **18 of 24 screenings** — more than the three genuinely-unformalisable criteria beneath it. The
+  protocol asks for an eGFR normalised to body surface area; the chart reports one that is not, or
+  is labelled as though it is not. Converting needs the patient's BSA, and whether Synthea's
+  `mL/min` is a genuinely un-normalised measurement or a labelling slip is not knowable from the
+  bundle. So the criterion abstains and the packet says why. It is the clearest case in the corpus
+  of an abstention that is correct, cheap to close, and *not* a limit of the model: one line from a
+  site telling us how their laboratory reports eGFR would clear eighteen screenings.
+
 - **Convert an analyte we have not vetted.** `caliper/units.py` carries an explicit table. A mass
   unit cannot be converted to a molar one without knowing the substance, so an analyte missing from
   the table abstains rather than guessing. The table is short by design and is a known bottleneck.
