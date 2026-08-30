@@ -122,6 +122,31 @@ component closely enough to notice something did not fit.
 | `medicationReference` was not resolved, and `Medication` had been trimmed from the corpus | 114 of 342 prescriptions carried no drug identity at all, so any criterion about a concomitant or prohibited medication was unresolvable for two thirds of patients | rendering medications in the chart summary |
 | The prose linter's rounding rule | See above | writing the packet against it |
 
+## The reproducibility claim was false, and the container is what found it
+
+`README.md` said the headline result reproduces byte for byte with no API key and no network. It did
+not, and the failure was silent, which is the worst way for it to fail.
+
+`docker run --rm caliper` produced **eleven verdicts different from the same command run locally** —
+73% coverage against 88%, and a `caliper` arm that had quietly become `caliper-no-resolver`. Nothing
+on stdout said so. Both runs printed a full table and neither printed a warning.
+
+Two causes, one on top of the other:
+
+| | |
+|---|---|
+| **The terminology store was not part of the artefact** | The resolver reads `.caliper/concepts.json` before it calls a model. That file was gitignored as a run artefact, so it was warm when the tape was recorded and cold in any fresh clone or container — which made the resolver ask questions the recording had never been asked. It is now committed and copied into the image, with the reason written in both ignore files. |
+| **A tape miss was degrading instead of stopping** | The retry ladder drops a rung on any transport exception, because a provider refusing a `response_format` has no portable exception type. `TapeMiss` was caught by that same clause, exhausted the ladder, and surfaced to the resolver as an ordinary failure — which it handles by returning no codes and carrying on, exactly as designed. A missing recording is not an unresolvable concept, and it now propagates. |
+
+The second is the one worth keeping. The first was a packaging mistake and would have been found by
+anyone who cloned the repository; the second is a system that was built to be honest about what it
+does not know and had a path by which it could be wrong without saying so. `tests/test_tape.py`
+now asserts that a miss reaches the caller and that an ordinary transport refusal still drops a rung,
+because the fix is only correct if it keeps both behaviours apart.
+
+Verified after the fix: every one of the eleven arms reports identical figures in the container and
+on the host.
+
 ## What the changelog is missing
 
 The order above is the order the components were reasoned about, not a clean chronology — several

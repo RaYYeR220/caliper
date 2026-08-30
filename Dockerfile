@@ -20,6 +20,10 @@ RUN pip install --no-cache-dir -e ".[dev]"
 
 COPY data ./data
 COPY eval ./eval
+# The resolver's terminology store. Committed rather than ignored, and copied here rather than
+# left to build cold: the resolver reads it before it calls a model, so a container without it
+# replays the same tape and reaches different verdicts, quietly.
+COPY .caliper ./.caliper
 COPY tests ./tests
 COPY scripts ./scripts
 COPY web ./web

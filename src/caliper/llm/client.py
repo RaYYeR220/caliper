@@ -37,6 +37,7 @@ from caliper.llm.schema import (
     to_strict_schema,
 )
 from caliper.llm.trace import Attempt, TraceStep, Trajectory
+from caliper.tape import TapeMiss
 
 DEFAULT_AGENT = "compiler"
 DEFAULT_MAX_RETRIES = 2
@@ -212,6 +213,14 @@ class LLMClient:
 
             try:
                 content, usage = self._call(messages, response_format)
+            except TapeMiss:
+                # Not a provider refusing a request: a recording that does not contain the run
+                # being replayed. Degrading through it is how a replay comes to disagree with the
+                # run it claims to reproduce while printing nothing — which it did, silently, on
+                # eleven cases, because the terminology store was warm when the tape was recorded
+                # and cold in the container replaying it. A reproduction that is not one has to
+                # stop rather than answer.
+                raise
             except Exception as exc:
                 # Every provider SDK raises its own hierarchy, and the interesting case — a model
                 # that will not accept this `response_format` — has no portable type. A request

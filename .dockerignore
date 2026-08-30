@@ -5,7 +5,11 @@
 .mypy_cache/
 **/__pycache__/
 .cache/
-.caliper/
+# The terminology store goes in; everything else the directory holds is scratch. A container
+# without it replays the same tape and reaches different verdicts, quietly — which is exactly
+# what it did before this line existed.
+.caliper/*
+!.caliper/concepts.json
 .env
 web/data/
 runs/

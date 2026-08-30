@@ -10,8 +10,10 @@ would make an offline claim false; a tape written with a key in it would be a le
 """
 
 import json
+from types import SimpleNamespace
 
 import pytest
+from pydantic import BaseModel
 
 from caliper.tape import Tape, TapeMiss, TapeTransport, exchange_key
 
@@ -329,3 +331,52 @@ class TestPruning:
 
         prune(tmp_path / "t.jsonl", {exchange_key(request())})
         assert (tmp_path / "t.jsonl").read_bytes() == before
+
+
+class TestAMissDuringReplayIsNotADegradation:
+    """A replay that answers differently from the run it replays is worse than one that crashes.
+
+    The retry ladder drops a rung on any transport exception, because a provider that refuses a
+    `response_format` has no portable exception type. A tape miss is not that. It means this
+    recording does not contain the run being replayed, and swallowing it produced the exact failure
+    this class exists to prevent: the same command, the same committed tape, and eleven different
+    verdicts, with nothing on stdout to say so.
+    """
+
+    def a_tape(self, tmp_path) -> Tape:
+        return Tape(tmp_path / "empty.jsonl", mode="replay")
+
+    def test_the_miss_reaches_the_caller_rather_than_exhausting_the_ladder(self, tmp_path):
+        from caliper.llm.client import LLMClient
+
+        client = LLMClient(
+            profile=a_profile(), transport=TapeTransport(self.a_tape(tmp_path))
+        )
+
+        with pytest.raises(TapeMiss):
+            client.complete(system="s", user="u", model_cls=_Shape, agent="resolver")
+
+    def test_an_ordinary_transport_failure_still_drops_a_rung(self, tmp_path):
+        """The behaviour the ladder is for has to survive the fix."""
+        from caliper.llm.client import LLMClient
+        from caliper.llm.errors import LLMError
+
+        class Refusing:
+            def __init__(self):
+                self.chat = SimpleNamespace(
+                    completions=SimpleNamespace(create=self._create)
+                )
+
+            def _create(self, **payload):
+                raise RuntimeError("this model does not accept that response_format")
+
+        client = LLMClient(profile=a_profile(), transport=Refusing())
+
+        with pytest.raises(LLMError):
+            client.complete(system="s", user="u", model_cls=_Shape, agent="resolver")
+
+
+class _Shape(BaseModel):
+    """The smallest thing the client can be asked to validate into."""
+
+    ok: bool = True

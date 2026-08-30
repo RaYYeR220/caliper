@@ -1,0 +1,1816 @@
+{
+  "consistency_violations": 0,
+  "entries": {
+    "absolute neutrophil count (anc)": {
+      "codes": [
+        {
+          "code": "751-8",
+          "display": "Neutrophils [#/volume] in Blood by Automated count",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:09:27Z",
+      "reuse_count": 2,
+      "text": "absolute neutrophil count (anc)"
+    },
+    "active myocarditis": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:00:26Z",
+      "reuse_count": 2,
+      "text": "active myocarditis"
+    },
+    "acute coronary syndrome": {
+      "codes": [
+        {
+          "code": "394659003",
+          "display": "Acute coronary syndrome",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT01131676",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:12:36Z",
+      "reuse_count": 3,
+      "text": "acute coronary syndrome"
+    },
+    "acute decompensated hf": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:20:07Z",
+      "reuse_count": 2,
+      "text": "acute decompensated hf"
+    },
+    "admission to the intensive care unit (icu)": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:52:12Z",
+      "reuse_count": 0,
+      "text": "admission to the intensive care unit (icu)"
+    },
+    "anthracycline": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:35:17Z",
+      "reuse_count": 2,
+      "text": "anthracycline"
+    },
+    "antibiotic treatment for upper and/or lower respiratory tract infections": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:49Z",
+      "reuse_count": 1,
+      "text": "antibiotic treatment for upper and/or lower respiratory tract infections"
+    },
+    "antineutrophil cytoplasmic antibody (anca)-associated vasculitis": {
+      "codes": [],
+      "first_seen_nct": "NCT06717698",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:40:51Z",
+      "reuse_count": 3,
+      "text": "antineutrophil cytoplasmic antibody (anca)-associated vasculitis"
+    },
+    "blood transfusion": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:09:41Z",
+      "reuse_count": 0,
+      "text": "blood transfusion"
+    },
+    "bmi": {
+      "codes": [
+        {
+          "code": "39156-5",
+          "display": "Body mass index (BMI) [Ratio]",
+          "system": "LOINC"
+        },
+        {
+          "code": "60621009",
+          "display": "Body mass index",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT06717698",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:40:22Z",
+      "reuse_count": 3,
+      "text": "bmi"
+    },
+    "body mass index": {
+      "codes": [
+        {
+          "code": "39156-5",
+          "display": "Body mass index (BMI) [Ratio]",
+          "system": "LOINC"
+        },
+        {
+          "code": "60621009",
+          "display": "Body mass index",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT01131676",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:12:20Z",
+      "reuse_count": 3,
+      "text": "body mass index"
+    },
+    "body mass index (bmi)": {
+      "codes": [
+        {
+          "code": "39156-5",
+          "display": "Body mass index (BMI) [Ratio]",
+          "system": "LOINC"
+        },
+        {
+          "code": "60621009",
+          "display": "Body mass index",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:49:25Z",
+      "reuse_count": 3,
+      "text": "body mass index (bmi)"
+    },
+    "breast-feeding": {
+      "codes": [],
+      "first_seen_nct": "NCT06717698",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:44:55Z",
+      "reuse_count": 0,
+      "text": "breast-feeding"
+    },
+    "cardiac transplantation": {
+      "codes": [
+        {
+          "code": "41582007",
+          "display": "Heart transplantation (procedure)",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:00:08Z",
+      "reuse_count": 1,
+      "text": "cardiac transplantation"
+    },
+    "chronic heart failure with reduced ejection fraction (hfref) with persistent nyha class ii-iv symptoms": {
+      "codes": [],
+      "first_seen_nct": "NCT02545049",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:57:24Z",
+      "reuse_count": 1,
+      "text": "chronic heart failure with reduced ejection fraction (hfref) with persistent nyha class ii-iv symptoms"
+    },
+    "chronic or intermittent haemodialysis": {
+      "codes": [
+        {
+          "code": "34897002",
+          "display": "Hemodialysis (procedure)",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03819153",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:04:14Z",
+      "reuse_count": 2,
+      "text": "chronic or intermittent haemodialysis"
+    },
+    "confirmed presence of hcv ribonucleic acid (rna)": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:52:49Z",
+      "reuse_count": 0,
+      "text": "confirmed presence of hcv ribonucleic acid (rna)"
+    },
+    "constrictive pericarditis": {
+      "codes": [
+        {
+          "code": "I31.1",
+          "display": "Chronic constrictive pericarditis",
+          "system": "ICD10"
+        },
+        {
+          "code": "31712002",
+          "display": "Constrictive pericarditis",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:00:30Z",
+      "reuse_count": 2,
+      "text": "constrictive pericarditis"
+    },
+    "continuous or intermittent oxygen therapy": {
+      "codes": [
+        {
+          "code": "57485005",
+          "display": "Oxygen therapy",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:51:40Z",
+      "reuse_count": 1,
+      "text": "continuous or intermittent oxygen therapy"
+    },
+    "copd": {
+      "codes": [
+        {
+          "code": "13645005",
+          "display": "Chronic obstructive lung disease",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:19:58Z",
+      "reuse_count": 0,
+      "text": "copd"
+    },
+    "copd (per 2025 gold criteria)": {
+      "codes": [
+        {
+          "code": "J44.9",
+          "display": "Chronic obstructive pulmonary disease, unspecified",
+          "system": "ICD10"
+        },
+        {
+          "code": "13645005",
+          "display": "Chronic obstructive lung disease",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:23:29Z",
+      "reuse_count": 0,
+      "text": "copd (per 2025 gold criteria)"
+    },
+    "copd exacerbation requiring systemic corticosteroid therapy": {
+      "codes": [
+        {
+          "code": "J44.1",
+          "display": "Chronic obstructive pulmonary disease with acute exacerbation",
+          "system": "ICD10"
+        },
+        {
+          "code": "195951007",
+          "display": "Acute exacerbation of chronic obstructive airways disease",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:34Z",
+      "reuse_count": 1,
+      "text": "copd exacerbation requiring systemic corticosteroid therapy"
+    },
+    "coronary artery bypass grafting": {
+      "codes": [
+        {
+          "code": "232717009",
+          "display": "Coronary artery bypass graft",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:59:45Z",
+      "reuse_count": 2,
+      "text": "coronary artery bypass grafting"
+    },
+    "corrected qt interval (qtcf)": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:49:36Z",
+      "reuse_count": 2,
+      "text": "corrected qt interval (qtcf)"
+    },
+    "crt implantation": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:00:03Z",
+      "reuse_count": 1,
+      "text": "crt implantation"
+    },
+    "current acute decompensated hf": {
+      "codes": [
+        {
+          "code": "443254003",
+          "display": "Acute decompensated heart failure (disorder)",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:32:04Z",
+      "reuse_count": 0,
+      "text": "current acute decompensated hf"
+    },
+    "dialysis for acute renal failure": {
+      "codes": [],
+      "first_seen_nct": "NCT02545049",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:14:54Z",
+      "reuse_count": 3,
+      "text": "dialysis for acute renal failure"
+    },
+    "diastolic blood pressure": {
+      "codes": [
+        {
+          "code": "8462-4",
+          "display": "Diastolic blood pressure",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:55Z",
+      "reuse_count": 3,
+      "text": "diastolic blood pressure"
+    },
+    "drug abuse or alcoholism": {
+      "codes": [
+        {
+          "code": "66214007",
+          "display": "Drug abuse",
+          "system": "SNOMED"
+        },
+        {
+          "code": "7200002",
+          "display": "Alcoholism",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:21:52Z",
+      "reuse_count": 0,
+      "text": "drug abuse or alcoholism"
+    },
+    "eastern cooperative oncology group (ecog) performance status": {
+      "codes": [
+        {
+          "code": "89247-1",
+          "display": "Eastern Cooperative Oncology Group (ECOG) performance status score",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:34:59Z",
+      "reuse_count": 3,
+      "text": "eastern cooperative oncology group (ecog) performance status"
+    },
+    "egfr (ckd-epi formula)": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:19:47Z",
+      "reuse_count": 2,
+      "text": "egfr (ckd-epi formula)"
+    },
+    "egfr (ckd-epi)": {
+      "codes": [
+        {
+          "code": "48642-3",
+          "display": "Estimated glomerular filtration rate (eGFR) CKD-EPI equation",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:59:34Z",
+      "reuse_count": 2,
+      "text": "egfr (ckd-epi)"
+    },
+    "egfr by ckd-epi": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:00:43Z",
+      "reuse_count": 0,
+      "text": "egfr by ckd-epi"
+    },
+    "estimated glomerular filtration rate (egfr)": {
+      "codes": [
+        {
+          "code": "33914-3",
+          "display": "Glomerular filtration rate/1.73 sq M.predicted",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT03315143",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:04:29Z",
+      "reuse_count": 8,
+      "text": "estimated glomerular filtration rate (egfr)"
+    },
+    "fasting blood glucose": {
+      "codes": [
+        {
+          "code": "1558-6",
+          "display": "Fasting glucose [Mass/volume] in Serum or Plasma",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:58Z",
+      "reuse_count": 2,
+      "text": "fasting blood glucose"
+    },
+    "fev1 % predicted": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:52:07Z",
+      "reuse_count": 0,
+      "text": "fev1 % predicted"
+    },
+    "fev1 % predicted value": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:49:55Z",
+      "reuse_count": 0,
+      "text": "fev1 % predicted value"
+    },
+    "fev1 (% predicted)": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:06Z",
+      "reuse_count": 0,
+      "text": "fev1 (% predicted)"
+    },
+    "fev1/forced vital capacity (fvc) ratio": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:49:48Z",
+      "reuse_count": 0,
+      "text": "fev1/forced vital capacity (fvc) ratio"
+    },
+    "fev1/fvc ratio": {
+      "codes": [
+        {
+          "code": "19926-5",
+          "display": "FEV1/FVC",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:01Z",
+      "reuse_count": 0,
+      "text": "fev1/fvc ratio"
+    },
+    "glomerular filtration rate": {
+      "codes": [
+        {
+          "code": "33914-3",
+          "display": "Glomerular filtration rate/1.73 sq M.predicted",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT01131676",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:12:27Z",
+      "reuse_count": 2,
+      "text": "glomerular filtration rate"
+    },
+    "glomerular filtration rate (modification of diet in renal disease formula)": {
+      "codes": [],
+      "first_seen_nct": "NCT01131676",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T10:53:45Z",
+      "reuse_count": 0,
+      "text": "glomerular filtration rate (modification of diet in renal disease formula)"
+    },
+    "glucagon-like peptide-1 (glp-1) ra (including medication with glp-1 ra activity, e.g., gip/glp-1 ra)": {
+      "codes": [],
+      "first_seen_nct": "NCT06717698",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:12:51Z",
+      "reuse_count": 1,
+      "text": "glucagon-like peptide-1 (glp-1) ra (including medication with glp-1 ra activity, e.g., gip/glp-1 ra)"
+    },
+    "glucagon-like peptide-1 (glp-1) receptor agonist": {
+      "codes": [],
+      "first_seen_nct": "NCT03819153",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:26:04Z",
+      "reuse_count": 3,
+      "text": "glucagon-like peptide-1 (glp-1) receptor agonist"
+    },
+    "glucagon-like peptide-1 (glp-1) receptor agonist (including medication with glp-1 ra activity, e.g., gip/glp-1 ra)": {
+      "codes": [],
+      "first_seen_nct": "NCT06717698",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:15:01Z",
+      "reuse_count": 0,
+      "text": "glucagon-like peptide-1 (glp-1) receptor agonist (including medication with glp-1 ra activity, e.g., gip/glp-1 ra)"
+    },
+    "glycated hemoglobin (hba1c)": {
+      "codes": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT02545049",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:14:58Z",
+      "reuse_count": 3,
+      "text": "glycated hemoglobin (hba1c)"
+    },
+    "glycosylated hemoglobin (hba1c)": {
+      "codes": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT03315143",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:04:25Z",
+      "reuse_count": 4,
+      "text": "glycosylated hemoglobin (hba1c)"
+    },
+    "haemodialysis": {
+      "codes": [
+        {
+          "code": "34897002",
+          "display": "Hemodialysis",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03819153",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:26:27Z",
+      "reuse_count": 4,
+      "text": "haemodialysis"
+    },
+    "hba1c": {
+      "codes": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT1",
+      "model": "venice:test-model",
+      "resolved_at": "2026-08-29T08:32:12Z",
+      "reuse_count": 7,
+      "text": "hba1c"
+    },
+    "hcv antibody positive with confirmed hcv rna": {
+      "codes": [
+        {
+          "code": "16128-1",
+          "display": "Hepatitis C virus Ab [Presence] in Serum",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:21:32Z",
+      "reuse_count": 0,
+      "text": "hcv antibody positive with confirmed hcv rna"
+    },
+    "heart rate": {
+      "codes": [
+        {
+          "code": "8867-4",
+          "display": "Heart rate",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:49:28Z",
+      "reuse_count": 3,
+      "text": "heart rate"
+    },
+    "hemoglobin": {
+      "codes": [
+        {
+          "code": "718-7",
+          "display": "Hemoglobin [Mass/volume] in Blood",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:09:35Z",
+      "reuse_count": 2,
+      "text": "hemoglobin"
+    },
+    "hepatitis c virus (hcv) antibody": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:51:17Z",
+      "reuse_count": 0,
+      "text": "hepatitis c virus (hcv) antibody"
+    },
+    "hepatitis c virus (hcv) ribonucleic acid (rna)": {
+      "codes": [
+        {
+          "code": "11259-4",
+          "display": "Hepatitis C virus RNA [Presence] in Serum or Plasma by Probe and target amplification method",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:51:28Z",
+      "reuse_count": 0,
+      "text": "hepatitis c virus (hcv) ribonucleic acid (rna)"
+    },
+    "hf due to active myocarditis": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:20:48Z",
+      "reuse_count": 0,
+      "text": "hf due to active myocarditis"
+    },
+    "hf due to constrictive pericarditis": {
+      "codes": [
+        {
+          "code": "I31.1",
+          "display": "Chronic constrictive pericarditis",
+          "system": "ICD10"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:20:56Z",
+      "reuse_count": 0,
+      "text": "hf due to constrictive pericarditis"
+    },
+    "hf due to hypertrophic (obstructive) cardiomyopathy": {
+      "codes": [
+        {
+          "code": "I42.1",
+          "display": "Obstructive hypertrophic cardiomyopathy",
+          "system": "ICD10"
+        },
+        {
+          "code": "233873004",
+          "display": "Hypertrophic obstructive cardiomyopathy",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:21:01Z",
+      "reuse_count": 0,
+      "text": "hf due to hypertrophic (obstructive) cardiomyopathy"
+    },
+    "hf due to restrictive cardiomyopathy": {
+      "codes": [
+        {
+          "code": "I42.5",
+          "display": "Other restrictive cardiomyopathy",
+          "system": "ICD10"
+        },
+        {
+          "code": "233785000",
+          "display": "Restrictive cardiomyopathy",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:20:42Z",
+      "reuse_count": 2,
+      "text": "hf due to restrictive cardiomyopathy"
+    },
+    "hf due to uncorrected primary valvular disease": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:21:06Z",
+      "reuse_count": 0,
+      "text": "hf due to uncorrected primary valvular disease"
+    },
+    "hfref (heart failure with reduced ejection fraction)": {
+      "codes": [
+        {
+          "code": "703272007",
+          "display": "Heart failure with reduced ejection fraction (disorder)",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:00:22Z",
+      "reuse_count": 0,
+      "text": "hfref (heart failure with reduced ejection fraction)"
+    },
+    "hiv antibody positive": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:21:16Z",
+      "reuse_count": 0,
+      "text": "hiv antibody positive"
+    },
+    "hiv infection": {
+      "codes": [
+        {
+          "code": "B20",
+          "display": "Human immunodeficiency virus [HIV] disease",
+          "system": "ICD10"
+        },
+        {
+          "code": "86406008",
+          "display": "Human immunodeficiency virus infection",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:40:40Z",
+      "reuse_count": 0,
+      "text": "hiv infection"
+    },
+    "hospitalisation for unstable angina pectoris": {
+      "codes": [
+        {
+          "code": "I20.0",
+          "display": "Unstable angina",
+          "system": "ICD10"
+        },
+        {
+          "code": "4557003",
+          "display": "Unstable angina",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03819153",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:26:14Z",
+      "reuse_count": 3,
+      "text": "hospitalisation for unstable angina pectoris"
+    },
+    "hospitalization due to copd": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:14Z",
+      "reuse_count": 1,
+      "text": "hospitalization due to copd"
+    },
+    "hospitalization due to copd or pneumonia": {
+      "codes": [
+        {
+          "code": "J18.9",
+          "display": "Pneumonia, unspecified organism",
+          "system": "ICD10"
+        },
+        {
+          "code": "J44.9",
+          "display": "Chronic obstructive pulmonary disease, unspecified",
+          "system": "ICD10"
+        },
+        {
+          "code": "13645005",
+          "display": "Chronic obstructive lung disease",
+          "system": "SNOMED"
+        },
+        {
+          "code": "233604007",
+          "display": "Pneumonia",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:44Z",
+      "reuse_count": 1,
+      "text": "hospitalization due to copd or pneumonia"
+    },
+    "hospitalization due to decompensated hf": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:20:22Z",
+      "reuse_count": 3,
+      "text": "hospitalization due to decompensated hf"
+    },
+    "hospitalization due to pneumonia": {
+      "codes": [
+        {
+          "code": "J18.9",
+          "display": "Pneumonia, unspecified organism",
+          "system": "ICD10"
+        },
+        {
+          "code": "233604007",
+          "display": "Pneumonia",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:19Z",
+      "reuse_count": 1,
+      "text": "hospitalization due to pneumonia"
+    },
+    "hospitalization for unstable angina pectoris": {
+      "codes": [
+        {
+          "code": "I20.0",
+          "display": "Unstable angina",
+          "system": "ICD10"
+        },
+        {
+          "code": "4557003",
+          "display": "Unstable angina (disorder)",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT06717698",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:40:58Z",
+      "reuse_count": 3,
+      "text": "hospitalization for unstable angina pectoris"
+    },
+    "human immunodeficiency virus (hiv) antibody": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:51:09Z",
+      "reuse_count": 0,
+      "text": "human immunodeficiency virus (hiv) antibody"
+    },
+    "human immunodeficiency virus (hiv) infection": {
+      "codes": [
+        {
+          "code": "B20",
+          "display": "Human immunodeficiency virus [HIV] disease",
+          "system": "ICD10"
+        },
+        {
+          "code": "86406008",
+          "display": "Human immunodeficiency virus infection",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:35:38Z",
+      "reuse_count": 1,
+      "text": "human immunodeficiency virus (hiv) infection"
+    },
+    "hypertrophic (obstructive) cardiomyopathy": {
+      "codes": [
+        {
+          "code": "I42.1",
+          "display": "Obstructive hypertrophic cardiomyopathy",
+          "system": "ICD10"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:00:36Z",
+      "reuse_count": 2,
+      "text": "hypertrophic (obstructive) cardiomyopathy"
+    },
+    "icu admission for copd": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:23Z",
+      "reuse_count": 0,
+      "text": "icu admission for copd"
+    },
+    "immunosuppressive therapy for primary or secondary renal disease": {
+      "codes": [],
+      "first_seen_nct": "NCT06717698",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:40:54Z",
+      "reuse_count": 0,
+      "text": "immunosuppressive therapy for primary or secondary renal disease"
+    },
+    "implantation of a crt": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:00:36Z",
+      "reuse_count": 0,
+      "text": "implantation of a crt"
+    },
+    "inactivated vaccine": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:52:02Z",
+      "reuse_count": 2,
+      "text": "inactivated vaccine"
+    },
+    "intolerance of an sglt2 inhibitor": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:19:52Z",
+      "reuse_count": 1,
+      "text": "intolerance of an sglt2 inhibitor"
+    },
+    "intolerance or allergy to salbutamol": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:21:43Z",
+      "reuse_count": 0,
+      "text": "intolerance or allergy to salbutamol"
+    },
+    "intubation": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:52:19Z",
+      "reuse_count": 0,
+      "text": "intubation"
+    },
+    "intubation for copd": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:29Z",
+      "reuse_count": 0,
+      "text": "intubation for copd"
+    },
+    "investigational drug": {
+      "codes": [],
+      "first_seen_nct": "NCT01131676",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:55:39Z",
+      "reuse_count": 0,
+      "text": "investigational drug"
+    },
+    "known human immunodeficiency virus (hiv) infection or positivity on immunoassay": {
+      "codes": [
+        {
+          "code": "B20",
+          "display": "Human immunodeficiency virus [HIV] disease",
+          "system": "ICD10"
+        },
+        {
+          "code": "86406008",
+          "display": "Human immunodeficiency virus infection",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:11:23Z",
+      "reuse_count": 0,
+      "text": "known human immunodeficiency virus (hiv) infection or positivity on immunoassay"
+    },
+    "lactating": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:51:51Z",
+      "reuse_count": 2,
+      "text": "lactating"
+    },
+    "left ventricular ejection fraction (lvef)": {
+      "codes": [
+        {
+          "code": "10230-1",
+          "display": "Left ventricular Ejection fraction",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:35:15Z",
+      "reuse_count": 3,
+      "text": "left ventricular ejection fraction (lvef)"
+    },
+    "leptomeningeal disease (lmd)": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:09:57Z",
+      "reuse_count": 0,
+      "text": "leptomeningeal disease (lmd)"
+    },
+    "live attenuated vaccine": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:51:56Z",
+      "reuse_count": 2,
+      "text": "live attenuated vaccine"
+    },
+    "locally advanced/metastatic her2+ breast cancer": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:35:11Z",
+      "reuse_count": 3,
+      "text": "locally advanced/metastatic her2+ breast cancer"
+    },
+    "lung volume reduction surgery": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:32Z",
+      "reuse_count": 3,
+      "text": "lung volume reduction surgery"
+    },
+    "lupus nephritis": {
+      "codes": [
+        {
+          "code": "77670008",
+          "display": "Lupus nephritis",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT06717698",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:40:42Z",
+      "reuse_count": 3,
+      "text": "lupus nephritis"
+    },
+    "lvef": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:19:41Z",
+      "reuse_count": 3,
+      "text": "lvef"
+    },
+    "major surgery (excluding placement of vascular access)": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:09:44Z",
+      "reuse_count": 0,
+      "text": "major surgery (excluding placement of vascular access)"
+    },
+    "major surgery (requiring general anesthesia)": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:51:04Z",
+      "reuse_count": 1,
+      "text": "major surgery (requiring general anesthesia)"
+    },
+    "major surgery requiring general anesthesia": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:21:08Z",
+      "reuse_count": 1,
+      "text": "major surgery requiring general anesthesia"
+    },
+    "measurable disease per recist 1.1": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:40:36Z",
+      "reuse_count": 0,
+      "text": "measurable disease per recist 1.1"
+    },
+    "mi": {
+      "codes": [
+        {
+          "code": "22298006",
+          "display": "Myocardial infarction",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:20:27Z",
+      "reuse_count": 3,
+      "text": "mi"
+    },
+    "mmrc dyspnea scale score": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:10Z",
+      "reuse_count": 0,
+      "text": "mmrc dyspnea scale score"
+    },
+    "modified medical research council (mmrc) dyspnea scale score": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:00Z",
+      "reuse_count": 2,
+      "text": "modified medical research council (mmrc) dyspnea scale score"
+    },
+    "myocardial infarction": {
+      "codes": [
+        {
+          "code": "22298006",
+          "display": "Myocardial infarction",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03819153",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:26:10Z",
+      "reuse_count": 10,
+      "text": "myocardial infarction"
+    },
+    "new york heart association (nyha) class iii-iv heart failure": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:24:01Z",
+      "reuse_count": 1,
+      "text": "new york heart association (nyha) class iii-iv heart failure"
+    },
+    "new york heart association (nyha) class iv heart failure": {
+      "codes": [],
+      "first_seen_nct": "NCT03819153",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:26:23Z",
+      "reuse_count": 3,
+      "text": "new york heart association (nyha) class iv heart failure"
+    },
+    "new york heart association (nyha) classification": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:35:35Z",
+      "reuse_count": 0,
+      "text": "new york heart association (nyha) classification"
+    },
+    "non-selective oral beta-blockers": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:51Z",
+      "reuse_count": 1,
+      "text": "non-selective oral beta-blockers"
+    },
+    "nursing": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:11:17Z",
+      "reuse_count": 0,
+      "text": "nursing"
+    },
+    "nyha class iii-iv heart failure": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:21:03Z",
+      "reuse_count": 0,
+      "text": "nyha class iii-iv heart failure"
+    },
+    "nyha functional class": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:00:28Z",
+      "reuse_count": 0,
+      "text": "nyha functional class"
+    },
+    "oral corticosteroids": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:35Z",
+      "reuse_count": 3,
+      "text": "oral corticosteroids"
+    },
+    "oral theophylline and/or theophylline derivatives": {
+      "codes": [
+        {
+          "code": "10061",
+          "display": "Theophylline",
+          "system": "RxNorm"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:45Z",
+      "reuse_count": 3,
+      "text": "oral theophylline and/or theophylline derivatives"
+    },
+    "oxygen therapy": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:24:08Z",
+      "reuse_count": 0,
+      "text": "oxygen therapy"
+    },
+    "pacemaker": {
+      "codes": [
+        {
+          "code": "Z95.0",
+          "display": "Presence of cardiac pacemaker",
+          "system": "ICD10"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:21:26Z",
+      "reuse_count": 3,
+      "text": "pacemaker"
+    },
+    "palliative radiation therapy": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:09:51Z",
+      "reuse_count": 2,
+      "text": "palliative radiation therapy"
+    },
+    "percutaneous coronary intervention": {
+      "codes": [
+        {
+          "code": "415070008",
+          "display": "Percutaneous coronary intervention",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:59:39Z",
+      "reuse_count": 2,
+      "text": "percutaneous coronary intervention"
+    },
+    "peritoneal dialysis": {
+      "codes": [
+        {
+          "code": "71192002",
+          "display": "Peritoneal dialysis (procedure)",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03819153",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:26:32Z",
+      "reuse_count": 7,
+      "text": "peritoneal dialysis"
+    },
+    "platelet count": {
+      "codes": [
+        {
+          "code": "777-3",
+          "display": "Platelets [#/volume] in Blood by Automated count",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:09:31Z",
+      "reuse_count": 1,
+      "text": "platelet count"
+    },
+    "positive hepatitis c virus (hcv) antibody": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:52:42Z",
+      "reuse_count": 0,
+      "text": "positive hepatitis c virus (hcv) antibody"
+    },
+    "positive human immunodeficiency virus (hiv) antibody": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:52:29Z",
+      "reuse_count": 0,
+      "text": "positive human immunodeficiency virus (hiv) antibody"
+    },
+    "positive treponema pallidum particle agglutination (tppa) antibody": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:53:01Z",
+      "reuse_count": 0,
+      "text": "positive treponema pallidum particle agglutination (tppa) antibody"
+    },
+    "post-bronchodilator fev1 % predicted": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:23:51Z",
+      "reuse_count": 0,
+      "text": "post-bronchodilator fev1 % predicted"
+    },
+    "post-bronchodilator fev1/fvc ratio": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:23:40Z",
+      "reuse_count": 1,
+      "text": "post-bronchodilator fev1/fvc ratio"
+    },
+    "pregnant": {
+      "codes": [
+        {
+          "code": "77386006",
+          "display": "Patient currently pregnant (finding)",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:51:45Z",
+      "reuse_count": 4,
+      "text": "pregnant"
+    },
+    "previous intolerance of an sglt2 inhibitor": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:31:56Z",
+      "reuse_count": 0,
+      "text": "previous intolerance of an sglt2 inhibitor"
+    },
+    "pulmonary resection": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:27Z",
+      "reuse_count": 3,
+      "text": "pulmonary resection"
+    },
+    "qtcf (qt interval corrected for heart rate by fridericia's formula)": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:35:31Z",
+      "reuse_count": 0,
+      "text": "qtcf (qt interval corrected for heart rate by fridericia's formula)"
+    },
+    "renal allograft": {
+      "codes": [],
+      "first_seen_nct": "NCT02545049",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:57:30Z",
+      "reuse_count": 2,
+      "text": "renal allograft"
+    },
+    "restrictive cardiomyopathy": {
+      "codes": [
+        {
+          "code": "I42.5",
+          "display": "Other restrictive cardiomyopathy",
+          "system": "ICD10"
+        },
+        {
+          "code": "79619009",
+          "display": "Restrictive cardiomyopathy (disorder)",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:00:13Z",
+      "reuse_count": 0,
+      "text": "restrictive cardiomyopathy"
+    },
+    "roflumilast": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:39Z",
+      "reuse_count": 3,
+      "text": "roflumilast"
+    },
+    "second degree heart block": {
+      "codes": [
+        {
+          "code": "I44.1",
+          "display": "Atrioventricular block, second degree",
+          "system": "ICD10"
+        },
+        {
+          "code": "28189009",
+          "display": "Second degree atrioventricular block",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:21:17Z",
+      "reuse_count": 2,
+      "text": "second degree heart block"
+    },
+    "second or third degree heart block": {
+      "codes": [
+        {
+          "code": "I44.1",
+          "display": "Atrioventricular block, second degree",
+          "system": "ICD10"
+        },
+        {
+          "code": "I44.2",
+          "display": "Atrioventricular block, complete",
+          "system": "ICD10"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:00:59Z",
+      "reuse_count": 0,
+      "text": "second or third degree heart block"
+    },
+    "serum creatinine and cystatin c-based egfr": {
+      "codes": [],
+      "first_seen_nct": "NCT06717698",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:40:32Z",
+      "reuse_count": 3,
+      "text": "serum creatinine and cystatin c-based egfr"
+    },
+    "serum creatinine-based egfr (ckd-epi)": {
+      "codes": [
+        {
+          "code": "33914-3",
+          "display": "Glomerular filtration rate/1.73 sq M.predicted by Creatinine-based formula (CKD-EPI)",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT03819153",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:25:59Z",
+      "reuse_count": 2,
+      "text": "serum creatinine-based egfr (ckd-epi)"
+    },
+    "serum potassium": {
+      "codes": [
+        {
+          "code": "2823-3",
+          "display": "Potassium [Moles/volume] in Serum or Plasma",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT02545049",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:14:46Z",
+      "reuse_count": 3,
+      "text": "serum potassium"
+    },
+    "sglt2 inhibitor": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:19:49Z",
+      "reuse_count": 3,
+      "text": "sglt2 inhibitor"
+    },
+    "smoking history": {
+      "codes": [
+        {
+          "code": "72166-2",
+          "display": "Tobacco smoking status NHIS",
+          "system": "LOINC"
+        },
+        {
+          "code": "160617001",
+          "display": "History of tobacco use (situation)",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:17Z",
+      "reuse_count": 1,
+      "text": "smoking history"
+    },
+    "smoking history (pack-years)": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:06Z",
+      "reuse_count": 1,
+      "text": "smoking history (pack-years)"
+    },
+    "stroke": {
+      "codes": [
+        {
+          "code": "I64",
+          "display": "Stroke, not specified as hemorrhage or infarction",
+          "system": "ICD10"
+        },
+        {
+          "code": "230690007",
+          "display": "Stroke",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT01131676",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:12:40Z",
+      "reuse_count": 18,
+      "text": "stroke"
+    },
+    "symptomatic bradycardia": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:21:13Z",
+      "reuse_count": 2,
+      "text": "symptomatic bradycardia"
+    },
+    "symptomatic hfref (nyha functional class ii-iv)": {
+      "codes": [
+        {
+          "code": "I50.20",
+          "display": "Unspecified systolic (congestive) heart failure",
+          "system": "ICD10"
+        },
+        {
+          "code": "443254009",
+          "display": "Systolic heart failure",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:19:35Z",
+      "reuse_count": 1,
+      "text": "symptomatic hfref (nyha functional class ii-iv)"
+    },
+    "symptomatic hypotension": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:20:01Z",
+      "reuse_count": 0,
+      "text": "symptomatic hypotension"
+    },
+    "systemic steroids": {
+      "codes": [],
+      "first_seen_nct": "NCT01131676",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:12:32Z",
+      "reuse_count": 1,
+      "text": "systemic steroids"
+    },
+    "systolic blood pressure": {
+      "codes": [
+        {
+          "code": "8480-6",
+          "display": "Systolic blood pressure",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:52Z",
+      "reuse_count": 3,
+      "text": "systolic blood pressure"
+    },
+    "third degree heart block": {
+      "codes": [
+        {
+          "code": "I44.2",
+          "display": "Atrioventricular block, complete",
+          "system": "ICD10"
+        },
+        {
+          "code": "27885002",
+          "display": "Third degree atrioventricular block",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:21:29Z",
+      "reuse_count": 2,
+      "text": "third degree heart block"
+    },
+    "tia": {
+      "codes": [
+        {
+          "code": "G45.9",
+          "display": "Transient cerebral ischemic attack, unspecified",
+          "system": "ICD10"
+        },
+        {
+          "code": "266257000",
+          "display": "Transient ischemic attack",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT01131676",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:12:44Z",
+      "reuse_count": 3,
+      "text": "tia"
+    },
+    "tppa antibody positive": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:21:39Z",
+      "reuse_count": 0,
+      "text": "tppa antibody positive"
+    },
+    "tqc3721": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:50:49Z",
+      "reuse_count": 3,
+      "text": "tqc3721"
+    },
+    "transfusion": {
+      "codes": [],
+      "first_seen_nct": "NCT05748834",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:11:11Z",
+      "reuse_count": 0,
+      "text": "transfusion"
+    },
+    "transient ischaemic attack": {
+      "codes": [
+        {
+          "code": "G45.9",
+          "display": "Transient cerebral ischemic attack, unspecified",
+          "system": "ICD10"
+        },
+        {
+          "code": "266257000",
+          "display": "Transient ischemic attack",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03819153",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:26:17Z",
+      "reuse_count": 7,
+      "text": "transient ischaemic attack"
+    },
+    "transient ischemic attack": {
+      "codes": [
+        {
+          "code": "G45.9",
+          "display": "Transient cerebral ischemic attack, unspecified",
+          "system": "ICD10"
+        },
+        {
+          "code": "266257000",
+          "display": "Transient ischemic attack",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:20:34Z",
+      "reuse_count": 3,
+      "text": "transient ischemic attack"
+    },
+    "treponema pallidum particle agglutination (tppa) antibody": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:51:35Z",
+      "reuse_count": 0,
+      "text": "treponema pallidum particle agglutination (tppa) antibody"
+    },
+    "type 1 diabetes mellitus": {
+      "codes": [
+        {
+          "code": "46635009",
+          "display": "Diabetes mellitus type 1",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:19:55Z",
+      "reuse_count": 3,
+      "text": "type 1 diabetes mellitus"
+    },
+    "type 2 diabetes mellitus": {
+      "codes": [
+        {
+          "code": "E11.9",
+          "display": "Type 2 diabetes mellitus without complications",
+          "system": "ICD10"
+        },
+        {
+          "code": "44054006",
+          "display": "Diabetes mellitus type 2",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03315143",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:04:21Z",
+      "reuse_count": 19,
+      "text": "type 2 diabetes mellitus"
+    },
+    "uacr": {
+      "codes": [
+        {
+          "code": "9318-7",
+          "display": "Albumin/Creatinine [Mass Ratio] in Urine",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT03819153",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:26:02Z",
+      "reuse_count": 2,
+      "text": "uacr"
+    },
+    "uncorrected primary valvular disease": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:00:41Z",
+      "reuse_count": 2,
+      "text": "uncorrected primary valvular disease"
+    },
+    "unstable angina": {
+      "codes": [
+        {
+          "code": "I20.0",
+          "display": "Unstable angina",
+          "system": "ICD10"
+        },
+        {
+          "code": "4557003",
+          "display": "Unstable angina",
+          "system": "SNOMED"
+        }
+      ],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:20:30Z",
+      "reuse_count": 6,
+      "text": "unstable angina"
+    },
+    "unstable or life-threatening arrhythmias requiring intervention": {
+      "codes": [],
+      "first_seen_nct": "NCT07252908",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T08:20:55Z",
+      "reuse_count": 2,
+      "text": "unstable or life-threatening arrhythmias requiring intervention"
+    },
+    "urine albumin-to-creatinine ratio (uacr)": {
+      "codes": [
+        {
+          "code": "14957-5",
+          "display": "Albumin/Creatinine [Mass Ratio] in Urine",
+          "system": "LOINC"
+        }
+      ],
+      "first_seen_nct": "NCT06717698",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:40:37Z",
+      "reuse_count": 3,
+      "text": "urine albumin-to-creatinine ratio (uacr)"
+    },
+    "valvular repair/replacement": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T07:59:56Z",
+      "reuse_count": 2,
+      "text": "valvular repair/replacement"
+    },
+    "ventricular assistance device implantation": {
+      "codes": [],
+      "first_seen_nct": "NCT03036124",
+      "model": "venice:claude-sonnet-5",
+      "resolved_at": "2026-08-30T11:32:12Z",
+      "reuse_count": 0,
+      "text": "ventricular assistance device implantation"
+    }
+  },
+  "version": 1
+}

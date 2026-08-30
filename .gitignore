@@ -40,9 +40,11 @@ video/
 *.mov
 *.bundle
 *-backup*
-
-# The concept store is a run artefact, not source.
-.caliper/
+# The terminology store is committed, not ignored: the resolver reads it before it calls a
+# model, so a cold store makes a replay resolve differently from the run it replays. Everything
+# else this directory holds is scratch.
+.caliper/*
+!.caliper/concepts.json
 
 # --- large or regenerable data ---
 data/patients/raw/
