@@ -12,6 +12,7 @@ import pytest
 from caliper.evaluate import AbsencePolicy, evaluate_criterion
 from caliper.ir import (
     Code,
+    CompositePredicate,
     Concept,
     Criterion,
     DemographicPredicate,
@@ -69,9 +70,7 @@ def encounter(when: date) -> Evidence:
 
 
 def index(*evidence: Evidence, birth_date: date | None = date(1970, 3, 4), sex: str = "female"):
-    return PatientIndex(
-        patient_id="p1", birth_date=birth_date, sex=sex, evidence=list(evidence)
-    )
+    return PatientIndex(patient_id="p1", birth_date=birth_date, sex=sex, evidence=list(evidence))
 
 
 def criterion(predicate, *, kind: str = "inclusion", cid: str = "INC-01") -> Criterion:
@@ -235,21 +234,67 @@ class TestUnsupportedCriteria:
         assert "investigator judgement" in result.resolution_hint.missing
 
 
-class TestInvariantsThatMustNeverBreak:
-    @pytest.mark.parametrize(
-        "predicate",
-        [
+# Every predicate type the IR defines, not a sample of them. The list was four long and read as
+# exhaustive, which meant composites — 2 of the 8 compiled criteria on one trial in the corpus —
+# and the medication and procedure variants of presence went unchecked against the promise that
+# an abstention always says what would close it.
+EVERY_PREDICATE = [
+    ObservationPredicate(concept=CREATININE, op="<=", value=1.5, unit="mg/dL"),
+    PresencePredicate(type="condition", concept=MI, presence="present"),
+    PresencePredicate(type="medication", concept=MI, presence="present"),
+    PresencePredicate(type="procedure", concept=MI, presence="present"),
+    PresencePredicate(type="condition", concept=MI, presence="absent"),
+    DemographicPredicate(field="age", op=">=", value=18, unit="years"),
+    DemographicPredicate(field="sex", op="==", value="female"),
+    UnsupportedPredicate(reason="judgement"),
+    UnsupportedPredicate(reason="consent", settlement="at_visit"),
+    CompositePredicate(
+        type="all_of",
+        operands=[
+            ObservationPredicate(concept=CREATININE, op=">=", value=1.0, unit="mg/dL"),
             ObservationPredicate(concept=CREATININE, op="<=", value=1.5, unit="mg/dL"),
+        ],
+    ),
+    CompositePredicate(
+        type="any_of",
+        operands=[
             PresencePredicate(type="condition", concept=MI, presence="present"),
             DemographicPredicate(field="age", op=">=", value=18, unit="years"),
-            UnsupportedPredicate(reason="judgement"),
         ],
-    )
+    ),
+    CompositePredicate(
+        type="not",
+        operands=[PresencePredicate(type="condition", concept=MI, presence="present")],
+    ),
+]
+
+
+class TestInvariantsThatMustNeverBreak:
+    @pytest.mark.parametrize("predicate", EVERY_PREDICATE)
     def test_every_unresolved_criterion_carries_a_resolution_hint(self, predicate):
         c = criterion(predicate)
         result = evaluate_criterion(c, index(birth_date=None), SCREENING)
         if result.verdict is Verdict.UNKNOWN:
             assert result.resolution_hint is not None
+            assert result.resolution_hint.missing.strip()
+
+    def test_the_parametrization_above_covers_every_predicate_type_the_ir_defines(self):
+        """A list that reads as exhaustive and is not is worse than a list that admits its gaps.
+
+        This is the guard on the guard: adding a predicate type to the IR without adding it above
+        fails here rather than silently narrowing what the invariant is checked against.
+        """
+        import typing
+
+        from caliper import ir
+
+        declared = {
+            arg.model_fields["type"].default
+            for arg in typing.get_args(ir.Predicate)
+            if hasattr(arg, "model_fields")
+        }
+        exercised = {predicate.type for predicate in EVERY_PREDICATE}
+        assert declared <= exercised, declared - exercised
 
     def test_a_resolved_verdict_never_invents_evidence_it_did_not_read(self):
         c = criterion(ObservationPredicate(concept=CREATININE, op="<=", value=1.5, unit="mg/dL"))
