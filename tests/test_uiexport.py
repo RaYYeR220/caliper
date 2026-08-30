@@ -49,6 +49,7 @@ from caliper.screen import screen
 from caliper.uiexport import (
     ScreeningRecord,
     _screening_entry,
+    _trial_entry,
     export_screening,
     export_trial,
     write_ui_bundle,
@@ -594,3 +595,59 @@ def test_the_queue_entry_counts_them_so_a_coordinator_can_sort_on_it() -> None:
     payload = export_screening(screening, patient, TRIAL_TITLE)
 
     assert _screening_entry(payload)["at_visit"] == 2
+
+
+def test_the_trial_counts_separate_the_two_kinds_of_unformalisable() -> None:
+    """Both are `unsupported`; only one of them holds a verdict open.
+
+    The interface says in a cohort banner why nothing came back eligible, and a count that lumps a
+    consent line in with a category the protocol never enumerated makes that sentence wrong: it
+    would claim a criterion blocks every chart when the screening deliberately lets it pass.
+    """
+    trial = a_trial()
+    criteria = CriteriaSet(
+        nct_id=trial.criteria_set.nct_id,
+        source_text=trial.criteria_set.source_text,
+        criteria=[
+            *trial.criteria_set.criteria,
+            Criterion(
+                id="INC-90",
+                kind="inclusion",
+                source_quote="Signed written informed consent",
+                predicate=UnsupportedPredicate(reason="given at the visit", settlement="at_visit"),
+            ),
+        ],
+    )
+    payload = export_trial(dataclasses.replace(trial, criteria_set=criteria), TRIAL_TITLE)
+
+    counts = payload["counts"]
+    assert counts["unsupported"] == counts["unsupported_blocking"] + counts["unsupported_at_visit"]
+    assert counts["unsupported_at_visit"] == 1
+
+
+def test_a_criterion_says_which_kind_of_unanswerable_it_is() -> None:
+    trial = a_trial()
+    criteria = CriteriaSet(
+        nct_id=trial.criteria_set.nct_id,
+        source_text=trial.criteria_set.source_text,
+        criteria=[
+            Criterion(
+                id="INC-90",
+                kind="inclusion",
+                source_quote="Signed written informed consent",
+                predicate=UnsupportedPredicate(reason="given at the visit", settlement="at_visit"),
+            ),
+        ],
+    )
+    payload = export_trial(dataclasses.replace(trial, criteria_set=criteria), TRIAL_TITLE)
+
+    assert payload["criteria"][0]["settlement"] == "at_visit"
+
+
+def test_the_index_carries_the_split_the_cohort_banner_reads() -> None:
+    """The banner explains why nothing is eligible, and it reads these two numbers, not the sum."""
+    trial = a_trial()
+    payload = export_trial(trial, TRIAL_TITLE)
+    entry = _trial_entry(payload)
+
+    assert entry["unsupported_blocking"] + entry["unsupported_at_visit"] == entry["unsupported"]

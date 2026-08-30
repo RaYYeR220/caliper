@@ -63,7 +63,11 @@ and nothing below is meaningful.
 **`caliper eval --replay`** — one line per arm as it finishes, then a table of every arm with its
 accuracy, coverage, unsafe errors and cost. The replayed cost is zero. Roughly one minute.
 
-**`caliper report`** — writes `RESULTS.md` from the results of step 2. The file is generated rather
+**`caliper report`** — writes `RESULTS.md` from the results of step 2. `make eval` scores the same
+recorded decisions against both answer keys, and `make report` renders both columns, because the key
+was corrected after a scored run and the honest thing is to let you see whether the correction moved
+the conclusion or only the figures. It did not move the conclusion: which arms committed an unsafe
+error is identical under both. The file is generated rather
 than committed, so there is nothing to diff it against: run step 2 twice and `caliper report` twice
 and the two `RESULTS.md` must be byte-identical, which is what `caliper eval --replay` being a
 replay means. Every figure in it is computed from `eval/results/`; none is typed by hand.

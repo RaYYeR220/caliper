@@ -228,6 +228,21 @@ class CriteriaSet(BaseModel):
     def unsupported_count(self) -> int:
         return sum(1 for c in self.criteria if c.predicate.type == "unsupported")
 
+    @property
+    def unsupported_blocking_count(self) -> int:
+        """Of those, the ones a record was supposed to settle — the only ones that hold a verdict.
+
+        The difference between the two counts is the whole point of the settlement field: a
+        protocol with six unformalisable criteria of which three are consent and intent is a very
+        different protocol from one with six gaps in what the chart can answer.
+        """
+        return sum(
+            1
+            for c in self.criteria
+            if isinstance(c.predicate, UnsupportedPredicate)
+            and c.predicate.settlement == "from_data"
+        )
+
 
 def concepts_in(criteria_set: CriteriaSet) -> list[Concept]:
     """Every distinct concept a trial's criteria mention, composites included.

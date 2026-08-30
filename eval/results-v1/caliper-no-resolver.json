@@ -1,0 +1,1646 @@
+{
+  "accuracy_ci": [
+    0.3293001487859225,
+    0.6154127369372966
+  ],
+  "arm": "caliper-no-resolver",
+  "balanced_accuracy": 0.28659003831417623,
+  "blockers": [
+    {
+      "criterion_id": "INC-02",
+      "missing": "a Estimated glomerular filtration rate (eGFR) result",
+      "nct_id": "NCT03315143",
+      "quote": "Estimated glomerular filtration rate (eGFR) \u226525 and \u226460 milliliter/minute (mL/min)/1.73 square meter (m^2).",
+      "reason": "no Estimated glomerular filtration rate (eGFR) result is on file for the required window",
+      "screenings": 18,
+      "trial_screenings": 24
+    },
+    {
+      "criterion_id": "INC-03",
+      "missing": "human judgement: The criterion turns on membership in 'major' and 'minor' cardiovascular risk factor categories, which this span does not enumerate. Without the protocol's defined list of qualifying risk factors, no single code or small set of codes can capture the category, so counting them cannot be formalised.",
+      "nct_id": "NCT03315143",
+      "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 18,
+      "trial_screenings": 24
+    },
+    {
+      "criterion_id": "EXC-01",
+      "missing": "human judgement: \"Stable\" antihyperglycemic treatment is not a single coded fact; it requires comparing dose/regimen changes across a window, which has no representation in this vocabulary (no concept for treatment stability, and no way to enumerate what counts as a change).",
+      "nct_id": "NCT03315143",
+      "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 18,
+      "trial_screenings": 24
+    },
+    {
+      "criterion_id": "EXC-03",
+      "missing": "human judgement: \"Lower extremity complications\" is an open-ended category illustrated by examples (skin ulcer, infection, osteomyelitis, gangrene) rather than an enumerated list; no single code or fixed set of codes captures it. It also requires judging that treatment is 'required' at a future randomization timepoint, which is not a stable recorded fact at screening.",
+      "nct_id": "NCT03315143",
+      "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 18,
+      "trial_screenings": 24
+    },
+    {
+      "criterion_id": "INC-01",
+      "missing": "human judgement: The parent criterion turns on 'non-childbearing potential', a category the protocol does not define numerically or by enumerated conditions (menopause status, surgical sterilization, etc.), so it cannot be reduced to a chart-checkable predicate. The linked sub-condition compounds this: it is geography-gated ('For US only'), names an unenumerated class of contraceptive method ('highly effective non-systemic methods with low user-dependency'), and requires the patient's stated willingness to continue using it throughout the study, which is a future intention no chart records. Because the parent and child are alternative branches of one combined eligibility test, neither branch can be honestly formalised without dropping qualifiers the protocol stated.",
+      "nct_id": "NCT06717698",
+      "quote": "Female of non-childbearing potential, or male.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 3,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-03",
+      "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. B adds HbA1c range requirements (6.5-10.5% for diagnosed, <6.5% for undiagnosed) that A does not mention at all, and also tightens the diagnosis window from '\u2265180 days' to 'more than 180 days', so B excludes patients A would admit.",
+      "nct_id": "NCT06717698",
+      "quote": "Diagnosed with type 2 diabetes mellitus greater than or equal to (\u2265) 180 days before screening, or not diagnosed with type 2 diabetes mellitus.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 3,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-04",
+      "missing": "BMI in kg/m^2 (the chart reports kg/m2, which we cannot convert)",
+      "nct_id": "NCT06717698",
+      "quote": "BMI greater than or equal to (\u2265) 27.0 kilogram per square metre (kg/m^2) at screening.",
+      "reason": "cannot convert kg/m2 to kg/m^2 for this analyte",
+      "screenings": 3,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-05",
+      "missing": "a serum creatinine and cystatin C-based Egfr result",
+      "nct_id": "NCT06717698",
+      "quote": "Kidney impairment defined by serum creatinine and cystatin C-based Egfr greater than or equal to (\u2265) 15 and less than (<) 90 mL/min/1.73 m^2.",
+      "reason": "no serum creatinine and cystatin C-based Egfr result is on file for the required window and no serum creatinine and cystatin C-based Egfr result is on file for the required window",
+      "screenings": 3,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-06",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A excludes UACR values of exactly 5000 mg/g (strict less-than), while B includes 5000 as an inclusive upper bound.",
+      "nct_id": "NCT06717698",
+      "quote": "Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal (\u2265)100 and less than (<) 5000 milligram per gram (mg/g).",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 3,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-07",
+      "missing": "human judgement: The requirement hinges on 'maximum labelled or tolerated dose', which is not a fixed numeric threshold but depends on per-patient titration and prescribing limits, and the criterion explicitly carves out an exception 'in the opinion of the investigator' for contraindication or intolerance. Neither the dose-adequacy judgement nor the investigator's contraindication/intolerance determination can be read off a chart without clinical interpretation, so this cannot be split into a clean medication-presence-plus-window predicate without dropping the qualifying language.",
+      "nct_id": "NCT06717698",
+      "quote": "Treatment with maximum labelled or tolerated dose of an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated, in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 3,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-03",
+      "missing": "human judgement: \"Immunosuppressive therapy\" is a broad drug class encompassing many distinct agents (corticosteroids, calcineurin inhibitors, antimetabolites, biologics, etc.); the protocol does not enumerate which members count, so no single medication code or bounded code set captures it.",
+      "nct_id": "NCT06717698",
+      "quote": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 3,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-07",
+      "missing": "human judgement: \"Uncontrolled and potentially unstable\" retinopathy/maculopathy is a clinical judgement about disease activity and stability with no objective grading or threshold stated, so no chart field can be checked against it. The remainder of the span (exam timing, pupil-dilation method) describes verification process rather than a patient state.",
+      "nct_id": "NCT06717698",
+      "quote": "Only applicable for participants with type 2 diabetes (T2D): Uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy. Verified by an eye examination performed within 90 days before screening or in the period between screening and randomisation. Pharmacological pupil-dilation is a requirement unless using a digital fundus photography camera specified for non-dilated examination.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 3,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-08",
+      "missing": "human judgement: The excluded class \"malignant neoplasms or in situ carcinomas\" is an open, extremely broad disease category with no enumerable set of member codes; the protocol only enumerates specific carve-out exceptions (skin cancer subtypes, low-risk prostate cancer, cervical in-situ carcinoma, high-grade PIN), not the members of the excluded class itself. A single code or finite code list cannot faithfully capture \"any malignant neoplasm\" without risking either over- or under-inclusion.",
+      "nct_id": "NCT06717698",
+      "quote": "Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or carcinoma in situ/high grade prostatic intraepithelial neoplasia (PIN)) within 5 years before screening.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 3,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-01",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A requires the diabetes diagnosis to predate informed consent, while B allows the diagnosis to be recorded at any time, including after consent.",
+      "nct_id": "NCT01131676",
+      "quote": "Diagnosis of type 2 diabetes mellitus prior to informed consent",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-02",
+      "missing": "human judgement: This bundles several things the schema cannot cleanly express: 'diet and exercise regimen' is not a codable condition/procedure; 'any background therapy' is an unenumerated open class of antidiabetic medications rather than a specific drug or drug class; and 'unchanged for 12 weeks' is a stability-over-time predicate on medication history that has no equivalent in the observation/medication vocabulary (which only supports presence/absence, not constancy of dose/regimen). The window is also anchored to randomization rather than screening, which could matter given the 12-week span.",
+      "nct_id": "NCT01131676",
+      "quote": "Male or female patients on diet and exercise regimen who are drug naive or pre treated with any background therapy. Antidiabetic therapy has to be unchanged for 12 weeks prior to randomization.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-03",
+      "missing": "human judgement: The HbA1c thresholds differ depending on whether the patient is 'on background therapy' or 'drug naive'. Those two patient states are not tied to a specific enumerated medication or condition concept -- 'background therapy' could mean any of a broad, unenumerated class of antidiabetic medications -- so the branching condition cannot be mapped onto a single coded predicate without guessing which drugs count. Formalising just the HbA1c range and dropping the therapy-status qualifier would silently apply the wrong threshold to some patients.",
+      "nct_id": "NCT01131676",
+      "quote": "Glycosylated haemoglobin (HbA1c) of >= 7.0% and <=10% for patients on background therapy or HbA1c >= 7.0% and <= 9.0% for drug naive patients",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-07",
+      "missing": "human judgement: \"High cardiovascular risk\" is not defined here with specific criteria (e.g., prior CV events, risk score thresholds, or enumerated risk factors). It is a broad clinical category that could be operationalized many ways, and no single code or measurable threshold captures it as stated.",
+      "nct_id": "NCT01131676",
+      "quote": "High cardiovascular risk",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-01",
+      "missing": "human judgement: Although a numeric threshold is stated, the criterion requires confirmation by a second measurement taken on a different day during a study-specific 'placebo run-in' phase. This is a repeat-testing procedure tied to a trial-design period that has no anchor in the schema (not screening/enrolment/randomisation/consent/first_dose), and the two-measurement confirmation logic cannot be expressed as a single observation predicate without dropping the confirmatory requirement.",
+      "nct_id": "NCT01131676",
+      "quote": "Uncontrolled hyperglycaemia with a glucose level >240 mg/dl (>13.3 mmol/L) after an overnight fast during placebo run-in and confirmed by a second measurement (not on the same day)",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-02",
+      "missing": "human judgement: Threshold is defined as a multiple of the upper limit of normal (ULN), which is laboratory-specific and not present in the patient record. The engine cannot resolve what 3x ULN equals numerically for a given lab.",
+      "nct_id": "NCT01131676",
+      "quote": "Indication of liver disease, defined by serum levels of either alanine aminotransferase (ALT), aspartate aminotransferase ALT or alkaline phosphatase above 3 x upper limit of normal (ULN) as determined at screening and/or run in.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-04",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A defines impairment as GFR<30 during screening or run-in, but B only checks the value as of screening and omits the run-in period, so B fails to exclude patients who had GFR<30 only during run-in.",
+      "nct_id": "NCT01131676",
+      "quote": "Impaired renal function, defined as Glomerular Filtration Rate <30 ml/min (severe renal impairment, Modification of Diet in Renal Disease formula) during screening or run in.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-05",
+      "missing": "human judgement: The span excludes bariatric surgery within two years plus an open, unenumerated category of 'other gastrointestinal surgeries that induce chronic malabsorption'. The bariatric-surgery portion alone could be coded, but the second clause is a broad surgical category with no enumerated members, and the two are joined as a single exclusion span rather than separable sub-bullets, so splitting them risks silently dropping part of the exclusion.",
+      "nct_id": "NCT01131676",
+      "quote": "Bariatric surgery within the past two years and other gastrointestinal surgeries that induce chronic malabsorption",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-06",
+      "missing": "human judgement: This is an open-ended disease category ('any disorders causing haemolysis or unstable Red Blood Cell') with only illustrative examples ('e.g.') rather than an enumerated, closed list. No single code or small code set captures 'blood dyscrasias' or 'unstable RBC' disorders broadly, and the protocol does not enumerate all members.",
+      "nct_id": "NCT01131676",
+      "quote": "Blood dyscrasias or any disorders causing haemolysis or unstable Red Blood Cell (e.g. malaria, babesiosis, haemolytic anemia)",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-07",
+      "missing": "human judgement: \"Cancer\" is a broad disease category encompassing many distinct conditions and codes; the protocol does not enumerate specific cancer types (aside from carving out basal cell carcinoma), so no single concept or small code set can capture it without over- or under-including diagnoses.",
+      "nct_id": "NCT01131676",
+      "quote": "Medical history of cancer (except for basal cell carcinoma) and/or treatment for cancer within the last 5 years",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-08",
+      "missing": "human judgement: \"Background therapy\" is not a specified drug or class, and \"contraindications according to the local label\" requires interpreting a drug label rather than checking a coded fact on the chart; no enumerable set of conditions or thresholds is given.",
+      "nct_id": "NCT01131676",
+      "quote": "Contraindications to background therapy according to the local label",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-09",
+      "missing": "human judgement: This mixes an open drug class ('anti-obesity drugs', with only two examples given, not an exhaustive enumeration) with an open-ended clause ('any other treatment ... leading to unstable body weight') that depends on clinical judgement about weight stability and is not a codable category (e.g. 'aggressive diet regimen'). No single code or bounded set of codes captures this, and the outcome requires judgement rather than a recorded fact.",
+      "nct_id": "NCT01131676",
+      "quote": "Treatment with anti-obesity drugs (e.g. sibutramine, orlistat) 3 months prior to informed consent or any other treatment at the time of screening (i.e. surgery, aggressive diet regimen, etc.) leading to unstable body weight",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-10",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. B only operationalises the systemic steroids clause and explicitly leaves the thyroid-dosage-change and uncontrolled-endocrine-disorder clauses unformalised (effectively never triggering), so patients who would be excluded by A for those two conditions are not excluded by B, letting more patients qualify.",
+      "nct_id": "NCT01131676",
+      "quote": "Current treatment with systemic steroids at time of informed consent or change in dosage of thyroid hormones within 6 weeks prior to informed consent or any other uncontrolled endocrine disorder except type 2 diabetes mellitus",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-11",
+      "missing": "human judgement: This exclusion is a compound OR across sub-conditions of fundamentally different character: nursing/pregnancy are recordable states, but the child-bearing-potential branch turns on whether the patient is 'practicing' a birth-control method, 'plans to continue' it, and 'agrees to submit' to periodic pregnancy testing during the trial \u2014 all intentions/behaviors that no chart records and that would be settled the same way (by asking the patient) regardless of the record. Combining these under one OR with the recordable pregnant/nursing conditions cannot be captured without either fabricating a chart-answerable proxy for the intention items or discarding the qualifiers the protocol actually states. Splitting into per-branch predicates and remixing with all_of/any_of would still leave the intention branches unformalisable and would misrepresent the compound logic if only the data-answerable branches were kept.",
+      "nct_id": "NCT01131676",
+      "quote": "Pre-menopausal women (last menstruation <+ 1 year prior to informed consent) who:",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-12",
+      "missing": "human judgement: Both clauses require clinical judgement rather than a chart fact: whether alcohol/drug abuse 'would interfere with trial participation' and whether an ongoing condition would lead to 'decreased compliance to study procedures or study drug intake' are investigator assessments of future impact, not recorded diagnoses with a stated threshold.",
+      "nct_id": "NCT01131676",
+      "quote": "Alcohol or drug abuse within the 3 months prior to informed consent that would interfere with trial participation or any ongoing condition leading to a decreased compliance to study procedures or study drug intake",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-01",
+      "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. A admits both men and women aged 18+ while B states only an age condition without the sex inclusion, so B's stated scope omits the explicit 'men or women' clause though this is likely implicit; however strictly comparing, A also implies no sex restriction (both sexes included) which B does not contradict, so the sets are the same on age but B doesn't restate the sex-inclusive language, which is not a substantive difference for eligibility, making them equivalent.",
+      "nct_id": "NCT02545049",
+      "quote": "Men or women \u226518 years of age",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-03",
+      "missing": "human judgement: Requires a diagnosis of Diabetic Kidney Disease plus albuminuria categorized as 'persistent high' or 'persistent very high' \u2014 these are named categories (roughly KDIGO A2/A3) but the protocol does not state the numeric albuminuria thresholds here, nor define 'persistent' in terms of number of qualifying measurements or timing across the Run-In and Screening visits. Formalising this would require inventing thresholds and a repeat-measurement rule the span does not specify.",
+      "nct_id": "NCT02545049",
+      "quote": "Diagnosis of Diabetic Kidney Disease with persistent high albuminuria or persistent very high albuminuria at the Run-In and Screening Visit",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-04",
+      "missing": "human judgement: While presence of an ACEI or ARB on the medication list is codable, the qualifier 'at maximal tolerated labeled dose without adjustments' requires a clinical judgement about dose titration history and tolerability that is not a discrete recorded value. No stated numeric threshold exists to check against, and the record would not straightforwardly indicate whether a dose is 'maximal tolerated' versus simply the current dose.",
+      "nct_id": "NCT02545049",
+      "quote": "Pretreated with either angiotensin-converting enzyme inhibitor (ACEI) or angiotensin receptor blocker (ARB) at maximal tolerated labeled dose without adjustments",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-05",
+      "missing": "a Serum potassium result",
+      "nct_id": "NCT02545049",
+      "quote": "Serum potassium <=4.8 mmol/L",
+      "reason": "no Serum potassium result is on file for the required window",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-01",
+      "missing": "human judgement: \"Significant non-diabetic renal disease\" and \"clinically relevant renal artery stenosis\" are open-ended clinical judgement categories with no stated diagnostic threshold or enumerated code list; they cannot be mapped to a single condition concept without guessing which diagnoses qualify.",
+      "nct_id": "NCT02545049",
+      "quote": "Confirmed significant non-diabetic renal disease, including clinically relevant renal artery stenosis",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-02",
+      "missing": "human judgement: The criterion sets different BP thresholds depending on which visit the reading was taken at: a higher threshold (\u2265170/\u2265110) at the 'run in visit' and a lower threshold (\u2265160/\u2265100) at 'screening'. The engine's window anchors do not include a 'run-in visit' anchor, and collapsing the run-in-visit readings onto the screening anchor would misrepresent the criterion, since the two visits carry genuinely different thresholds. A complete record would still answer this if it tagged BP readings by visit, so this is a gap in expressibility rather than an inherently unanswerable question.",
+      "nct_id": "NCT02545049",
+      "quote": "Uncontrolled arterial hypertension (ie, mean sitting systolic blood pressure (SBP) \u2265170 mmHg or mean sitting diastolic blood pressure(DBP) \u2265110 mmHg at run in visit, or mean sitting SBP \u2265160 mmHg or mean sitting DBP \u2265100 mmHg at screening)",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-03",
+      "missing": "human judgement: This bundles a diagnosis (HFrEF), a symptom-severity requirement (NYHA class II-IV) that must specifically persist at a trial-defined 'Run in visit', and a parenthetical guideline-rationale (class 1A MRA indication). The 'Run in visit' is not one of the anchors the engine resolves (screening, enrolment, randomisation, consent, first_dose), and it is doing real work here: the exclusion turns on symptoms persisting through that specific study visit, not simply being present in the chart at any point. NYHA class is also not cleanly a numeric observation the way the schema expects. Formalising this as a simple condition/observation would drop the run-in-specific persistence requirement.",
+      "nct_id": "NCT02545049",
+      "quote": "Clinical diagnosis of chronic heart failure with reduced ejection fraction (HFrEF) and persistent symptoms {New York Heart Association (NYHA) class II - IV} at Run in visit [class 1A recommendation for mineralcorticoid receptor antagonist (MRAs)]",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-04",
+      "missing": "human judgement: back-translation: the compiled predicate contradicts the protocol quote. A anchors the 12-week window to the Run-in visit while B anchors it to screening, which are different timepoints in the protocol.",
+      "nct_id": "NCT02545049",
+      "quote": "Dialysis for acute renal failure within 12 weeks of Run-in visit",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-05",
+      "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. A admits patients under either condition (renal allograft in place OR scheduled kidney transplant within 12 months), but B only formalizes the renal allograft diagnosis and explicitly leaves the scheduled-transplant clause unformalized, so B fails to capture patients who qualify under A solely via the scheduled-transplant criterion.",
+      "nct_id": "NCT02545049",
+      "quote": "Renal allograft in place or scheduled kidney transplant within next 12 months",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-06",
+      "missing": "a Glycated hemoglobin (HbA1c) result",
+      "nct_id": "NCT02545049",
+      "quote": "Glycated hemoglobin (HbA1c) >12%",
+      "reason": "no Glycated hemoglobin (HbA1c) result is on file for the required window",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-03",
+      "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. A requires the diagnosis to have been present for at least 2 months (inclusive), but B requires it to have been recorded more than 2 months before screening (strict), excluding patients diagnosed exactly 2 months prior that A would admit.",
+      "nct_id": "NCT03036124",
+      "quote": "Established documented diagnosis of symptomatic HFrEF (NYHA functional class II-IV), which has been present for at least 2 months",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-04",
+      "missing": "a LVEF result",
+      "nct_id": "NCT03036124",
+      "quote": "LVEF\u226440%",
+      "reason": "no LVEF result is on file for the required window",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-05",
+      "missing": "human judgement: States NT-proBNP is 'elevated' but gives no numeric threshold or reference range, which the record cannot supply.",
+      "nct_id": "NCT03036124",
+      "quote": "Elevated NT-proBNP levels",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-06",
+      "missing": "human judgement: \"Background standard of care\" and \"locally recognized guidelines\" describe a category of treatment practice, not an enumerated medication or coded state. There is no specific drug, dose, or threshold named, and \"locally recognized guidelines\" varies by site and is not something the schema can represent.",
+      "nct_id": "NCT03036124",
+      "quote": "Patients should receive background standard of care for HFrEF and be treated according to locally recognized guidelines",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-07",
+      "missing": "a eGFR (CKD-EPI formula) result",
+      "nct_id": "NCT03036124",
+      "quote": "eGFR \u226530 mL/min/1.73 m^2 (CKD-EPI formula) at enrolment (visit 1)",
+      "reason": "no eGFR (CKD-EPI formula) result is on file for the required window",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-03",
+      "missing": "human judgement: Two problems prevent clean formalisation: (1) 'symptomatic hypotension' bundles a subjective symptom judgement with a diagnosis, not a stated threshold; (2) the BP clause requires a '2 out of 3 measurements' aggregation rule across specific visits, which the observation vocabulary (a single numeric comparison) cannot express without inventing an aggregation semantics the protocol's own logic depends on.",
+      "nct_id": "NCT03036124",
+      "quote": "Symptomatic hypotension or systolic BP <95 mmHg at 2 out of 3 measurements either at visit 1 or visit 2",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-04",
+      "missing": "human judgement: back-translation: the compiled predicate contradicts the protocol quote. A leaves the anchor for 'current' ADHF unspecified (implicitly at enrollment), while B explicitly anchors that clause to screening, a different and earlier time point than enrollment used for the hospitalization clause.",
+      "nct_id": "NCT03036124",
+      "quote": "Current acute decompensated HF or hospitalization due to decompensated HF <4 weeks prior to enrolment",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-06",
+      "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. A excludes patients either for a past procedure within 12 weeks or for a planned future procedure after randomization, but B only formalizes the past-procedure disjunct and explicitly leaves the 'planned future operation' clause unresolved (always false), so patients who satisfy only the planned-procedure clause of A are missed by B.",
+      "nct_id": "NCT03036124",
+      "quote": "Coronary revascularization (percutaneous coronary intervention or coronary artery bypass grafting) or valvular repair/replacement within 12 weeks prior to enrolment or planned to undergo any of these operations after randomization",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-07",
+      "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. A treats either documented implantation within 12 weeks or a stated intent to implant as satisfying the criterion, while B only checks for a documented implantation and leaves the intent-to-implant clause entirely unformalized, so patients who only intend to implant a CRT are not captured by B.",
+      "nct_id": "NCT03036124",
+      "quote": "Implantation of a CRT within 12 weeks prior to enrolment or intent to implant a CRT device",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-08",
+      "missing": "human judgement: This span bundles several distinct things under one bullet: a history of cardiac transplantation, a history of VAD implantation, an open-ended 'or similar device' category that no enumerated code list captures, and a future-planned implantation after randomization (a process/plan, not a recorded state, resolved only at the visit). Formalising only the transplant/VAD-present part would silently drop the 'or similar device' qualifier and the post-randomization plan, producing a narrower predicate than the protocol intends.",
+      "nct_id": "NCT03036124",
+      "quote": "Previous cardiac transplantation or implantation of a ventricular assistance device or similar device, or implantation expected after randomization",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-11",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A excludes any patient with severe (eGFR<30), unstable, or rapidly progressing renal disease, but B only operationalizes the eGFR<30 threshold and explicitly declines to enforce the unstable/rapidly-progressing condition, so B admits patients with unstable or rapidly progressing renal disease whose eGFR is 30 or above, whom A would exclude.",
+      "nct_id": "NCT03036124",
+      "quote": "Severe (eGFR <30 mL/min/1.73 m^2 by CKD-EPI), unstable or rapidly progressing renal disease at the time of randomization",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-01",
+      "missing": "human judgement: The age threshold is conditional on the patient's country of enrolment (18 years generally, 20 years for Japan). The demographic vocabulary supports only age and sex, with no field for country or site region, so this region-dependent threshold cannot be expressed as a single demographic predicate without silently dropping the Japan-specific qualifier.",
+      "nct_id": "NCT03819153",
+      "quote": "Male or female, age above or equal to 18 years at the time of signing informed consent. Japan: Male or female, age above or equal to 20 years at the time of signing informed consent",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-03",
+      "missing": "a HbA1c result",
+      "nct_id": "NCT03819153",
+      "quote": "HbA1c less than or equal to 10% (less than or equal to 86 mmol/mol)",
+      "reason": "no HbA1c result is on file for the required window",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-04",
+      "missing": "human judgement: the compiled quote does not appear in the protocol text",
+      "nct_id": "NCT03819153",
+      "quote": "Renal impairment defined either by:\n- serum creatinine-based eGFR greater than or equal to 50 and less than or equal to 75 mL/min/1.73 m^2 (CKD-EPI) and UACR greater than 300 and less than 5000 mg/g or\n- serum creatinine-based eGFR greater than or equal to 25 and less than 50 mL/min/1.73 m^2 (CKD-EPI) and UACR greater than 100 and less than 5000 mg/g",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-05",
+      "missing": "human judgement: The requirement is not simply that an ACE inhibitor or ARB is on the chart, but that it be dosed at the 'maximum labelled or tolerated dose' \u2014 a dose-adequacy judgement with no stated numeric threshold that varies by patient and drug. It also carries an explicit clinical-judgement exception ('unless such treatment is contraindicated or not tolerated'). Neither the dose-adequacy assessment nor the contraindication/intolerance exception can be captured as a presence/absence or numeric predicate without approximating away the actual requirement.",
+      "nct_id": "NCT03819153",
+      "quote": "Treatment with maximum labelled or tolerated dose of a renin-angiotensin-aldosterone system (RAAS) blocking agent including an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated. Treatment dose must be stable for at least 4 weeks prior to the date of the laboratory assessments used for determination of the inclusion criteria for renal impairment and kept stable until screening",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-01",
+      "missing": "human judgement: This span names several broad disease categories (congenital/hereditary kidney diseases, autoimmune kidney diseases, congenital urinary tract malformations) using 'including' to give examples rather than an exhaustive list. No single code captures categories this broad, and the protocol does not enumerate all members. Formalising only the named examples (polycystic kidney disease, glomerulonephritis) would silently drop the broader categories the protocol intends to exclude.",
+      "nct_id": "NCT03819153",
+      "quote": "Congenital or hereditary kidney diseases including polycystic kidney disease, autoimmune kidney diseases including glomerulonephritis or congenital urinary tract malformations",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-02",
+      "missing": "confirmation that glucagon-like peptide-1 (GLP-1) receptor agonist is genuinely absent rather than merely unrecorded",
+      "nct_id": "NCT03819153",
+      "quote": "Use of any glucagon-like peptide-1 (GLP-1) receptor agonist within 30 days prior to screening",
+      "reason": "nothing documents glucagon-like peptide-1 (GLP-1) receptor agonist in the required window, and the chart does not show the window was covered",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-03",
+      "missing": "confirmation that Myocardial infarction is genuinely absent rather than merely unrecorded",
+      "nct_id": "NCT03819153",
+      "quote": "Myocardial infarction, stroke, hospitalisation for unstable angina pectoris or transient ischaemic attack within 60 days prior to the day of screening",
+      "reason": "nothing documents Myocardial infarction in the required window, and the chart does not show the window was covered or nothing documents Stroke in the required window, and the chart does not show the window was covered or nothing documents Hospitalisation for unstable angina pectoris in the required window, and the chart does not show the window was covered or nothing documents Transient ischaemic attack in the required window, and the chart does not show the window was covered",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-06",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A excludes any patient who is currently on dialysis regardless of how long ago it started, but B only flags a dialysis procedure recorded within the 90 days before screening, so a patient on ongoing chronic dialysis that began more than 90 days ago would be excluded by A but not caught by B.",
+      "nct_id": "NCT03819153",
+      "quote": "Current (or within 90 days) chronic or intermittent haemodialysis or peritoneal dialysis",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-07",
+      "missing": "human judgement: \"Uncontrolled and potentially unstable\" diabetic retinopathy or maculopathy is a clinical-judgement qualifier with no stated grading scale or threshold (e.g. no reference to a specific retinopathy severity classification). The remainder of the span describes a verification procedure (fundus exam timing, pupil dilation method) rather than a chart-recordable state. No single observation or condition code can be extracted without inventing the missing severity criteria.",
+      "nct_id": "NCT03819153",
+      "quote": "Uncontrolled and potentially unstable diabetic retinopathy or maculopathy. Verified by a fundus examination performed within the past 90 days prior to screening or in the period between screening and randomisation. Pharmacological pupil-dilation is a requirement unless using a digital fundus photography camera specified for non-dilated examination",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 2,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-04",
+      "missing": "confirmation that glucagon-like peptide-1 (GLP-1) receptor agonist (including medication with GLP-1 RA activity, e.g., GIP/GLP-1 RA) is genuinely absent rather than merely unrecorded",
+      "nct_id": "NCT06717698",
+      "quote": "Use of any glucagon-like peptide-1 (GLP-1) RA (including medication with GLP-1 RA activity, e.g., GIP/GLP-1 RA) within 90 days prior to screening.",
+      "reason": "nothing documents glucagon-like peptide-1 (GLP-1) receptor agonist (including medication with GLP-1 RA activity, e.g., GIP/GLP-1 RA) in the required window, and the chart does not show the window was covered",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-06",
+      "missing": "confirmation that Haemodialysis is genuinely absent rather than merely unrecorded",
+      "nct_id": "NCT06717698",
+      "quote": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.",
+      "reason": "nothing documents Haemodialysis in the required window, and the chart does not show the window was covered or nothing documents Peritoneal dialysis in the required window, and the chart does not show the window was covered",
+      "screenings": 2,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-15",
+      "missing": "confirmation that Acute coronary syndrome is genuinely absent rather than merely unrecorded",
+      "nct_id": "NCT01131676",
+      "quote": "Acute coronary syndrome, stroke or TIA within 2 months prior to informed consent",
+      "reason": "nothing documents Acute coronary syndrome in the required window, and the chart does not show the window was covered or nothing documents Stroke in the required window, and the chart does not show the window was covered or nothing documents TIA in the required window, and the chart does not show the window was covered",
+      "screenings": 1,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "EXC-01",
+      "missing": "confirmation that SGLT2 inhibitor is genuinely absent rather than merely unrecorded",
+      "nct_id": "NCT03036124",
+      "quote": "Receiving therapy with an SGLT2 inhibitor within 8 weeks prior to enrolment or previous intolerance of an SGLT2 inhibitor",
+      "reason": "nothing documents SGLT2 inhibitor in the required window, and the chart does not show the window was covered or intolerance of an SGLT2 inhibitor is not documented in a window the chart covers",
+      "screenings": 1,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "EXC-05",
+      "missing": "confirmation that MI is genuinely absent rather than merely unrecorded",
+      "nct_id": "NCT03036124",
+      "quote": "MI, unstable angina, stroke or transient ischemic attack within 12 weeks prior to enrolment",
+      "reason": "nothing documents MI in the required window, and the chart does not show the window was covered or nothing documents unstable angina in the required window, and the chart does not show the window was covered or nothing documents stroke in the required window, and the chart does not show the window was covered or nothing documents transient ischemic attack in the required window, and the chart does not show the window was covered",
+      "screenings": 1,
+      "trial_screenings": 4
+    },
+    {
+      "criterion_id": "INC-03",
+      "missing": "a Eastern Cooperative Oncology Group (ECOG) Performance Status result",
+      "nct_id": "NCT05748834",
+      "quote": "Eastern Cooperative Oncology Group (ECOG) Performance Status score of 0 or 1",
+      "reason": "no Eastern Cooperative Oncology Group (ECOG) Performance Status result is on file for the required window",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-04",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A requires HER2+ status confirmed specifically by local lab testing per ASCO/CAP guidelines with IHC3+ or FISH+, while B only requires a documented diagnosis without specifying the testing method or criteria.",
+      "nct_id": "NCT05748834",
+      "quote": "Have a confirmed diagnosis of locally advanced/metastatic HER2+ breast cancer (based on local laboratory testing per American Society of Clinical Oncology (ASCO)/College of American Pathologists (CAP) guidelines immunohistochemistry 3+ (IHC3+) or fluorescence in situ hybridization + (FISH+))",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-05",
+      "missing": "human judgement: \"Anti-HER2 therapy\" is a broad drug class (trastuzumab, pertuzumab, T-DM1, tucatinib, trastuzumab deruxtecan, etc.) that the protocol does not enumerate here, so no single medication code captures it. The criterion also requires counting 'lines of therapy' and distinguishing metastatic-setting treatment from adjuvant treatment with a relapse-timing condition, which is a derived clinical judgement not represented as a simple presence/absence or dated event in the chart.",
+      "nct_id": "NCT05748834",
+      "quote": "Have had prior treatment with at least 1 line of anti-HER2 therapy for locally advanced/metastatic disease or relapsed within 6 months of completion of adjuvant anti-HER2 therapy. Prior treatment with tucatinib in the metastatic setting is allowed",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-06",
+      "missing": "human judgement: \"Measurable disease per RECIST 1.1\" is a radiological determination requiring interpretation of imaging against a structured set of rules (target/non-target lesion sizing, etc.), not a single coded fact or numeric threshold that can be read off the chart. There is no discrete lab value or condition code that captures this.",
+      "nct_id": "NCT05748834",
+      "quote": "Measurable disease as measured by Response Evaluation Criteria in Solid Tumors (RECIST) Version 1.1",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-07",
+      "missing": "human judgement: This criterion bundles several heterogeneous requirements under an OR/AND structure that the schema cannot cleanly represent as one predicate: (1) an intention/compliance requirement to use contraception through a future window (a process, not a chart fact), (2) a pregnancy test timed relative to a future dosing event rather than screening, (3) a breastfeeding status, and (4) an alternative branch defining 'non-child-bearing potential' whose sub-criteria include an institution-specific FSH/LH reference range (unresolvable, like an ULN threshold) alongside age and amenorrhea facts. Splitting this into the schema's operand types would require dropping or inventing qualifiers, so the whole span is returned unsupported rather than partially and confidently formalised.",
+      "nct_id": "NCT05748834",
+      "quote": "Females of child-bearing potential should be using adequate contraceptive measures from the time of screening until 6 months following the last dose of study drug(s), should not be breast feeding and must have a negative pregnancy test prior to start of dosing, or must have evidence of non-child-bearing potential by fulfilling one of the following criteria at screening:",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-09",
+      "missing": "human judgement: back-translation: the compiled predicate contradicts the protocol quote. B leaves the platelet count requirement entirely unformalized (only a note about a missing transfusion-window rule), so it fails to encode a component of 'adequate hematologic function' that A implicitly requires, making the two predicates non-comparable rather than a clean narrowing or broadening.",
+      "nct_id": "NCT05748834",
+      "quote": "Adequate hematologic function",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-10",
+      "missing": "human judgement: The parent phrase 'adequate hepatic function' states no numeric threshold itself, and the sub-conditions that operationalize it define thresholds as multiples of the 'upper limit of normal (ULN)', a laboratory-specific reference range that is not present in the patient record. The engine cannot resolve ULN-relative thresholds. Additionally, the Gilbert's Syndrome exception introduces a conditional carve-out (direct bilirubin plus normal AST/ALT) that this schema's nesting cannot express alongside the primary rule.",
+      "nct_id": "NCT05748834",
+      "quote": "Adequate hepatic function",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-11",
+      "missing": "a Estimated glomerular filtration rate (eGFR) result",
+      "nct_id": "NCT05748834",
+      "quote": "Estimated glomerular filtration rate (eGFR) \u226550 mL/min/1.73 m2",
+      "reason": "no Estimated glomerular filtration rate (eGFR) result is on file for the required window",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-12",
+      "missing": "a Left ventricular ejection fraction (LVEF) result",
+      "nct_id": "NCT05748834",
+      "quote": "Left ventricular ejection fraction (LVEF) \u226550% based on screening echocardiogram (ECHO)/multigated acquisition (MUGA)",
+      "reason": "no Left ventricular ejection fraction (LVEF) result is on file for the required window",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-13",
+      "missing": "human judgement: This is a branching CNS eligibility requirement whose sub-conditions mix clinical-judgement calls ('not needing immediate local therapy', classification of 'target and non-target lesions', a size threshold that triggers Medical Monitor discussion/approval rather than a fixed eligibility rule), a documentation-availability requirement (records must be available), and at least one branch ('Previously treated brain metastases:') that is truncated and evidently nests further sub-conditions not given here. No clean observation/condition predicate or any_of/all_of structure can capture this without dropping the judgement qualifiers or guessing at the missing nested content.",
+      "nct_id": "NCT05748834",
+      "quote": "Central nervous system (CNS) Inclusion - Based on screening contrast brain magnetic resonance imaging (MRI), patients must have one of the following:",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-15",
+      "missing": "human judgement: This is a lead-in bullet that conditions eligibility on 'all of the following criteria' being met, but the sub-criteria themselves were not provided alongside this span. Without them, the compound condition cannot be formalised.",
+      "nct_id": "NCT05748834",
+      "quote": "Patients treated with CNS local therapy for newly identified lesions found on contrast brain MRI performed during screening for this study may be eligible to enroll if all of the following criteria are met:",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-16",
+      "missing": "human judgement: Each sub-condition anchors its time window to 'first dose of treatment', not to screening. The engine can only evaluate windows against the screening date, and the gap between screening and first dose of treatment is not fixed \u2014 it can be days to weeks, which is exactly the margin these thresholds (14/7/28 days) are testing. Substituting screening for first_dose would let the anchor do silent, potentially decisive work, so this cannot be safely reduced to the schema's window relations.",
+      "nct_id": "NCT05748834",
+      "quote": "Time since whole brain radiotherapy (WBRT) is \u226514 days prior to first dose of treatment, time since stereotactic radiosurgery (SRS) is \u22657 days prior to first dose of treatment, or time since surgical resection is \u226528 days",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "INC-17",
+      "missing": "human judgement: Whether other disease sites are 'assessable by RECIST 1.1' requires radiological interpretation against a specific measurability standard, not a discrete chart-coded fact. There is no lab/condition code capturing RECIST assessability.",
+      "nct_id": "NCT05748834",
+      "quote": "Other sites of disease assessable by RECIST 1.1 are present",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "EXC-01",
+      "missing": "human judgement: back-translation: the compiled predicate contradicts the protocol quote. Sentence A is merely an introductory stem ('Treatment with any of the following:') with no substantive content of its own, while B asserts specific, complex criteria (chemotherapy class, anthracycline, major surgery, palliative radiation with a 14-day window) that are not present in A at all, so the two cannot be judged to pick out the same set of patients.",
+      "nct_id": "NCT05748834",
+      "quote": "Treatment with any of the following:",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "EXC-02",
+      "missing": "human judgement: This is a compound exclusion whose sub-conditions mix objective thresholds (lesion size, steroid dose) with clinical-judgement determinations ('thought to require immediate local therapy', 'poorly controlled' seizures, 'manifest neurologic progression'), a process-based override ('unless discussed with the Medical Monitor and approval for enrollment is granted'), and a cross-reference to another criterion (CNS inclusion criteria 14c). No single clean predicate or small composite captures this without dropping the judgement-based exceptions that materially change the outcome, so the whole span is left unsupported rather than partially formalised.",
+      "nct_id": "NCT05748834",
+      "quote": "Based on screening brain MRI, patients must not have any of the following:",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "EXC-03",
+      "missing": "human judgement: Refers to drug classes defined by pharmacologic mechanism (strong CYP2C8 inhibitors, strong CYP3A4 inhibitors/inducers, CYP2C8 inducers) rather than enumerated medications. No single code or finite code set captures 'strong CYP2C8/3A4 inhibitor or inducer' as the protocol does not list member drugs, so this cannot be mapped to a medication concept without guessing which drugs qualify.",
+      "nct_id": "NCT05748834",
+      "quote": "Use of a strong cytochrome P450 (CYP)2C8-inhibitor or use of a strong CYP3A4 or use of a CYP2C8 inducer within 5 days prior to the first dose of study treatment",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "EXC-04",
+      "missing": "human judgement: This is an open-ended category ('any unresolved toxicities from prior therapy') rather than an enumerated list of conditions, so no fixed set of codes can capture it. It also carries a carve-out that depends on clinical judgement ('asymptomatic or adequately managed', 'approval by the Medical Monitor'), which no chart field records.",
+      "nct_id": "NCT05748834",
+      "quote": "With the exception of alopecia, any unresolved toxicities from prior therapy greater than CTCAE Grade 1 at the time of starting study treatment. Note: patients with chronic Grade 2 toxicities who are asymptomatic or adequately managed with stable medication may be eligible with approval by the Medical Monitor.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "EXC-05",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A excludes women who plan to become pregnant during the study or for 6 months after treatment, but B leaves this clause unformalized and unenforced, so B admits patients A would exclude on that basis.",
+      "nct_id": "NCT05748834",
+      "quote": "Women who are pregnant or nursing or plan to become pregnant while in the study and for at least 6 months after the last administration of study treatment",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "EXC-07",
+      "missing": "human judgement: This is an open-ended, judgement-laden category ('condition that will interfere significantly with absorption, distribution, metabolism, or excretion') with an illustrative but non-exhaustive list of examples, spanning multiple heterogeneous conditions of varying severity (some requiring investigator assessment like 'uncontrolled' nausea). No single code or fixed set of codes captures this class, and the severity qualifiers are not fully specified for all listed examples.",
+      "nct_id": "NCT05748834",
+      "quote": "Presence of active gastrointestinal disease or other condition that will interfere significantly with the absorption, distribution, metabolism, or excretion of tucatinib (e.g., ulcerative disease, uncontrolled nausea, vomiting, diarrhea Grade \u22652, malabsorption syndrome)",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "EXC-08",
+      "missing": "human judgement: the compiled quote does not appear in the protocol text",
+      "nct_id": "NCT05748834",
+      "quote": "Any of the following cardiac criteria:\n\nMean resting QT interval with QT corrected for heart rate by Fridericia's formula [QTcF]) prolongation to >480 msec for females and >460 msec for males in three successive screening measures\nAny clinically important abnormalities (as assessed by the Investigator) in rhythm, conduction, or morphology of resting electrocardiograms (ECGs), e.g., complete left bundle branch block, third-degree heart block\nCongestive heart failure (New York Heart Association \u2265 Grade 2 within past 6 months)\nPatients with a left ventricular ejection fraction (LVEF) <50% or the lower limit of normal of the institutional standard",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "EXC-09",
+      "missing": "human judgement: Explicitly framed as an investigator judgement ('As judged by the Investigator') over an open, unenumerated class of 'severe or uncontrolled systemic diseases' without stated thresholds (e.g., 'uncontrolled' hypertension/diabetes have no defined values); no single set of codes can capture this, and it depends on clinical judgement.",
+      "nct_id": "NCT05748834",
+      "quote": "As judged by the Investigator, any evidence of severe or uncontrolled systemic diseases, including uncontrolled hypertension, uncontrolled diabetes mellitus, active bleeding diatheses, or active infection, including hepatitis B and hepatitis C. Screening for chronic conditions is not required.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "EXC-11",
+      "missing": "human judgement: \"Other active invasive cancers\" is an open, unenumerated disease category (any malignancy type except the study cancer) with carve-outs that themselves depend on clinical judgement (\"appropriately treated\", \"considered cured by local treatment\"). No single code or bounded set of codes captures this, and the exceptions cannot be resolved from a chart without a clinician's assessment.",
+      "nct_id": "NCT05748834",
+      "quote": "Presence of other active invasive cancers other than the one treated in this study within 3 years prior to screening, except appropriately treated basal cell carcinoma of the skin, in situ carcinoma of uterine cervix, or other local tumors considered cured by local treatment",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 3
+    },
+    {
+      "criterion_id": "EXC-05",
+      "missing": "confirmation that Myocardial infarction is genuinely absent rather than merely unrecorded",
+      "nct_id": "NCT06717698",
+      "quote": "Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.",
+      "reason": "nothing documents Myocardial infarction in the required window, and the chart does not show the window was covered or nothing documents Stroke in the required window, and the chart does not show the window was covered or nothing documents Transient ischaemic attack in the required window, and the chart does not show the window was covered or nothing documents Hospitalization for unstable angina pectoris in the required window, and the chart does not show the window was covered",
+      "screenings": 1,
+      "trial_screenings": 5
+    },
+    {
+      "criterion_id": "INC-04",
+      "missing": "Body Mass Index (BMI) in kg/m\u00b2 (the chart reports kg/m2, which we cannot convert)",
+      "nct_id": "NCT07252908",
+      "quote": "Body Mass Index (BMI) within the range of 18-30 kg/m\u00b2 (inclusive).",
+      "reason": "cannot convert kg/m2 to kg/m\u00b2 for this analyte",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "INC-06",
+      "missing": "heart rate in bpm (the chart reports /min, which we cannot convert)",
+      "nct_id": "NCT07252908",
+      "quote": "12-lead electrocardiogram (ECG) showing: heart rate of 50-100 beats per minute (bpm); corrected QT interval (QTcF) <= 450 msec for males or <= 470 msec for females.",
+      "reason": "cannot convert /min to bpm for this analyte and recorded sex 'female' against != 'male' and recorded sex 'female' against != 'female' or no corrected QT interval (QTcF) result is on file for the required window",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "INC-07",
+      "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. B omits the requirement that symptoms consistent with COPD have persisted for at least 1 year before screening, dropping half of A's compound condition instead of encoding it, which makes B admit only patients satisfying the diagnosis criterion while failing to enforce the symptom-duration criterion.",
+      "nct_id": "NCT07252908",
+      "quote": "Diagnosed with COPD according to the 2025 Global Initiative for Chronic Obstructive Lung Disease (GOLD) criteria, and have had symptoms consistent with COPD for at least 1 year before screening.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "INC-08",
+      "missing": "human judgement: \"Stable background inhaled therapy\" names a broad, unenumerated drug class (any inhaled COPD therapy) and requires a judgement of \"stable\" (no dose-change threshold given). Neither the class nor the stability criterion can be captured by a single medication code or coded state.",
+      "nct_id": "NCT07252908",
+      "quote": "Have been on stable background inhaled therapy for COPD for at least 4 weeks before screening.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "INC-10",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A requires FEV1 strictly less than 80% predicted, while B allows FEV1 up to and including 80%, so B admits patients at exactly 80% that A would exclude.",
+      "nct_id": "NCT07252908",
+      "quote": "At the screening visit (V1 visit), after administration of a bronchodilator (4 puffs of salbutamol), the FEV1/Forced Vital Capacity (FVC) ratio < 0.7, and 30% predicted value <= FEV1 < 80% predicted value.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "INC-11",
+      "missing": "human judgement: \"Clinically stable\" is a clinical-judgement qualifier with no stated objective criteria (no exacerbation counts, no symptom score, no threshold), so it cannot be mapped to a coded condition or observation. It also spans a future interval (between V1 and V2 visits) that has not yet occurred at screening.",
+      "nct_id": "NCT07252908",
+      "quote": "Clinically stable COPD within 4 weeks before the screening visit (V1 visit) and between the V1 visit and V2 visit.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "INC-12",
+      "missing": "a Modified Medical Research Council (mMRC) Dyspnea Scale score result",
+      "nct_id": "NCT07252908",
+      "quote": "Modified Medical Research Council (mMRC) Dyspnea Scale score >= 2 at screening.",
+      "reason": "no Modified Medical Research Council (mMRC) Dyspnea Scale score result is on file for the required window",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "INC-13",
+      "missing": "human judgement: References \"concurrent medication restrictions\" and \"time intervals specified in the protocol\" without enumerating which medications or windows are meant here; the specific drug classes and durations are not given in this span, so no coded medication predicate can be constructed. It also includes a forward-looking expectation of maintaining compliance during treatment, which is not a chart fact.",
+      "nct_id": "NCT07252908",
+      "quote": "Meet the concurrent medication restrictions (within the time intervals specified in the protocol) and are expected to maintain the restriction requirements during treatment.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "INC-14",
+      "missing": "a Smoking history result",
+      "nct_id": "NCT07252908",
+      "quote": "Smoking history >= 10 pack-years (pack-year: number of packs per day \u00d7 number of smoking years; e.g., 1 pack (20 cigarettes) per day for 10 consecutive years, or 10 cigarettes per day for 20 consecutive years).",
+      "reason": "no Smoking history result is on file for the required window",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-01",
+      "missing": "human judgement: \"Life-threatening COPD\" is a severity category, not a coded diagnosis; the ICU admission/intubation details are introduced with \"including\", indicating they are illustrative examples rather than an exhaustive, enumerable definition. No single code or fixed set of codes captures this without dropping the qualifier.",
+      "nct_id": "NCT07252908",
+      "quote": "Life-threatening COPD history, including admission to the intensive care unit (ICU) and/or requirement for intubation.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-02",
+      "missing": "human judgement: The exclusion window is defined by two different anchors (screening/V1 and randomization/V2), and the randomization date is not known at screening. Because randomization occurs after screening, the 'within 3 months before randomization' window extends further back in time than the screening-anchored window, so the anchor choice materially changes which events count. The engine can only anchor to screening, and substituting a single screening-anchored window would silently narrow the exclusion criterion.",
+      "nct_id": "NCT07252908",
+      "quote": "COPD exacerbation requiring systemic corticosteroid therapy within 3 months before the screening visit (V1 visit) or before the randomization visit (V2 visit).",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-04",
+      "missing": "human judgement: \"Antibiotic treatment\" is a broad drug class covering many distinct agents, and the protocol does not enumerate which antibiotics count, so no single medication code or bounded set of codes captures it. The span also anchors the 6-week window to two different, non-equivalent events (screening or the later randomization/V3 visit), and appends a rescreening procedure (rescreen 6 weeks after recovery) rather than a chart-checkable state, none of which the schema can represent without dropping qualifiers or inventing a resolution.",
+      "nct_id": "NCT07252908",
+      "quote": "Antibiotic treatment for upper and/or lower respiratory tract infections within 6 weeks before screening or before the randomization visit (V3 visit). Note: Subjects with a history of lower respiratory tract infection within 6 weeks cannot be enrolled, but may be rescreened 6 weeks after recovery from the infection.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-05",
+      "missing": "human judgement: This is a mixed list of specific named conditions plus an open-ended catch-all ('other respiratory diseases as assessed by the investigator') and an undefined qualifier ('clinically significant active pulmonary infections'). The trailing catch-all makes the category unbounded \u2014 no enumerated code set captures it \u2014 and 'clinically significant' and 'as assessed by the investigator' depend on clinical judgement not recorded as discrete data. Splitting out only the cleanly-named diagnoses would silently drop the qualifiers the protocol intended, so the whole span is left unformalised.",
+      "nct_id": "NCT07252908",
+      "quote": "Concurrent other respiratory diseases: \u03b1-1 antitrypsin deficiency, primary ciliary dyskinesia, lung cancer; clinically significant active pulmonary infections, pulmonary tuberculosis, bronchiectasis, pulmonary fibrosis, sarcoidosis, pulmonary hypertension, asthma, and other respiratory diseases as assessed by the investigator.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-09",
+      "missing": "confirmation that oral corticosteroids is genuinely absent rather than merely unrecorded",
+      "nct_id": "NCT07252908",
+      "quote": "Receipt of oral corticosteroids or roflumilast for COPD within 3 months before the screening visit (V1 visit), or receipt of oral theophylline and/or theophylline derivatives for COPD within 1 week before the screening visit (V1 visit).",
+      "reason": "nothing documents oral corticosteroids in the required window, and the chart does not show the window was covered or nothing documents roflumilast in the required window, and the chart does not show the window was covered or nothing documents oral theophylline and/or theophylline derivatives in the required window, and the chart does not show the window was covered",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-10",
+      "missing": "human judgement: \"Non-selective oral beta-blockers\" names a pharmacologic subclass (e.g., propranolol, nadolol, sotalol, carvedilol, labetalol) rather than a single coded medication, and the protocol does not enumerate its members. No single RxNorm code captures this class cleanly.",
+      "nct_id": "NCT07252908",
+      "quote": "Use of non-selective oral beta-blockers.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-12",
+      "missing": "human judgement: \"Immunotherapy\" is named as a broad drug class with only illustrative examples (\"e.g.\"), not an exhaustive enumeration. Azathioprine and cyclophosphamide are themselves immunosuppressants rather than a single coherent class, and the protocol gives no closed list of members, so no single code or small code set can capture what counts as 'immunotherapy' here.",
+      "nct_id": "NCT07252908",
+      "quote": "Patients who received immunotherapy (e.g., azathioprine, cyclophosphamide) within 4 weeks before the screening period.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-14",
+      "missing": "human judgement: Relies on investigator judgement of clinical significance and an open-ended, unenumerated list of disease categories ('including but not limited to'), neither of which maps to a single codeable concept or stated threshold.",
+      "nct_id": "NCT07252908",
+      "quote": "The patient has a history of currently uncontrolled diseases, including but not limited to endocrine, thyroid, neuropsychiatric, hepatic, gastrointestinal, renal, hematologic, urinary, immunologic, or ophthalmic diseases, which are judged to be clinically significant by the investigator.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-15",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A excludes any history or current evidence of clinically significant cardiovascular disease as judged by the investigator (with no time limit), while B only excludes five specific diagnoses restricted to narrow 6-month or 3-month windows before screening and omits the general investigator-judgment clause entirely, so B admits patients (e.g., an MI 10 years ago, or an investigator-judged dangerous condition not on the list) that A would exclude.",
+      "nct_id": "NCT07252908",
+      "quote": "History or current evidence of clinically significant cardiovascular diseases, defined as any disease that the investigator believes would endanger the patient's safety if participating in the study, or any disease that may affect the efficacy or safety analysis if the disease/condition deteriorates during the study; subjects with any of the following conditions at Visit 1 will be excluded:",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-16",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A only classifies hypertension as uncontrolled when the BP thresholds are met after drug (antihypertensive) treatment, whereas B applies the same thresholds without regard to whether the reading was taken after drug control, so B would exclude patients whose pre-treatment BP is high but who are actually controlled on medication.",
+      "nct_id": "NCT07252908",
+      "quote": "Unstable or uncontrolled hypertension (systolic blood pressure >= 160 mmHg and diastolic blood pressure >= 100 mmHg after drug control).",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-17",
+      "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. B leaves the \"poorly controlled type 2 diabetes\" clause unformalised/unanswerable, so it fails to admit exclusion of patients who meet that clause but not the glucose threshold, making it narrower than A.",
+      "nct_id": "NCT07252908",
+      "quote": "Patients with poorly controlled type 2 diabetes or fasting blood glucose > 10 mmol/L.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-18",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. B only actually implements the first disjunct (major surgery within 8 weeks before screening) and leaves the 'failure to fully recover' and 'planned surgery before end of study' clauses unformalised rather than encoding them as exclusion conditions, so patients A would exclude under those two clauses are admitted by B.",
+      "nct_id": "NCT07252908",
+      "quote": "Receipt of major surgery (requiring general anesthesia) within 8 weeks before the screening visit (V1 visit), failure to fully recover from the surgery at the time of screening (V1 visit), or planned surgery before the end of the study.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-19",
+      "missing": "human judgement: \"Malignant tumors of any organ or system\" is an open-ended disease category spanning countless organ sites with no single code and no enumerated list of members, so it cannot be captured as one condition concept. The criterion also nests a conditional carve-out (specific cancer types excluded from the exclusion only if cured more than 5 years before screening) that the schema's condition/window primitives cannot express without inventing structure the protocol did not state.",
+      "nct_id": "NCT07252908",
+      "quote": "History of malignant tumors (cured or uncured) of any organ or system within the past 5 years (excluding non-metastatic cutaneous basal cell or squamous cell carcinoma, or cervical carcinoma in situ that have been cured for more than 5 years before the screening period).",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-20",
+      "missing": "human judgement: The parent criterion turns on the investigator's determination of 'clinically significant' abnormal lab values, and is explicitly open-ended ('including but not limited to') rather than an exhaustive enumeration. Even the listed examples cannot rescue this: the ALT/AST/alkaline phosphatase/bilirubin thresholds are stated as multiples of the Upper Limit of Normal, a laboratory-specific reference range not present in the record. Only the eGFR < 60 mL/min/1.73m\u00b2 sub-condition is independently resolvable, but formalising only that piece while dropping the investigator-judgment clause and the open list would misrepresent the criterion as narrower than the protocol states, so the whole unit is left unsupported rather than partially approximated.",
+      "nct_id": "NCT07252908",
+      "quote": "Clinically significant abnormal values in safety laboratory tests (hematology, biochemistry, or urinalysis) determined by the investigator at the screening visit (V1 visit), including but not limited to one of the following:",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-21",
+      "missing": "human judgement: This is a compound criterion whose HBsAg clause carries a conditional exception ('HBV DNA testing may be added if necessary; subjects with HBV DNA < LLOQ need not be excluded'). That exception both describes a discretionary testing process rather than a fixed state, and its threshold (Lower Limit of Quantification) is assay-specific and not a number the record states, analogous to an unresolvable upper-limit-of-normal reference. Formalising the HIV/HCV/TPPA clauses alone while dropping or approximating the HBsAg exception would silently change the criterion's meaning, so the whole span is left unsupported rather than partially decomposed.",
+      "nct_id": "NCT07252908",
+      "quote": "Positive test result for Human Immunodeficiency Virus (HIV) antibody; positive test result for Hepatitis B Surface Antigen (HBsAg) (if HBsAg is positive, Hepatitis B Virus (HBV) DNA testing may be added if necessary; subjects with HBV DNA < Lower Limit of Quantification (LLOQ) need not be excluded); positive Hepatitis C Virus (HCV) antibody with confirmed presence of HCV ribonucleic acid (RNA); positive Treponema Pallidum Particle Agglutination (TPPA) antibody.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-22",
+      "missing": "human judgement: Names a specific drug (salbutamol) but also 'other inhaled bronchodilator therapies for COPD', which is an open drug class not enumerated by the protocol. No single medication concept or allergy code can capture the full scope of the class, so the criterion cannot be formalised without dropping the 'or other' qualifier.",
+      "nct_id": "NCT07252908",
+      "quote": "Intolerance or allergy to salbutamol or other inhaled bronchodilator therapies for COPD.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-23",
+      "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. A excludes anyone requiring oxygen either continuously or intermittently, but B only counts a documented oxygen therapy procedure that is current at the moment of screening, which would miss intermittent users who are not actively on oxygen at that exact screening timepoint.",
+      "nct_id": "NCT07252908",
+      "quote": "Patients requiring continuous or intermittent oxygen therapy.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-24",
+      "missing": "human judgement: back-translation: the compiled predicate is narrower than the protocol quote. B omits the 'planning to become pregnant during the study' condition entirely, so it excludes fewer patients than A.",
+      "nct_id": "NCT07252908",
+      "quote": "Female subjects who are pregnant, lactating, or planning to become pregnant during the study enrollment period.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-25",
+      "missing": "human judgement: back-translation: the compiled predicate is broader than the protocol quote. A excludes patients who have any planned vaccination during the study, but B omits this third disjunct entirely, so B admits patients with planned future vaccination that A would exclude.",
+      "nct_id": "NCT07252908",
+      "quote": "Receipt of live attenuated vaccine within 28 days before randomization, receipt of inactivated vaccine within 7 days before randomization, or planned vaccination during the study.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-26",
+      "missing": "human judgement: \"Drug abuse\" is a broad, unenumerated category of substances with no single code, and \"alcoholism\" is defined here via a self-reported consumption pattern (units/week with custom unit definitions) that is not a value recorded in a structured chart as an observation or coded condition. Neither the drug-abuse category nor the quantified alcohol-consumption threshold maps cleanly onto the vocabulary.",
+      "nct_id": "NCT07252908",
+      "quote": "History of drug abuse or alcoholism within the past 3 years (consumption of 14 units of alcohol per week: 1 unit = 360 ml of beer, or 45 ml of spirits with 40% alcohol content, or 150 ml of wine).",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    },
+    {
+      "criterion_id": "EXC-27",
+      "missing": "human judgement: The exclusion window is defined as the longer of a fixed 4 weeks or 5 half-lives of an unspecified investigational drug \u2014 a threshold that varies per trial/drug and is not resolvable without knowing the specific agent's pharmacokinetics, which the chart does not record in a structured, comparable way.",
+      "nct_id": "NCT07252908",
+      "quote": "Participation in any drug or medical device clinical trial within 4 weeks or 5 drug half-lives (whichever is longer) before screening.",
+      "reason": "this criterion was not formalised because it cannot be decided from data",
+      "screenings": 1,
+      "trial_screenings": 2
+    }
+  ],
+  "by_expected": {
+    "eligible": {
+      "abstained": 0,
+      "cases": 7,
+      "correct": 0,
+      "unsafe": 0
+    },
+    "ineligible": {
+      "abstained": 6,
+      "cases": 29,
+      "correct": 23,
+      "unsafe": 0
+    },
+    "needs_review": {
+      "abstained": 1,
+      "cases": 15,
+      "correct": 1,
+      "unsafe": 0
+    }
+  },
+  "cases": 51,
+  "correct": 24,
+  "cost_usd": 6.5423680000000015,
+  "coverage": 0.8823529411764706,
+  "coverage_at_zero_unsafe": 0.8823529411764706,
+  "curve": [
+    {
+      "answered": 51,
+      "coverage": 1.0,
+      "risk": 0.6862745098039216,
+      "threshold": 0.0,
+      "unsafe": 26
+    },
+    {
+      "answered": 51,
+      "coverage": 1.0,
+      "risk": 0.6862745098039216,
+      "threshold": 0.083333,
+      "unsafe": 26
+    },
+    {
+      "answered": 50,
+      "coverage": 0.9803921568627451,
+      "risk": 0.68,
+      "threshold": 0.090909,
+      "unsafe": 25
+    },
+    {
+      "answered": 48,
+      "coverage": 0.9411764705882353,
+      "risk": 0.7083333333333334,
+      "threshold": 0.111111,
+      "unsafe": 25
+    },
+    {
+      "answered": 47,
+      "coverage": 0.9215686274509803,
+      "risk": 0.7021276595744681,
+      "threshold": 0.117647,
+      "unsafe": 24
+    },
+    {
+      "answered": 46,
+      "coverage": 0.9019607843137255,
+      "risk": 0.717391304347826,
+      "threshold": 0.142857,
+      "unsafe": 24
+    },
+    {
+      "answered": 44,
+      "coverage": 0.8627450980392157,
+      "risk": 0.7045454545454546,
+      "threshold": 0.166667,
+      "unsafe": 22
+    },
+    {
+      "answered": 44,
+      "coverage": 0.8627450980392157,
+      "risk": 0.7045454545454546,
+      "threshold": 0.181818,
+      "unsafe": 22
+    },
+    {
+      "answered": 42,
+      "coverage": 0.8235294117647058,
+      "risk": 0.7380952380952381,
+      "threshold": 0.2,
+      "unsafe": 22
+    },
+    {
+      "answered": 23,
+      "coverage": 0.45098039215686275,
+      "risk": 0.9130434782608695,
+      "threshold": 0.214286,
+      "unsafe": 21
+    },
+    {
+      "answered": 23,
+      "coverage": 0.45098039215686275,
+      "risk": 0.9130434782608695,
+      "threshold": 0.235294,
+      "unsafe": 21
+    },
+    {
+      "answered": 22,
+      "coverage": 0.43137254901960786,
+      "risk": 0.9545454545454546,
+      "threshold": 0.352941,
+      "unsafe": 21
+    },
+    {
+      "answered": 20,
+      "coverage": 0.39215686274509803,
+      "risk": 0.95,
+      "threshold": 0.357143,
+      "unsafe": 19
+    },
+    {
+      "answered": 20,
+      "coverage": 0.39215686274509803,
+      "risk": 0.95,
+      "threshold": 1.0,
+      "unsafe": 19
+    }
+  ],
+  "failures": [],
+  "false_abstention": 0.16666666666666666,
+  "scores": [
+    {
+      "case_id": "AK-001",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "AK-002",
+      "criteria_coverage": 0.16666666666666666,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-003",
+      "criteria_coverage": 0.1111111111111111,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "negation"
+    },
+    {
+      "case_id": "AK-004",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-005",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "AK-006",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-007",
+      "criteria_coverage": 0.09090909090909091,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "threshold_edge"
+    },
+    {
+      "case_id": "AK-008",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-009",
+      "criteria_coverage": 0.09090909090909091,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-010",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "unit"
+    },
+    {
+      "case_id": "AK-011",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-012",
+      "criteria_coverage": 0.35294117647058826,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-013",
+      "criteria_coverage": 0.23529411764705882,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-014",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-015",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-016",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-017",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-018",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-019",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "AK-020",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-021",
+      "criteria_coverage": 0.18181818181818182,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "unit"
+    },
+    {
+      "case_id": "AK-022",
+      "criteria_coverage": 0.18181818181818182,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-023",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-024",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "unsupported"
+    },
+    {
+      "case_id": "AK-025",
+      "criteria_coverage": 0.08333333333333333,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "unsupported"
+    },
+    {
+      "case_id": "AK-026",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "unsupported"
+    },
+    {
+      "case_id": "AK-027",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-028",
+      "criteria_coverage": 0.35714285714285715,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-029",
+      "criteria_coverage": 0.21428571428571427,
+      "decision": "needs_review",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "AK-030",
+      "criteria_coverage": 0.14285714285714285,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "unit"
+    },
+    {
+      "case_id": "AK-031",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-032",
+      "criteria_coverage": 0.11764705882352941,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "unit"
+    },
+    {
+      "case_id": "AK-033",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-034",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-035",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-036",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-001",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "eligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-002",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "constructed",
+      "trap": "threshold_edge"
+    },
+    {
+      "case_id": "CK-003",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "constructed",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "CK-004",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-005",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "threshold_edge"
+    },
+    {
+      "case_id": "CK-006",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "CK-007",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-008",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "threshold_edge"
+    },
+    {
+      "case_id": "CK-009",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "CK-010",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-011",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "threshold_edge"
+    },
+    {
+      "case_id": "CK-012",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "CK-013",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-014",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-015",
+      "criteria_coverage": 0.2,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    }
+  ],
+  "screenings": 51,
+  "selective_risk": 0.4666666666666667,
+  "unsafe": 0,
+  "wall_seconds": 3.948
+}

@@ -10,7 +10,8 @@ import json
 from datetime import date
 
 from caliper.answerkey import AnswerKey, Case
-from caliper.evalrun import Arm, forced_outcome, run_arm, score_screening
+from caliper.blockers import Blocker
+from caliper.evalrun import Arm, ArmReport, forced_outcome, run_arm, score_screening
 from caliper.evaluate import AbsencePolicy
 from caliper.ir import (
     Code,
@@ -22,6 +23,7 @@ from caliper.ir import (
     PresencePredicate,
 )
 from caliper.logic import ScreeningOutcome, Verdict
+from caliper.metrics import summarise
 from caliper.pipeline import PipelineConfig
 from caliper.record import Evidence, PatientIndex
 from caliper.screen import screen
@@ -313,3 +315,27 @@ class TestConstructedCases:
         report = run_arm(self.key(self.a_case("CK-001")), arm, load_patient=load)
         assert report.scores == []
         assert report.failures[0].stage == "load_patient"
+
+
+def test_a_blocker_keeps_its_own_trial_denominator_through_the_json() -> None:
+    """Dropped in serialisation, the report's counts silently revert to "of the whole run"."""
+    report = ArmReport(
+        arm="caliper",
+        scores=[],
+        summary=summarise([], arm="caliper"),
+        blockers=[
+            Blocker(
+                nct_id="NCT03315143",
+                criterion_id="INC-03",
+                screenings=18,
+                reason="r",
+                missing="m",
+                trial_screenings=24,
+            )
+        ],
+        screenings=51,
+    )
+
+    row = report.to_dict()["blockers"][0]
+    assert row["trial_screenings"] == 24
+    assert Blocker(**row).trial_screenings == 24

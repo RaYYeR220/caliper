@@ -150,6 +150,7 @@ class ArmReport:
                     "nct_id": b.nct_id,
                     "criterion_id": b.criterion_id,
                     "screenings": b.screenings,
+                    "trial_screenings": b.trial_screenings,
                     "reason": b.reason,
                     "missing": b.missing,
                     "quote": b.quote,

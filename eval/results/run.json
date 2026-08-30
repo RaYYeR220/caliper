@@ -9,18 +9,21 @@
     "single_prompt",
     "always_needs_review",
     "always_eligible",
+    "always_ineligible",
     "random"
   ],
-  "finished_utc": "2026-08-30T08:30:46+00:00",
+  "finished_utc": "2026-08-30T12:16:16+00:00",
   "key_cases": 51,
-  "key_digest": "42b74a00ab98ffa9d7a4c2bb366707a83fc10e65a7e30b73315a81f5c145d975",
-  "replayed": false,
+  "key_digest": "2c411896ee836f16b790b63b38f017f24e48dd33ab4d5e03ec25b108efc5f11c",
+  "replayed": true,
   "tape_agents": {
-    "baseline": 36,
-    "compiler": 171,
-    "critic": 115,
-    "resolver": 124
+    "baseline": 87,
+    "compiler": 340,
+    "critic": 179,
+    "extractor": 6,
+    "resolver": 151,
+    "writer": 10
   },
-  "tape_exchanges": 446,
-  "total_usd": 21.67011
+  "tape_exchanges": 773,
+  "total_usd": 22.605316
 }

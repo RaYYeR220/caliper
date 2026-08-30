@@ -242,6 +242,7 @@ RISK_FACTOR = Blocker(
     reason="no evidence resolves 'at least one major cardiovascular risk factor'",
     missing="whether any of the risk factors the protocol means is documented",
     quote="At least one major cardiovascular risk factor",
+    trial_screenings=24,
 )
 UNSTABLE_TREATMENT = Blocker(
     nct_id="NCT03315143",
@@ -250,6 +251,7 @@ UNSTABLE_TREATMENT = Blocker(
     reason="prescriptions carry no stop date",
     missing="whether antihyperglycemic treatment was stable in the last 12 weeks",
     quote="Antihyperglycemic treatment has not been stable within 12 weeks | of screening",
+    trial_screenings=24,
 )
 
 
@@ -284,8 +286,8 @@ class TestWhatAbstentionCost:
     def test_a_pipe_in_the_protocol_text_does_not_break_the_table(self):
         row = blocker_table([UNSTABLE_TREATMENT], 24).splitlines()[-1]
         assert "\\|" in row
-        # Four columns, so five unescaped delimiters. The one in the quote is not one of them.
-        assert row.replace("\\|", "").count("|") == 5
+        # Five columns, so six unescaped delimiters. The one in the quote is not one of them.
+        assert row.replace("\\|", "").count("|") == 6
 
     def test_a_criterion_that_blocks_everything_is_described_as_such_in_words(self):
         note = blocker_note([RISK_FACTOR], 24)
@@ -300,7 +302,12 @@ class TestWhatAbstentionCost:
     def test_two_of_them_are_described_in_the_plural(self):
         """A generated sentence that reads as broken English is one nobody trusts."""
         both = Blocker(
-            nct_id="NCT03315143", criterion_id="INC-06", screenings=24, reason="r", missing="m"
+            nct_id="NCT03315143",
+            criterion_id="INC-06",
+            screenings=24,
+            reason="r",
+            missing="m",
+            trial_screenings=24,
         )
         note = blocker_note([RISK_FACTOR, both], 24)
         assert "`INC-04` and `INC-06`" in note
@@ -309,7 +316,12 @@ class TestWhatAbstentionCost:
     def test_two_trials_are_told_apart_where_the_identifiers_collide(self):
         """`INC-06` is a different criterion in every protocol, so the sentence has to say which."""
         elsewhere = Blocker(
-            nct_id="NCT01131676", criterion_id="INC-06", screenings=24, reason="r", missing="m"
+            nct_id="NCT01131676",
+            criterion_id="INC-06",
+            screenings=24,
+            reason="r",
+            missing="m",
+            trial_screenings=24,
         )
         note = blocker_note([RISK_FACTOR, elsewhere], 24)
 

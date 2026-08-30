@@ -35,6 +35,16 @@ class Blocker:
     reason: str
     missing: str
     quote: str = ""
+    trial_screenings: int = 0
+    """How many screenings this criterion's own trial ran — the denominator that means something.
+
+    Counting against the whole run mixes trials: a criterion on a protocol with 24 cases in a run
+    of 51 can never block more than 24, and "18 of 51" quietly reads as though it could.
+    """
+
+    @property
+    def blocks_every_screening(self) -> bool:
+        return bool(self.trial_screenings) and self.screenings >= self.trial_screenings
 
 
 def blocking_criteria(
@@ -52,6 +62,7 @@ def blocking_criteria(
 
     counts: Counter[tuple[str, str]] = Counter()
     detail: dict[tuple[str, str], tuple[str, str]] = {}
+    per_trial: Counter[str] = Counter(result.nct_id for result in results)
     for result in results:
         for outcome in result.criteria:
             if outcome.verdict is not Verdict.UNKNOWN or not outcome.blocking:
@@ -69,6 +80,7 @@ def blocking_criteria(
             reason=detail[nct_id, criterion_id][0],
             missing=detail[nct_id, criterion_id][1],
             quote=quotes.get((nct_id, criterion_id), ""),
+            trial_screenings=per_trial[nct_id],
         )
         for (nct_id, criterion_id), count in counts.most_common()
     ]

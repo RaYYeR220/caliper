@@ -118,6 +118,9 @@ def _criterion(criterion: Criterion, finding: Finding | None) -> dict[str, Any]:
         "compiled_as": render_predicate(predicate),
         "unsupported": unsupported is not None,
         "unsupported_reason": unsupported.reason if unsupported is not None else None,
+        # Which kind of unanswerable. `from_data` is a gap in the record and holds the verdict
+        # open; `at_visit` is a question no record was going to answer and does not.
+        "settlement": unsupported.settlement if unsupported is not None else None,
         "codes": _codes_of(predicate),
         "critic": _critic(finding),
     }
@@ -280,6 +283,10 @@ def export_trial(trial: CompiledTrial, trial_title: str) -> dict[str, Any]:
             "inclusion": sum(1 for c in criteria if c["kind"] == "inclusion"),
             "exclusion": sum(1 for c in criteria if c["kind"] == "exclusion"),
             "unsupported": criteria_set.unsupported_count,
+            "unsupported_blocking": criteria_set.unsupported_blocking_count,
+            "unsupported_at_visit": (
+                criteria_set.unsupported_count - criteria_set.unsupported_blocking_count
+            ),
             "reviewed": len(findings),
             "downgraded": len(report.downgrades) if report is not None else 0,
         },
@@ -386,6 +393,8 @@ def _trial_entry(payload: dict[str, Any]) -> dict[str, Any]:
         "criteria_fingerprint": payload["criteria_fingerprint"],
         "criteria": counts["criteria"],
         "unsupported": counts["unsupported"],
+        "unsupported_blocking": counts["unsupported_blocking"],
+        "unsupported_at_visit": counts["unsupported_at_visit"],
         "downgraded": counts["downgraded"],
         "coverage": payload["coverage"]["ratio"],
     }

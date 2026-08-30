@@ -143,6 +143,36 @@ class TestBlockingCriteria:
             "Adequate organ function",
         }
 
+    def test_it_counts_against_the_screenings_of_its_own_trial(self):
+        """The denominator a reader needs, and not the one the run happens to have.
+
+        "Blocked 18 of 51" mixes trials: the 51 are every case in the run, and the criterion only
+        ever had 24 chances. Against its own trial the same fact reads "18 of 24", which is the
+        difference between a criterion that is a nuisance and one that is most of the problem.
+        """
+        other = CriteriaSet(
+            nct_id="NCT2",
+            source_text=SOURCE,
+            criteria=[
+                Criterion(
+                    id="INC-01",
+                    kind="inclusion",
+                    source_quote="Adequate organ function",
+                    predicate=UnsupportedPredicate(reason="the protocol does not define adequate"),
+                )
+            ],
+        )
+        results = [
+            *screenings(),
+            screen(other, patient("p4", 8.1), SCREENING),
+            screen(other, patient("p5", 8.1), SCREENING),
+        ]
+
+        by_trial = {b.nct_id: b for b in blocking_criteria(results) if b.criterion_id != "INC-01"}
+        assert by_trial["NCT1"].trial_screenings == 3
+        elsewhere = next(b for b in blocking_criteria(results) if b.nct_id == "NCT2")
+        assert (elsewhere.screenings, elsewhere.trial_screenings) == (2, 2)
+
     def test_nothing_blocking_reports_nothing(self):
         result = screen(
             CriteriaSet(nct_id="NCT1", source_text=SOURCE, criteria=[LAB]),

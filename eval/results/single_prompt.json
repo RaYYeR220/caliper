@@ -1,39 +1,61 @@
 {
   "accuracy_ci": [
-    0.4416928277674611,
-    0.7241570394874148
+    0.6688426487470713,
+    0.9017565834884012
   ],
   "arm": "single_prompt",
+  "balanced_accuracy": 0.5982384823848238,
+  "blockers": [],
+  "by_expected": {
+    "eligible": {
+      "abstained": 2,
+      "cases": 6,
+      "correct": 4,
+      "unsafe": 0
+    },
+    "ineligible": {
+      "abstained": 5,
+      "cases": 41,
+      "correct": 36,
+      "unsafe": 0
+    },
+    "needs_review": {
+      "abstained": 1,
+      "cases": 4,
+      "correct": 1,
+      "unsafe": 2
+    }
+  },
   "cases": 51,
-  "correct": 30,
-  "cost_usd": 0.0,
-  "coverage": 0.9411764705882353,
-  "coverage_at_zero_unsafe": 1.0,
+  "correct": 41,
+  "cost_usd": 0.9633659999999971,
+  "coverage": 0.8627450980392157,
+  "coverage_at_zero_unsafe": 0.0,
   "curve": [
     {
       "answered": 51,
       "coverage": 1.0,
-      "risk": 0.4117647058823529,
+      "risk": 0.19607843137254902,
       "threshold": 0.0,
-      "unsafe": 0
+      "unsafe": 2
     },
     {
       "answered": 51,
       "coverage": 1.0,
-      "risk": 0.4117647058823529,
+      "risk": 0.19607843137254902,
       "threshold": 1.0,
-      "unsafe": 0
+      "unsafe": 2
     }
   ],
   "failures": [],
-  "false_abstention": 0.08333333333333333,
+  "false_abstention": 0.14893617021276595,
   "scores": [
     {
       "case_id": "AK-001",
       "criteria_coverage": 1.0,
-      "decision": "needs_review",
-      "expected": "needs_review",
-      "forced_decision": "needs_review",
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
       "provenance": "annotated",
       "trap": "missing_data"
     },
@@ -59,7 +81,7 @@
       "case_id": "AK-004",
       "criteria_coverage": 1.0,
       "decision": "ineligible",
-      "expected": "needs_review",
+      "expected": "ineligible",
       "forced_decision": "ineligible",
       "provenance": "annotated",
       "trap": "temporal"
@@ -68,7 +90,7 @@
       "case_id": "AK-005",
       "criteria_coverage": 1.0,
       "decision": "ineligible",
-      "expected": "needs_review",
+      "expected": "ineligible",
       "forced_decision": "ineligible",
       "provenance": "annotated",
       "trap": "missing_data"
@@ -85,18 +107,18 @@
     {
       "case_id": "AK-007",
       "criteria_coverage": 1.0,
-      "decision": "ineligible",
+      "decision": "needs_review",
       "expected": "ineligible",
-      "forced_decision": "ineligible",
+      "forced_decision": "needs_review",
       "provenance": "annotated",
       "trap": "threshold_edge"
     },
     {
       "case_id": "AK-008",
       "criteria_coverage": 1.0,
-      "decision": "needs_review",
-      "expected": "needs_review",
-      "forced_decision": "needs_review",
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
       "provenance": "annotated",
       "trap": "temporal"
     },
@@ -112,9 +134,9 @@
     {
       "case_id": "AK-010",
       "criteria_coverage": 1.0,
-      "decision": "needs_review",
-      "expected": "needs_review",
-      "forced_decision": "needs_review",
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
       "provenance": "annotated",
       "trap": "unit"
     },
@@ -122,7 +144,7 @@
       "case_id": "AK-011",
       "criteria_coverage": 1.0,
       "decision": "ineligible",
-      "expected": "needs_review",
+      "expected": "ineligible",
       "forced_decision": "ineligible",
       "provenance": "annotated",
       "trap": "temporal"
@@ -158,7 +180,7 @@
       "case_id": "AK-015",
       "criteria_coverage": 1.0,
       "decision": "ineligible",
-      "expected": "needs_review",
+      "expected": "ineligible",
       "forced_decision": "ineligible",
       "provenance": "annotated",
       "trap": "temporal"
@@ -194,7 +216,7 @@
       "case_id": "AK-019",
       "criteria_coverage": 1.0,
       "decision": "ineligible",
-      "expected": "needs_review",
+      "expected": "ineligible",
       "forced_decision": "ineligible",
       "provenance": "annotated",
       "trap": "missing_data"
@@ -211,9 +233,9 @@
     {
       "case_id": "AK-021",
       "criteria_coverage": 1.0,
-      "decision": "ineligible",
+      "decision": "needs_review",
       "expected": "ineligible",
-      "forced_decision": "ineligible",
+      "forced_decision": "needs_review",
       "provenance": "annotated",
       "trap": "unit"
     },
@@ -230,7 +252,7 @@
       "case_id": "AK-023",
       "criteria_coverage": 1.0,
       "decision": "ineligible",
-      "expected": "needs_review",
+      "expected": "ineligible",
       "forced_decision": "ineligible",
       "provenance": "annotated",
       "trap": "temporal"
@@ -302,7 +324,7 @@
       "case_id": "AK-031",
       "criteria_coverage": 1.0,
       "decision": "ineligible",
-      "expected": "needs_review",
+      "expected": "ineligible",
       "forced_decision": "ineligible",
       "provenance": "annotated",
       "trap": "temporal"
@@ -356,7 +378,7 @@
       "case_id": "CK-001",
       "criteria_coverage": 1.0,
       "decision": "ineligible",
-      "expected": "eligible",
+      "expected": "ineligible",
       "forced_decision": "ineligible",
       "provenance": "constructed",
       "trap": "none"
@@ -374,7 +396,7 @@
       "case_id": "CK-003",
       "criteria_coverage": 1.0,
       "decision": "ineligible",
-      "expected": "needs_review",
+      "expected": "ineligible",
       "forced_decision": "ineligible",
       "provenance": "constructed",
       "trap": "missing_data"
@@ -382,9 +404,9 @@
     {
       "case_id": "CK-004",
       "criteria_coverage": 1.0,
-      "decision": "ineligible",
+      "decision": "eligible",
       "expected": "eligible",
-      "forced_decision": "ineligible",
+      "forced_decision": "eligible",
       "provenance": "constructed",
       "trap": "none"
     },
@@ -400,18 +422,18 @@
     {
       "case_id": "CK-006",
       "criteria_coverage": 1.0,
-      "decision": "ineligible",
+      "decision": "eligible",
       "expected": "needs_review",
-      "forced_decision": "ineligible",
+      "forced_decision": "eligible",
       "provenance": "constructed",
       "trap": "missing_data"
     },
     {
       "case_id": "CK-007",
       "criteria_coverage": 1.0,
-      "decision": "ineligible",
+      "decision": "eligible",
       "expected": "eligible",
-      "forced_decision": "ineligible",
+      "forced_decision": "eligible",
       "provenance": "constructed",
       "trap": "none"
     },
@@ -427,18 +449,18 @@
     {
       "case_id": "CK-009",
       "criteria_coverage": 1.0,
-      "decision": "ineligible",
+      "decision": "eligible",
       "expected": "needs_review",
-      "forced_decision": "ineligible",
+      "forced_decision": "eligible",
       "provenance": "constructed",
       "trap": "missing_data"
     },
     {
       "case_id": "CK-010",
       "criteria_coverage": 1.0,
-      "decision": "ineligible",
+      "decision": "needs_review",
       "expected": "eligible",
-      "forced_decision": "ineligible",
+      "forced_decision": "needs_review",
       "provenance": "constructed",
       "trap": "none"
     },
@@ -463,32 +485,33 @@
     {
       "case_id": "CK-013",
       "criteria_coverage": 1.0,
-      "decision": "ineligible",
+      "decision": "eligible",
       "expected": "eligible",
-      "forced_decision": "ineligible",
+      "forced_decision": "eligible",
       "provenance": "constructed",
       "trap": "none"
     },
     {
       "case_id": "CK-014",
       "criteria_coverage": 1.0,
-      "decision": "ineligible",
+      "decision": "needs_review",
       "expected": "eligible",
-      "forced_decision": "ineligible",
+      "forced_decision": "needs_review",
       "provenance": "constructed",
       "trap": "none"
     },
     {
       "case_id": "CK-015",
       "criteria_coverage": 1.0,
-      "decision": "ineligible",
+      "decision": "eligible",
       "expected": "eligible",
-      "forced_decision": "ineligible",
+      "forced_decision": "eligible",
       "provenance": "constructed",
       "trap": "none"
     }
   ],
-  "selective_risk": 0.375,
-  "unsafe": 0,
-  "wall_seconds": 269.001
+  "screenings": 0,
+  "selective_risk": 0.06818181818181818,
+  "unsafe": 2,
+  "wall_seconds": 1.565
 }

@@ -67,6 +67,28 @@ class ReportInputs:
     blocked_screenings: int = 0
     """How many screenings that arm ran. The denominator every count below is reported against."""
 
+    comparison: Sequence[ArmReport] = ()
+    """The same recorded decisions scored against a different answer key.
+
+    The key was corrected after a scored run, which is exactly when a correction deserves least
+    trust. Publishing only the corrected figures asks the reader to take our word for it; publishing
+    both lets them ask the better question — did fixing the key change the conclusion, or only the
+    numbers? Empty when there is nothing to compare, in which case the section is omitted.
+    """
+
+    comparison_label: str = ""
+    """What that other key is called, in the reader's words rather than a path."""
+
+    comparison_digest: str = ""
+    """Its digest, so the comparison names the file it was made against rather than a version."""
+
+    def __post_init__(self) -> None:
+        if self.comparison and not self.comparison_label:
+            raise ValueError(
+                "a comparison needs a label: an unnamed second column of numbers invites the "
+                "reader to guess which key produced it"
+            )
+
 
 def _errors(count: int) -> str:
     """The unsafe-error count as words that stay true at zero and at one."""
@@ -177,15 +199,22 @@ def expected_table(arms: list[ArmReport]) -> str:
 
 def blocker_table(blockers: Sequence[Blocker], screenings: int) -> str:
     """One row per criterion that held screenings up, with the work that would settle it."""
+    # The trial is part of the identity, not decoration: criterion identifiers are ordinals
+    # within one protocol, so `INC-03` names something different in each of the eight here.
     header = (
-        "| Criterion | Screenings blocked | Protocol text | What was missing |\n|---|---:|---|---|"
+        "| Trial | Criterion | Screenings blocked | Protocol text | What was missing |\n"
+        "|---|---|---:|---|---|"
     )
     rows = []
     for blocker in blockers[:MAX_BLOCKERS_LISTED]:
-        count = f"{blocker.screenings} of {screenings}" if screenings else str(blocker.screenings)
+        # Against its own trial's screenings, not the run's. A criterion on a protocol with 24
+        # cases in a run of 51 can never block more than 24, and the larger denominator makes a
+        # criterion that stops nearly everything look like one that stops a third of it.
+        denominator = blocker.trial_screenings or screenings
+        count = f"{blocker.screenings} of {denominator}" if denominator else str(blocker.screenings)
         rows.append(
-            f"| `{blocker.criterion_id}` | {count} | {_cell(blocker.quote or '—')} | "
-            f"{_cell(blocker.missing or blocker.reason or '—')} |"
+            f"| {blocker.nct_id} | `{blocker.criterion_id}` | {count} | "
+            f"{_cell(blocker.quote or '—')} | {_cell(blocker.missing or blocker.reason or '—')} |"
         )
     return "\n".join([header, *rows])
 
@@ -217,7 +246,7 @@ def blocker_note(blockers: Sequence[Blocker], screenings: int) -> str:
         "appears in both rows."
     ]
 
-    universal = [b for b in blockers if screenings and b.screenings >= screenings]
+    universal = [b for b in blockers if b.blocks_every_screening]
     if universal:
         # The trial is only worth naming where the sentence spans more than one, and repeating
         # the same NCT after every identifier reads like a machine wrote it, which it did.
@@ -367,6 +396,70 @@ def failures_section(arms: list[ArmReport]) -> str:
     return "\n".join(lines)
 
 
+def _unsafe_ranking(arms: Sequence[ArmReport]) -> list[tuple[str, bool]]:
+    """Which arms committed an unsafe error, by name. The only ordering this report argues from."""
+    return sorted((a.arm, a.summary.unsafe > 0) for a in arms)
+
+
+def comparison_table(
+    arms: Sequence[ArmReport], other: Sequence[ArmReport], *, label: str
+) -> str:
+    """The same decisions under two keys, so any difference is the key's and not the run's."""
+    by_name = {a.arm: a for a in other}
+    header = (
+        f"| Arm | Accuracy | Accuracy, {label} | Unsafe | Unsafe, {label} |\n"
+        "|---|---:|---:|---:|---:|"
+    )
+    rows = []
+    for report in ordered_arms(list(arms)):
+        earlier = by_name.get(report.arm)
+        rows.append(
+            f"| `{report.arm}` | {_pct(report.summary.accuracy)} | "
+            + (f"{_pct(earlier.summary.accuracy)}" if earlier else "—")
+            + f" | {report.summary.unsafe} | "
+            + (f"{earlier.summary.unsafe}" if earlier else "—")
+            + " |"
+        )
+    return "\n".join([header, *rows])
+
+
+def comparison_note(
+    arms: Sequence[ArmReport], other: Sequence[ArmReport], *, label: str
+) -> str | None:
+    """Whether the correction moved the conclusion, stated only when it demonstrably did not.
+
+    The conclusion this project rests on is an ordering, not a percentage: which arms sent a patient
+    forward who should not have gone. If that ordering is identical under both keys then correcting
+    the key changed the figures and nothing else, which is worth saying plainly. If it moved, the
+    sentence says only that, and leaves the reader to compare — a report that talks its way out of
+    an inconvenient comparison is worth less than no comparison at all.
+    """
+    if not other:
+        return None
+
+    shared = {a.arm for a in arms} & {a.arm for a in other}
+    here = [(n, u) for n, u in _unsafe_ranking(arms) if n in shared]
+    there = [(n, u) for n, u in _unsafe_ranking(other) if n in shared]
+    lines = [
+        "The decisions in both columns are the same recorded decisions. Only the key differs, so "
+        "every change here is the key's doing and none of it is the system's."
+    ]
+    if here == there:
+        lines.append(
+            "Which arms committed an unsafe error is **unchanged** between the two: the "
+            "correction moved the figures and left the conclusion where it was."
+        )
+    else:
+        moved = sorted(n for (n, u), (_, v) in zip(here, there, strict=True) if u != v)
+        lines.append(
+            "Which arms committed an unsafe error is **not** the same between the two — "
+            + _and_list([f"`{name}`" for name in moved])
+            + " differs — so the correction did more than move figures, and the two columns have "
+            "to be read against each other rather than one taken as the answer."
+        )
+    return " ".join(lines)
+
+
 def render(inputs: ReportInputs) -> str:
     """Build `RESULTS.md` from the run."""
     caliper = next((a for a in inputs.arms if a.arm == "caliper"), None)
@@ -424,6 +517,20 @@ def render(inputs: ReportInputs) -> str:
             "— a column of the form `41/41`, `0/6`, `0/4`:",
             "",
             expected_table(inputs.arms),
+            "",
+        ]
+
+    if inputs.comparison:
+        sections += [
+            f"## The same run, scored against {inputs.comparison_label}",
+            "",
+            f"Digest `{inputs.comparison_digest[:16]}…`. `LIMITS.md` records why there are two "
+            "keys and `eval/annotation/corrections.md` lists every label that moved, with the "
+            "chart value that refuted the old one.",
+            "",
+            comparison_table(inputs.arms, inputs.comparison, label=inputs.comparison_label),
+            "",
+            comparison_note(inputs.arms, inputs.comparison, label=inputs.comparison_label) or "",
             "",
         ]
 

@@ -32,6 +32,7 @@ data-verify: ## Confirm the committed fixtures still match their digests
 
 eval: ## The headline result, replayed from recorded model responses. No API key needed.
 	$(PY) -m caliper.cli eval --replay
+	$(PY) -m caliper.cli eval --replay --key eval/answer_key.v1.json --out eval/results-v1
 
 eval-record: ## The same evaluation against a live provider, re-recording the tape. Needs a key.
 	$(PY) -m caliper.cli eval --record
@@ -42,8 +43,8 @@ baseline: ## The single-prompt baseline on the same cases
 charts: ## Regenerate eval/charts/, the chart summaries the annotators labelled from
 	$(PY) scripts/summarise_patients.py
 
-report: ## Rebuild the results tables and figures from the last run
-	$(PY) -m caliper.cli report
+report: ## Rebuild the results tables and figures from the last run, under both answer keys
+	$(PY) -m caliper.cli report --compare eval/results-v1 --compare-label "version one of the key"
 
 clean: ## Remove build and cache artefacts
 	rm -rf .pytest_cache .ruff_cache .mypy_cache dist build **/__pycache__

@@ -258,6 +258,12 @@ def build_report(
     results: Path = typer.Option(DEFAULT_OUT, "--results", help="Where the per-arm results are."),
     out: Path = typer.Option(Path("RESULTS.md"), "--out"),
     metamorphic: Path = typer.Option(None, help="A Markdown table of metamorphic results."),
+    compare: Path = typer.Option(
+        None, help="A second results directory: the same decisions scored against another key."
+    ),
+    compare_label: str = typer.Option(
+        "the earlier key", help="What to call that key in the report."
+    ),
 ) -> None:
     """Rebuild RESULTS.md from the committed run. No figure in it is typed by hand."""
     run = json.loads((results / "run.json").read_text(encoding="utf-8"))
@@ -265,6 +271,15 @@ def build_report(
     # The blockers are reported for the system as it ships, not for an ablation: "what abstention
     # cost" is only a useful section if it is about the arm the headline numbers describe.
     blocked = next((r for r in reports if r.arm == BLOCKED_ARM), None)
+
+    # The same recorded decisions, scored against a different key. Loaded from a directory rather
+    # than rescored here, so the comparison is between two committed runs a reader can open.
+    other: list[ArmReport] = []
+    other_digest = ""
+    if compare is not None:
+        other_run = json.loads((compare / "run.json").read_text(encoding="utf-8"))
+        other = [_load_arm(compare / f"{name}.json") for name in other_run["arms"]]
+        other_digest = other_run["key_digest"]
     text = report.render(
         report.ReportInputs(
             arms=reports,
@@ -274,6 +289,9 @@ def build_report(
             blockers=blocked.blockers if blocked else (),
             blocked_arm=BLOCKED_ARM,
             blocked_screenings=blocked.screenings if blocked else 0,
+            comparison=other,
+            comparison_label=compare_label,
+            comparison_digest=other_digest,
         )
     )
     out.write_text(text, encoding="utf-8")
