@@ -458,3 +458,27 @@ def test_the_motivating_case_actually_works():
         model_cls=Verdict,
     )
     assert verdict.value.label
+
+
+class TestAProfileThatNeedsNoCredential:
+    """A local command is reached by running it, not by authenticating to it."""
+
+    def test_it_reports_its_credential_as_present(self):
+        from caliper.llm import has_api_key
+        from caliper.llm.local import local_profile
+
+        assert has_api_key(local_profile(), {}) is True
+
+    def test_resolving_its_key_yields_an_empty_string_rather_than_raising(self):
+        from caliper.llm import resolve_api_key
+        from caliper.llm.local import local_profile
+
+        assert resolve_api_key(local_profile(), {}) == ""
+
+    def test_a_hosted_profile_still_demands_its_key(self):
+        import pytest
+
+        from caliper.llm import MissingAPIKeyError, profile_for, resolve_api_key
+
+        with pytest.raises(MissingAPIKeyError):
+            resolve_api_key(profile_for("venice", "claude-sonnet-5"), {})

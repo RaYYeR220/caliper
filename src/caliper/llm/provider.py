@@ -230,7 +230,12 @@ def resolve_api_key(profile: ProviderProfile, env: Mapping[str, str] | None = No
 
     The value is returned to the caller and never stored, logged or put in a trajectory. Only the
     variable's name appears in error messages.
+
+    A profile that names no variable needs no credential: a local command is reached by running it,
+    not by authenticating to it.
     """
+    if not profile.api_key_env:
+        return ""
     env = os.environ if env is None else env
     key = (env.get(profile.api_key_env) or "").strip()
     if not key:
@@ -242,5 +247,7 @@ def resolve_api_key(profile: ProviderProfile, env: Mapping[str, str] | None = No
 
 def has_api_key(profile: ProviderProfile, env: Mapping[str, str] | None = None) -> bool:
     """Whether the profile's credential is present, without reading its value out."""
+    if not profile.api_key_env:
+        return True
     env = os.environ if env is None else env
     return bool((env.get(profile.api_key_env) or "").strip())
