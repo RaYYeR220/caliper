@@ -7,7 +7,7 @@ PY := .venv/Scripts/python.exe
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help install test lint typecheck check data-verify eval eval-live baseline report clean
+.PHONY: help install test lint typecheck check data-verify eval eval-record baseline charts report clean
 
 help: ## Show the targets that matter
 	@grep -hE '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-16s %s\n", $$1, $$2}'
@@ -33,11 +33,14 @@ data-verify: ## Confirm the committed fixtures still match their digests
 eval: ## The headline result, replayed from recorded model responses. No API key needed.
 	$(PY) -m caliper.cli eval --replay
 
-eval-live: ## The same evaluation against a live provider. Requires a key in .env
-	$(PY) -m caliper.cli eval --live
+eval-record: ## The same evaluation against a live provider, re-recording the tape. Needs a key.
+	$(PY) -m caliper.cli eval --record
 
 baseline: ## The single-prompt baseline on the same cases
-	$(PY) -m caliper.cli eval --replay --arm baseline
+	$(PY) -m caliper.cli eval --replay --arms single_prompt
+
+charts: ## Regenerate eval/charts/, the chart summaries the annotators labelled from
+	$(PY) scripts/summarise_patients.py
 
 report: ## Rebuild the results tables and figures from the last run
 	$(PY) -m caliper.cli report

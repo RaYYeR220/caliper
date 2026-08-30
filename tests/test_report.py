@@ -11,10 +11,23 @@ headline is checked against the arm it describes, and the sample-size caveat is 
 intervals it is talking about.
 """
 
+from caliper.blockers import Blocker
 from caliper.evalrun import ArmReport
 from caliper.logic import ScreeningOutcome as Outcome
 from caliper.metrics import CaseScore, summarise
-from caliper.report import ReportInputs, arm_table, headline, interval_note, render
+from caliper.report import (
+    MAX_BLOCKERS_LISTED,
+    ReportInputs,
+    arm_table,
+    base_rate_note,
+    blocker_note,
+    blocker_table,
+    expected_table,
+    headline,
+    interval_note,
+    ordered_arms,
+    render,
+)
 
 
 def scores(*rows: tuple[Outcome, Outcome, str]) -> list[CaseScore]:
@@ -97,6 +110,55 @@ INPUTS = ReportInputs(
 )
 
 
+def a_lopsided_run(ineligible: int = 41, eligible: int = 6, review: int = 4) -> list[Outcome]:
+    """The shape of the corrected answer key, where `ineligible` is most of the answer."""
+    return (
+        [Outcome.INELIGIBLE] * ineligible
+        + [Outcome.ELIGIBLE] * eligible
+        + [Outcome.NEEDS_REVIEW] * review
+    )
+
+
+def an_arm_answering(name: str, answer: Outcome, expected: list[Outcome]) -> ArmReport:
+    rows = [
+        CaseScore(
+            case_id=f"C-{i:03d}",
+            expected=want,
+            decision=answer,
+            forced_decision=answer,
+            criteria_coverage=1.0,
+            provenance="annotated",
+        )
+        for i, want in enumerate(expected, start=1)
+    ]
+    return arm(name, rows, cost=0.0)
+
+
+def a_perfect_arm(name: str, expected: list[Outcome]) -> ArmReport:
+    rows = [
+        CaseScore(
+            case_id=f"C-{i:03d}",
+            expected=want,
+            decision=want,
+            forced_decision=want,
+            criteria_coverage=1.0,
+            provenance="annotated",
+        )
+        for i, want in enumerate(expected, start=1)
+    ]
+    return arm(name, rows)
+
+
+LOPSIDED = a_lopsided_run()
+ALWAYS_INELIGIBLE = an_arm_answering("always_ineligible", Outcome.INELIGIBLE, LOPSIDED)
+REAL = a_perfect_arm("caliper", LOPSIDED)
+LOPSIDED_INPUTS = ReportInputs(
+    arms=[REAL, ALWAYS_INELIGIBLE],
+    key_digest="0123456789abcdef" * 4,
+    key_cases=len(LOPSIDED),
+)
+
+
 class TestHeadline:
     def test_it_names_the_coverage_the_system_actually_reached(self):
         assert f"{CALIPER.summary.coverage * 100:.0f}%" in headline([CALIPER, BASELINE])
@@ -128,12 +190,224 @@ class TestHeadline:
     def test_it_says_so_plainly_when_there_is_nothing_to_report(self):
         assert "No Caliper arm" in headline([BASELINE])
 
+    def test_a_baseline_that_ran_no_cases_is_left_out_rather_than_reported_as_zero(self):
+        """Decided 0% of 0 cases is true of an arm that never ran, and reads as a result."""
+        empty = arm("single_prompt", [], cost=0.0)
+        text = headline([CALIPER, empty])
+        assert "single-prompt" not in text
+
+
+class TestTheBaseRate:
+    """Accuracy on a key that is 80% one answer is close to a measurement of the key.
+
+    The document has to say so where the table is, and the sentence has to rest on a row the reader
+    can see rather than on an assertion. `always_ineligible` is that row.
+    """
+
+    def test_the_document_names_the_arm_that_proves_the_point(self):
+        text = render(LOPSIDED_INPUTS)
+        assert "always_ineligible" in text
+        assert "What the accuracy column is worth" in text
+
+    def test_it_quotes_the_degenerate_arms_own_two_numbers(self):
+        note = base_rate_note(LOPSIDED_INPUTS.arms)
+        assert note is not None
+        summary = ALWAYS_INELIGIBLE.summary
+        assert f"{summary.accuracy * 100:.0f}%" in note
+        assert f"{summary.balanced_accuracy * 100:.0f}%" in note
+
+    def test_the_section_is_dropped_when_no_such_arm_was_run(self):
+        """A floor nobody measured is a claim, and this module does not print claims."""
+        text = render(ReportInputs(arms=[REAL], key_digest="x" * 64, key_cases=len(LOPSIDED)))
+        assert base_rate_note([REAL]) is None
+        assert "What the accuracy column is worth" not in text
+
+    def test_the_per_outcome_table_shows_where_the_correctness_came_from(self):
+        table = expected_table(LOPSIDED_INPUTS.arms)
+        assert "41/41" in table
+        assert "0/6" in table
+        assert "0/4" in table
+
+    def test_the_balanced_column_is_in_the_table_beside_accuracy(self):
+        table = arm_table(LOPSIDED_INPUTS.arms)
+        assert "| Balanced |" in table
+        # 80% accuracy, 33% balanced, on the same row.
+        assert "| 80% | 33% |" in table
+
+
+RISK_FACTOR = Blocker(
+    nct_id="NCT03315143",
+    criterion_id="INC-04",
+    screenings=24,
+    reason="no evidence resolves 'at least one major cardiovascular risk factor'",
+    missing="whether any of the risk factors the protocol means is documented",
+    quote="At least one major cardiovascular risk factor",
+)
+UNSTABLE_TREATMENT = Blocker(
+    nct_id="NCT03315143",
+    criterion_id="INC-06",
+    screenings=8,
+    reason="prescriptions carry no stop date",
+    missing="whether antihyperglycemic treatment was stable in the last 12 weeks",
+    quote="Antihyperglycemic treatment has not been stable within 12 weeks | of screening",
+)
+
+
+class TestWhatAbstentionCost:
+    """A false-abstention rate says how often; these say which criteria, and at what cost.
+
+    The distinction the section turns on: a criterion that blocks every screening is one
+    conversation about the protocol, settled once for the cohort. A criterion that blocks a third of
+    them is a per-patient tax. Both are the same integer until the document says which.
+    """
+
+    def test_the_section_appears_where_the_false_abstention_figure_is(self):
+        text = render(
+            ReportInputs(
+                arms=INPUTS.arms,
+                key_digest=INPUTS.key_digest,
+                key_cases=3,
+                blockers=[RISK_FACTOR, UNSTABLE_TREATMENT],
+                blocked_screenings=24,
+            )
+        )
+        assert "What abstention cost" in text
+        assert text.index("Every arm") < text.index("What abstention cost")
+        assert text.index("What abstention cost") < text.index("Risk and coverage")
+
+    def test_it_names_the_criteria_and_quotes_the_protocol_at_the_reader(self):
+        table = blocker_table([RISK_FACTOR, UNSTABLE_TREATMENT], 24)
+        assert "`INC-04`" in table
+        assert "At least one major cardiovascular risk factor" in table
+        assert "24 of 24" in table
+
+    def test_a_pipe_in_the_protocol_text_does_not_break_the_table(self):
+        row = blocker_table([UNSTABLE_TREATMENT], 24).splitlines()[-1]
+        assert "\\|" in row
+        # Four columns, so five unescaped delimiters. The one in the quote is not one of them.
+        assert row.replace("\\|", "").count("|") == 5
+
+    def test_a_criterion_that_blocks_everything_is_described_as_such_in_words(self):
+        note = blocker_note([RISK_FACTOR], 24)
+        assert "every one" in note
+        assert "`INC-04`" in note
+        assert "That is not a per-patient cost" in note
+
+    def test_a_criterion_that_blocks_some_of_them_is_not(self):
+        note = blocker_note([UNSTABLE_TREATMENT], 24)
+        assert "every one" not in note
+
+    def test_two_of_them_are_described_in_the_plural(self):
+        """A generated sentence that reads as broken English is one nobody trusts."""
+        both = Blocker(
+            nct_id="NCT03315143", criterion_id="INC-06", screenings=24, reason="r", missing="m"
+        )
+        note = blocker_note([RISK_FACTOR, both], 24)
+        assert "`INC-04` and `INC-06`" in note
+        assert "Those are not per-patient costs" in note
+
+    def test_two_trials_are_told_apart_where_the_identifiers_collide(self):
+        """`INC-06` is a different criterion in every protocol, so the sentence has to say which."""
+        elsewhere = Blocker(
+            nct_id="NCT01131676", criterion_id="INC-06", screenings=24, reason="r", missing="m"
+        )
+        note = blocker_note([RISK_FACTOR, elsewhere], 24)
+
+        assert "(NCT01131676)" in note
+        assert "(NCT03315143)" in note
+
+    def test_the_counts_are_not_summed_into_a_number_of_screenings(self):
+        """A screening held up by three criteria is held up once, not three times."""
+        note = blocker_note([RISK_FACTOR, UNSTABLE_TREATMENT], 24)
+        assert "32" not in note
+        assert "appears in both rows" in note
+
+    def test_the_section_is_omitted_when_the_run_recorded_no_blockers(self):
+        """An empty list means the runner did not record them, not that nothing blocked anything."""
+        assert "What abstention cost" not in render(INPUTS)
+
+    def test_a_long_tail_is_truncated_and_said_to_be(self):
+        many = [
+            Blocker(
+                nct_id="NCT03315143",
+                criterion_id=f"INC-{i:02d}",
+                screenings=1,
+                reason="r",
+                missing="m",
+            )
+            for i in range(MAX_BLOCKERS_LISTED + 3)
+        ]
+        text = render(
+            ReportInputs(
+                arms=INPUTS.arms,
+                key_digest=INPUTS.key_digest,
+                key_cases=3,
+                blockers=many,
+                blocked_screenings=24,
+            )
+        )
+        assert "3 further criteria" in text
+        assert f"`INC-{MAX_BLOCKERS_LISTED:02d}`" not in text
+
+    def test_the_arm_the_blockers_belong_to_is_named_rather_than_assumed(self):
+        text = render(
+            ReportInputs(
+                arms=INPUTS.arms,
+                key_digest=INPUTS.key_digest,
+                key_cases=3,
+                blockers=[RISK_FACTOR],
+                blocked_arm="caliper-no-resolver",
+                blocked_screenings=24,
+            )
+        )
+        assert "`caliper-no-resolver`" in text
+
+
+class TestArmOrder:
+    def test_the_arms_that_answer_without_looking_come_last(self):
+        ordered = ordered_arms([ALWAYS_INELIGIBLE, REAL])
+        assert [a.arm for a in ordered] == ["caliper", "always_ineligible"]
+
+    def test_every_always_arm_is_grouped_there_whichever_answer_it_gives(self):
+        arms = [
+            an_arm_answering("always_eligible", Outcome.ELIGIBLE, LOPSIDED),
+            REAL,
+            ALWAYS_INELIGIBLE,
+            TRIVIAL,
+        ]
+        assert [a.arm for a in ordered_arms(arms)][0] == "caliper"
+        assert {a.arm for a in ordered_arms(arms)[1:]} == {
+            "always_eligible",
+            "always_ineligible",
+            "always_needs_review",
+        }
+
+    def test_an_arm_that_happens_to_answer_uniformly_is_not_demoted_for_it(self):
+        """Answering uniformly is not evidence of a policy; a name is a claim its author made."""
+        uniform = an_arm_answering("single_prompt", Outcome.ELIGIBLE, LOPSIDED)
+        assert [a.arm for a in ordered_arms([uniform, ALWAYS_INELIGIBLE])] == [
+            "single_prompt",
+            "always_ineligible",
+        ]
+
+    def test_random_is_named_because_its_answers_vary_without_meaning_anything(self):
+        varied = arm(
+            "random",
+            scores(
+                (Outcome.ELIGIBLE, Outcome.ELIGIBLE, "none"),
+                (Outcome.INELIGIBLE, Outcome.NEEDS_REVIEW, "none"),
+            ),
+        )
+        assert [a.arm for a in ordered_arms([varied, REAL])] == ["caliper", "random"]
+
+    def test_real_arms_keep_the_order_they_were_given_in(self):
+        ordered = ordered_arms([BASELINE, CALIPER, TRIVIAL])
+        assert [a.arm for a in ordered][:2] == ["single_prompt", "caliper"]
+
 
 class TestIntervalNote:
     def test_the_width_it_names_is_the_width_the_table_prints(self):
-        widths = [
-            (a.summary.accuracy_ci[1] - a.summary.accuracy_ci[0]) * 100 for a in INPUTS.arms
-        ]
+        widths = [(a.summary.accuracy_ci[1] - a.summary.accuracy_ci[0]) * 100 for a in INPUTS.arms]
         note = interval_note(INPUTS.arms)
         assert f"{sorted(widths)[len(widths) // 2]:.0f} percentage points" in note
 

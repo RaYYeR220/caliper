@@ -15,6 +15,14 @@ from pydantic import BaseModel, ConfigDict, Field, computed_field, model_validat
 
 EQUALITY_OPS = ("==", "!=")
 
+CriterionKind = Literal["inclusion", "exclusion"]
+"""Which half of the protocol a criterion came from, named so that other modules can say it.
+
+A failed inclusion and a triggered exclusion are different facts about a patient, and the
+distinction survives all the way to the printed packet. Spelling the literal out in each module
+that needs it would let the two drift.
+"""
+
 
 class _Frozen(BaseModel):
     model_config = ConfigDict(frozen=True, extra="forbid")
@@ -182,7 +190,7 @@ def max_predicate_depth(predicate: Predicate) -> int:
 
 class Criterion(_Frozen):
     id: str = Field(min_length=1)
-    kind: Literal["inclusion", "exclusion"]
+    kind: CriterionKind
     source_quote: str
     predicate: Predicate
     notes: str | None = None

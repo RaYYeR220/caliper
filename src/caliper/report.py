@@ -18,11 +18,15 @@ Every claim below is either derived from the run or is true by construction of t
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from statistics import median
 
+from caliper.blockers import Blocker
 from caliper.evalrun import ArmReport
 from caliper.metrics import CurvePoint
+
+MAX_BLOCKERS_LISTED = 10
 
 
 def _pct(value: float) -> str:
@@ -37,12 +41,31 @@ def _cost(value: float | None) -> str:
     return "—" if value is None else f"${value:.2f}"
 
 
+def _cell(text: str) -> str:
+    """Protocol text goes in table cells, and a pipe or a newline in it breaks the table."""
+    return " ".join(text.split()).replace("|", "\\|")
+
+
 @dataclass(frozen=True)
 class ReportInputs:
     arms: list[ArmReport]
     key_digest: str
     key_cases: int
     metamorphic: str | None = None
+
+    blockers: Sequence[Blocker] = ()
+    """The criteria that left screenings undecided, most frequent first.
+
+    Computed by the runner rather than here: a blocker is a fact about a `ScreeningResult`, and the
+    per-arm results this module is handed carry only the case-level scores. Empty when the run did
+    not record them, in which case the section is omitted rather than guessed at.
+    """
+
+    blocked_arm: str = "caliper"
+    """Which arm the blockers were counted over. Named so the section cannot mislabel them."""
+
+    blocked_screenings: int = 0
+    """How many screenings that arm ran. The denominator every count below is reported against."""
 
 
 def _errors(count: int) -> str:
@@ -69,7 +92,9 @@ def headline(arms: list[ArmReport]) -> str:
         f"Caliper decided **{_pct(summary.coverage)}** of its {summary.cases} cases without a "
         f"human, committing {_errors(summary.unsafe)} in doing so.",
     ]
-    if baseline is not None:
+    # Only when it answered something. "Decided 0% of the same 0 cases" is a true sentence about an
+    # arm that did not run, and it reads as a result.
+    if baseline is not None and baseline.summary.cases:
         other = baseline.summary
         lines.append(
             f"The single-prompt baseline decided **{_pct(other.coverage)}** of the same "
@@ -78,21 +103,208 @@ def headline(arms: list[ArmReport]) -> str:
     return " ".join(lines)
 
 
+DEGENERATE_PREFIX = "always_"
+DEGENERATE_ARMS = frozenset({"random"})
+
+
+def is_degenerate(report: ArmReport) -> bool:
+    """Whether this arm answers without reading the chart in front of it.
+
+    Read off the arm's name, which follows the convention `evalcmd.ARMS` uses: an `always_*` arm
+    returns one fixed outcome, and `random` returns outcomes that vary without meaning anything.
+
+    Inferring it from the answers instead was the obvious alternative and is wrong twice over. An
+    arm that answered every case identically has done so degenerately in that run, but on a short
+    run that is a coincidence rather than a policy — three cases and a real baseline can look
+    identical to `always_eligible` — and on a lopsided key a genuinely good system could answer
+    uniformly and be relegated for it. A name is a claim its author made; the answers are not.
+    """
+    return report.arm.startswith(DEGENERATE_PREFIX) or report.arm in DEGENERATE_ARMS
+
+
+def ordered_arms(arms: list[ArmReport]) -> list[ArmReport]:
+    """Real systems first, then the arms that answer without looking, each in the order given.
+
+    Interleaved, a degenerate arm reads as a competitor. Grouped at the bottom it reads as what it
+    is: the floor the table is measured against.
+    """
+    return [a for a in arms if not is_degenerate(a)] + [a for a in arms if is_degenerate(a)]
+
+
 def arm_table(arms: list[ArmReport]) -> str:
     header = (
-        "| Arm | Cases | Accuracy | 95% CI | Coverage | Unsafe errors | "
+        "| Arm | Cases | Accuracy | Balanced | 95% CI | Coverage | Unsafe errors | "
         "False abstention | Coverage at 0 unsafe | Cost |\n"
-        "|---|---:|---:|---|---:|---:|---:|---:|---:|"
+        "|---|---:|---:|---:|---|---:|---:|---:|---:|---:|"
     )
     rows = []
-    for report in arms:
+    for report in ordered_arms(arms):
         s = report.summary
         rows.append(
-            f"| `{report.arm}` | {s.cases} | {_pct(s.accuracy)} | {_ci(s.accuracy_ci)} | "
-            f"{_pct(s.coverage)} | {s.unsafe} | {_pct(s.false_abstention)} | "
-            f"{_pct(s.coverage_at_zero_unsafe)} | {_cost(report.cost_usd)} |"
+            f"| `{report.arm}` | {s.cases} | {_pct(s.accuracy)} | {_pct(s.balanced_accuracy)} | "
+            f"{_ci(s.accuracy_ci)} | {_pct(s.coverage)} | {s.unsafe} | "
+            f"{_pct(s.false_abstention)} | {_pct(s.coverage_at_zero_unsafe)} | "
+            f"{_cost(report.cost_usd)} |"
         )
     return "\n".join([header, *rows])
+
+
+def expected_table(arms: list[ArmReport]) -> str:
+    """How each arm did on each answer the key expects, which is where a base-rate exploit shows."""
+    outcomes = sorted({name for a in arms for name in a.summary.by_expected})
+    ordered = ordered_arms(arms)
+    header = (
+        "| Key expects | Cases | "
+        + " | ".join(f"`{a.arm}`" for a in ordered)
+        + " |\n|---|---:|"
+        + "---:|" * len(ordered)
+    )
+    rows = []
+    for outcome in outcomes:
+        counts = [
+            a.summary.by_expected[outcome].cases
+            for a in ordered
+            if outcome in a.summary.by_expected
+        ]
+        total = max(counts, default=0)
+        cells = []
+        for report in ordered:
+            slice_ = report.summary.by_expected.get(outcome)
+            cells.append("—" if slice_ is None else f"{slice_.correct}/{slice_.cases}")
+        rows.append(f"| `{outcome}` | {total} | " + " | ".join(cells) + " |")
+    return "\n".join([header, *rows])
+
+
+def blocker_table(blockers: Sequence[Blocker], screenings: int) -> str:
+    """One row per criterion that held screenings up, with the work that would settle it."""
+    header = (
+        "| Criterion | Screenings blocked | Protocol text | What was missing |\n|---|---:|---|---|"
+    )
+    rows = []
+    for blocker in blockers[:MAX_BLOCKERS_LISTED]:
+        count = f"{blocker.screenings} of {screenings}" if screenings else str(blocker.screenings)
+        rows.append(
+            f"| `{blocker.criterion_id}` | {count} | {_cell(blocker.quote or '—')} | "
+            f"{_cell(blocker.missing or blocker.reason or '—')} |"
+        )
+    return "\n".join([header, *rows])
+
+
+def _and_list(names: list[str]) -> str:
+    if len(names) == 1:
+        return names[0]
+    return ", ".join(names[:-1]) + f" and {names[-1]}"
+
+
+def blocker_note(blockers: Sequence[Blocker], screenings: int) -> str:
+    """What the abstentions actually cost, in criteria rather than as a percentage.
+
+    A criterion that stops *every* screening is one conversation about the protocol, settled once
+    for the whole cohort. A criterion that stops a third of them is a per-patient tax on the chart.
+    Both are the same integer in a table, so the sentence says which kind this run has rather than
+    leaving the reader to divide.
+
+    The counts are deliberately not summed. A screening held up by three criteria is held up once,
+    and a total would read as a number of screenings while being a number of criterion-screenings.
+    """
+    if not blockers:
+        return "No criterion left a screening undecided."
+
+    subject = "criterion" if len(blockers) == 1 else "criteria"
+    lines = [
+        f"{len(blockers)} {subject} left screenings undecided, most-frequent first. Each row "
+        "counts the screenings that one criterion held up, so a screening blocked by two of them "
+        "appears in both rows."
+    ]
+
+    universal = [b for b in blockers if screenings and b.screenings >= screenings]
+    if universal:
+        # The trial is only worth naming where the sentence spans more than one, and repeating
+        # the same NCT after every identifier reads like a machine wrote it, which it did.
+        one_trial = len({b.nct_id for b in universal}) == 1
+        named = _and_list(
+            [
+                f"`{b.criterion_id}`" if one_trial else f"`{b.criterion_id}` ({b.nct_id})"
+                for b in universal
+            ]
+        )
+        if len(universal) == 1:
+            lines.append(
+                f"{named} left **every one** of the {screenings} screenings undecided. That is not "
+                "a per-patient cost. It is the same question about the protocol every time, and "
+                "answering it once clears it for the whole cohort."
+            )
+        else:
+            lines.append(
+                f"{named} left **every one** of the {screenings} screenings undecided. Those are "
+                "not per-patient costs. Each is the same question about the protocol every time, "
+                "and answering them once clears them for the whole cohort."
+            )
+    return "\n\n".join(lines)
+
+
+def blockers_section(inputs: ReportInputs) -> list[str]:
+    """The section, or nothing when the run recorded no blockers to explain the number with."""
+    if not inputs.blockers:
+        return []
+    listed = len(inputs.blockers[:MAX_BLOCKERS_LISTED])
+    lines = [
+        "### What abstention cost",
+        "",
+        f"The false-abstention column above says how often `{inputs.blocked_arm}` sent a decidable "
+        "case to a human. It does not say why, and on its own that reads as a complaint. These are "
+        "the criteria it could not settle from the record.",
+        "",
+        blocker_note(inputs.blockers, inputs.blocked_screenings),
+        "",
+        blocker_table(inputs.blockers, inputs.blocked_screenings),
+        "",
+    ]
+    if listed < len(inputs.blockers):
+        lines += [
+            f"{len(inputs.blockers) - listed} further criteria blocked fewer screenings each and "
+            "are omitted from this table.",
+            "",
+        ]
+    return lines
+
+
+def base_rate_note(arms: list[ArmReport]) -> str | None:
+    """What the accuracy column is worth on this key, with the arm that proves it named.
+
+    The arm named is whichever degenerate one scored highest on plain accuracy, because the point
+    being made is how far up the accuracy column a system that reads nothing can get.
+
+    Returns None when no degenerate arm was run: the claim rests on that arm's row, and a paragraph
+    asserting a floor the table does not show would be exactly the kind of sentence this module is
+    written to avoid.
+    """
+    candidates = [a for a in arms if is_degenerate(a) and a.summary.cases]
+    if not candidates:
+        return None
+    exploit = max(candidates, key=lambda a: a.summary.accuracy)
+
+    summary = exploit.summary
+    largest = max(summary.by_expected.items(), key=lambda item: item[1].cases, default=None)
+    if largest is None:
+        return None
+    name, biggest = largest
+    outcomes = len(summary.by_expected)
+
+    return "\n\n".join(
+        [
+            f"The key expects `{name}` for {biggest.cases} of its {summary.cases} cases. That is a "
+            "real property of trial screening — most patients do not qualify for most trials — but "
+            "it means the accuracy column above can be reached without reading a chart. "
+            f"`{exploit.arm}` is in the table to make that concrete rather than latent: it scores "
+            f"**{_pct(summary.accuracy)}** accuracy and knows nothing.",
+            "The balanced column is the same run with that thumb taken off the scale: accuracy "
+            f"computed per expected outcome and averaged unweighted over the {outcomes} outcomes "
+            f"the key uses. `{exploit.arm}` scores **{_pct(summary.balanced_accuracy)}** on it, "
+            f"which is the ceiling for any arm that gives the same answer every time. Read the "
+            "balanced column, not the accuracy one, and read both against the unsafe-error count.",
+        ]
+    )
 
 
 def interval_note(arms: list[ArmReport]) -> str:
@@ -164,8 +376,11 @@ def render(inputs: ReportInputs) -> str:
         "Generated by `caliper report`. Every figure below comes from the committed run; none is "
         "typed by hand.",
         "",
-        f"Answer key: **{inputs.key_cases} cases**, frozen before the first scored run, "
-        f"digest `{inputs.key_digest[:16]}…`.",
+        # Not "frozen before the first scored run": the key was corrected after one, which
+        # `LIMITS.md` records. What the digest proves is narrower, and is what is claimed here.
+        f"Answer key: **{inputs.key_cases} cases**, digest `{inputs.key_digest[:16]}…`. "
+        "`caliper eval` refuses to score against a key whose digest does not match its sidecar; "
+        "`LIMITS.md` records how the key was built and where it was corrected.",
         "",
         "## Headline",
         "",
@@ -189,6 +404,26 @@ def render(inputs: ReportInputs) -> str:
             "error, because it never sends anyone forward, and it is useless — which is the whole "
             "reason coverage and false abstention are reported beside the safety number rather "
             "than behind it.",
+            "",
+        ]
+
+    # Directly under the table, and before the accuracy discussion: the false-abstention figure and
+    # the criteria that produced it have to be read together or the number reads as a complaint.
+    sections += blockers_section(inputs)
+
+    # The accuracy column is the weakest one printed, and a reader who has not been told so by the
+    # time they have read it has already been misled.
+    base_rate = base_rate_note(inputs.arms)
+    if base_rate is not None:
+        sections += [
+            "### What the accuracy column is worth",
+            "",
+            base_rate,
+            "",
+            "Per expected outcome, which is where an arm that trades on the base rate shows itself "
+            "— a column of the form `41/41`, `0/6`, `0/4`:",
+            "",
+            expected_table(inputs.arms),
             "",
         ]
 

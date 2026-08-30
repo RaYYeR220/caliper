@@ -171,12 +171,22 @@ def screen(
         console.print(f"  caveat: {caveat}")
 
     if packet is not None:
-        from caliper.packet import build_packet, render_html
+        from caliper.agents.writer import deterministic_rationales
+        from caliper.packet import build_packet, render_html, render_markdown
 
         document = build_packet(
-            result, compiled.criteria_set, patient, screening.rationales, trial_title=trial.title
+            result,
+            compiled.criteria_set,
+            patient,
+            screening.rationales or deterministic_rationales(result),
+            trial_title=trial.title,
         )
-        packet.write_text(render_html(document), encoding="utf-8")
+        # Chosen by the name the caller gave, because a packet destined for a pull request or an
+        # email is the same document and should not need a different command to get it.
+        markdown = packet.suffix.lower() in {".md", ".markdown"}
+        packet.write_text(
+            render_markdown(document) if markdown else render_html(document), encoding="utf-8"
+        )
         console.print(f"packet written to {packet}")
 
 
@@ -253,8 +263,7 @@ def tape_prune(
 def costs(run: Path) -> None:
     """Summarise what a recorded run cost, by agent and by model."""
     loaded = Trajectory.read_jsonl(run)
-    ledger = loaded.cost_ledger()
-    console.print(json.dumps(ledger.to_dict(), indent=2))
+    console.print(loaded.cost_ledger().summary_table())
 
 
 if __name__ == "__main__":

@@ -21,15 +21,20 @@ from caliper.screen import ScreeningResult
 
 @dataclass(frozen=True)
 class Blocker:
+    """One criterion, and how many screenings it left undecided.
+
+    Identified by trial and criterion together. Criterion identifiers are ordinals assigned within
+    one protocol, so `INC-01` names a different criterion in every trial in the corpus; keying on
+    the identifier alone silently added eight unrelated criteria together and reported the sum as
+    one very troublesome line.
+    """
+
+    nct_id: str
     criterion_id: str
     screenings: int
     reason: str
     missing: str
     quote: str = ""
-
-    @property
-    def share(self) -> float:
-        return 0.0
 
 
 def blocking_criteria(
@@ -40,31 +45,30 @@ def blocking_criteria(
     A criterion settled at the screening visit is not counted: it holds nothing up, and listing it
     here would bury the ones that do behind consent forms.
     """
-    quotes: dict[str, str] = {}
+    quotes: dict[tuple[str, str], str] = {}
     for criteria_set in criteria_sets or []:
         for criterion in criteria_set.criteria:
-            quotes[criterion.id] = criterion.source_quote
+            quotes[criteria_set.nct_id, criterion.id] = criterion.source_quote
 
-    counts: Counter[str] = Counter()
-    detail: dict[str, tuple[str, str]] = {}
+    counts: Counter[tuple[str, str]] = Counter()
+    detail: dict[tuple[str, str], tuple[str, str]] = {}
     for result in results:
-        for criterion in result.criteria:
-            if criterion.verdict is not Verdict.UNKNOWN or not criterion.blocking:
+        for outcome in result.criteria:
+            if outcome.verdict is not Verdict.UNKNOWN or not outcome.blocking:
                 continue
-            counts[criterion.criterion_id] += 1
-            hint = criterion.resolution_hint
-            detail.setdefault(
-                criterion.criterion_id,
-                (criterion.rationale, hint.missing if hint is not None else ""),
-            )
+            key = (result.nct_id, outcome.criterion_id)
+            counts[key] += 1
+            hint = outcome.resolution_hint
+            detail.setdefault(key, (outcome.rationale, hint.missing if hint is not None else ""))
 
     return [
         Blocker(
+            nct_id=nct_id,
             criterion_id=criterion_id,
             screenings=count,
-            reason=detail[criterion_id][0],
-            missing=detail[criterion_id][1],
-            quote=quotes.get(criterion_id, ""),
+            reason=detail[nct_id, criterion_id][0],
+            missing=detail[nct_id, criterion_id][1],
+            quote=quotes.get((nct_id, criterion_id), ""),
         )
-        for criterion_id, count in counts.most_common()
+        for (nct_id, criterion_id), count in counts.most_common()
     ]

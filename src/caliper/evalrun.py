@@ -21,9 +21,10 @@ from pathlib import Path
 
 from caliper.answerkey import AnswerKey, Case
 from caliper.baselines import Baseline
+from caliper.blockers import Blocker, blocking_criteria
 from caliper.ir import CriteriaSet
 from caliper.logic import ScreeningOutcome, Verdict
-from caliper.metrics import CaseScore, Summary, summarise
+from caliper.metrics import CaseScore, Summary, by_expected, summarise
 from caliper.pipeline import PipelineConfig
 from caliper.record import PatientIndex
 from caliper.screen import ScreeningResult, screen
@@ -106,6 +107,16 @@ class ArmReport:
     failures: list[CaseFailure] = field(default_factory=list)
     wall_seconds: float = 0.0
     cost_usd: float | None = None
+    blockers: list[Blocker] = field(default_factory=list)
+    """The criteria that left screenings undecided, most frequent first.
+
+    Empty for a baseline arm, which produces an answer rather than a set of criterion verdicts and
+    so has nothing to report about what held it up.
+    """
+
+    screenings: int = 0
+    """How many screenings the blocker counts are out of, so a share can be worked out from them."""
+
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -119,7 +130,32 @@ class ArmReport:
             "selective_risk": self.summary.selective_risk,
             "false_abstention": self.summary.false_abstention,
             "coverage_at_zero_unsafe": self.summary.coverage_at_zero_unsafe,
+            "balanced_accuracy": self.summary.balanced_accuracy,
             "accuracy_ci": list(self.summary.accuracy_ci),
+            # Kept as the report reads it: how many of the cases the key expected this answer for
+            # were got right. A single accuracy figure on this key is close to a measurement of its
+            # base rate, so the breakdown is the part worth persisting.
+            "by_expected": {
+                expected: {
+                    "cases": group.cases,
+                    "correct": group.correct,
+                    "unsafe": group.unsafe,
+                    "abstained": group.abstained,
+                }
+                for expected, group in by_expected(self.scores).items()
+            },
+            "screenings": self.screenings,
+            "blockers": [
+                {
+                    "nct_id": b.nct_id,
+                    "criterion_id": b.criterion_id,
+                    "screenings": b.screenings,
+                    "reason": b.reason,
+                    "missing": b.missing,
+                    "quote": b.quote,
+                }
+                for b in self.blockers
+            ],
             "scores": [
                 {
                     "case_id": s.case_id,
@@ -165,6 +201,7 @@ def run_arm(
     scores: list[CaseScore] = []
     failures: list[CaseFailure] = []
     compiled: dict[str, CriteriaSet] = {}
+    screenings: list[ScreeningResult] = []
 
     for case in key.cases:
         try:
@@ -197,6 +234,7 @@ def run_arm(
                 case.screening_date,
                 policy=arm.config.absence_policy,
             )
+            screenings.append(result)
             scores.append(score_screening(case, result))
         except Exception as error:
             failures.append(CaseFailure(case.id, "screen", str(error)))
@@ -208,4 +246,6 @@ def run_arm(
         failures=failures,
         wall_seconds=time.perf_counter() - started,
         cost_usd=cost_usd,
+        blockers=blocking_criteria(screenings, criteria_sets=list(compiled.values())),
+        screenings=len(screenings),
     )

@@ -13,6 +13,11 @@ alone would also be dishonest, because abstaining on everything reaches zero uns
 trivially. So `summarise` carries the false-abstention rate, which is what abstaining on everything
 is bad at, and the results table always shows the trivial baselines alongside.
 
+Accuracy is the weakest number in this module and is treated as such. A hand-built key of fifty-odd
+cases has a base rate, and this one is lopsided: most patients do not qualify for most trials. So
+`balanced_accuracy` is computed beside it, and `by_expected` carries the breakdown that shows where
+an arm's correctness actually came from.
+
 An **unsafe** error has a specific meaning here: the system sent a patient forward as eligible when
 the key says they were not, or says a human had to look first. The reverse mistake — screening out
 a patient who could have enrolled — is a real cost too, but it is a cost to the trial rather than to
@@ -220,9 +225,17 @@ class Summary:
     selective_risk: float
     false_abstention: float
     coverage_at_zero_unsafe: float
+    balanced_accuracy: float
     accuracy_ci: tuple[float, float]
     by_trap: dict[str, Slice] = field(default_factory=dict)
     by_provenance: dict[str, Slice] = field(default_factory=dict)
+    by_expected: dict[str, Slice] = field(default_factory=dict)
+    """Every case grouped by the answer the key expected. The raw form of `balanced_accuracy`.
+
+    An aggregate accuracy cannot show that an arm got 41 of 41 `ineligible` cases and 0 of 6
+    `eligible` ones, and that is the shape a base-rate exploit has. This can.
+    """
+
     curve: list[CurvePoint] = field(default_factory=list)
 
     @property
@@ -246,6 +259,39 @@ def _grouped(scores: list[CaseScore], key) -> dict[str, Slice]:
     return {name: _slice(members) for name, members in sorted(groups.items())}
 
 
+def by_expected(scores: list[CaseScore]) -> dict[str, Slice]:
+    """Every case grouped by the outcome the key expected, in alphabetical order of that outcome."""
+    return _grouped(scores, lambda s: s.expected.value)
+
+
+def balanced_accuracy(scores: list[CaseScore]) -> float:
+    """Per-expected-outcome accuracy, averaged without weighting by how common each outcome is.
+
+    Plain accuracy on this key is close to a measurement of its base rate. Most patients do not
+    qualify for most trials, and after vital status was added to the annotation protocol the key
+    expects `ineligible` for 41 of its 51 cases — so answering `ineligible` to everything, reading
+    no chart at all, scores 80%. `always_ineligible` is run as an arm precisely so that number is
+    printed rather than left for a reader to discover.
+
+    Averaging the three per-outcome accuracies without weights removes the thumb from the scale: the
+    same degenerate arm scores 1/3, because it is right about one of the three answers the key uses
+    and wrong about the other two. This is macro-averaged recall under its plainer name, and the
+    bound is what makes it worth printing — an arm that always says the same thing cannot exceed
+    `1/k` for `k` outcomes in the key, whatever the base rate happens to be.
+
+    The average is taken over the outcomes the key actually uses, not over every member of
+    `ScreeningOutcome`. An outcome the key never asks about cannot be got right or wrong, and
+    dividing by it would report a ceiling below 1.0 that no system could ever reach.
+
+    It is not a replacement for accuracy, and neither is a substitute for the safety numbers: a
+    system can be balanced, accurate, and still have waved someone through.
+    """
+    slices = by_expected(scores)
+    if not slices:
+        return 0.0
+    return sum(s.accuracy for s in slices.values()) / len(slices)
+
+
 def summarise(scores: list[CaseScore], *, arm: str) -> Summary:
     """Everything the results table needs for one arm of the evaluation."""
     correct = sum(1 for s in scores if s.correct)
@@ -258,8 +304,10 @@ def summarise(scores: list[CaseScore], *, arm: str) -> Summary:
         selective_risk=selective_risk(scores),
         false_abstention=false_abstention_rate(scores),
         coverage_at_zero_unsafe=coverage_at_zero_unsafe(scores),
+        balanced_accuracy=balanced_accuracy(scores),
         accuracy_ci=clopper_pearson(correct, len(scores)),
         by_trap=_grouped(scores, lambda s: s.trap),
         by_provenance=_grouped(scores, lambda s: s.provenance),
+        by_expected=by_expected(scores),
         curve=risk_coverage_curve(scores),
     )

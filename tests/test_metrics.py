@@ -9,9 +9,13 @@ rate and the trivial baselines all stay in the same table for the same reason.
 
 import math
 
+import pytest
+
 from caliper.logic import ScreeningOutcome as Outcome
 from caliper.metrics import (
     CaseScore,
+    balanced_accuracy,
+    by_expected,
     clopper_pearson,
     coverage_at_zero_unsafe,
     empirical_coverage,
@@ -236,6 +240,82 @@ class TestTheOperatingPoint:
             score(Outcome.NEEDS_REVIEW, Outcome.ELIGIBLE, case_id="C-002"),
         ]
         assert coverage_at_zero_unsafe(scores) == 0.0
+
+
+def a_lopsided_key(ineligible: int = 41, eligible: int = 6, review: int = 4) -> list[Outcome]:
+    """The shape of the real answer key: most patients do not qualify for most trials."""
+    return (
+        [Outcome.INELIGIBLE] * ineligible
+        + [Outcome.ELIGIBLE] * eligible
+        + [Outcome.NEEDS_REVIEW] * review
+    )
+
+
+def always(answer: Outcome, expected: list[Outcome]) -> list[CaseScore]:
+    return [
+        score(want, answer, case_id=f"C-{i:03d}") for i, want in enumerate(expected, start=1)
+    ]
+
+
+class TestByExpected:
+    def test_every_case_lands_in_exactly_one_group(self):
+        scores = always(Outcome.INELIGIBLE, a_lopsided_key())
+        slices = by_expected(scores)
+        assert sum(s.cases for s in slices.values()) == len(scores)
+
+    def test_the_groups_are_the_outcomes_the_key_uses(self):
+        slices = by_expected(always(Outcome.INELIGIBLE, a_lopsided_key()))
+        assert set(slices) == {"eligible", "ineligible", "needs_review"}
+        assert slices["ineligible"].correct == 41
+        assert slices["eligible"].correct == 0
+
+    def test_an_outcome_the_key_never_asks_about_is_absent_rather_than_empty(self):
+        slices = by_expected(always(Outcome.ELIGIBLE, [Outcome.ELIGIBLE, Outcome.INELIGIBLE]))
+        assert "needs_review" not in slices
+
+    def test_the_summary_carries_it(self):
+        summary = summarise(always(Outcome.INELIGIBLE, a_lopsided_key()), arm="always_ineligible")
+        assert sum(s.cases for s in summary.by_expected.values()) == summary.cases
+
+
+class TestBalancedAccuracy:
+    """Plain accuracy on a lopsided key is close to a measurement of the key's base rate.
+
+    The corrected answer key expects `ineligible` for 41 of 51 cases, so an arm that answers
+    `ineligible` and reads nothing scores 80% — better than any real arm. These pin the number that
+    survives that: per-expected-outcome accuracy, averaged without weighting.
+    """
+
+    def test_answering_only_the_commonest_outcome_scores_the_base_rate_on_accuracy(self):
+        summary = summarise(always(Outcome.INELIGIBLE, a_lopsided_key()), arm="always_ineligible")
+        assert round(summary.accuracy, 3) == round(41 / 51, 3)
+
+    def test_and_scores_one_over_k_on_the_balanced_figure(self):
+        scores = always(Outcome.INELIGIBLE, a_lopsided_key())
+        assert math.isclose(balanced_accuracy(scores), 1 / 3)
+
+    @pytest.mark.parametrize(
+        "answer", [Outcome.ELIGIBLE, Outcome.INELIGIBLE, Outcome.NEEDS_REVIEW]
+    )
+    def test_no_single_answer_can_beat_one_over_k_whatever_it_is(self, answer):
+        """The bound is the whole reason this number is worth printing beside accuracy."""
+        expected = a_lopsided_key()
+        outcomes = len(set(expected))
+        assert balanced_accuracy(always(answer, expected)) <= 1 / outcomes + 1e-9
+
+    def test_a_system_that_is_right_about_everything_still_scores_one(self):
+        expected = a_lopsided_key()
+        scores = [score(want, want, case_id=f"C-{i:03d}") for i, want in enumerate(expected, 1)]
+        assert balanced_accuracy(scores) == 1.0
+
+    def test_it_averages_over_the_outcomes_the_key_uses_rather_than_every_outcome_there_is(self):
+        """A key that never asks a question must not put a ceiling below 1.0 on a perfect system."""
+        expected = [Outcome.ELIGIBLE, Outcome.INELIGIBLE]
+        scores = [score(want, want, case_id=f"C-{i:03d}") for i, want in enumerate(expected, 1)]
+        assert balanced_accuracy(scores) == 1.0
+
+    def test_an_empty_run_is_zero_rather_than_an_error(self):
+        assert balanced_accuracy([]) == 0.0
 
 
 class TestConfidenceIntervals:

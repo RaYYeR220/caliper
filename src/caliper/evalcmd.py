@@ -34,6 +34,7 @@ from caliper.baselines import (
     RandomOutcome,
     SinglePrompt,
 )
+from caliper.blockers import Blocker
 from caliper.evalrun import Arm, ArmReport, run_arm
 from caliper.evaluate import AbsencePolicy
 from caliper.ir import CriteriaSet
@@ -248,6 +249,10 @@ def _print_summary(reports: list[ArmReport]) -> None:
     console.print(table)
 
 
+BLOCKED_ARM = "caliper"
+"""Which arm "what abstention cost" is reported for: the system as it ships, not an ablation."""
+
+
 @app.command("report")
 def build_report(
     results: Path = typer.Option(DEFAULT_OUT, "--results", help="Where the per-arm results are."),
@@ -257,12 +262,18 @@ def build_report(
     """Rebuild RESULTS.md from the committed run. No figure in it is typed by hand."""
     run = json.loads((results / "run.json").read_text(encoding="utf-8"))
     reports = [_load_arm(results / f"{name}.json") for name in run["arms"]]
+    # The blockers are reported for the system as it ships, not for an ablation: "what abstention
+    # cost" is only a useful section if it is about the arm the headline numbers describe.
+    blocked = next((r for r in reports if r.arm == BLOCKED_ARM), None)
     text = report.render(
         report.ReportInputs(
             arms=reports,
             key_digest=run["key_digest"],
             key_cases=run["key_cases"],
             metamorphic=metamorphic.read_text(encoding="utf-8") if metamorphic else None,
+            blockers=blocked.blockers if blocked else (),
+            blocked_arm=BLOCKED_ARM,
+            blocked_screenings=blocked.screenings if blocked else 0,
         )
     )
     out.write_text(text, encoding="utf-8")
@@ -291,4 +302,6 @@ def _load_arm(path: Path) -> ArmReport:
         scores=scores,
         summary=summarise(scores, arm=payload["arm"]),
         cost_usd=payload.get("cost_usd"),
+        blockers=[Blocker(**row) for row in payload.get("blockers", [])],
+        screenings=payload.get("screenings", 0),
     )

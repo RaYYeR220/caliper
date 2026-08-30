@@ -307,7 +307,7 @@ class TestPruning:
         assert len(Tape(tmp_path / "t.jsonl", mode="replay")) == 1
 
     def test_it_refuses_to_prune_a_key_it_does_not_hold(self, tmp_path):
-        """A miss means the caller replayed against a different tape; emptying this one would hide it."""
+        """A miss means the caller replayed a different tape; emptying this one would hide it."""
         import pytest
 
         from caliper.tape import prune

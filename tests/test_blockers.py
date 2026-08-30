@@ -111,6 +111,38 @@ class TestBlockingCriteria:
         )
         assert blocking_criteria([result]) == []
 
+    def test_two_trials_using_the_same_identifier_stay_two_criteria(self):
+        """The bug this keying exists for.
+
+        Criterion identifiers are ordinals within one protocol, so `INC-02` names something
+        different in every trial. Counting on the identifier alone added eight unrelated criteria
+        together and reported the sum as one very troublesome line.
+        """
+        other = CriteriaSet(
+            nct_id="NCT2",
+            source_text=SOURCE,
+            criteria=[
+                Criterion(
+                    id="INC-02",
+                    kind="inclusion",
+                    source_quote="Adequate organ function",
+                    predicate=UnsupportedPredicate(reason="the protocol does not define adequate"),
+                )
+            ],
+        )
+        results = [
+            screen(criteria(), patient("p1", 8.1), SCREENING),
+            screen(other, patient("p2", 8.1), SCREENING),
+        ]
+
+        blockers = blocking_criteria(results, criteria_sets=[criteria(), other])
+
+        assert sorted((b.nct_id, b.screenings) for b in blockers) == [("NCT1", 1), ("NCT2", 1)]
+        assert {b.quote for b in blockers} == {
+            "One major cardiovascular risk factor",
+            "Adequate organ function",
+        }
+
     def test_nothing_blocking_reports_nothing(self):
         result = screen(
             CriteriaSet(nct_id="NCT1", source_text=SOURCE, criteria=[LAB]),

@@ -28,6 +28,7 @@ from caliper.llm import (
     StrictSchemaError,
     StructuredOutput,
     Tier,
+    TraceStep,
     Trajectory,
     UnknownProfileError,
     Usage,
