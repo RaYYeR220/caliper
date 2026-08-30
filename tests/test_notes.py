@@ -11,6 +11,7 @@ the extractor against fiction. Every quote is therefore re-checked against its n
 
 from __future__ import annotations
 
+import dataclasses
 import json
 from datetime import date
 from pathlib import Path
@@ -286,3 +287,46 @@ class TestManifestIsGroundTruth:
         assert defined == set(REQUIRED_PHENOMENA)
         used = {entry["phenomenon"] for row in MANIFEST_ROWS for entry in row["items"]}
         assert used <= defined
+
+
+class TestADeathSurvivesTheMerge:
+    """Attaching notes must not resurrect anybody.
+
+    `attach_notes` returns a copy, and the copy was built by naming the fields to carry over. Two
+    of them were not named. A patient whose chart records a death and who also has a note came back
+    from the merge alive, and screening — which stops on a recorded death before it reads a single
+    criterion — went on to produce a full criterion table about someone who cannot be enrolled.
+
+    This is the second time a hand-rolled rebuild of `PatientIndex` has dropped these two fields;
+    the first was in the perturbation tooling. Both are now `dataclasses.replace`, which cannot
+    forget a field that is added later.
+    """
+
+    def a_patient(self, tmp_path, **kw) -> PatientIndex:
+        return PatientIndex(
+            patient_id="p-dead",
+            birth_date=date(1950, 1, 1),
+            sex="male",
+            evidence=[],
+            **kw,
+        )
+
+    def test_a_dated_death_is_carried_across(self, tmp_path):
+        patient = self.a_patient(tmp_path, deceased=date(2026, 1, 1))
+
+        assert attach_notes(patient, tmp_path).deceased == date(2026, 1, 1)
+
+    def test_an_undated_death_is_carried_across(self, tmp_path):
+        patient = self.a_patient(tmp_path, deceased_undated=True)
+
+        assert attach_notes(patient, tmp_path).deceased_undated is True
+
+    def test_every_field_is_carried_across(self, tmp_path):
+        """Named individually, the next field added here is dropped by a merge nobody re-reads."""
+        patient = self.a_patient(tmp_path, deceased=date(2026, 1, 1))
+        merged = attach_notes(patient, tmp_path)
+
+        for field in dataclasses.fields(PatientIndex):
+            if field.name == "evidence":
+                continue
+            assert getattr(merged, field.name) == getattr(patient, field.name), field.name

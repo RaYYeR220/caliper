@@ -12,7 +12,7 @@ then no model is involved at all.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date
 from pathlib import Path
 
@@ -167,12 +167,9 @@ def screen_patient(
     if config.use_narrative:
         narrative = _read_notes(trial, patient, ctx, config)
         if narrative is not None and narrative.evidence:
-            patient = PatientIndex(
-                patient_id=patient.patient_id,
-                birth_date=patient.birth_date,
-                sex=patient.sex,
-                evidence=[*patient.evidence, *narrative.evidence],
-            )
+            # `replace`, not a field-by-field rebuild: the same shape of copy elsewhere silently
+            # dropped the recorded death and screened a patient who could not be enrolled.
+            patient = replace(patient, evidence=[*patient.evidence, *narrative.evidence])
 
     result = screen(trial.criteria_set, patient, as_of, policy=config.absence_policy)
 

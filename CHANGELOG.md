@@ -112,8 +112,12 @@ is the one this evaluation has the least to say about.
 
 ## Bugs the process found
 
-None of these were visible from outside the layer they lived in. All four came from reading one
-component closely enough to notice something did not fit.
+None of these were visible from outside the layer they lived in. All of them came from reading one
+component closely enough to notice something did not fit. The last one is the same mistake as an
+earlier one — a `PatientIndex` rebuilt by naming its fields, dropping the two that were added after
+that code was written — in a second place nobody thought to check when the first was fixed. Both are
+now `dataclasses.replace`, which cannot forget a field, and a test asserts every field survives the
+merge rather than the two we happen to have noticed.
 
 | Bug | Consequence | Found by |
 |---|---|---|
@@ -121,6 +125,7 @@ component closely enough to notice something did not fit.
 | `Patient.deceasedDateTime` was dropped on ingestion | One patient who died four weeks before the screening date read as an ordinary, complete, screenable chart | building the evaluation cases |
 | `medicationReference` was not resolved, and `Medication` had been trimmed from the corpus | 114 of 342 prescriptions carried no drug identity at all, so any criterion about a concomitant or prohibited medication was unresolvable for two thirds of patients | rendering medications in the chart summary |
 | The prose linter's rounding rule | See above | writing the packet against it |
+| Attaching a clinical note resurrected the patient | `attach_notes` returns a copy, and the copy was built by naming the fields to carry over — `deceased` and `deceased_undated` were not named. Three of the nine patients with notes in this corpus are recorded as dead, and sixteen answer-key cases are on them. Screening stops on a recorded death before it reads a criterion; after a note was attached it no longer did. **The published numbers are unaffected: `use_narrative` is off in every evaluation arm, so the path never ran during a scored run.** It ran in `caliper screen`. | reading `screen_patient` while looking for somewhere to thread settlements through, and finding the same rebuild a second time |
 
 ## The reproducibility claim was false, and the container is what found it
 

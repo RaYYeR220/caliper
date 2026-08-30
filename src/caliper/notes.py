@@ -25,7 +25,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -114,12 +114,10 @@ def attach_notes(patient: PatientIndex, root: Path = DEFAULT_NOTES_ROOT) -> Pati
     """
     cited = {e.fhir_path for e in patient.evidence}
     fresh = [row for row in load_notes(patient.patient_id, root) if row.fhir_path not in cited]
-    return PatientIndex(
-        patient_id=patient.patient_id,
-        birth_date=patient.birth_date,
-        sex=patient.sex,
-        evidence=[*patient.evidence, *fresh],
-    )
+    # `replace` rather than naming the fields: this rebuild used to list them, and the two it did
+    # not list were `deceased` and `deceased_undated`, so a patient with a note came back from the
+    # merge alive and was screened as an ordinary candidate.
+    return replace(patient, evidence=[*patient.evidence, *fresh])
 
 
 def _read(path: Path) -> Sequence[Mapping[str, Any]]:
