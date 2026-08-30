@@ -27,6 +27,7 @@ from caliper.ir import (
 )
 from caliper.logic import Verdict
 from caliper.record import Evidence, PatientIndex, window_start
+from caliper.settlements import Settlement, SettlementLog
 from caliper.units import convert
 
 
@@ -66,6 +67,12 @@ class CriterionResult:
     resolution_hint: ResolutionHint | None = None
     approximations: tuple[str, ...] = ()
     """Places where the verdict rests on something we could not evaluate exactly."""
+
+    settled_by: Settlement | None = None
+    """Set where a person answered a question the record could not. Never evidence, and never a
+    verdict the record had already reached: the evaluator refuses a settlement on a criterion it
+    decided itself, so this field can only ever appear where the verdict would have been UNKNOWN.
+    """
 
     blocking: bool = True
     """Whether being unresolved here should stop a screening.
@@ -390,9 +397,35 @@ def evaluate_criterion(
     index: PatientIndex,
     as_of: date,
     policy: AbsencePolicy = AbsencePolicy.COVERAGE_GATED,
+    *,
+    settlements: SettlementLog | None = None,
+    nct_id: str = "",
 ) -> CriterionResult:
-    """Decide one criterion for one patient on one date."""
-    return _evaluate_predicate(criterion, criterion.predicate, index, as_of, policy)
+    """Decide one criterion for one patient on one date.
+
+    A settlement is consulted only after the record has had its say, and only where the record had
+    nothing to say. That order is the whole safety argument: a person can answer a question the
+    chart could not, and cannot overturn one it did.
+    """
+    result = _evaluate_predicate(criterion, criterion.predicate, index, as_of, policy)
+    if settlements is None:
+        return result
+
+    settlement = settlements.for_criterion(nct_id, criterion.id)
+    if settlement is None:
+        return result
+    if result.verdict is not Verdict.UNKNOWN:
+        settlements.refuse(criterion.id, "the record decided this criterion")
+        return result
+
+    return replace(
+        result,
+        verdict=settlement.verdict,
+        rationale=settlement.sentence,
+        evidence=(),
+        resolution_hint=None,
+        settled_by=settlement,
+    )
 
 
 def _evaluate_predicate(

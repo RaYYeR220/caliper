@@ -15,8 +15,6 @@ from caliper.ir import UnsupportedPredicate
 from caliper.uicmd import _COMPILATIONS
 
 
-
-
 class TestSettlement:
     """Which of the demo trial's unanswerable criteria are questions for the visit.
 

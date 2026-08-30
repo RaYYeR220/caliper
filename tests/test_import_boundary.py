@@ -215,6 +215,7 @@ def test_the_closure_is_the_one_the_documents_describe() -> None:
         "caliper.ir",
         "caliper.logic",
         "caliper.record",
+        "caliper.settlements",
         "caliper.units",
     }
 

@@ -15,6 +15,7 @@ from caliper.evaluate import AbsencePolicy, CriterionResult, ResolutionHint, eva
 from caliper.ir import CriteriaSet
 from caliper.logic import CriterionVerdict, ScreeningOutcome, Verdict, roll_up
 from caliper.record import PatientIndex
+from caliper.settlements import SettlementLog
 
 
 @dataclass(frozen=True)
@@ -43,6 +44,11 @@ class ScreeningResult:
                 if caveat not in seen:
                     seen.append(caveat)
         return tuple(seen)
+
+    @property
+    def settled_criterion_ids(self) -> tuple[str, ...]:
+        """Criteria a person answered because the record could not, so the packet can say which."""
+        return tuple(c.criterion_id for c in self.criteria if c.settled_by is not None)
 
     @property
     def criteria_total(self) -> int:
@@ -113,13 +119,28 @@ def screen(
     patient: PatientIndex,
     as_of: date,
     policy: AbsencePolicy = AbsencePolicy.COVERAGE_GATED,
+    *,
+    settlements: SettlementLog | None = None,
 ) -> ScreeningResult:
-    """Evaluate every criterion in `criteria_set` against `patient` and roll the results up."""
+    """Evaluate every criterion in `criteria_set` against `patient` and roll the results up.
+
+    `settlements` carries answers a person gave for criteria no chart could settle. They are
+    applied per criterion by the evaluator, and only where it reached UNKNOWN on its own — which is
+    why a patient the record has already excluded stays excluded whatever the log says.
+    """
     if patient.died_before(as_of) or patient.deceased_undated:
         return _deceased(criteria_set, patient, as_of, policy)
 
     results = tuple(
-        evaluate_criterion(criterion, patient, as_of, policy) for criterion in criteria_set.criteria
+        evaluate_criterion(
+            criterion,
+            patient,
+            as_of,
+            policy,
+            settlements=settlements,
+            nct_id=criteria_set.nct_id,
+        )
+        for criterion in criteria_set.criteria
     )
     rollup = roll_up(
         [CriterionVerdict(r.criterion_id, r.kind, r.verdict, r.blocking) for r in results]
