@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Callable
+from dataclasses import replace
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -136,15 +137,16 @@ def _run(
             arm = Arm(name=name, run_baseline=_baseline(name, ctx))
         else:
             arm = Arm(name=name, config=config, compile_trial=_compiler(config, ctx, cache))
-        reports.append(
-            run_arm(
-                key,
-                arm,
-                load_patient=_chart_for,
-                load_criteria_text=lambda nct: corpus.load_trial(nct).criteria_text,
-                cost_usd=(ctx.trajectory.total_usd() or 0.0) - before,
-            )
+        # Computed after the arm runs, not passed in: as an argument it was evaluated eagerly and
+        # every arm reported nothing.
+        report = run_arm(
+            key,
+            arm,
+            load_patient=_chart_for,
+            load_criteria_text=lambda nct: corpus.load_trial(nct).criteria_text,
         )
+        spent = (ctx.trajectory.total_usd() or 0.0) - before
+        reports.append(replace(report, cost_usd=spent))
         console.print(
             f"[green]{name}[/green]: {reports[-1].summary.cases} cases, "
             f"{reports[-1].summary.unsafe} unsafe, {reports[-1].wall_seconds:.0f}s"

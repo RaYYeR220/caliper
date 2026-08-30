@@ -316,6 +316,20 @@ def _results_section(summary: dict[str, Any], focus_codes: Sequence[str]) -> lis
     return [*lines, ""]
 
 
+def _vital_status(patient: PatientIndex, as_of: date) -> str:
+    """State a recorded death, because the summary is the whole chart to whoever reads it.
+
+    A reader given this text and nothing else — a model asked to pre-screen from it, or a person
+    annotating — cannot see `PatientIndex.deceased`. Omitting it showed them a patient who had died
+    four weeks earlier as an ordinary candidate.
+    """
+    if patient.deceased is not None and patient.deceased <= as_of:
+        return f"- **Died {patient.deceased.isoformat()}**, before the screening date"
+    if patient.deceased is None and patient.deceased_undated:
+        return "- **Recorded as deceased**, with no date given"
+    return ""
+
+
 def summarise(patient: PatientIndex, *, as_of: date, focus_codes: Sequence[str] = ()) -> str:
     """Render a compact clinical summary a coordinator can annotate from.
 
@@ -338,8 +352,11 @@ def summarise(patient: PatientIndex, *, as_of: date, focus_codes: Sequence[str] 
         if born
         else "- Date of birth: not recorded, so age is unknown",
         f"- Sex: {demographics['sex'] or 'not recorded'}",
-        "",
     ]
+    vital = _vital_status(patient, as_of)
+    if vital:
+        lines.append(vital)
+    lines.append("")
 
     active = summary["conditions"]["active"]
     lines += _section(

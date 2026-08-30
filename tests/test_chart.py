@@ -373,3 +373,51 @@ class TestAgainstRealBundles:
         for path in _bundle_paths():
             patient = load_patient_index(json.loads(path.read_text(encoding="utf-8")))
             assert summarise(patient, as_of=SCREENING).strip()
+
+
+class TestVitalStatus:
+    """The baseline sees the chart through this summary and nothing else.
+
+    Caliper reads `PatientIndex.deceased` directly. If the summary omits it, the two systems are not
+    being shown the same patient, and the comparison measures our plumbing rather than their
+    reasoning.
+    """
+
+    def a_patient(self, **overrides):
+        from datetime import date as _date
+
+        from caliper.record import PatientIndex
+
+        base = dict(
+            patient_id="p-1",
+            birth_date=_date(1970, 1, 1),
+            sex="female",
+            evidence=[],
+        )
+        return PatientIndex(**{**base, **overrides})
+
+    def test_a_death_before_the_screening_date_is_stated(self):
+        from datetime import date as _date
+
+        text = summarise(self.a_patient(deceased=_date(2026, 5, 3)), as_of=_date(2026, 6, 1))
+        assert "2026-05-03" in text
+        assert "died" in text.lower() or "deceased" in text.lower()
+
+    def test_a_death_recorded_after_the_screening_date_is_not(self):
+        """It had not happened yet on the date the screening is about."""
+        from datetime import date as _date
+
+        text = summarise(self.a_patient(deceased=_date(2026, 7, 1)), as_of=_date(2026, 6, 1))
+        assert "2026-07-01" not in text
+
+    def test_a_death_with_no_date_is_still_stated(self):
+        from datetime import date as _date
+
+        text = summarise(self.a_patient(deceased_undated=True), as_of=_date(2026, 6, 1))
+        assert "deceased" in text.lower() or "died" in text.lower()
+
+    def test_a_living_patient_gets_no_such_line(self):
+        from datetime import date as _date
+
+        text = summarise(self.a_patient(), as_of=_date(2026, 6, 1))
+        assert "died" not in text.lower()
