@@ -9,6 +9,8 @@
     "inclusion": 4,
     "exclusion": 4,
     "unsupported": 6,
+    "unsupported_blocking": 3,
+    "unsupported_at_visit": 3,
     "reviewed": 2,
     "downgraded": 0
   },
@@ -23,6 +25,7 @@
       "compiled_as": "a documented diagnosis of type 2 diabetes mellitus and HbA1c at least 7%",
       "unsupported": false,
       "unsupported_reason": null,
+      "settlement": null,
       "codes": [
         {
           "system": "SNOMED",
@@ -52,6 +55,7 @@
       "compiled_as": "glomerular filtration rate between 25 and 60 mL/min/{1.73_m2} inclusive",
       "unsupported": false,
       "unsupported_reason": null,
+      "settlement": null,
       "codes": [
         {
           "system": "LOINC",
@@ -76,6 +80,7 @@
       "compiled_as": "not formalised: the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
       "unsupported": true,
       "unsupported_reason": "the criterion counts major and minor cardiovascular risk factors without listing either, so neither branch names anything countable",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -88,6 +93,7 @@
       "compiled_as": "not formalised: consent is a site procedure and leaves no finding in the patient record",
       "unsupported": true,
       "unsupported_reason": "consent is a site procedure and leaves no finding in the patient record",
+      "settlement": "at_visit",
       "codes": [],
       "critic": null
     },
@@ -100,6 +106,7 @@
       "compiled_as": "not formalised: the chart records prescriptions, not whether antihyperglycaemic therapy was unchanged over the 12 weeks before screening",
       "unsupported": true,
       "unsupported_reason": "the chart records prescriptions, not whether antihyperglycaemic therapy was unchanged over the 12 weeks before screening",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -112,6 +119,7 @@
       "compiled_as": "not formalised: a planned procedure is an intention, and the chart records events",
       "unsupported": true,
       "unsupported_reason": "a planned procedure is an intention, and the chart records events",
+      "settlement": "at_visit",
       "codes": [],
       "critic": null
     },
@@ -124,6 +132,7 @@
       "compiled_as": "not formalised: 'such as' leaves the list of lower extremity complications open, and the criterion turns on treatment being required at randomisation, which has not happened when a chart is screened",
       "unsupported": true,
       "unsupported_reason": "'such as' leaves the list of lower extremity complications open, and the criterion turns on treatment being required at randomisation, which has not happened when a chart is screened",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -136,6 +145,7 @@
       "compiled_as": "not formalised: starting a drug during the study is an intention, and the chart records events",
       "unsupported": true,
       "unsupported_reason": "starting a drug during the study is an intention, and the chart records events",
+      "settlement": "at_visit",
       "codes": [],
       "critic": null
     }

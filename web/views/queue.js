@@ -386,11 +386,22 @@ function finding(trial, all) {
     h(
       "p",
       { class: "note" },
-      `Eligible needs every criterion resolved. ${trial.unsupported} of this protocol's ` +
-        `${trial.criteria} could not be formalised from a record at all, so they read unresolved ` +
-        "against every chart and no chart can clear them. That is a fact about the protocol " +
-        "rather than about these patients.",
+      `Eligible needs every criterion the record was supposed to settle. ` +
+        `${trial.unsupported_blocking} of this protocol's ${trial.criteria} ask something a chart ` +
+        "could answer and could not be formalised, so they read unresolved against every chart " +
+        "and no chart clears them. That is a fact about the protocol rather than about these " +
+        "patients.",
     ),
+    trial.unsupported_at_visit
+      ? h(
+          "p",
+          { class: "note" },
+          `A further ${trial.unsupported_at_visit} could not be formalised either — consent, a ` +
+            "planned procedure, an intention — but no record was ever going to answer those, so " +
+            "they do not hold a screening open. Each packet lists them under Confirm at the " +
+            "screening visit.",
+        )
+      : null,
     built.length
       ? h(
           "p",

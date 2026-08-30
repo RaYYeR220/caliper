@@ -9,6 +9,8 @@
     "inclusion": 7,
     "exclusion": 15,
     "unsupported": 16,
+    "unsupported_blocking": 11,
+    "unsupported_at_visit": 5,
     "reviewed": 9,
     "downgraded": 3
   },
@@ -23,6 +25,7 @@
       "compiled_as": "a documented diagnosis of type 2 diabetes mellitus, current as of consent",
       "unsupported": false,
       "unsupported_reason": null,
+      "settlement": null,
       "codes": [
         {
           "system": "SNOMED",
@@ -47,6 +50,7 @@
       "compiled_as": "not formalised: the chart records prescriptions, not whether antidiabetic therapy was unchanged over the 12 weeks before randomisation",
       "unsupported": true,
       "unsupported_reason": "the chart records prescriptions, not whether antidiabetic therapy was unchanged over the 12 weeks before randomisation",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -59,6 +63,7 @@
       "compiled_as": "not formalised: back-translation: the compiled predicate is broader than the protocol quote. B admits a drug-naive patient whose HbA1c is between 9.0% and 10%, whom A excludes.",
       "unsupported": true,
       "unsupported_reason": "back-translation: the compiled predicate is broader than the protocol quote. B admits a drug-naive patient whose HbA1c is between 9.0% and 10%, whom A excludes.",
+      "settlement": "from_data",
       "codes": [],
       "critic": {
         "severity": "broader",
@@ -77,6 +82,7 @@
       "compiled_as": "age at least 18 years",
       "unsupported": false,
       "unsupported_reason": null,
+      "settlement": null,
       "codes": [],
       "critic": {
         "severity": "equivalent",
@@ -95,6 +101,7 @@
       "compiled_as": "body mass index at most 45 kg/m2",
       "unsupported": false,
       "unsupported_reason": null,
+      "settlement": null,
       "codes": [
         {
           "system": "LOINC",
@@ -119,6 +126,7 @@
       "compiled_as": "not formalised: consent is a site procedure and leaves no finding in the patient record",
       "unsupported": true,
       "unsupported_reason": "consent is a site procedure and leaves no finding in the patient record",
+      "settlement": "at_visit",
       "codes": [],
       "critic": null
     },
@@ -131,6 +139,7 @@
       "compiled_as": "not formalised: the protocol defines high cardiovascular risk in a table the registry record does not carry",
       "unsupported": true,
       "unsupported_reason": "the protocol defines high cardiovascular risk in a table the registry record does not carry",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -143,6 +152,7 @@
       "compiled_as": "not formalised: back-translation: the compiled predicate is broader than the protocol quote. A requires a fasting measurement confirmed on a second day; B is satisfied by one random glucose.",
       "unsupported": true,
       "unsupported_reason": "back-translation: the compiled predicate is broader than the protocol quote. A requires a fasting measurement confirmed on a second day; B is satisfied by one random glucose.",
+      "settlement": "from_data",
       "codes": [],
       "critic": {
         "severity": "broader",
@@ -161,6 +171,7 @@
       "compiled_as": "not formalised: back-translation: the compiled predicate is narrower than the protocol quote. A is also triggered by aspartate aminotransferase or alkaline phosphatase above three times the upper limit of normal; B tests only alanine aminotransferase.",
       "unsupported": true,
       "unsupported_reason": "back-translation: the compiled predicate is narrower than the protocol quote. A is also triggered by aspartate aminotransferase or alkaline phosphatase above three times the upper limit of normal; B tests only alanine aminotransferase.",
+      "settlement": "from_data",
       "codes": [],
       "critic": {
         "severity": "narrower",
@@ -179,6 +190,7 @@
       "compiled_as": "not formalised: a planned procedure is an intention, and the chart records events",
       "unsupported": true,
       "unsupported_reason": "a planned procedure is an intention, and the chart records events",
+      "settlement": "at_visit",
       "codes": [],
       "critic": null
     },
@@ -191,6 +203,7 @@
       "compiled_as": "glomerular filtration rate below 30 mL/min",
       "unsupported": false,
       "unsupported_reason": null,
+      "settlement": null,
       "codes": [
         {
           "system": "LOINC",
@@ -215,6 +228,7 @@
       "compiled_as": "not formalised: 'other gastrointestinal surgeries that induce chronic malabsorption' names no enumerable set of procedure codes",
       "unsupported": true,
       "unsupported_reason": "'other gastrointestinal surgeries that induce chronic malabsorption' names no enumerable set of procedure codes",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -227,6 +241,7 @@
       "compiled_as": "not formalised: the criterion names three examples of an open class of disorders, and compiling the examples would exclude fewer patients than the protocol does",
       "unsupported": true,
       "unsupported_reason": "the criterion names three examples of an open class of disorders, and compiling the examples would exclude fewer patients than the protocol does",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -239,6 +254,7 @@
       "compiled_as": "(a documented diagnosis of malignant neoplastic disease, recorded within the 5 years before screening) and (not (a documented diagnosis of basal cell carcinoma, recorded within the 5 years before screening))",
       "unsupported": false,
       "unsupported_reason": null,
+      "settlement": null,
       "codes": [
         {
           "system": "SNOMED",
@@ -268,6 +284,7 @@
       "compiled_as": "not formalised: the local label is not part of the patient record",
       "unsupported": true,
       "unsupported_reason": "the local label is not part of the patient record",
+      "settlement": "at_visit",
       "codes": [],
       "critic": null
     },
@@ -280,6 +297,7 @@
       "compiled_as": "not formalised: the second half of the criterion covers any treatment leading to unstable body weight, which names no coded intervention",
       "unsupported": true,
       "unsupported_reason": "the second half of the criterion covers any treatment leading to unstable body weight, which names no coded intervention",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -292,6 +310,7 @@
       "compiled_as": "not formalised: a change in thyroid dose and an uncontrolled endocrine disorder are neither of them recorded as a codeable finding",
       "unsupported": true,
       "unsupported_reason": "a change in thyroid dose and an uncontrolled endocrine disorder are neither of them recorded as a codeable finding",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -304,6 +323,7 @@
       "compiled_as": "not formalised: birth control and agreement to periodic pregnancy testing are undertakings by the patient, not findings in the chart",
       "unsupported": true,
       "unsupported_reason": "birth control and agreement to periodic pregnancy testing are undertakings by the patient, not findings in the chart",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -316,6 +336,7 @@
       "compiled_as": "not formalised: the criterion turns on whether the behaviour would interfere with participation, which is a judgement rather than a finding",
       "unsupported": true,
       "unsupported_reason": "the criterion turns on whether the behaviour would interfere with participation, which is a judgement rather than a finding",
+      "settlement": "from_data",
       "codes": [],
       "critic": null
     },
@@ -328,6 +349,7 @@
       "compiled_as": "not formalised: participation in another trial is not recorded in the chart",
       "unsupported": true,
       "unsupported_reason": "participation in another trial is not recorded in the chart",
+      "settlement": "at_visit",
       "codes": [],
       "critic": null
     },
@@ -340,6 +362,7 @@
       "compiled_as": "not formalised: the criterion is a catch-all reserved for the investigator",
       "unsupported": true,
       "unsupported_reason": "the criterion is a catch-all reserved for the investigator",
+      "settlement": "at_visit",
       "codes": [],
       "critic": null
     },
@@ -352,6 +375,7 @@
       "compiled_as": "(a documented diagnosis of acute coronary syndrome, recorded within the 2 months before consent) or (a documented diagnosis of stroke, recorded within the 2 months before consent) or (a documented diagnosis of transient ischaemic attack, recorded within the 2 months before consent)",
       "unsupported": false,
       "unsupported_reason": null,
+      "settlement": null,
       "codes": [
         {
           "system": "SNOMED",
