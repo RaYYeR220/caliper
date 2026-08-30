@@ -41,10 +41,14 @@ it to be discovered by filtering to a verdict that never appears.
 So the demo carries a second cohort, and marks it everywhere. The fifteen screenings on NCT03315143
 whose identifier carries a `CK-` case number are **constructed**: charts from
 [`eval/answer_key.json`](../eval/answer_key.json) that were edited to supply a measurement the
-patient never had, so that a bound the protocol states could be crossed on purpose. Seven of them
-the key derives as eligible on the criteria it scopes in; four are ineligible by one unit; four are
+patient never had, so that a bound the protocol states could be crossed on purpose. Six of them the
+key derives as eligible on the criteria it scopes in; six are ineligible by one unit; three are
 undecidable because the measurement was removed instead. Caliper still stops at needs review on all
-seven of the eligible ones, and each of those packets names the criteria that stopped it.
+six of the eligible ones, and each of those packets names the criteria that stopped it.
+
+Those counts are version two of the key, which is the file linked above. Version one, kept unchanged
+as `eval/answer_key.v1.json` and scored beside it, splits the same fifteen 7 / 4 / 4; the difference
+is the vital-status correction, and `eval/annotation/corrections.md` lists every label that moved.
 
 Every constructed screening carries its case number in its name, a hatched edge in the queue and on
 the packet, and — above the verdict, before anything derived from the chart — the frozen key's own

@@ -31,7 +31,7 @@ Tiers:
 | Unit conversion refuses rather than guesses on an unvetted analyte | VERIFIED | `caliper/units.py`, `tests/test_evaluate.py` |
 | No criterion is decided from evidence dated after the screening date | VERIFIED | `_in_window` in `caliper/record.py`, `tests/test_record.py` |
 | A patient recorded as deceased before screening is never eligible | VERIFIED | `screen` in `caliper/screen.py`, `tests/test_screen.py` |
-| Every unresolved criterion carries what would resolve it | VERIFIED | `ResolutionHint`, asserted for every predicate type in `tests/test_evaluate.py` |
+| An unresolved observation, presence, demographic or unsupported criterion carries what would resolve it | VERIFIED | `ResolutionHint`, parametrized over those four in `tests/test_evaluate.py`. **Composites and the medication and procedure variants of `PresencePredicate` are not covered by that parametrization**, and composites are 2 of the 8 criteria in one committed trial, so this is narrower than "every predicate type" |
 | Perturbing an input changes the verdict in the required direction | REPRODUCIBLE | `pytest tests/test_metamorphic.py` — relations true by construction |
 | Only a criterion the record was supposed to settle blocks a verdict | VERIFIED | `UnsupportedPredicate.settlement` in `caliper/ir.py`, `roll_up` in `logic.py`, `tests/test_settlement.py` |
 | A compiler that says nothing about settlement cannot unblock a verdict | VERIFIED | the default is `from_data`; asserted in `tests/test_settlement.py` |
@@ -76,7 +76,7 @@ Tiers:
 | Per-criterion abstention is not novel | VERIFIED | TrialGPT (Nat Commun 2024) labels criteria including "not enough information"; TREC Clinical Trials has separated "excluded" from "insufficient information" since 2021 |
 | Compiling criteria to executable form is not novel | VERIFIED | Criteria2Query (JAMIA 2019), OHDSI ATLAS cohort expressions compiled by `circe-be` |
 | Three-valued logic with null propagation is not novel | VERIFIED | the CQL logical specification; our evaluator implements the same semantics deliberately |
-| Abstention without explanation shifts errors rather than removing them | VERIFIED | a 2025 study of 259 clinicians, cited in `README.md` |
+| Abstention without explanation shifts errors rather than removing them | MODELLED | a 2025 study of 259 clinicians, described in `README.md`. We read it during design and did not re-verify it while offline; it carries no author or venue here, so treat it as the reasoning behind a design choice rather than as a checked citation |
 
 ## Claims the hot take makes
 
@@ -84,9 +84,11 @@ Tiers:
 |---|---|---|
 | The baseline is more accurate than Caliper on this key | MEASURED | `RESULTS.md`, arm table: 80% against 73% |
 | The baseline sent two ineligible patients forward and Caliper sent none | MEASURED | same table, unsafe-error column |
-| Removing the critic improved accuracy and coverage | MEASURED | `caliper-no-critic` row; the four cases it moved are named in `CHANGELOG.md` |
+| Removing the critic improved accuracy and coverage | MEASURED | `caliper-no-critic` row; the four cases it moved are `AK-002`, `AK-003`, `AK-012` and `AK-025`, each `needs_review` with the critic and `ineligible` without, obtainable by diffing `eval/results/caliper.json` against `caliper-no-critic.json` |
 | Neither difference is larger than the confidence interval | MEASURED | the CI column spans ~26 points at n=51 |
 | No cross-provider or open-weight comparison was run | NOT CLAIMED | there is no such arm in `evalcmd.ARMS`, and none in `RESULTS.md` |
+| Three-valued logic, the quote check and the unit refusal are what "paid" | NOT CLAIMED | no arm removes any of the three. The hot take says which parts we would keep and why; only the critic, the resolver, per-span compilation and the absence policy are ablated |
+| The span-coverage figure comparing per-span to whole-protocol compilation | NOT CLAIMED | `caliper compile` prints it per trial, and nothing in `RESULTS.md` compares the two arms on it. `CHANGELOG.md` names it as the evidence that would settle entry 4 and says it is not the accuracy column |
 
 ---
 

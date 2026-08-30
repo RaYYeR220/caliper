@@ -69,16 +69,24 @@ and nothing below is meaningful.
 **`caliper eval --replay`** — one line per arm as it finishes, then a table of every arm with its
 accuracy, coverage, unsafe errors and cost. The replayed cost is zero. Roughly one minute.
 
-**`caliper report`** — writes `RESULTS.md` from the results of step 2. `make eval` scores the same
-recorded decisions against both answer keys, and `make report` renders both columns, because the key
-was corrected after a scored run and the honest thing is to let you see whether the correction moved
-the conclusion or only the figures. It did not move the conclusion: which arms committed an unsafe
-error is identical under both. The file is generated rather
+**`caliper report`** — writes `RESULTS.md`. Use `make eval && make report` rather than the bare
+commands: the committed `RESULTS.md` carries a second table scoring the same recorded decisions
+against the *earlier* answer key, and that needs both `eval/results/` and `eval/results-v1/`, which
+is what the `make` targets produce. `caliper eval --replay` followed by a bare `caliper report`
+writes a valid file twenty lines shorter, missing that section, and you would be right to wonder
+why it differed from the committed one.
+
+The comparison is there because the key was corrected after a scored run, which is the least
+trustworthy moment to correct one. It did not move the conclusion: which arms committed an unsafe
+error is identical under both keys.
+
+`RESULTS.md` **is** committed, so `git diff --stat RESULTS.md` after `make eval && make report` is a
+real check and should come back empty. The file is generated rather
 than committed, so there is nothing to diff it against: run step 2 twice and `caliper report` twice
 and the two `RESULTS.md` must be byte-identical, which is what `caliper eval --replay` being a
 replay means. Every figure in it is computed from `eval/results/`; none is typed by hand.
 
-**`pytest`** — the whole suite, about seven seconds. It includes the metamorphic suite, which needs
+**`pytest`** — the whole suite, about twenty-five seconds on an ordinary laptop. It includes the metamorphic suite, which needs
 no model at all: those cases assert a required relationship between two runs (redact the only
 creatinine and the criterion that used it *must* become unresolved) rather than asserting an answer,
 so they hold whatever anyone believes about the answer key.
@@ -120,20 +128,22 @@ caliper eval --record      # calls the provider and rewrites eval/tape.jsonl
 against a configured base URL, and the provider profile carries whatever non-standard body each
 provider needs.
 
-**Approximate cost and runtime for one full evaluation** (all ten arms over the answer key):
+**Cost and runtime for one full evaluation** (all eleven arms over the answer key):
 
 | | |
 |---|---|
-| Model calls | 885 in the committed recording: 479 compiler, 207 critic, 148 resolver, 51 baseline |
-| Tokens | 7.8 million, overwhelmingly prompt rather than completion |
-| Cost | $21.67 at `claude-sonnet-5` list prices |
+| Model calls | 767: 479 compiler, 213 critic, 51 baseline, and 24 resolver steps that cost nothing |
+| Tokens | 8.3 million, overwhelmingly prompt rather than completion |
+| Cost | $22.61 at `claude-sonnet-5` list prices |
 | Wall clock | an hour and a half, dominated by rate limits rather than compute |
 
-None of those four figures is typed from memory: `caliper costs eval/results/trajectory.jsonl`
-prints the first three from the recording itself, broken down by agent and by model, and it is the
-same command the cost column in `RESULTS.md` comes from. The compiler dominates because it is asked
-one criterion at a time — that is the choice entry 4 in `CHANGELOG.md` describes, and this is its
-price.
+Read those out of the recording rather than from here: `caliper costs eval/results/trajectory.jsonl`
+prints the first three broken down by agent and by model, and its total is the same figure the cost
+column in `RESULTS.md` sums to. The compiler dominates because it is asked one criterion at a time —
+that is the choice entry 4 in `CHANGELOG.md` describes, and this is its price. The resolver's
+twenty-four steps carry no tokens and no cost because every one of them was served by the
+terminology store rather than by a model; the store is what makes the second trial nearly free, and
+`caliper costs` prints those steps as unpriced rather than hiding them.
 
 `caliper costs eval/results/trajectory.jsonl` breaks the actual figure down by agent and by model,
 and `caliper tape` shows what was asked to produce it.
@@ -197,5 +207,7 @@ works offline and on a machine with no Node installed.
 
 ## Versions
 
-Recorded per run in `eval/results/run.json`, and pinned in `uv.lock`. The figures in `RESULTS.md`
+Pinned in `uv.lock`, which is committed. `eval/results/run.json` records what the run did — arms,
+key digest, exchange counts, cost — and not which versions produced it; if you need to reproduce the
+environment exactly, `uv sync` against the lockfile is the mechanism. The figures in `RESULTS.md`
 were produced on Python 3.12 with the dependency set in that lock file.

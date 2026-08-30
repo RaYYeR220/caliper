@@ -81,7 +81,7 @@ Two trials require a cardiovascular risk judgement and neither defines it. EMPA-
 the three words "High cardiovascular risk". SCORED's inclusion 3 asks for "at least one major
 cardiovascular risk factor" or, from 55, "at least two minor cardiovascular risk factors", and
 enumerates neither class. Pass 2 supplied a definition — obesity, metabolic syndrome and
-hyperlipidaemia counted as major factors — and resolved all six. Pass 1 abstained on all six.
+hyperlipidaemia counted as major factors — and resolved all nine. Pass 1 abstained on all nine.
 
 The decision splits them, on a single principle: the criterion resolves where every plausible
 definition gives the same answer, and abstains where the definition does the work.

@@ -6,7 +6,7 @@ Answer key: **51 cases**, digest `2c411896ee836f16…`. `caliper eval` refuses t
 
 ## Headline
 
-Caliper decided **73%** of its 51 cases without a human, committing no unsafe error in doing so. The single-prompt baseline decided **86%** of the same 51 cases and committed **2** unsafe errors.
+Caliper decided **65%** of its 51 cases without a human, committing no unsafe error in doing so. The single-prompt baseline decided **84%** of the same 51 cases and committed **2** unsafe errors.
 
 At this sample size an exact binomial interval spans about 26 percentage points. Differences narrower than that are not differences, and the intervals are printed so that is checkable rather than asserted.
 
@@ -14,17 +14,17 @@ At this sample size an exact binomial interval spans about 26 percentage points.
 
 | Arm | Cases | Accuracy | Balanced | 95% CI | Coverage | Unsafe errors | False abstention | Coverage at 0 unsafe | Cost |
 |---|---:|---:|---:|---|---:|---:|---:|---:|---:|
-| `caliper` | 51 | 73% | 60% | 58%–84% | 73% | 0 | 30% | 73% | $6.54 |
-| `caliper-whole-protocol` | 51 | 73% | 60% | 58%–84% | 73% | 0 | 30% | 73% | $2.60 |
-| `caliper-no-critic` | 51 | 80% | 63% | 67%–90% | 80% | 0 | 21% | 80% | $5.96 |
-| `caliper-no-resolver` | 51 | 71% | 37% | 56%–83% | 88% | 0 | 13% | 88% | $6.54 |
-| `caliper-closed-world` | 51 | 73% | 60% | 58%–84% | 73% | 0 | 30% | 73% | $0.00 |
-| `caliper-open-world` | 51 | 65% | 57% | 50%–78% | 65% | 0 | 38% | 65% | $0.00 |
-| `single_prompt` | 51 | 80% | 60% | 67%–90% | 86% | 2 | 15% | 0% | $0.96 |
-| `always_needs_review` | 51 | 8% | 33% | 2%–19% | 8% | 0 | 100% | 8% | $0.00 |
+| `caliper` | 51 | 73% | 60% | 58%–84% | 65% | 0 | 30% | 65% | $6.54 |
+| `caliper-whole-protocol` | 51 | 73% | 60% | 58%–84% | 65% | 0 | 30% | 65% | $2.60 |
+| `caliper-no-critic` | 51 | 80% | 63% | 67%–90% | 73% | 0 | 21% | 73% | $5.96 |
+| `caliper-no-resolver` | 51 | 71% | 37% | 56%–83% | 86% | 0 | 13% | 86% | $6.54 |
+| `caliper-closed-world` | 51 | 73% | 60% | 58%–84% | 65% | 0 | 30% | 65% | $0.00 |
+| `caliper-open-world` | 51 | 65% | 57% | 50%–78% | 57% | 0 | 38% | 57% | $0.00 |
+| `single_prompt` | 51 | 80% | 60% | 67%–90% | 84% | 2 | 15% | 0% | $0.96 |
+| `always_needs_review` | 51 | 8% | 33% | 2%–19% | 0% | 0 | 100% | 0% | $0.00 |
 | `always_eligible` | 51 | 12% | 33% | 4%–24% | 100% | 45 | 0% | 0% | $0.00 |
 | `always_ineligible` | 51 | 80% | 33% | 67%–90% | 100% | 0 | 0% | 100% | $0.00 |
-| `random` | 51 | 29% | 24% | 17%–44% | 73% | 18 | 30% | 0% | $0.00 |
+| `random` | 51 | 29% | 24% | 17%–44% | 71% | 18 | 30% | 0% | $0.00 |
 
 The `Coverage at 0 unsafe` column is the operating point: the share of cases an arm decided by itself, or nothing at all if it committed an unsafe error. Safety is a precondition there rather than something to trade coverage against.
 

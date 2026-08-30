@@ -7,7 +7,7 @@ attack first. Every claim in `README.md` is meant to be read against this file.
 
 | Component | Status |
 |---|---|
-| Trial eligibility criteria | **Real.** Ten studies pulled from the ClinicalTrials.gov v2 API and committed verbatim, with the registry's own `dataTimestamp`. Nothing was hand-edited. |
+| Trial eligibility criteria | **Real.** Ten studies pulled from the ClinicalTrials.gov v2 API and committed verbatim, with the registry's own `dataTimestamp`. Nothing was hand-edited. **The evaluation covers eight of them:** `NCT05763121` and `NCT06547333` have no cases in the answer key and were never compiled, so any statement here about "every protocol" means the eight that were. |
 | Patient records | **Synthetic.** Synthea FHIR R4 bundles from MITRE's public sample, trimmed to ten resource types. No real person, no PHI, and none of this is derived from a real chart. |
 | Clinical notes | **Hand-authored for this project.** Synthea's own notes are fill-in-the-blank templates with no clinical language in them, so the narrative cases use notes we wrote. They are listed in `data/notes/manifest.json` and are clearly labelled as authored fixtures. |
 | Terminology codes | **Real code systems, resolved by a model.** LOINC, SNOMED CT and RxNorm identifiers are checked for shape but are not validated against a terminology server. |
@@ -28,10 +28,10 @@ Not "this patient is eligible for this trial". It means:
 > has been settled with cited evidence, and these N criteria remain — each of which is settled at the
 > screening visit for every patient, and each of which is listed.
 
-That distinction is deliberate and it was forced on us by the data. Every one of the ten protocols in
+That distinction is deliberate and it was forced on us by the data. Every one of the eight protocols in
 the corpus contains at least one criterion no chart could ever answer: signed written informed
 consent, a procedure planned after randomisation, the investigator's own judgement of the patient in
-person. Treating those as unresolved data made `ELIGIBLE` unreachable for all ten — one consent
+person. Treating those as unresolved data made `ELIGIBLE` unreachable for all eight — one consent
 criterion and the screening abstains, whoever the patient is. That is not caution; it is a system
 that never says anything.
 
@@ -55,15 +55,22 @@ cannot thereby unblock a verdict.
   protocol was written rather than by how good the system is.
 - **Resolve "above the upper limit of normal".** Reference ranges are laboratory-specific and are
   not in the record we are given. Any criterion phrased that way abstains.
-- **Reconcile `mL/min` with `mL/min/1.73m^2`.** This is worth naming separately because it is the
-  single most expensive refusal we measured: on the headline trial it is the top blocker, holding up
-  **18 of 24 screenings** — more than the three genuinely-unformalisable criteria beneath it. The
-  protocol asks for an eGFR normalised to body surface area; the chart reports one that is not, or
-  is labelled as though it is not. Converting needs the patient's BSA, and whether Synthea's
-  `mL/min` is a genuinely un-normalised measurement or a labelling slip is not knowable from the
-  bundle. So the criterion abstains and the packet says why. It is the clearest case in the corpus
-  of an abstention that is correct, cheap to close, and *not* a limit of the model: one line from a
-  site telling us how their laboratory reports eGFR would clear eighteen screenings.
+- **Reconcile `mL/min` with `mL/min/1.73m^2`.** Worth naming separately because it is the one
+  blocker in the corpus that is not a limit of the design. The protocol asks for an eGFR normalised
+  to body surface area; the chart reports one that is not, or is labelled as though it is not.
+  Converting needs the patient's BSA, and whether Synthea's `mL/min` is genuinely un-normalised or a
+  labelling slip is not knowable from the bundle, so the criterion abstains and the packet says why.
+  One line from a site about how its laboratory reports eGFR would settle it.
+
+  **It would not, on its own, clear a single screening**, and the arithmetic is worth doing here
+  rather than leaving a reader to find it. On the headline trial it blocks 18 of 24 screenings —
+  and so do the other three unformalisable criteria, exactly the same 18, because the remaining 6
+  patients died before the screening date and never reach a criterion at all. Settle the unit
+  question and those 18 screenings are still held by an unenumerated risk-factor category, a
+  treatment-stability question the chart cannot answer, and an open-ended list. That is what a
+  blocker table is for: the top row is not the bottleneck, the *set* is. Of the 24 screenings on
+  that trial, 13 already end in a verdict — an exclusion fires before the open criteria matter —
+  and 11 are the ones settling all four would actually release.
 
 - **Convert an analyte we have not vetted.** `caliper/units.py` carries an explicit table. A mass
   unit cannot be converted to a molar one without knowing the substance, so an analyte missing from

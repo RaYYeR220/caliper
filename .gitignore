@@ -18,7 +18,9 @@ venv/
 .coverage
 htmlcov/
 dist/
-build/
+# Anchored to the root. Unanchored, this swallowed `trajectories/build/` — three files the
+# README links to and the challenge requires — and the repository looked complete locally.
+/build/
 
 # --- node / web ---
 node_modules/

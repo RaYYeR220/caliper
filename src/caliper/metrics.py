@@ -53,10 +53,16 @@ class CaseScore:
 
     @property
     def answered(self) -> bool:
-        """Whether the system committed to something a coordinator can act on without a chart."""
-        return self.decision is not ScreeningOutcome.NEEDS_REVIEW or (
-            self.expected is ScreeningOutcome.NEEDS_REVIEW
-        )
+        """Whether the system committed to a verdict. Nothing about whether it was the right one.
+
+        This once also counted an abstention the key agreed with, on the reasoning that sending a
+        genuinely undecidable case to a human is the correct output. It is — and it is still an
+        abstention. The coordinator opens the chart either way, so nothing was covered; and the
+        inflated figure gave `always_needs_review`, which decides nothing at all, a coverage of 8%,
+        which is precisely the reading that arm is in the table to make impossible. Coverage here
+        is coverage in the selective-prediction sense: one minus the abstention rate.
+        """
+        return self.decision is not ScreeningOutcome.NEEDS_REVIEW
 
     @property
     def correct(self) -> bool:
@@ -151,7 +157,7 @@ def coverage_at_zero_unsafe(scores: list[CaseScore]) -> float:
     headline. It measures a threshold the system does not run at, and it is won outright by a system
     that answers nothing: every case sits on the curve at full width, no answer is ever given, and
     so no answer is ever unsafe. That is how `always_needs_review` scored 100% here while Caliper,
-    which really did decide 86% of its cases without committing a single unsafe error, scored zero.
+    which really did decide 65% of its cases without committing a single unsafe error, scored zero.
 
     Retiring the number in favour of printing coverage and unsafe errors side by side was the other
     option, and the report does print both. But one arm has to be comparable against another in a

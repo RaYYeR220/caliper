@@ -371,3 +371,51 @@ class TestSummary:
         ]
         summary = summarise(scores, arm="caliper")
         assert set(summary.by_provenance) == {"constructed", "annotated"}
+
+
+class TestCoverageCountsCommitments:
+    """Coverage is the share of cases the system did not abstain on. Nothing else belongs in it.
+
+    The first definition also counted an abstention the key agreed with — "correct to send this to a
+    human" read as "answered". That inflated the headline by eight points and, worse, gave
+    `always_needs_review` a coverage of 8% while it decided literally nothing, which is the exact
+    reading the arm exists to make impossible. Coverage in the selective-prediction sense (El-Yaniv
+    and Wiener) is one minus the abstention rate, and a coordinator still has to open the chart on
+    every case the system declined, whether or not declining was right.
+    """
+
+    def a_score(self, expected: Outcome, decision: Outcome) -> CaseScore:
+        return CaseScore(
+            case_id="c",
+            expected=expected,
+            decision=decision,
+            forced_decision=Outcome.ELIGIBLE,
+            criteria_coverage=1.0,
+        )
+
+    def test_an_abstention_the_key_agrees_with_is_still_an_abstention(self):
+        score = self.a_score(Outcome.NEEDS_REVIEW, Outcome.NEEDS_REVIEW)
+
+        assert score.answered is False
+        assert empirical_coverage([score]) == 0.0
+
+    def test_a_verdict_is_answered_whether_or_not_it_is_right(self):
+        wrong = self.a_score(Outcome.ELIGIBLE, Outcome.INELIGIBLE)
+
+        assert wrong.answered is True
+        assert empirical_coverage([wrong]) == 1.0
+
+    def test_an_arm_that_abstains_on_everything_covers_nothing(self):
+        scores = [
+            self.a_score(Outcome.INELIGIBLE, Outcome.NEEDS_REVIEW),
+            self.a_score(Outcome.NEEDS_REVIEW, Outcome.NEEDS_REVIEW),
+        ]
+
+        assert empirical_coverage(scores) == 0.0
+
+    def test_the_abstention_it_got_right_is_still_credited_as_accurate(self):
+        """Coverage and accuracy answer different questions, and the fix must not blur them."""
+        score = self.a_score(Outcome.NEEDS_REVIEW, Outcome.NEEDS_REVIEW)
+
+        assert score.correct is True
+        assert score.answered is False

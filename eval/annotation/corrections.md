@@ -7,15 +7,25 @@ enough detail that a reader can disagree with any of it line by line.
 
 ## The run
 
-The corrections follow the first full evaluation, recorded in `eval/results/`:
+The corrections follow the **first** full evaluation, which scored version 1 of the key, finished
+`2026-08-30T08:30:46Z` and cost $21.67. Its `caliper` arm answered 23 of 51 correctly with 0 unsafe
+errors, and that is the run whose disagreements sent us back to the key.
+
+**That run is no longer the one in `eval/results/`.** Two bugs it exposed — the runner ignoring each
+case's declared edits, and a chart summary that omitted a recorded death — were fixed, which meant
+re-recording, so the committed recording is a later one. Every figure below has been recomputed
+against the committed run rather than left at what the first one said; where a number differs from
+the narrative above, the committed artifacts are right and this paragraph is history.
+
+The committed run, for reference:
 
 | | |
 |---|---|
-| finished | `2026-08-30T08:30:46Z` (`eval/results/run.json`) |
-| key scored | version 1, digest `42b74a00ab98ffa9d7a4c2bb366707a83fc10e65a7e30b73315a81f5c145d975` |
-| arms | 10, over 51 cases each |
-| cost | $21.67 |
-| headline | the `caliper` arm answered 23 of 51 correctly, 45.1%, with 0 unsafe errors |
+| finished | `2026-08-30T13:33:59Z` (`eval/results/run.json`) |
+| keys scored | version 2 in `eval/results/`, version 1 in `eval/results-v1/`, same recorded decisions |
+| arms | 11, over 51 cases each |
+| cost | $22.61 |
+| headline | the `caliper` arm answered 37 of 51 correctly, 72.5%, with 0 unsafe errors |
 
 Version 1 is kept unchanged as `eval/answer_key.v1.json`, with its own sidecar carrying that same
 digest. Version 2 is `eval/answer_key.json`, digest
@@ -148,19 +158,19 @@ should distrust. Three things bound it:
 3. **It does not flatter selectively.** Rescoring the *same recorded decisions* from the run above
    against both keys:
 
-   | arm | v1 | v2 | |
+   | arm | v1 | v2 | cases |
    |---|---:|---:|---:|
-   | `caliper-no-critic` | 54.9% | 78.4% | +12 |
-   | `caliper` | 45.1% | 68.6% | +12 |
-   | `caliper-whole-protocol` | 45.1% | 68.6% | +12 |
-   | `caliper-no-resolver` | 45.1% | 68.6% | +12 |
-   | `caliper-closed-world` | 45.1% | 68.6% | +12 |
-   | `caliper-open-world` | 37.3% | 60.8% | +12 |
-   | `single_prompt` | 58.8% | 70.6% | +6 |
+   | `caliper-no-critic` | 56.9% | 80.4% | +12 |
+   | `caliper` | 49.0% | 72.5% | +12 |
+   | `caliper-whole-protocol` | 49.0% | 72.5% | +12 |
+   | `caliper-no-resolver` | 47.1% | 70.6% | +12 |
+   | `caliper-closed-world` | 49.0% | 72.5% | +12 |
+   | `caliper-open-world` | 41.2% | 64.7% | +12 |
+   | `single_prompt` | 56.9% | 80.4% | +12 |
    | `random` | 31.4% | 29.4% | −1 |
    | `always_needs_review` | 29.4% | 7.8% | −11 |
    | `always_eligible` | 13.7% | 11.8% | −1 |
-   | *always ineligible (not run)* | *56.9%* | *80.4%* | *+12* |
+   | `always_ineligible` | 56.9% | 80.4% | +12 |
 
    The last row is the one that matters. **Version 2 is a more degenerate key than version 1**: 41
    of its 51 cases are `ineligible`, so a system that says `ineligible` to everything now beats every
@@ -169,11 +179,9 @@ should distrust. Three things bound it:
    through its headline. That is a cost of the correction and it is not offset by the fact that the
    correction is right.
 
-   The 15 constructed cases in that run were screened against **unedited** charts, because the
-   runner did not replay perturbations; see error class 2. Their contribution to every number in
-   that table is not meaningful until the runner is wired to `caliper.answerkey.rebuild_patient`.
-   The clean comparison is the annotated half alone: the `caliper` arm scored 19 of 36 against
-   version 1 and 29 of 36 against version 2.
+   The annotated half alone, which the perturbation bug never touched: the `caliper` arm scored 20
+   of 36 against version 1 and 30 of 36 against version 2. The same +10, from the same 12 corrected
+   labels, with the constructed cases removed from the comparison entirely.
 
 ---
 
@@ -239,15 +247,21 @@ judgement about what the evaluation is for, not a correction the chart forces.
 
 ### The defect the 45% run actually exposed
 
-`caliper.evalrun.run_arm` screens `load_patient(case.patient_id)`: the **base** chart, with no
+`caliper.evalrun.run_arm` screened `load_patient(case.patient_id)`: the **base** chart, with no
 perturbations replayed. Every one of the 15 constructed cases in that run was therefore screened
-against a chart that is not the chart its labels describe, and `run.json` records `"replayed":
-false`. The six eligible cases were presented to every arm as prediabetic patients with no eGFR and
-scored against labels written for diabetic patients with an eGFR of 34–52.
+against a chart that is not the chart its labels describe. The six eligible cases were presented to
+every arm as prediabetic patients with no eGFR and scored against labels written for diabetic
+patients with an eGFR of 34–52.
 
 That is a scoring defect, not a key error, and it is the direct cause of the disagreement on those
-cases. The fix is `caliper.answerkey.rebuild_patient`, added by this work as the single
-implementation of perturbation replay; the runner is not wired to it here.
+cases. The fix is `caliper.answerkey.rebuild_patient`, the single implementation of perturbation
+replay, and `run_arm` now takes the whole `Case` rather than its identifier so it cannot load the
+wrong chart again. **The committed run has the fix**; the numbers in this document are from that
+run, not from the broken one.
+
+(`run.json` has a `"replayed"` field and it is not this. It records whether the model tape was
+replayed rather than called live — it reads `true` in the committed run for that reason — and an
+earlier draft of this section cited it as though it meant perturbation replay. It never did.)
 
 ---
 

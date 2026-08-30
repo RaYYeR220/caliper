@@ -12,7 +12,9 @@ docker build -t caliper . && docker run --rm caliper
 ```
 
 That verifies every fixture against its committed digest, runs the whole evaluation from recorded
-model responses, and prints the results table. No API key, no network, no cost.
+model responses, and prints the results table. No API key and no cost. The build pulls a base image
+and installs dependencies, like any build; the run itself reaches nothing, and a tape miss stops it
+rather than falling through to a provider.
 
 Without Docker: `make install && make data-verify && make eval`. Details in
 [`REPRODUCE.md`](REPRODUCE.md).

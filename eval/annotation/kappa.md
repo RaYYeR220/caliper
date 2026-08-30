@@ -68,7 +68,8 @@ misread as a quality certificate.
 The two weakest trials are the two that concentrate the protocol's soft spots. `NCT03315143` has
 five in-scope criteria and one of them, "at least one major cardiovascular risk factor", is
 undefined in the registry text and was reached on all nine of its pairs; that single criterion
-accounts for all nine of its disagreements. `NCT07252908` has the most criteria with explicit short
+accounts for eight of its nine disagreements; the ninth, on `AK-016`, is `NCT03315143-I2` and is
+listed under Theme 6 in `disagreements.md`. `NCT07252908` has the most criteria with explicit short
 windows, and ten of its eleven disagreements are the chart-currency question described in
 `disagreements.md`.
 

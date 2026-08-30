@@ -469,7 +469,11 @@ describe key version 1, which is kept unchanged at `eval/answer_key.v1.json`.*
 
 The first full run finished `2026-08-30T08:30:46Z` and cost $21.67. Scored against key version 1,
 digest `42b74a00...`, the `caliper` arm answered 23 of 51 cases correctly, 45.1%, with 0 unsafe
-errors. Investigating the 28 disagreements found that a substantial fraction of them were errors in
+errors. **Those figures describe that run and not the one in `eval/results/`** — two of the bugs it
+exposed had to be fixed and the evaluation re-recorded, so the committed recording is a later one
+with different numbers. `eval/annotation/corrections.md` carries the committed run's figures beside
+these; this section is kept as it was written because it is the record of what prompted the
+corrections, not a statement about the current results. Investigating the 28 disagreements found that a substantial fraction of them were errors in
 this protocol rather than in the system. That is the most useful thing the run produced, and it is
 reported here rather than buried: an evaluation whose first result is a list of faults in its own
 ground truth is working, but only if the list is published.
@@ -569,9 +573,10 @@ carries.
 
 A constructed case's labels describe the base chart *plus its edits*. `caliper.evalrun.run_arm`
 screened `load_patient(case.patient_id)` — the base chart, unedited — so in the run above all 15
-constructed cases were scored against labels written for a chart no arm was shown, and `run.json`
-records `"replayed": false`. That is a scoring defect rather than a key error, and it accounts for
-the disagreements on those cases. `caliper.answerkey.rebuild_patient` is now the single
+constructed cases were scored against labels written for a chart no arm was shown. That is a scoring
+defect rather than a key error, and it accounts for the disagreements on those cases. (`run.json`
+has a `"replayed"` field, and it is not this one: it records whether the model tape was replayed
+rather than called live. An earlier draft cited it here as though it meant perturbation replay.) `caliper.answerkey.rebuild_patient` is now the single
 implementation of replaying a case's recorded perturbations onto its base chart; it refuses to
 proceed if a recorded edit does not apply exactly as recorded, and returns the base unchanged for an
 annotated case.
@@ -639,13 +644,14 @@ compiler.
 
 ### The caveat, and what is not yet checked
 
-The tape predates the `settlement` field. Every recorded `unsupported` response carries no
-settlement and defaults to `from_data`, so **the right-hand column above is my own reading, not the
-compiler's classification.** What the tape does establish is the harder half — that the compiler
-independently refused to formalise exactly the 23 criteria this protocol scoped out — and that half
-needs no re-recording. The comparison of the two `settlement` values is pre-registered here so that
-it can be run against the real classifications as soon as the tape is re-recorded, without anyone
-choosing the expected answer afterwards.
+*Written when the tape predated the `settlement` field, and left standing because the pre-registration
+is the point. **The tape has since been re-recorded and now carries the compiler's own
+classifications** — 250 `settlement` values across the recorded `unsupported` responses, 73 of them
+`at_visit` — so the comparison below can be run against the real thing rather than against my
+reading, and it was pre-registered before those values existed.*
+
+What the tape established even before that is the harder half: the compiler independently refused to
+formalise exactly the 23 criteria this protocol scoped out, which needed no re-recording to check.
 
 Two further observations from the same matching:
 

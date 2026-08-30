@@ -966,8 +966,8 @@
   "cases": 51,
   "correct": 41,
   "cost_usd": 5.957559999999999,
-  "coverage": 0.803921568627451,
-  "coverage_at_zero_unsafe": 0.803921568627451,
+  "coverage": 0.7254901960784313,
+  "coverage_at_zero_unsafe": 0.7254901960784313,
   "curve": [
     {
       "answered": 51,
@@ -1534,5 +1534,5 @@
   "screenings": 51,
   "selective_risk": 0.0,
   "unsafe": 0,
-  "wall_seconds": 3.564
+  "wall_seconds": 4.279
 }
