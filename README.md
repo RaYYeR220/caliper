@@ -164,9 +164,11 @@ the file has not been hand-edited since it was frozen — not that it predates t
 history is what orders those.
 
 The comparison is in `RESULTS.md` and it is the reason both keys were worth keeping. Correcting the
-key moved every accuracy figure by roughly twenty-four points — Caliper 73% to 49%, the baseline 80%
-to 57% — and left **which arms committed an unsafe error exactly as it was**. The correction changed
-the figures and not the conclusion. That sentence is generated rather than asserted: the report
+key cost every arm that reads a chart about twenty-four points of accuracy — Caliper 73% to 49%, the
+baseline 80% to 57% — and *gained* twenty-two for `always_needs_review`, which is what a base rate
+does when you move twelve cases into the answer it was already giving. What it did not move is
+**which arms committed an unsafe error**: identical under both keys. The correction changed the
+figures and not the conclusion. That last sentence is generated rather than asserted — the report
 refuses to print it unless the two orderings actually match.
 
 ---
