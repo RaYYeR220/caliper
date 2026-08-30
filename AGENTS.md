@@ -96,6 +96,22 @@ saying "I could not do this cleanly, and here is why" rather than working around
 None of those were visible from the outside. All of them came from an agent reading one layer
 closely enough to notice that something did not fit.
 
+### One agent was pointed at the documentation instead of the code
+
+The last substantial piece of work in this repository was not a feature. An agent was given the
+public documents, the committed results, and one instruction: be the judge who checks, find every
+sentence the repository itself refutes, and **report rather than fix**.
+
+That constraint is the interesting part. An agent that fixes what it finds produces a clean tree and
+no list; an agent that only reports produces a list somebody has to act on, one item at a time, which
+is where the judgement belongs. It found twenty-two, including the two most damaging problems in the
+submission — a metric whose name and definition had drifted apart, and three required files an
+unanchored `.gitignore` rule had kept out of every clone. `CHANGELOG.md` has the full account.
+
+It also refuted two claims that had been written *about the agents themselves*, which is the right
+way round: the process description is a claim like any other, and it was checked against the git
+history rather than taken on trust.
+
 ### Discipline that was enforced, not hoped for
 
 - **Tests first.** Every module in this repository was specified as failing tests before it existed.
