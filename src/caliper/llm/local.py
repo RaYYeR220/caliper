@@ -20,11 +20,16 @@ multiplied into a figure that reads like a measurement.
 Nothing here logs, prints, or echoes. The prompts carry protocol text and chart text, and a
 transport is not the place to decide that is safe to write down.
 
-    from caliper.llm import LLMClient
-    from caliper.llm.local import LocalTransport, claude_code_command, local_profile
+`local:claude-code` is a built-in profile, so `CALIPER_PROVIDER=local` resolves to it the way
+`venice` and `openrouter` do. The profile is only half of it: a profile says where a model lives,
+and this one lives in a subprocess, so the caller has to hand `LLMClient` the transport as well.
+`LLMClient` builds an HTTP client when it is given none, and against `local://command` that fails —
+loudly, which is the intended failure and not a fallback.
 
-    transport = LocalTransport(claude_code_command())
-    client = LLMClient(local_profile("claude-code"), transport=transport)
+    from caliper.llm import LLMClient, profile_from_env
+    from caliper.llm.local import LocalTransport, claude_code_command
+
+    client = LLMClient(profile_from_env(), transport=LocalTransport(claude_code_command()))
 """
 
 from __future__ import annotations
@@ -37,12 +42,30 @@ from types import SimpleNamespace
 from typing import Any
 
 from caliper.llm.errors import LLMError
-from caliper.llm.provider import ProviderProfile, StructuredOutput
+from caliper.llm.provider import (
+    CLAUDE_CODE_MODEL,
+    LOCAL_BASE_URL,
+    LOCAL_PROVIDER,
+    ProviderProfile,
+    local,
+)
 
-LOCAL_PROVIDER = "local"
-# Not a URL anyone can reach. It exists so that a profile printed into a trajectory says plainly
-# where the answer came from, and so that anything trying to open it fails loudly.
-LOCAL_BASE_URL = "local://command"
+__all__ = [
+    "CLAUDE_CODE_ARGV",
+    "CHARS_PER_TOKEN",
+    "LOCAL_BASE_URL",
+    "LOCAL_PROVIDER",
+    "EstimatedUsage",
+    "LocalCommand",
+    "LocalCommandError",
+    "LocalCommandFailed",
+    "LocalCommandTimeout",
+    "LocalTransport",
+    "claude_code_command",
+    "estimate_usage",
+    "local_profile",
+    "render_prompt",
+]
 
 # `claude -p` reads a prompt on stdin and writes the completion to stdout. Named here for the
 # convenience constructor below; the transport itself knows nothing about it.
@@ -149,19 +172,20 @@ class LocalMessage:
 class LocalChoice:
     message: LocalMessage
     index: int = 0
-    finish_reason: str = "stop"
 
 
 @dataclass(frozen=True)
 class LocalResponse:
-    """The OpenAI-shaped envelope, with only the fields anything in this codebase reads."""
+    """The OpenAI-shaped envelope, with only the fields anything in this codebase reads.
+
+    Only those fields. A `finish_reason` and a second copy of `usage.is_estimate` were here, and
+    both were write-only: nothing read either, and a field nobody reads is a claim nobody checks.
+    `EstimatedUsage.is_estimate` is the one place that says these counts were inferred.
+    """
 
     choices: tuple[LocalChoice, ...]
     usage: EstimatedUsage
     model: str = LOCAL_PROVIDER
-    # A flat mirror of the flag on `usage`, so that a reader who prints the response rather than
-    # the usage still sees what they are holding.
-    usage_is_estimate: bool = True
 
 
 def render_prompt(
@@ -275,26 +299,14 @@ class LocalTransport:
         return completed.stdout or ""
 
 
-def local_profile(model: str = "local", **overrides: Any) -> ProviderProfile:
-    """A profile for a model reached by running a program, rather than by calling an endpoint.
+def local_profile(model: str = CLAUDE_CODE_MODEL, **overrides: Any) -> ProviderProfile:
+    """A profile for a model reached by running a program. Defined in `provider.py`.
 
-    Three things differ from a hosted profile, and each is a claim about what is true rather than a
-    placeholder. Structured output is `NONE`, because nothing in a pipe enforces a schema and
-    pretending otherwise would start the client on a rung that cannot hold weight. `api_key_env` is
-    empty, because there is no credential to name. Prices are `None`, not zero: a local run is
-    unpriced, not free, and the ledger already counts unpriced calls separately from cheap ones.
+    Kept as a name in this module because a reader who has found the transport should not have to
+    go looking for the profile that goes with it, and because the docstring explaining why the
+    prices are `None` belongs beside the code that estimates the tokens.
     """
-    defaults: dict[str, Any] = {
-        "provider": LOCAL_PROVIDER,
-        "model": model,
-        "base_url": LOCAL_BASE_URL,
-        "api_key_env": "",
-        "structured_output": StructuredOutput.NONE,
-        "input_usd_per_mtok": None,
-        "output_usd_per_mtok": None,
-        "notes": "Answered by a local command. Token counts are estimates; calls are unpriced.",
-    }
-    return ProviderProfile(**{**defaults, **overrides})
+    return local(model, **overrides)
 
 
 def claude_code_command(**overrides: Any) -> LocalCommand:

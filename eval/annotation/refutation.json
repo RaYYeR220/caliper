@@ -1,0 +1,183 @@
+{
+  "note": "Refutation probes. For every criterion that carries a `met` label anywhere in the key, this file records what a `met` label asserts, expressed as a fact that can be looked for in the raw committed FHIR bundle. scripts/build_answer_key.py reads data/patients/*.json directly to run them: not through caliper.record, caliper.evaluate or PatientIndex, because using the system's own matching to validate the key that scores the system would prove nothing. The probes are written from the criterion quotes in criteria.json, which are the registry's own words. They are deliberately weaker than the annotation protocol: a probe asks only whether the chart contains anything that could support the label, ignoring recency, ignoring which result is the most recent, and ignoring the mutual-consistency rule of protocol.md section 5. A probe therefore never disputes a judgement call; it only catches a label the chart cannot support at all.",
+  "screening_date": "2026-06-01",
+  "grammar": {
+    "probe": "null, or a term. A null probe means the criterion states neither a coded condition nor a numeric threshold, so a `met` label on it cannot be refuted from the record; `reason` says why.",
+    "terms": {
+      "all_of": "every sub-term holds",
+      "any_of": "at least one sub-term holds",
+      "condition": "a Condition resource coded with one of `codes` in `system`; `status` and `onset_on_or_before` narrow it further",
+      "absent_condition": "no Condition resource coded with any of `codes` in `system`",
+      "observation": "an Observation, or an Observation component, coded with one of `loinc`, carrying a numeric value inside the stated bounds",
+      "medication": "a MedicationRequest or MedicationStatement coded with one of `codes` in `system`",
+      "age": "the age in whole years at the screening date, from Patient.birthDate",
+      "sex": "Patient.gender is one of the listed values"
+    },
+    "bounds": "`at_least` and `at_most` are inclusive; `above` and `below` are strict. Only results dated on or before the screening date count, because a result the coordinator could not have had in front of them cannot support a label about that day. Undated results count: an undated value is not evidence of absence.",
+    "conventions": "SNOMED and LOINC codes are quoted exactly as data/patients/*.json carries them. Every code named here already appears in the committed corpus."
+  },
+  "probes": {
+    "NCT01131676-I1": {
+      "assertion": "a recorded diagnosis of type 2 diabetes mellitus",
+      "probe": {"condition": {"system": "SNOMED", "codes": ["44054006"], "near": ["714628002", "427089005"]}}
+    },
+    "NCT01131676-I2": {
+      "assertion": "antidiabetic therapy unchanged for the 12 weeks before randomisation",
+      "probe": null,
+      "reason": "a claim about the stability of a regimen over a window, not about the presence of a coded fact or the value of a measurement. Nothing on a chart refutes it."
+    },
+    "NCT01131676-I3": {
+      "assertion": "a glycated haemoglobin between 7.0% and 10.0%",
+      "probe": {"observation": {"loinc": ["4548-4"], "at_least": 7.0, "at_most": 10.0}},
+      "reason": "the criterion states a narrower ceiling of 9.0% for drug-naive patients; the probe uses the wider 10.0% so that it cannot dispute the annotator's reading of which arm applies."
+    },
+    "NCT01131676-I4": {
+      "assertion": "age 18 or over at the screening date",
+      "probe": {"age": {"at_least": 18}}
+    },
+    "NCT01131676-I5": {
+      "assertion": "a body mass index of 45 or below",
+      "probe": {"observation": {"loinc": ["39156-5"], "at_most": 45.0}}
+    },
+    "NCT01131676-I7": {
+      "assertion": "high cardiovascular risk",
+      "probe": null,
+      "reason": "the registry entry states the phrase and never defines it. There is no code set to look for, and inventing one here would make the check an opinion about cardiology rather than a reading of the chart. protocol.md section 3 records the same judgement."
+    },
+    "NCT02545049-I1": {
+      "assertion": "age 18 or over at the screening date",
+      "probe": {"age": {"at_least": 18}}
+    },
+    "NCT02545049-I2": {
+      "assertion": "a recorded diagnosis of type 2 diabetes mellitus",
+      "probe": {"condition": {"system": "SNOMED", "codes": ["44054006"], "near": ["714628002", "427089005"]}}
+    },
+    "NCT02545049-I5": {
+      "assertion": "a serum potassium of 4.8 mmol/L or below",
+      "probe": {"observation": {"loinc": ["2823-3", "6298-4"], "at_most": 4.8}}
+    },
+    "NCT03036124-I2": {
+      "assertion": "age 18 or over at the screening date",
+      "probe": {"age": {"at_least": 18}}
+    },
+    "NCT03315143-I1": {
+      "assertion": "type 2 diabetes mellitus recorded as a condition, together with a glycated haemoglobin of 7% or more",
+      "probe": {
+        "all_of": [
+          {"condition": {"system": "SNOMED", "codes": ["44054006"], "near": ["714628002", "427089005"]}},
+          {"observation": {"loinc": ["4548-4"], "at_least": 7.0}}
+        ]
+      },
+      "reason": "the criterion is a conjunction and both halves are checkable. Prediabetes, SNOMED 714628002, is not type 2 diabetes and does not satisfy the first half."
+    },
+    "NCT03315143-I2": {
+      "assertion": "an estimated glomerular filtration rate between 25 and 60 mL/min/1.73 m2",
+      "probe": {"observation": {"loinc": ["33914-3"], "at_least": 25.0, "at_most": 60.0}}
+    },
+    "NCT03315143-I3": {
+      "assertion": "age 18 or over, with at least one major cardiovascular risk factor",
+      "probe": {"age": {"at_least": 18}},
+      "reason": "only the age floor is refutable. The registry enumerates neither the major nor the minor risk factors, so the second clause has no code set; a passing probe here means the age branch is not contradicted, not that the risk-factor clause was checked."
+    },
+    "NCT03819153-I1": {
+      "assertion": "age 18 or over at the screening date",
+      "probe": {"age": {"at_least": 18}}
+    },
+    "NCT03819153-I2": {
+      "assertion": "a recorded diagnosis of type 2 diabetes mellitus",
+      "probe": {"condition": {"system": "SNOMED", "codes": ["44054006"], "near": ["714628002", "427089005"]}}
+    },
+    "NCT03819153-I3": {
+      "assertion": "a glycated haemoglobin of 10% or below",
+      "probe": {"observation": {"loinc": ["4548-4"], "at_most": 10.0}}
+    },
+    "NCT05748834-I2": {
+      "assertion": "age 18 or over at the screening date",
+      "probe": {"age": {"at_least": 18}}
+    },
+    "NCT05748834-I11": {
+      "assertion": "an estimated glomerular filtration rate of 50 mL/min/1.73 m2 or more",
+      "probe": {"observation": {"loinc": ["33914-3"], "at_least": 50.0}}
+    },
+    "NCT05748834-E7": {
+      "assertion": "a condition that interferes with absorption; the adjudication of AK-026 named cystic fibrosis as the malabsorption syndrome the criterion lists",
+      "probe": {"condition": {"system": "SNOMED", "codes": ["190905008"]}},
+      "reason": "the exclusion lists several qualifying conditions, most of which are severity or symptom grades rather than diagnoses. The code set is the one the adjudication actually relied on, so the probe checks that reasoning rather than restating the whole list."
+    },
+    "NCT06717698-I1": {
+      "assertion": "male, or female of non-childbearing potential",
+      "probe": {
+        "any_of": [
+          {"sex": ["male"]},
+          {"condition": {"system": "SNOMED", "codes": ["267020005", "183996000"]}}
+        ]
+      },
+      "reason": "the male branch is a recorded fact. For a female patient only a recorded sterilisation can support the criterion from the chart alone, so the code set is the corpus's tubal-ligation and sterilisation codes; menopausal status is not coded anywhere in this corpus and is not probed."
+    },
+    "NCT06717698-I2": {
+      "assertion": "age 18 or over at the screening date",
+      "probe": {"age": {"at_least": 18}}
+    },
+    "NCT06717698-I3": {
+      "assertion": "either type 2 diabetes diagnosed at least 180 days before screening with HbA1c 6.5-10.5%, or no type 2 diabetes and HbA1c below 6.5%",
+      "probe": {
+        "any_of": [
+          {
+            "all_of": [
+              {"condition": {"system": "SNOMED", "codes": ["44054006"], "onset_on_or_before": "2025-12-03"}},
+              {"observation": {"loinc": ["4548-4"], "at_least": 6.5, "at_most": 10.5}}
+            ]
+          },
+          {
+            "all_of": [
+              {"absent_condition": {"system": "SNOMED", "codes": ["44054006"]}},
+              {"observation": {"loinc": ["4548-4"], "below": 6.5}}
+            ]
+          }
+        ]
+      },
+      "reason": "2025-12-03 is 180 days before the 2026-06-01 screening date. The date arithmetic is done here rather than in the checker so that the bound is visible in the pre-registered file."
+    },
+    "NCT06717698-I4": {
+      "assertion": "a body mass index of 27.0 kg/m2 or more",
+      "probe": {"observation": {"loinc": ["39156-5"], "at_least": 27.0}}
+    },
+    "NCT07252908-I3": {
+      "assertion": "age between 40 and 80 inclusive at the screening date",
+      "probe": {"age": {"at_least": 40, "at_most": 80}}
+    },
+    "NCT07252908-I4": {
+      "assertion": "a body mass index between 18 and 30 kg/m2 inclusive",
+      "probe": {"observation": {"loinc": ["39156-5"], "at_least": 18.0, "at_most": 30.0}}
+    },
+    "NCT07252908-I7": {
+      "assertion": "a recorded diagnosis of chronic obstructive pulmonary disease",
+      "probe": {"condition": {"system": "SNOMED", "codes": ["13645005", "87433001"]}},
+      "reason": "87433001, pulmonary emphysema, is the code this corpus uses for the obstructive picture the GOLD criteria describe; 13645005 is the COPD code itself and appears in the corpus vocabulary. The probe does not check the GOLD criteria or the one-year symptom duration, neither of which is coded."
+    },
+    "NCT07252908-I8": {
+      "assertion": "an inhaled maintenance therapy for chronic obstructive pulmonary disease is on the chart",
+      "probe": {
+        "medication": {
+          "system": "RxNorm",
+          "codes": ["245314", "859088", "896209", "351109"]
+        }
+      },
+      "reason": "the code set is every inhaled respiratory product the committed corpus carries. The criterion's other half, that the therapy has been stable for four weeks, is a claim about a regimen over a window and is not refutable from a chart."
+    },
+    "NCT07252908-I11": {
+      "assertion": "clinically stable COPD in the four weeks before screening",
+      "probe": null,
+      "reason": "clinical stability is an assessment made at the visit, not a coded fact or a measured quantity."
+    },
+    "NCT07252908-E5": {
+      "assertion": "a concurrent respiratory disease other than COPD, of which asthma is the one this corpus codes",
+      "probe": {"condition": {"system": "SNOMED", "codes": ["195967001"]}},
+      "reason": "the exclusion lists ten respiratory diseases. Only asthma, SNOMED 195967001, occurs anywhere in this corpus, so it is the only member of the list a probe can look for."
+    }
+  },
+  "accepted": {
+    "note": "Flags the check raised that were reviewed and found not to be errors in the key. Each needs a reason naming the fact the check could not see. An entry here that the check no longer raises is a build error, on the same principle as adjudication.json: a waiver that no longer applies is a waiver nobody has re-read.",
+    "entries": []
+  }
+}

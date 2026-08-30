@@ -1,0 +1,26 @@
+{
+  "arms": [
+    "caliper",
+    "caliper-whole-protocol",
+    "caliper-no-critic",
+    "caliper-no-resolver",
+    "caliper-closed-world",
+    "caliper-open-world",
+    "single_prompt",
+    "always_needs_review",
+    "always_eligible",
+    "random"
+  ],
+  "finished_utc": "2026-08-30T08:30:46+00:00",
+  "key_cases": 51,
+  "key_digest": "42b74a00ab98ffa9d7a4c2bb366707a83fc10e65a7e30b73315a81f5c145d975",
+  "replayed": false,
+  "tape_agents": {
+    "baseline": 36,
+    "compiler": 171,
+    "critic": 115,
+    "resolver": 124
+  },
+  "tape_exchanges": 446,
+  "total_usd": 21.67011
+}

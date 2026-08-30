@@ -22,6 +22,17 @@ VENICE_BASE_URL = "https://api.venice.ai/api/v1"
 VENICE_UNION_LIMIT = 16
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
+LOCAL_PROVIDER = "local"
+
+# Not a URL anyone can reach. A local provider is a program on this machine, and the scheme is here
+# so a profile printed into a trajectory says plainly where the answer came from, and so anything
+# that tries to open it fails loudly rather than quietly reaching the internet. It lives in this
+# module rather than in `local.py` because a profile's base URL is a fact about a provider, and
+# `local.py` would otherwise be the one provider that declares its own.
+LOCAL_BASE_URL = "local://command"
+
+CLAUDE_CODE_MODEL = "claude-code"
+
 # Venice prepends a persona system prompt unless it is switched off. A clinical compiler that has
 # been told it is a chatty assistant is a different program from the one we tested.
 VENICE_EXTRA_BODY: dict[str, Any] = {"venice_parameters": {"include_venice_system_prompt": False}}
@@ -153,6 +164,33 @@ def _openrouter(
     )
 
 
+def local(model: str = CLAUDE_CODE_MODEL, **overrides: Any) -> ProviderProfile:
+    """A profile for a model reached by running a program, rather than by calling an endpoint.
+
+    Three fields differ from a hosted profile, and each is a claim about what is true rather than a
+    placeholder. Structured output is `NONE`, because nothing in a pipe enforces a schema and
+    pretending otherwise would start the client on a rung that cannot hold weight. `api_key_env` is
+    empty, because there is no credential to name — `resolve_api_key` and `has_api_key` both read
+    that as "needs none". Prices are `None`, not zero: a local run is unpriced, not free, and the
+    ledger already counts unpriced calls separately from cheap ones.
+
+    A profile is not a transport. `caliper.llm.local.LocalTransport` is what actually runs the
+    program, and `LLMClient` builds an HTTP client when it is not given one, so a caller selecting
+    this profile has to pass that transport in.
+    """
+    defaults: dict[str, Any] = {
+        "provider": LOCAL_PROVIDER,
+        "model": model,
+        "base_url": LOCAL_BASE_URL,
+        "api_key_env": "",
+        "structured_output": StructuredOutput.NONE,
+        "input_usd_per_mtok": None,
+        "output_usd_per_mtok": None,
+        "notes": "Answered by a local command. Token counts are estimates; calls are unpriced.",
+    }
+    return ProviderProfile(**{**defaults, **overrides})
+
+
 _BUILTIN: tuple[ProviderProfile, ...] = (
     _venice(
         "claude-sonnet-5",
@@ -199,10 +237,18 @@ _BUILTIN: tuple[ProviderProfile, ...] = (
         output_usd=None,
         notes="Prices not confirmed; calls against this model are reported as unpriced.",
     ),
+    local(CLAUDE_CODE_MODEL),
 )
 
 DEFAULT_PROVIDER = "venice"
-DEFAULT_MODELS = {"venice": "claude-sonnet-5", "openrouter": "anthropic/claude-sonnet-5"}
+DEFAULT_MODELS = {
+    "venice": "claude-sonnet-5",
+    "openrouter": "anthropic/claude-sonnet-5",
+    # `CALIPER_PROVIDER=local` reaches the Claude Code CLI in print mode. A reviewer who already has
+    # it installed can run the pipeline against no hosted account at all, which is also the check
+    # that the provider seam is real: a transport that shells out shares no code with the SDK.
+    LOCAL_PROVIDER: CLAUDE_CODE_MODEL,
+}
 
 
 def builtin_profiles() -> dict[str, ProviderProfile]:

@@ -6,87 +6,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Diagnosis of type 2 diabetes mellitus prior to informed consent"
-        },
-        {
-          "expected": "met",
-          "quote": "Male or female patients on diet and exercise regimen who are drug naive or pre treated with any background therapy. Antidiabetic therapy has to be unchanged for 12 weeks prior to randomization."
-        },
-        {
-          "expected": "met",
-          "quote": "Glycosylated haemoglobin (HbA1c) of >= 7.0% and <=10% for patients on background therapy or HbA1c >= 7.0% and <= 9.0% for drug naive patients"
-        },
-        {
-          "expected": "met",
-          "quote": "Age >= 18 years"
-        },
-        {
-          "expected": "met",
-          "quote": "Body Mass index <= 45 at Visit 1"
-        },
-        {
-          "expected": "unknown",
-          "quote": "High cardiovascular risk"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Uncontrolled hyperglycaemia with a glucose level >240 mg/dl (>13.3 mmol/L) after an overnight fast during placebo run-in and confirmed by a second measurement (not on the same day)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Indication of liver disease, defined by serum levels of either alanine aminotransferase (ALT), aspartate aminotransferase ALT or alkaline phosphatase above 3 x upper limit of normal (ULN) as determined at screening and/or run in."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Impaired renal function, defined as Glomerular Filtration Rate <30 ml/min (severe renal impairment, Modification of Diet in Renal Disease formula) during screening or run in."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Bariatric surgery within the past two years and other gastrointestinal surgeries that induce chronic malabsorption"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Blood dyscrasias or any disorders causing haemolysis or unstable Red Blood Cell (e.g. malaria, babesiosis, haemolytic anemia)"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Medical history of cancer (except for basal cell carcinoma) and/or treatment for cancer within the last 5 years"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Treatment with anti-obesity drugs (e.g. sibutramine, orlistat) 3 months prior to informed consent or any other treatment at the time of screening (i.e. surgery, aggressive diet regimen, etc.) leading to unstable body weight"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Current treatment with systemic steroids at time of informed consent or change in dosage of thyroid hormones within 6 weeks prior to informed consent or any other uncontrolled endocrine disorder except type 2 diabetes mellitus"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Pre-menopausal women (last menstruation <+ 1 year prior to informed consent) who: are nursing or pregnant or; are of child-bearing potential and are not practicing an acceptable method of birth control, or do not plan to continue using this method throughout the study and do not agree to submit to periodic pregnancy testing during participation in the trial."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Alcohol or drug abuse within the 3 months prior to informed consent that would interfere with trial participation or any ongoing condition leading to a decreased compliance to study procedures or study drug intake"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Participation in another trial with an investigational drug within 30 days prior to informed consent"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Acute coronary syndrome, stroke or TIA within 2 months prior to informed consent"
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "AK-001",
       "nct_id": "NCT01131676",
       "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "A recent, well-populated chart with type 2 diabetes and an in-range HbA1c: every demographic and metabolic criterion resolves, and the case still cannot be decided because the trial bounds liver enzymes this chart has never carried and the registry never defines its cardiovascular-risk criterion. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 3 of 18 are unresolved: NCT01131676-I7, NCT01131676-E2, NCT01131676-E6.",
+      "rationale": "A recent, well-populated chart with type 2 diabetes and an in-range HbA1c: every demographic and metabolic criterion resolves, and the case still cannot be decided because the trial bounds liver enzymes this chart has never carried and the registry never defines its cardiovascular-risk criterion. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2026-05-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "missing_data"
     },
@@ -276,87 +203,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Diagnosis of type 2 diabetes mellitus prior to informed consent"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Male or female patients on diet and exercise regimen who are drug naive or pre treated with any background therapy. Antidiabetic therapy has to be unchanged for 12 weeks prior to randomization."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Glycosylated haemoglobin (HbA1c) of >= 7.0% and <=10% for patients on background therapy or HbA1c >= 7.0% and <= 9.0% for drug naive patients"
-        },
-        {
-          "expected": "met",
-          "quote": "Age >= 18 years"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Body Mass index <= 45 at Visit 1"
-        },
-        {
-          "expected": "unknown",
-          "quote": "High cardiovascular risk"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Uncontrolled hyperglycaemia with a glucose level >240 mg/dl (>13.3 mmol/L) after an overnight fast during placebo run-in and confirmed by a second measurement (not on the same day)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Indication of liver disease, defined by serum levels of either alanine aminotransferase (ALT), aspartate aminotransferase ALT or alkaline phosphatase above 3 x upper limit of normal (ULN) as determined at screening and/or run in."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Impaired renal function, defined as Glomerular Filtration Rate <30 ml/min (severe renal impairment, Modification of Diet in Renal Disease formula) during screening or run in."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Bariatric surgery within the past two years and other gastrointestinal surgeries that induce chronic malabsorption"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Blood dyscrasias or any disorders causing haemolysis or unstable Red Blood Cell (e.g. malaria, babesiosis, haemolytic anemia)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Medical history of cancer (except for basal cell carcinoma) and/or treatment for cancer within the last 5 years"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Treatment with anti-obesity drugs (e.g. sibutramine, orlistat) 3 months prior to informed consent or any other treatment at the time of screening (i.e. surgery, aggressive diet regimen, etc.) leading to unstable body weight"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Current treatment with systemic steroids at time of informed consent or change in dosage of thyroid hormones within 6 weeks prior to informed consent or any other uncontrolled endocrine disorder except type 2 diabetes mellitus"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Pre-menopausal women (last menstruation <+ 1 year prior to informed consent) who: are nursing or pregnant or; are of child-bearing potential and are not practicing an acceptable method of birth control, or do not plan to continue using this method throughout the study and do not agree to submit to periodic pregnancy testing during participation in the trial."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Alcohol or drug abuse within the 3 months prior to informed consent that would interfere with trial participation or any ongoing condition leading to a decreased compliance to study procedures or study drug intake"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Participation in another trial with an investigational drug within 30 days prior to informed consent"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Acute coronary syndrome, stroke or TIA within 2 months prior to informed consent"
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "AK-004",
       "nct_id": "NCT01131676",
       "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "The type 2 diabetes diagnosis is real and does not expire, but every measurement the protocol bounds is ten years old and no encounter has been recorded since 2016-06-13. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 16 of 18 are unresolved: NCT01131676-I2, NCT01131676-I3, NCT01131676-I5, NCT01131676-I7 and 12 more.",
+      "rationale": "The type 2 diabetes diagnosis is real and does not expire, but every measurement the protocol bounds is ten years old and no encounter has been recorded since 2016-06-13. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2016-06-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "temporal"
     },
@@ -366,87 +220,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "unknown",
-          "quote": "Diagnosis of type 2 diabetes mellitus prior to informed consent"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Male or female patients on diet and exercise regimen who are drug naive or pre treated with any background therapy. Antidiabetic therapy has to be unchanged for 12 weeks prior to randomization."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Glycosylated haemoglobin (HbA1c) of >= 7.0% and <=10% for patients on background therapy or HbA1c >= 7.0% and <= 9.0% for drug naive patients"
-        },
-        {
-          "expected": "met",
-          "quote": "Age >= 18 years"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Body Mass index <= 45 at Visit 1"
-        },
-        {
-          "expected": "unknown",
-          "quote": "High cardiovascular risk"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Uncontrolled hyperglycaemia with a glucose level >240 mg/dl (>13.3 mmol/L) after an overnight fast during placebo run-in and confirmed by a second measurement (not on the same day)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Indication of liver disease, defined by serum levels of either alanine aminotransferase (ALT), aspartate aminotransferase ALT or alkaline phosphatase above 3 x upper limit of normal (ULN) as determined at screening and/or run in."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Impaired renal function, defined as Glomerular Filtration Rate <30 ml/min (severe renal impairment, Modification of Diet in Renal Disease formula) during screening or run in."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Bariatric surgery within the past two years and other gastrointestinal surgeries that induce chronic malabsorption"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Blood dyscrasias or any disorders causing haemolysis or unstable Red Blood Cell (e.g. malaria, babesiosis, haemolytic anemia)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Medical history of cancer (except for basal cell carcinoma) and/or treatment for cancer within the last 5 years"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Treatment with anti-obesity drugs (e.g. sibutramine, orlistat) 3 months prior to informed consent or any other treatment at the time of screening (i.e. surgery, aggressive diet regimen, etc.) leading to unstable body weight"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Current treatment with systemic steroids at time of informed consent or change in dosage of thyroid hormones within 6 weeks prior to informed consent or any other uncontrolled endocrine disorder except type 2 diabetes mellitus"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Pre-menopausal women (last menstruation <+ 1 year prior to informed consent) who: are nursing or pregnant or; are of child-bearing potential and are not practicing an acceptable method of birth control, or do not plan to continue using this method throughout the study and do not agree to submit to periodic pregnancy testing during participation in the trial."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Alcohol or drug abuse within the 3 months prior to informed consent that would interfere with trial participation or any ongoing condition leading to a decreased compliance to study procedures or study drug intake"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Participation in another trial with an investigational drug within 30 days prior to informed consent"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Acute coronary syndrome, stroke or TIA within 2 months prior to informed consent"
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "AK-005",
       "nct_id": "NCT01131676",
       "patient_id": "30889246-5f7d-9305-542f-55cb89e1f4de",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "Sixty-five years of this patient's life are undocumented. The date of birth is the only fact that survives as usable. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 16 of 18 are unresolved: NCT01131676-I1, NCT01131676-I2, NCT01131676-I3, NCT01131676-I5 and 12 more.",
+      "rationale": "Sixty-five years of this patient's life are undocumented. The date of birth is the only fact that survives as usable. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 1961-08-23, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "missing_data"
     },
@@ -456,59 +237,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Men or women >=18 years of age"
-        },
-        {
-          "expected": "met",
-          "quote": "Subjects with Type Type 2 Diabetes Mellitus as defined by the American Diabetes Association"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Diagnosis of Diabetic Kidney Disease with persistent high albuminuria or persistent very high albuminuria at the Run-In and Screening Visit"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Pretreated with either angiotensin-converting enzyme inhibitor (ACEI) or angiotensin receptor blocker (ARB) at maximal tolerated labeled dose without adjustments"
-        },
-        {
-          "expected": "met",
-          "quote": "Serum potassium <=4.8 mmol/L"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Confirmed significant non-diabetic renal disease, including clinically relevant renal artery stenosis"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Uncontrolled arterial hypertension (ie, mean sitting systolic blood pressure (SBP) >=170 mmHg or mean sitting diastolic blood pressure(DBP) >=110 mmHg at run in visit, or mean sitting SBP >=160 mmHg or mean sitting DBP >=100 mmHg at screening)"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Clinical diagnosis of chronic heart failure with reduced ejection fraction (HFrEF) and persistent symptoms {New York Heart Association (NYHA) class II - IV} at Run in visit [class 1A recommendation for mineralcorticoid receptor antagonist (MRAs)]"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Dialysis for acute renal failure within 12 weeks of Run-in visit"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Renal allograft in place or scheduled kidney transplant within next 12 months"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Glycated hemoglobin (HbA1c) >12%"
-        }
-      ],
+      "criterion_labels": [],
       "expected": "ineligible",
       "id": "AK-006",
       "nct_id": "NCT02545049",
       "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "Type 2 diabetes is present, but the trial wants diabetic kidney disease with high albuminuria and a maximal-dose RAAS blocker, and the chart has a normal UACR and no ACE inhibitor or ARB. Derived ineligible by roll_up on the adjudicated labels; decided by NCT02545049-I3 (inclusion not met), NCT02545049-I4 (inclusion not met).",
+      "rationale": "Type 2 diabetes is present, but the trial wants diabetic kidney disease with high albuminuria and a maximal-dose RAAS blocker, and the chart has a normal UACR and no ACE inhibitor or ARB. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2026-05-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "none"
     },
@@ -580,59 +316,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Men or women >=18 years of age"
-        },
-        {
-          "expected": "met",
-          "quote": "Subjects with Type Type 2 Diabetes Mellitus as defined by the American Diabetes Association"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Diagnosis of Diabetic Kidney Disease with persistent high albuminuria or persistent very high albuminuria at the Run-In and Screening Visit"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Pretreated with either angiotensin-converting enzyme inhibitor (ACEI) or angiotensin receptor blocker (ARB) at maximal tolerated labeled dose without adjustments"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Serum potassium <=4.8 mmol/L"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Confirmed significant non-diabetic renal disease, including clinically relevant renal artery stenosis"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Uncontrolled arterial hypertension (ie, mean sitting systolic blood pressure (SBP) >=170 mmHg or mean sitting diastolic blood pressure(DBP) >=110 mmHg at run in visit, or mean sitting SBP >=160 mmHg or mean sitting DBP >=100 mmHg at screening)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Clinical diagnosis of chronic heart failure with reduced ejection fraction (HFrEF) and persistent symptoms {New York Heart Association (NYHA) class II - IV} at Run in visit [class 1A recommendation for mineralcorticoid receptor antagonist (MRAs)]"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Dialysis for acute renal failure within 12 weeks of Run-in visit"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Renal allograft in place or scheduled kidney transplant within next 12 months"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Glycated hemoglobin (HbA1c) >12%"
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "AK-008",
       "nct_id": "NCT02545049",
       "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "A diabetic kidney disease diagnosis with a ten-year-old UACR. The criterion asks for persistent albuminuria at the run-in and screening visits, and nothing in this chart can speak to either. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 9 of 11 are unresolved: NCT02545049-I3, NCT02545049-I4, NCT02545049-I5, NCT02545049-E1 and 5 more.",
+      "rationale": "A diabetic kidney disease diagnosis with a ten-year-old UACR. The criterion asks for persistent albuminuria at the run-in and screening visits, and nothing in this chart can speak to either. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2016-06-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "temporal"
     },
@@ -704,83 +395,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Male or female, aged >=18 years"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Established documented diagnosis of symptomatic HFrEF (NYHA functional class II-IV), which has been present for at least 2 months"
-        },
-        {
-          "expected": "unknown",
-          "quote": "LVEF<=40%"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Elevated NT-proBNP levels"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Patients should receive background standard of care for HFrEF and be treated according to locally recognized guidelines"
-        },
-        {
-          "expected": "unknown",
-          "quote": "eGFR >=30 mL/min/1.73 m^2 (CKD-EPI formula) at enrolment (visit 1)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Receiving therapy with an SGLT2 inhibitor within 8 weeks prior to enrolment or previous intolerance of an SGLT2 inhibitor"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Type 1 diabetes mellitus"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Symptomatic hypotension or systolic BP <95 mmHg at 2 out of 3 measurements either at visit 1 or visit 2"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Current acute decompensated HF or hospitalization due to decompensated HF <4 weeks prior to enrolment"
-        },
-        {
-          "expected": "unknown",
-          "quote": "MI, unstable angina, stroke or transient ischemic attack within 12 weeks prior to enrolment"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Coronary revascularization (percutaneous coronary intervention or coronary artery bypass grafting) or valvular repair/replacement within 12 weeks prior to enrolment or planned to undergo any of these operations after randomization"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Implantation of a CRT within 12 weeks prior to enrolment or intent to implant a CRT device"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Previous cardiac transplantation or implantation of a ventricular assistance device or similar device, or implantation expected after randomization"
-        },
-        {
-          "expected": "unknown",
-          "quote": "HF due to restrictive cardiomyopathy, active myocarditis, constrictive pericarditis, hypertrophic (obstructive) cardiomyopathy or uncorrected primary valvular disease"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Symptomatic bradycardia or second or third degree heart block without a pacemaker"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Severe (eGFR <30 mL/min/1.73 m^2 by CKD-EPI), unstable or rapidly progressing renal disease at the time of randomization"
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "AK-010",
       "nct_id": "NCT03036124",
       "patient_id": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "The chart has an ejection fraction, an NT-proBNP and an eGFR, and none of them is usable: the eGFR is MDRD reported in bare mL/min where the protocol names CKD-EPI in mL/min/1.73 m2, and all three are eleven years old. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 16 of 17 are unresolved: NCT03036124-I3, NCT03036124-I4, NCT03036124-I5, NCT03036124-I6 and 12 more.",
+      "rationale": "The chart has an ejection fraction, an NT-proBNP and an eGFR, and none of them is usable: the eGFR is MDRD reported in bare mL/min where the protocol names CKD-EPI in mL/min/1.73 m2, and all three are eleven years old. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2015-09-24, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "unit"
     },
@@ -790,83 +412,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Male or female, aged >=18 years"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Established documented diagnosis of symptomatic HFrEF (NYHA functional class II-IV), which has been present for at least 2 months"
-        },
-        {
-          "expected": "unknown",
-          "quote": "LVEF<=40%"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Elevated NT-proBNP levels"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Patients should receive background standard of care for HFrEF and be treated according to locally recognized guidelines"
-        },
-        {
-          "expected": "unknown",
-          "quote": "eGFR >=30 mL/min/1.73 m^2 (CKD-EPI formula) at enrolment (visit 1)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Receiving therapy with an SGLT2 inhibitor within 8 weeks prior to enrolment or previous intolerance of an SGLT2 inhibitor"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Type 1 diabetes mellitus"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Symptomatic hypotension or systolic BP <95 mmHg at 2 out of 3 measurements either at visit 1 or visit 2"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Current acute decompensated HF or hospitalization due to decompensated HF <4 weeks prior to enrolment"
-        },
-        {
-          "expected": "unknown",
-          "quote": "MI, unstable angina, stroke or transient ischemic attack within 12 weeks prior to enrolment"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Coronary revascularization (percutaneous coronary intervention or coronary artery bypass grafting) or valvular repair/replacement within 12 weeks prior to enrolment or planned to undergo any of these operations after randomization"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Implantation of a CRT within 12 weeks prior to enrolment or intent to implant a CRT device"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Previous cardiac transplantation or implantation of a ventricular assistance device or similar device, or implantation expected after randomization"
-        },
-        {
-          "expected": "unknown",
-          "quote": "HF due to restrictive cardiomyopathy, active myocarditis, constrictive pericarditis, hypertrophic (obstructive) cardiomyopathy or uncorrected primary valvular disease"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Symptomatic bradycardia or second or third degree heart block without a pacemaker"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Severe (eGFR <30 mL/min/1.73 m^2 by CKD-EPI), unstable or rapidly progressing renal disease at the time of randomization"
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "AK-011",
       "nct_id": "NCT03036124",
       "patient_id": "fb56f051-a2cd-ac10-dcb0-e0738295fc1f",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "An ejection fraction of 41.83% sits just above the trial's 40% ceiling and was measured in 1991. The pair exists to show that a threshold comparison against a thirty-five-year-old value is not a threshold comparison. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 16 of 17 are unresolved: NCT03036124-I3, NCT03036124-I4, NCT03036124-I5, NCT03036124-I6 and 12 more.",
+      "rationale": "An ejection fraction of 41.83% sits just above the trial's 40% ceiling and was measured in 1991. The pair exists to show that a threshold comparison against a thirty-five-year-old value is not a threshold comparison. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 1991-06-06, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "temporal"
     },
@@ -1048,35 +601,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
-        }
-      ],
+      "criterion_labels": [],
       "expected": "ineligible",
       "id": "AK-014",
       "nct_id": "NCT03315143",
       "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "The only pair in the key that satisfies this trial's diabetes inclusion, and it fails on renal function: an eGFR of 141.3 against a 25-60 window. Derived ineligible by roll_up on the adjudicated labels; decided by NCT03315143-I2 (inclusion not met).",
+      "rationale": "The only pair in the key that satisfies this trial's diabetes inclusion, and it fails on renal function: an eGFR of 141.3 against a 25-60 window. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2026-05-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "none"
     },
@@ -1086,35 +618,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "unknown",
-          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "AK-015",
       "nct_id": "NCT03315143",
       "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "The same trial as AK-014 against a chart that stops in 2016. All five in-scope criteria are unresolved. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 5 of 5 are unresolved: NCT03315143-I1, NCT03315143-I2, NCT03315143-I3, NCT03315143-E1 and 1 more.",
+      "rationale": "The same trial as AK-014 against a chart that stops in 2016. All five in-scope criteria are unresolved. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2016-06-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "temporal"
     },
@@ -1238,35 +749,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "unknown",
-          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "AK-019",
       "nct_id": "NCT03315143",
       "patient_id": "30889246-5f7d-9305-542f-55cb89e1f4de",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "The shortest criterion set in the key against the emptiest chart in the corpus: five criteria, five unknowns. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 5 of 5 are unresolved: NCT03315143-I1, NCT03315143-I2, NCT03315143-I3, NCT03315143-E1 and 1 more.",
+      "rationale": "The shortest criterion set in the key against the emptiest chart in the corpus: five criteria, five unknowns. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 1961-08-23, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "missing_data"
     },
@@ -1276,59 +766,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Male or female, age above or equal to 18 years at the time of signing informed consent. Japan: Male or female, age above or equal to 20 years at the time of signing informed consent"
-        },
-        {
-          "expected": "met",
-          "quote": "Diagnosed with type 2 diabetes mellitus"
-        },
-        {
-          "expected": "met",
-          "quote": "HbA1c less than or equal to 10% (less than or equal to 86 mmol/mol)"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Renal impairment defined either by: 1. serum creatinine-based eGFR greater than or equal to 50 and less than or equal to 75 mL/min/1.73 m^2 (CKD-EPI) and UACR greater than 300 and less than 5000 mg/g or 2. serum creatinine-based eGFR greater than or equal to 25 and less than 50 mL/min/1.73 m^2 (CKD-EPI) and UACR greater than 100 and less than 5000 mg/g"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Treatment with maximum labelled or tolerated dose of a renin-angiotensin-aldosterone system (RAAS) blocking agent including an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated. Treatment dose must be stable for at least 4 weeks prior to the date of the laboratory assessments used for determination of the inclusion criteria for renal impairment and kept stable until screening"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Congenital or hereditary kidney diseases including polycystic kidney disease, autoimmune kidney diseases including glomerulonephritis or congenital urinary tract malformations"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Use of any glucagon-like peptide-1 (GLP-1) receptor agonist within 30 days prior to screening"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Myocardial infarction, stroke, hospitalisation for unstable angina pectoris or transient ischaemic attack within 60 days prior to the day of screening"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Presently classified as being in New York Heart Association (NYHA) Class IV heart failure"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Current (or within 90 days) chronic or intermittent haemodialysis or peritoneal dialysis"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Uncontrolled and potentially unstable diabetic retinopathy or maculopathy. Verified by a fundus examination performed within the past 90 days prior to screening or in the period between screening and randomisation."
-        }
-      ],
+      "criterion_labels": [],
       "expected": "ineligible",
       "id": "AK-020",
       "nct_id": "NCT03819153",
       "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "Type 2 diabetes and an HbA1c inside range, but the renal band and the RAAS-blocker requirement both fail on values the chart does carry. Derived ineligible by roll_up on the adjudicated labels; decided by NCT03819153-I4 (inclusion not met), NCT03819153-I5 (inclusion not met).",
+      "rationale": "Type 2 diabetes and an HbA1c inside range, but the renal band and the RAAS-blocker requirement both fail on values the chart does carry. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2026-05-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "none"
     },
@@ -1462,59 +907,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Male or female, age above or equal to 18 years at the time of signing informed consent. Japan: Male or female, age above or equal to 20 years at the time of signing informed consent"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Diagnosed with type 2 diabetes mellitus"
-        },
-        {
-          "expected": "unknown",
-          "quote": "HbA1c less than or equal to 10% (less than or equal to 86 mmol/mol)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Renal impairment defined either by: 1. serum creatinine-based eGFR greater than or equal to 50 and less than or equal to 75 mL/min/1.73 m^2 (CKD-EPI) and UACR greater than 300 and less than 5000 mg/g or 2. serum creatinine-based eGFR greater than or equal to 25 and less than 50 mL/min/1.73 m^2 (CKD-EPI) and UACR greater than 100 and less than 5000 mg/g"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Treatment with maximum labelled or tolerated dose of a renin-angiotensin-aldosterone system (RAAS) blocking agent including an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated. Treatment dose must be stable for at least 4 weeks prior to the date of the laboratory assessments used for determination of the inclusion criteria for renal impairment and kept stable until screening"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Congenital or hereditary kidney diseases including polycystic kidney disease, autoimmune kidney diseases including glomerulonephritis or congenital urinary tract malformations"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Use of any glucagon-like peptide-1 (GLP-1) receptor agonist within 30 days prior to screening"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Myocardial infarction, stroke, hospitalisation for unstable angina pectoris or transient ischaemic attack within 60 days prior to the day of screening"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Presently classified as being in New York Heart Association (NYHA) Class IV heart failure"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Current (or within 90 days) chronic or intermittent haemodialysis or peritoneal dialysis"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Uncontrolled and potentially unstable diabetic retinopathy or maculopathy. Verified by a fundus examination performed within the past 90 days prior to screening or in the period between screening and randomisation."
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "AK-023",
       "nct_id": "NCT03819153",
       "patient_id": "8d91c36a-1f7e-3842-9f14-8d567ed9cdcd",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "A chart with exactly the right shape for a kidney trial — ACE inhibitor, ARB, sacubitril/valsartan — and no encounter for eleven years. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 10 of 11 are unresolved: NCT03819153-I2, NCT03819153-I3, NCT03819153-I4, NCT03819153-I5 and 6 more.",
+      "rationale": "A chart with exactly the right shape for a kidney trial — ACE inhibitor, ARB, sacubitril/valsartan — and no encounter for eleven years. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2015-09-24, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "temporal"
     },
@@ -1524,91 +924,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "At least 18 years-of-age at the time of signature of the informed consent form (ICF)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Eastern Cooperative Oncology Group (ECOG) Performance Status score of 0 or 1"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Have a confirmed diagnosis of locally advanced/metastatic HER2+ breast cancer (based on local laboratory testing per American Society of Clinical Oncology (ASCO)/College of American Pathologists (CAP) guidelines immunohistochemistry 3+ (IHC3+) or fluorescence in situ hybridization + (FISH+))"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Have had prior treatment with at least 1 line of anti-HER2 therapy for locally advanced/metastatic disease or relapsed within 6 months of completion of adjuvant anti-HER2 therapy. Prior treatment with tucatinib in the metastatic setting is allowed"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Measurable disease as measured by Response Evaluation Criteria in Solid Tumors (RECIST) Version 1.1"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Adequate hematologic function: Absolute neutrophil count (ANC) >=1500/uL; Platelet count >=100,000/uL (no transfusions allowed to meet this requirement); Hemoglobin >=9 g/dL (at least 2-week washout from any transfusion)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Adequate hepatic function: Total bilirubin <=1.5 x upper limit of normal (ULN); AST and ALT <=2.5 x ULN (<=5 x ULN if liver metastases are present)"
-        },
-        {
-          "expected": "met",
-          "quote": "Estimated glomerular filtration rate (eGFR) >=50 mL/min/1.73 m2"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Left ventricular ejection fraction (LVEF) >=50% based on screening echocardiogram (ECHO)/multigated acquisition (MUGA)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Central nervous system (CNS) Inclusion - Based on screening contrast brain magnetic resonance imaging (MRI), patients must have one of the following: No evidence of brain metastases; Untreated brain metastases not needing immediate local therapy; Previously treated brain metastases"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Treatment with any of the following: Any systemic anti-cancer chemotherapy or small molecule, biologic, or hormonal agent from a previous treatment regimen or clinical study within 21 days or 5 half-lives (whichever is shorter) prior to the first dose of study drugs; Prior treatment with anthracycline in any setting; Major surgery (excluding placement of vascular access) within 28 days of first dose of study drugs; Palliative radiation therapy within 14 days of first dose of study drugs"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Based on screening brain MRI, patients must not have any of the following: Any untreated brain lesions >2.0 cm in size; Ongoing use of systemic corticosteroids for control of symptoms of brain metastases at a total daily dose of >2 mg of dexamethasone (or equivalent); Any brain lesion thought to require immediate local therapy; Known or suspected leptomeningeal disease (LMD); Have poorly controlled (>1 week) generalized or complex partial seizures"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Use of a strong cytochrome P450 (CYP)2C8-inhibitor or use of a strong CYP3A4 or use of a CYP2C8 inducer within 5 days prior to the first dose of study treatment"
-        },
-        {
-          "expected": "not_met",
-          "quote": "With the exception of alopecia, any unresolved toxicities from prior therapy greater than CTCAE Grade 1 at the time of starting study treatment."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Women who are pregnant or nursing or plan to become pregnant while in the study and for at least 6 months after the last administration of study treatment"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Presence of active gastrointestinal disease or other condition that will interfere significantly with the absorption, distribution, metabolism, or excretion of tucatinib (e.g., ulcerative disease, uncontrolled nausea, vomiting, diarrhea Grade >=2, malabsorption syndrome)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Any of the following cardiac criteria: Mean resting QT interval with QT corrected for heart rate by Fridericia's formula [QTcF]) prolongation to >480 msec for females and >460 msec for males in three successive screening measures; Any clinically important abnormalities in rhythm, conduction, or morphology of resting electrocardiograms (ECGs); Congestive heart failure (New York Heart Association >= Grade 2 within past 6 months); Patients with a left ventricular ejection fraction (LVEF) <50% or the lower limit of normal of the institutional standard"
-        },
-        {
-          "expected": "not_met",
-          "quote": "Known human immunodeficiency virus (HIV) infection or positivity on immunoassay. Testing for seropositive status during screening will be at the discretion of the Investigator for subjects without previously reported results."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Presence of other active invasive cancers other than the one treated in this study within 3 years prior to screening, except appropriately treated basal cell carcinoma of the skin, in situ carcinoma of uterine cervix, or other local tumors considered cured by local treatment"
-        }
-      ],
+      "criterion_labels": [],
       "expected": "ineligible",
       "id": "AK-024",
       "nct_id": "NCT05748834",
       "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "The oncology trial against a patient with no oncological history. The case-level answer is easy and the criterion-level answer is not: ECOG, RECIST, brain MRI, ejection fraction and a liver panel are not things this corpus contains, so most of the criteria are unknown. Derived ineligible by roll_up on the adjudicated labels; decided by NCT05748834-I4 (inclusion not met), NCT05748834-I5 (inclusion not met), NCT05748834-I6 (inclusion not met).",
+      "rationale": "The oncology trial against a patient with no oncological history. The case-level answer is easy and the criterion-level answer is not: ECOG, RECIST, brain MRI, ejection fraction and a liver panel are not things this corpus contains, so most of the criteria are unknown. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2026-05-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "unsupported"
     },
@@ -1712,91 +1035,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "At least 18 years-of-age at the time of signature of the informed consent form (ICF)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Eastern Cooperative Oncology Group (ECOG) Performance Status score of 0 or 1"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Have a confirmed diagnosis of locally advanced/metastatic HER2+ breast cancer (based on local laboratory testing per American Society of Clinical Oncology (ASCO)/College of American Pathologists (CAP) guidelines immunohistochemistry 3+ (IHC3+) or fluorescence in situ hybridization + (FISH+))"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Have had prior treatment with at least 1 line of anti-HER2 therapy for locally advanced/metastatic disease or relapsed within 6 months of completion of adjuvant anti-HER2 therapy. Prior treatment with tucatinib in the metastatic setting is allowed"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Measurable disease as measured by Response Evaluation Criteria in Solid Tumors (RECIST) Version 1.1"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Adequate hematologic function: Absolute neutrophil count (ANC) >=1500/uL; Platelet count >=100,000/uL (no transfusions allowed to meet this requirement); Hemoglobin >=9 g/dL (at least 2-week washout from any transfusion)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Adequate hepatic function: Total bilirubin <=1.5 x upper limit of normal (ULN); AST and ALT <=2.5 x ULN (<=5 x ULN if liver metastases are present)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Estimated glomerular filtration rate (eGFR) >=50 mL/min/1.73 m2"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Left ventricular ejection fraction (LVEF) >=50% based on screening echocardiogram (ECHO)/multigated acquisition (MUGA)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Central nervous system (CNS) Inclusion - Based on screening contrast brain magnetic resonance imaging (MRI), patients must have one of the following: No evidence of brain metastases; Untreated brain metastases not needing immediate local therapy; Previously treated brain metastases"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Treatment with any of the following: Any systemic anti-cancer chemotherapy or small molecule, biologic, or hormonal agent from a previous treatment regimen or clinical study within 21 days or 5 half-lives (whichever is shorter) prior to the first dose of study drugs; Prior treatment with anthracycline in any setting; Major surgery (excluding placement of vascular access) within 28 days of first dose of study drugs; Palliative radiation therapy within 14 days of first dose of study drugs"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Based on screening brain MRI, patients must not have any of the following: Any untreated brain lesions >2.0 cm in size; Ongoing use of systemic corticosteroids for control of symptoms of brain metastases at a total daily dose of >2 mg of dexamethasone (or equivalent); Any brain lesion thought to require immediate local therapy; Known or suspected leptomeningeal disease (LMD); Have poorly controlled (>1 week) generalized or complex partial seizures"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Use of a strong cytochrome P450 (CYP)2C8-inhibitor or use of a strong CYP3A4 or use of a CYP2C8 inducer within 5 days prior to the first dose of study treatment"
-        },
-        {
-          "expected": "unknown",
-          "quote": "With the exception of alopecia, any unresolved toxicities from prior therapy greater than CTCAE Grade 1 at the time of starting study treatment."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Women who are pregnant or nursing or plan to become pregnant while in the study and for at least 6 months after the last administration of study treatment"
-        },
-        {
-          "expected": "met",
-          "quote": "Presence of active gastrointestinal disease or other condition that will interfere significantly with the absorption, distribution, metabolism, or excretion of tucatinib (e.g., ulcerative disease, uncontrolled nausea, vomiting, diarrhea Grade >=2, malabsorption syndrome)"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Any of the following cardiac criteria: Mean resting QT interval with QT corrected for heart rate by Fridericia's formula [QTcF]) prolongation to >480 msec for females and >460 msec for males in three successive screening measures; Any clinically important abnormalities in rhythm, conduction, or morphology of resting electrocardiograms (ECGs); Congestive heart failure (New York Heart Association >= Grade 2 within past 6 months); Patients with a left ventricular ejection fraction (LVEF) <50% or the lower limit of normal of the institutional standard"
-        },
-        {
-          "expected": "unknown",
-          "quote": "Known human immunodeficiency virus (HIV) infection or positivity on immunoassay. Testing for seropositive status during screening will be at the discretion of the Investigator for subjects without previously reported results."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Presence of other active invasive cancers other than the one treated in this study within 3 years prior to screening, except appropriately treated basal cell carcinoma of the skin, in situ carcinoma of uterine cervix, or other local tumors considered cured by local treatment"
-        }
-      ],
+      "criterion_labels": [],
       "expected": "ineligible",
       "id": "AK-026",
       "nct_id": "NCT05748834",
       "patient_id": "2211f478-b7b4-7711-16cf-84ffb52b9d2b",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "The oncology trial against a stale chart, selected because even the absence of breast cancer cannot be asserted here: seventeen of the nineteen criteria are unresolved, and the only inclusion that resolves is the age floor. What decides the case is the one exclusion that does resolve. Adjudication found that cystic fibrosis with pancreatic enzyme replacement is the malabsorption syndrome the trial's absorption exclusion names, and an active chronic diagnosis does not need the last decade to be documented. This is the only case in the key decided by an exclusion alone. Derived ineligible by roll_up on the adjudicated labels; decided by NCT05748834-E7 (exclusion met).",
+      "rationale": "The oncology trial against a stale chart, selected because even the absence of breast cancer cannot be asserted here: seventeen of the nineteen criteria are unresolved, and the only inclusion that resolves is the age floor. What decides the case is the one exclusion that does resolve. Adjudication found that cystic fibrosis with pancreatic enzyme replacement is the malabsorption syndrome the trial's absorption exclusion names, and an active chronic diagnosis does not need the last decade to be documented. This is the only case in the key decided by an exclusion alone. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2016-06-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "unsupported"
     },
@@ -1806,75 +1052,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Female of non-childbearing potential, or male. For US only: Female of childbearing potential using highly effective non-systemic methods of contraception with low user-dependency at least 2 months prior to screening and willingness to continue using it through-out the study, or male."
-        },
-        {
-          "expected": "met",
-          "quote": "Age 18 years or above at the time of signing the informed consent."
-        },
-        {
-          "expected": "met",
-          "quote": "Diagnosed with type 2 diabetes mellitus greater than or equal to (>=) 180 days before screening, or not diagnosed with type 2 diabetes mellitus. HbA1c of 6.5 percentage (%)-10.5 percentage (%) [48 - 91 millimoles per mole (mmol/mol)] (both inclusive) if diagnosed with type 2 diabetes mellitus, or HbA1c of less than (<)6.5 percentage (%) [<48 mmol/mol] if not diagnosed with type 2 diabetes mellitus."
-        },
-        {
-          "expected": "met",
-          "quote": "BMI greater than or equal to (>=) 27.0 kilogram per square metre (kg/m^2) at screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Kidney impairment defined by serum creatinine and cystatin C-based Egfr greater than or equal to (>=) 15 and less than (<) 90 mL/min/1.73 m^2."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal (>=)100 and less than (<) 5000 milligram per gram (mg/g)."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Treatment with maximum labelled or tolerated dose of an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated, in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Female who is pregnant, breast-feeding or intends to become pregnant or is of childbearing potential and not using highly effective non-systemic contraception with low user-dependency."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Use of any glucagon-like peptide-1 (GLP-1) RA (including medication with GLP-1 RA activity, e.g., GIP/GLP-1 RA) within 90 days prior to screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Only applicable for participants with type 2 diabetes (T2D): Uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy. Verified by an eye examination performed within 90 days before screening or in the period between screening and randomisation."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or carcinoma in situ/high grade prostatic intraepithelial neoplasia (PIN)) within 5 years before screening."
-        }
-      ],
+      "criterion_labels": [],
       "expected": "ineligible",
       "id": "AK-027",
       "nct_id": "NCT06717698",
       "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "Every demographic and metabolic inclusion is met and the kidney trial still fails, on an eGFR above its ceiling and a UACR below its floor. Derived ineligible by roll_up on the adjudicated labels; decided by NCT06717698-I5 (inclusion not met), NCT06717698-I6 (inclusion not met), NCT06717698-I7 (inclusion not met).",
+      "rationale": "Every demographic and metabolic inclusion is met and the kidney trial still fails, on an eGFR above its ceiling and a UACR below its floor. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2026-05-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "none"
     },
@@ -2118,75 +1303,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "unknown",
-          "quote": "Female of non-childbearing potential, or male. For US only: Female of childbearing potential using highly effective non-systemic methods of contraception with low user-dependency at least 2 months prior to screening and willingness to continue using it through-out the study, or male."
-        },
-        {
-          "expected": "met",
-          "quote": "Age 18 years or above at the time of signing the informed consent."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Diagnosed with type 2 diabetes mellitus greater than or equal to (>=) 180 days before screening, or not diagnosed with type 2 diabetes mellitus. HbA1c of 6.5 percentage (%)-10.5 percentage (%) [48 - 91 millimoles per mole (mmol/mol)] (both inclusive) if diagnosed with type 2 diabetes mellitus, or HbA1c of less than (<)6.5 percentage (%) [<48 mmol/mol] if not diagnosed with type 2 diabetes mellitus."
-        },
-        {
-          "expected": "unknown",
-          "quote": "BMI greater than or equal to (>=) 27.0 kilogram per square metre (kg/m^2) at screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Kidney impairment defined by serum creatinine and cystatin C-based Egfr greater than or equal to (>=) 15 and less than (<) 90 mL/min/1.73 m^2."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal (>=)100 and less than (<) 5000 milligram per gram (mg/g)."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Treatment with maximum labelled or tolerated dose of an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated, in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Female who is pregnant, breast-feeding or intends to become pregnant or is of childbearing potential and not using highly effective non-systemic contraception with low user-dependency."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Use of any glucagon-like peptide-1 (GLP-1) RA (including medication with GLP-1 RA activity, e.g., GIP/GLP-1 RA) within 90 days prior to screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Only applicable for participants with type 2 diabetes (T2D): Uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy. Verified by an eye examination performed within 90 days before screening or in the period between screening and randomisation."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or carcinoma in situ/high grade prostatic intraepithelial neoplasia (PIN)) within 5 years before screening."
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "AK-031",
       "nct_id": "NCT06717698",
       "patient_id": "fb56f051-a2cd-ac10-dcb0-e0738295fc1f",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "A 58-year-old woman whose chart ends in 1991. Almost every criterion is unresolved, including whether she is of childbearing potential. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 14 of 15 are unresolved: NCT06717698-I1, NCT06717698-I3, NCT06717698-I4, NCT06717698-I5 and 10 more.",
+      "rationale": "A 58-year-old woman whose chart ends in 1991. Almost every criterion is unresolved, including whether she is of childbearing potential. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 1991-06-06, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "temporal"
     },
@@ -2350,151 +1474,14 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Male and female subjects aged 40 to 80 years (inclusive)."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Body Mass Index (BMI) within the range of 18-30 kg/m2 (inclusive)."
-        },
-        {
-          "expected": "unknown",
-          "quote": "12-lead electrocardiogram (ECG) showing: heart rate of 50-100 beats per minute (bpm); corrected QT interval (QTcF) <= 450 msec for males or <= 470 msec for females."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Diagnosed with COPD according to the 2025 Global Initiative for Chronic Obstructive Lung Disease (GOLD) criteria, and have had symptoms consistent with COPD for at least 1 year before screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Have been on stable background inhaled therapy for COPD for at least 4 weeks before screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "At the screening visit (V1 visit), after administration of a bronchodilator (4 puffs of salbutamol), the FEV1/Forced Vital Capacity (FVC) ratio < 0.7, and 30% predicted value <= FEV1 < 80% predicted value."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Clinically stable COPD within 4 weeks before the screening visit (V1 visit) and between the V1 visit and V2 visit."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Modified Medical Research Council (mMRC) Dyspnea Scale score >= 2 at screening."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Smoking history >= 10 pack-years (pack-year: number of packs per day x number of smoking years)."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Life-threatening COPD history, including admission to the intensive care unit (ICU) and/or requirement for intubation."
-        },
-        {
-          "expected": "not_met",
-          "quote": "COPD exacerbation requiring systemic corticosteroid therapy within 3 months before the screening visit (V1 visit) or before the randomization visit (V2 visit)."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Hospitalization history due to COPD or pneumonia >= 1 time within 6 months before screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Antibiotic treatment for upper and/or lower respiratory tract infections within 6 weeks before screening or before the randomization visit (V3 visit)."
-        },
-        {
-          "expected": "met",
-          "quote": "Concurrent other respiratory diseases: alpha-1 antitrypsin deficiency, primary ciliary dyskinesia, lung cancer; clinically significant active pulmonary infections, pulmonary tuberculosis, bronchiectasis, pulmonary fibrosis, sarcoidosis, pulmonary hypertension, asthma, and other respiratory diseases as assessed by the investigator."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Clinically significant abnormalities found on chest computed tomography (CT) that are not caused by COPD and judged by the investigator to have an impact on trial results or patient safety. If there is no chest CT report within 6 months before Visit 1, a chest CT examination must be performed at Visit 1."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Previous pulmonary resection or lung volume reduction surgery."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Pulmonary rehabilitation therapy (those whose treatment has been stable for 4 weeks before screening and will remain stable during the trial may be enrolled)."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Receipt of oral corticosteroids or roflumilast for COPD within 3 months before the screening visit (V1 visit), or receipt of oral theophylline and/or theophylline derivatives for COPD within 1 week before the screening visit (V1 visit)."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Use of non-selective oral beta-blockers."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Previous treatment with TQC3721."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Patients who received immunotherapy (e.g., azathioprine, cyclophosphamide) within 4 weeks before the screening period."
-        },
-        {
-          "expected": "not_met",
-          "quote": "History or current evidence of clinically significant cardiovascular diseases; subjects with any of the following conditions at Visit 1 will be excluded: 1. Myocardial infarction, unstable angina, or stroke within the past 6 months; 2. Unstable or life-threatening arrhythmias requiring intervention within the past 3 months; 3. New York Heart Association (NYHA) Class III-IV heart failure."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Unstable or uncontrolled hypertension (systolic blood pressure >= 160 mmHg and diastolic blood pressure >= 100 mmHg after drug control)."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Patients with poorly controlled type 2 diabetes or fasting blood glucose > 10 mmol/L."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Receipt of major surgery (requiring general anesthesia) within 8 weeks before the screening visit (V1 visit), failure to fully recover from the surgery at the time of screening (V1 visit), or planned surgery before the end of the study."
-        },
-        {
-          "expected": "not_met",
-          "quote": "History of malignant tumors (cured or uncured) of any organ or system within the past 5 years (excluding non-metastatic cutaneous basal cell or squamous cell carcinoma, or cervical carcinoma in situ that have been cured for more than 5 years before the screening period)."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Clinically significant abnormal values in safety laboratory tests (hematology, biochemistry, or urinalysis) determined by the investigator at the screening visit (V1 visit), including but not limited to one of the following: 1. Alanine Aminotransferase (ALT) or Aspartate Aminotransferase (AST) > 2 x Upper Limit of Normal (ULN); alkaline phosphatase > 2 x ULN; total bilirubin > 1.5 x ULN; 2. Estimated glomerular filtration rate (eGFR) calculated using the Chronic Kidney Disease Epidemiology Collaboration (CKD-EPI) formula < 60 mL/min/1.73m2."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Positive test result for Human Immunodeficiency Virus (HIV) antibody; positive test result for Hepatitis B Surface Antigen (HBsAg); positive Hepatitis C Virus (HCV) antibody with confirmed presence of HCV ribonucleic acid (RNA); positive Treponema Pallidum Particle Agglutination (TPPA) antibody."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Intolerance or allergy to salbutamol or other inhaled bronchodilator therapies for COPD."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Patients requiring continuous or intermittent oxygen therapy."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Female subjects who are pregnant, lactating, or planning to become pregnant during the study enrollment period."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Receipt of live attenuated vaccine within 28 days before randomization, receipt of inactivated vaccine within 7 days before randomization, or planned vaccination during the study."
-        },
-        {
-          "expected": "not_met",
-          "quote": "History of drug abuse or alcoholism within the past 3 years (consumption of 14 units of alcohol per week: 1 unit = 360 ml of beer, or 45 ml of spirits with 40% alcohol content, or 150 ml of wine)."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Participation in any drug or medical device clinical trial within 4 weeks or 5 drug half-lives (whichever is longer) before screening."
-        }
-      ],
+      "criterion_labels": [],
       "expected": "ineligible",
       "id": "AK-033",
       "nct_id": "NCT07252908",
       "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
       "perturbations": [],
       "provenance": "annotated",
-      "rationale": "An asthma diagnosis fires this COPD trial's concurrent-respiratory-disease exclusion, and the BMI ceiling and the COPD inclusions fail as well. Together with AK-026 it is one of only two cases in the key where an exclusion criterion fires at all. Derived ineligible by roll_up on the adjudicated labels; decided by NCT07252908-I4 (inclusion not met), NCT07252908-I7 (inclusion not met), NCT07252908-I8 (inclusion not met), NCT07252908-I11 (inclusion not met), NCT07252908-E5 (exclusion met).",
+      "rationale": "An asthma diagnosis fires this COPD trial's concurrent-respiratory-disease exclusion, and the BMI ceiling and the COPD inclusions fail as well. Together with AK-026 it is one of only two cases in the key where an exclusion criterion fires at all. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2026-05-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "none"
     },
@@ -2618,29 +1605,8 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
-        },
-        {
-          "expected": "met",
-          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
-        },
-        {
-          "expected": "met",
-          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
-        }
-      ],
-      "expected": "eligible",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "CK-001",
       "nct_id": "NCT03315143",
       "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
@@ -2716,7 +1682,7 @@
         }
       ],
       "provenance": "constructed",
-      "rationale": "The eligible member of the 1be83f06 triple. This patient already satisfies the diabetes inclusion and both exclusions; the only two open criteria are a renal function far outside the band and an undefined cardiovascular-risk term. Supplying an eGFR inside the band and an established cardiovascular diagnosis closes both. Constructed from AK-014 by 2 recorded edits; 3 criterion labels are carried forward unchanged from the two annotation passes and 2 are overridden by those edits. Derived eligible by roll_up on the adjudicated labels; all 5 criteria resolved and none is disqualifying.",
+      "rationale": "The eligible member of the 1be83f06 triple. This patient already satisfies the diabetes inclusion and both exclusions; the only two open criteria are a renal function far outside the band and an undefined cardiovascular-risk term. Supplying an eGFR inside the band and an established cardiovascular diagnosis closes both. Constructed from AK-014 by 2 recorded edits, which the case publishes in full. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2026-05-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "none"
     },
@@ -2726,28 +1692,7 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
-        },
-        {
-          "expected": "met",
-          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
-        }
-      ],
+      "criterion_labels": [],
       "expected": "ineligible",
       "id": "CK-002",
       "nct_id": "NCT03315143",
@@ -2824,7 +1769,7 @@
         }
       ],
       "provenance": "constructed",
-      "rationale": "The near-miss member of the 1be83f06 triple: identical to CK-001 except that the eGFR is 61 rather than 42, one unit above a bound the protocol writes as 60 or below. A system that rounds, or that reads an inclusive bound as exclusive, cannot tell this case from CK-001. Constructed from AK-014 by 2 recorded edits; 3 criterion labels are carried forward unchanged from the two annotation passes and 2 are overridden by those edits. Derived ineligible by roll_up on the adjudicated labels; decided by NCT03315143-I2 (inclusion not met).",
+      "rationale": "The near-miss member of the 1be83f06 triple: identical to CK-001 except that the eGFR is 61 rather than 42, one unit above a bound the protocol writes as 60 or below. A system that rounds, or that reads an inclusive bound as exclusive, cannot tell this case from CK-001. Constructed from AK-014 by 2 recorded edits, which the case publishes in full. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2026-05-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "threshold_edge"
     },
@@ -2834,29 +1779,8 @@
         "llm-pass-1",
         "llm-pass-2"
       ],
-      "criterion_labels": [
-        {
-          "expected": "met",
-          "quote": "Type 2 Diabetes Mellitus with glycosylated hemoglobin (HbA1c) >=7%."
-        },
-        {
-          "expected": "unknown",
-          "quote": "Estimated glomerular filtration rate (eGFR) >=25 and <=60 milliliter/minute (mL/min)/1.73 square meter (m^2)."
-        },
-        {
-          "expected": "met",
-          "quote": "Age 18 years or older with at least one major cardiovascular risk factor or age 55 years or older with at least two minor cardiovascular risk factors."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Antihyperglycemic treatment has not been stable within 12 weeks prior to screening."
-        },
-        {
-          "expected": "not_met",
-          "quote": "Lower extremity complications (such as skin ulcer, infection, osteomyelitis, and gangrene) identified during screening and requiring treatment at randomization."
-        }
-      ],
-      "expected": "needs_review",
+      "criterion_labels": [],
+      "expected": "ineligible",
       "id": "CK-003",
       "nct_id": "NCT03315143",
       "patient_id": "1be83f06-48ef-7bac-7097-b9e0644aeaf8",
@@ -2915,7 +1839,7 @@
         }
       ],
       "provenance": "constructed",
-      "rationale": "The undecidable member of the 1be83f06 triple: every value CK-001 supplies except the renal one, which is removed outright. The correct answer is to abstain and to name the eGFR as the missing datum. Constructed from AK-014 by 2 recorded edits; 3 criterion labels are carried forward unchanged from the two annotation passes and 2 are overridden by those edits. Derived needs_review by roll_up on the adjudicated labels; no criterion is disqualifying and 1 of 5 are unresolved: NCT03315143-I2.",
+      "rationale": "The undecidable member of the 1be83f06 triple: every value CK-001 supplies except the renal one, which is removed outright. The correct answer is to abstain and to name the eGFR as the missing datum. Constructed from AK-014 by 2 recorded edits, which the case publishes in full. Derived ineligible by the vital-status rule of protocol.md section 12, which precedes every criterion: the committed bundle records death on 2026-05-03, before the 2026-06-01 screening date. No criterion was evaluated, so the case carries no criterion labels, and the criterion-level reading in the note above describes the chart rather than the outcome.",
       "screening_date": "2026-06-01",
       "trap": "missing_data"
     },
@@ -4915,8 +3839,8 @@
       "trap": "none"
     }
   ],
-  "frozen_at": "2026-08-29T10:50:09+00:00",
-  "notes": "51 cases over 8 trials and 14 patients. 36 are annotated: labelled criterion by criterion in two independent language-model passes and adjudicated by the maintainer, with the case outcome derived by applying caliper.logic.roll_up to the adjudicated criterion labels. 15 are constructed: an annotated pair with a recorded list of chart edits applied, the criteria those edits close overridden, and the outcome derived by the same rollup rule from the same human criterion labels. No clinician reviewed any of it, and no case outcome was written down by anyone reading the chart as a whole. The two provenances are reported separately everywhere. The finding behind the constructed cases: no patient in this corpus is eligible for any of these eight real protocols as their chart stands, because every protocol bounds at least one quantity no Synthea chart carries -- a liver panel for NCT01131676, a UACR for NCT02545049, NCT03819153 and NCT06717698, a cystatin C-based eGFR for NCT06717698, ECOG and RECIST and a brain MRI for NCT05748834, mMRC and pack-years and spirometry percent-predicted for NCT07252908, and an NYHA class for NCT03036124. Under the annotation protocol a test not done is unknown rather than normal, and unknown propagates. Every eligible case in this key is therefore constructed, and eval/annotation/protocol.md section 11 says exactly how.",
+  "frozen_at": "2026-08-30T10:43:33+00:00",
+  "notes": "51 cases over 8 trials and 14 patients, at version 2. 36 are annotated: labelled criterion by criterion in two independent language-model passes and adjudicated by the maintainer. 15 are constructed: an annotated pair with a recorded list of chart edits applied and the criteria those edits close overridden. No clinician reviewed any of it, and no case outcome was written down by anyone reading a chart as a whole. Every outcome is derived: by the vital-status rule of eval/annotation/protocol.md section 12 where it applies, and otherwise by caliper.logic.roll_up over the criterion labels. Version 2 corrects version 1, which is kept unchanged at eval/answer_key.v1.json with its own digest. Vital status was missing from the annotation protocol, and 20 of these 51 cases are on the five patients the corpus records as having died before the 2026-06-01 screening date. Those cases are ineligible and carry no criterion labels, because no criterion was evaluated; 12 of them changed outcome. eval/annotation/corrections.md lists every change with the chart value behind it, and eval/annotation/refutation.json holds the pre-registered check that tries to contradict every met label against the raw committed FHIR. The key's central finding is unchanged: no patient in this corpus is eligible for any of these eight real protocols as their chart stands, because every protocol bounds at least one quantity no Synthea chart carries -- a liver panel for NCT01131676, a UACR for NCT02545049, NCT03819153 and NCT06717698, a cystatin C-based eGFR for NCT06717698, ECOG and RECIST and a brain MRI for NCT05748834, mMRC and pack-years and spirometry percent-predicted for NCT07252908, and an NYHA class for NCT03036124. Under the annotation protocol a test not done is unknown rather than normal, and unknown propagates. All six eligible cases are therefore constructed, all six are on NCT03315143, and every one rests on a type 2 diabetes diagnosis and a renal value that a recorded chart edit supplied to a patient whose real chart carries prediabetes. The build names all 18 such labels every time it runs, and protocol.md section 12 says why they were kept rather than dropped.",
   "screening_date": "2026-06-01",
-  "version": "1.0.0"
+  "version": "2.0.0"
 }

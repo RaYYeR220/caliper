@@ -3,11 +3,17 @@
 This document describes how `eval/answer_key.json` was produced, in enough detail that someone
 with this repository and no other information could repeat the exercise and get the same labels.
 
-It was written before annotation began. Five things were added afterwards, and each is marked where
+It was written before annotation began. Seven things were added afterwards, and each is marked where
 it appears: the counts in section 9, the note on `family_history` in section 7, three clarifications
 forced by the adjudication — two in section 4 and one in section 5 — each labelled *sharpened at
-adjudication*, and section 11, which describes the constructed cases added after the first build.
-Nothing that was in the document before annotation was removed or reworded.
+adjudication*, section 11, which describes the constructed cases added after the first build,
+section 12, a methods amendment written after the first *scored* run, and section 13, which
+compares this document's scope decisions against the compiler's. Nothing that was in the document
+before annotation was removed or reworded.
+
+**Sections 9 and 11 describe version 1 of the key, which is kept unchanged at
+`eval/answer_key.v1.json`. Section 12 says what changed in version 2 and carries the corrected
+counts.**
 
 Everything here is an annotation of synthetic patient records by language models against real
 registry text. **No clinician reviewed these labels.** Section 8 says what that costs.
@@ -375,12 +381,17 @@ Cases by trap:
 | `disagreements.md` | the same, in prose |
 | `kappa.md` | Cohen's kappa, the contingency table, and the working |
 | `constructed.json` | the 15 constructed cases: base pair, chart edits, and the criteria they close |
+| `refutation.json` | *added at the amendment.* What a `met` label asserts, per criterion, as a fact that can be looked for in a raw bundle; plus the flags that were reviewed and accepted |
+| `corrections.md` | *added at the amendment.* Every label that changed between key versions 1 and 2, with the chart value behind it |
 
-`scripts/build_answer_key.py` reads all of these, applies `caliper.logic.roll_up`, validates
-through `caliper.answerkey.load_key`, and freezes the result. It refuses to build if either pass is
+`scripts/build_answer_key.py` reads all of these, derives each outcome, validates through
+`caliper.answerkey.load_key`, and freezes the result. It refuses to build if either pass is
 missing a criterion, if a disagreement is not decided in `adjudication.json`, if `adjudication.json`
 decides a criterion the passes agreed on, if a constructed case overrides a criterion its base pair
-had already satisfied, or if any chart edit is not visible in the finished chart when read back.
+had already satisfied, if any chart edit is not visible in the finished chart when read back, if a
+criterion carries a `met` label with no probe declared for it, if the refutation pass contradicts a
+`met` label that `refutation.json` does not answer for, or if a constructed case carries a `met`
+label the committed chart does not support and does not declare the edit that supplies it.
 
 ---
 

@@ -119,7 +119,9 @@ def _rehydrate(snapshot: dict[str, Any], where: str) -> Evidence:
             date=date.fromisoformat(when) if when else None,
         )
     except (KeyError, TypeError, ValueError) as exc:
-        raise AnswerKeyError(f"{where}: an added row is not a usable evidence record: {exc}") from exc
+        raise AnswerKeyError(
+            f"{where}: an added row is not a usable evidence record: {exc}"
+        ) from exc
 
 
 def _is(row: Evidence, snapshot: dict[str, Any]) -> bool:
@@ -179,8 +181,7 @@ def rebuild_patient(case: Case, base: PatientIndex) -> PatientIndex:
     where = f"case {case.id}"
     if case.patient_id and base.patient_id and case.patient_id != base.patient_id:
         raise AnswerKeyError(
-            f"{where}: expects the chart of patient {case.patient_id}, "
-            f"got {base.patient_id}"
+            f"{where}: expects the chart of patient {case.patient_id}, got {base.patient_id}"
         )
     if not case.perturbations:
         return base

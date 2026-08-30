@@ -1,0 +1,578 @@
+{
+  "accuracy_ci": [
+    0.31127502739112944,
+    0.5965811770952076
+  ],
+  "arm": "caliper",
+  "cases": 51,
+  "correct": 23,
+  "cost_usd": 0.0,
+  "coverage": 0.8627450980392157,
+  "coverage_at_zero_unsafe": 0.0,
+  "curve": [
+    {
+      "answered": 51,
+      "coverage": 1.0,
+      "risk": 0.7058823529411765,
+      "threshold": 0.0,
+      "unsafe": 27
+    },
+    {
+      "answered": 51,
+      "coverage": 1.0,
+      "risk": 0.7058823529411765,
+      "threshold": 0.035714,
+      "unsafe": 27
+    },
+    {
+      "answered": 50,
+      "coverage": 0.9803921568627451,
+      "risk": 0.7,
+      "threshold": 0.090909,
+      "unsafe": 26
+    },
+    {
+      "answered": 48,
+      "coverage": 0.9411764705882353,
+      "risk": 0.7083333333333334,
+      "threshold": 0.119048,
+      "unsafe": 25
+    },
+    {
+      "answered": 48,
+      "coverage": 0.9411764705882353,
+      "risk": 0.7083333333333334,
+      "threshold": 0.125,
+      "unsafe": 25
+    },
+    {
+      "answered": 30,
+      "coverage": 0.5882352941176471,
+      "risk": 0.8333333333333334,
+      "threshold": 0.133333,
+      "unsafe": 25
+    },
+    {
+      "answered": 28,
+      "coverage": 0.5490196078431373,
+      "risk": 0.8214285714285714,
+      "threshold": 0.136364,
+      "unsafe": 23
+    },
+    {
+      "answered": 27,
+      "coverage": 0.5294117647058824,
+      "risk": 0.8148148148148148,
+      "threshold": 0.166667,
+      "unsafe": 22
+    },
+    {
+      "answered": 27,
+      "coverage": 0.5294117647058824,
+      "risk": 0.8148148148148148,
+      "threshold": 0.181818,
+      "unsafe": 22
+    },
+    {
+      "answered": 25,
+      "coverage": 0.49019607843137253,
+      "risk": 0.88,
+      "threshold": 0.222222,
+      "unsafe": 22
+    },
+    {
+      "answered": 24,
+      "coverage": 0.47058823529411764,
+      "risk": 0.875,
+      "threshold": 0.25,
+      "unsafe": 21
+    },
+    {
+      "answered": 21,
+      "coverage": 0.4117647058823529,
+      "risk": 0.9523809523809523,
+      "threshold": 0.266667,
+      "unsafe": 20
+    },
+    {
+      "answered": 21,
+      "coverage": 0.4117647058823529,
+      "risk": 0.9523809523809523,
+      "threshold": 0.333333,
+      "unsafe": 20
+    },
+    {
+      "answered": 20,
+      "coverage": 0.39215686274509803,
+      "risk": 0.95,
+      "threshold": 1.0,
+      "unsafe": 19
+    }
+  ],
+  "failures": [],
+  "false_abstention": 0.19444444444444445,
+  "scores": [
+    {
+      "case_id": "AK-001",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "AK-002",
+      "criteria_coverage": 0.13636363636363635,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-003",
+      "criteria_coverage": 0.09090909090909091,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "negation"
+    },
+    {
+      "case_id": "AK-004",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-005",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "AK-006",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-007",
+      "criteria_coverage": 0.18181818181818182,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "threshold_edge"
+    },
+    {
+      "case_id": "AK-008",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-009",
+      "criteria_coverage": 0.18181818181818182,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-010",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "unit"
+    },
+    {
+      "case_id": "AK-011",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-012",
+      "criteria_coverage": 0.2222222222222222,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-013",
+      "criteria_coverage": 0.16666666666666666,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-014",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-015",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-016",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-017",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-018",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-019",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "AK-020",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-021",
+      "criteria_coverage": 0.25,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "unit"
+    },
+    {
+      "case_id": "AK-022",
+      "criteria_coverage": 0.25,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-023",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-024",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "unsupported"
+    },
+    {
+      "case_id": "AK-025",
+      "criteria_coverage": 0.03571428571428571,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "unsupported"
+    },
+    {
+      "case_id": "AK-026",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "unsupported"
+    },
+    {
+      "case_id": "AK-027",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-028",
+      "criteria_coverage": 0.3333333333333333,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-029",
+      "criteria_coverage": 0.26666666666666666,
+      "decision": "needs_review",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "AK-030",
+      "criteria_coverage": 0.13333333333333333,
+      "decision": "needs_review",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "unit"
+    },
+    {
+      "case_id": "AK-031",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "temporal"
+    },
+    {
+      "case_id": "AK-032",
+      "criteria_coverage": 0.11904761904761904,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "unit"
+    },
+    {
+      "case_id": "AK-033",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-034",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-035",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "AK-036",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "annotated",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-001",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "eligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-002",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "eligible",
+      "provenance": "constructed",
+      "trap": "threshold_edge"
+    },
+    {
+      "case_id": "CK-003",
+      "criteria_coverage": 1.0,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "eligible",
+      "provenance": "constructed",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "CK-004",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-005",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "threshold_edge"
+    },
+    {
+      "case_id": "CK-006",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "CK-007",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-008",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "threshold_edge"
+    },
+    {
+      "case_id": "CK-009",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "CK-010",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-011",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "ineligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "threshold_edge"
+    },
+    {
+      "case_id": "CK-012",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "needs_review",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "missing_data"
+    },
+    {
+      "case_id": "CK-013",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-014",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    },
+    {
+      "case_id": "CK-015",
+      "criteria_coverage": 0.125,
+      "decision": "ineligible",
+      "expected": "eligible",
+      "forced_decision": "ineligible",
+      "provenance": "constructed",
+      "trap": "none"
+    }
+  ],
+  "selective_risk": 0.4772727272727273,
+  "unsafe": 0,
+  "wall_seconds": 2637.099
+}

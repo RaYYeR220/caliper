@@ -15,6 +15,21 @@ produces a different key and the frozen digest stops matching.
 The script refuses to guess. A criterion the two passes disagreed on and the adjudication file does
 not decide is an error, not a coin toss.
 
+Two passes exist because the first scored run found errors in the key rather than in the system,
+and both are described in `eval/annotation/corrections.md`.
+
+`vital_status` applies the rule that precedes every criterion: a patient the chart records as dead
+before the screening date is `ineligible`, and no criterion is evaluated. It reads the bundle's
+`Patient.deceasedDateTime` directly rather than asking `PatientIndex`, for the same reason the
+refutation pass does.
+
+`refute` tries to contradict every `met` label against the raw committed FHIR: `data/patients`
+read here, with no help from `caliper.record`, `caliper.evaluate` or `PatientIndex`, because
+validating the key with the same matching code the key is used to score would establish nothing.
+It flags; it does not fix. A flag it raises against an annotated case is an error in the key. A flag
+it raises against a constructed case whose own recorded edits supply the fact is not: that is what a
+constructed case is, and the pass reports the two separately.
+
 Usage:
     python scripts/build_answer_key.py            # rebuild, validate, freeze, print the summary
     python scripts/build_answer_key.py --dry-run  # everything except writing the key
@@ -26,7 +41,7 @@ import argparse
 import json
 import sys
 from collections import Counter
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from datetime import date
 from typing import Any
 
@@ -56,6 +71,7 @@ from caliper.perturb import (
 from caliper.record import Evidence, PatientIndex
 
 ANNOTATION_DIR = REPO_ROOT / "eval" / "annotation"
+PATIENT_DIR = REPO_ROOT / "data" / "patients"
 KEY_PATH = REPO_ROOT / "eval" / "answer_key.json"
 
 SCREENING_DATE = date(2026, 6, 1)
@@ -296,11 +312,488 @@ def _is_blocker(kind: str, verdict: str) -> bool:
     return verdict != ("met" if kind == "inclusion" else "not_met")
 
 
+# ------------------------------------------------------------------------------------------------
+# Reading the raw bundles, without the system's help
+# ------------------------------------------------------------------------------------------------
+
+# Terminology systems as the bundles spell them, mapped to the short names the annotation uses.
+_SYSTEMS = {
+    "http://loinc.org": "LOINC",
+    "http://snomed.info/sct": "SNOMED",
+    "http://www.nlm.nih.gov/research/umls/rxnorm": "RxNorm",
+}
+
+_MEDICATION_TYPES = ("MedicationRequest", "MedicationStatement", "MedicationAdministration")
+
+
+@dataclass(frozen=True)
+class Fact:
+    """One thing the bundle says, flattened far enough to be looked for and quoted back."""
+
+    kind: str
+    codes: tuple[tuple[str, str], ...]
+    display: str
+    value: float | None = None
+    unit: str | None = None
+    when: date | None = None
+    status: str | None = None
+
+    def has(self, system: str, codes: tuple[str, ...]) -> bool:
+        return any(s == system and c in codes for s, c in self.codes)
+
+    @property
+    def cited(self) -> str:
+        stamp = self.when.isoformat() if self.when else "undated"
+        if self.value is not None:
+            return f"{self.value} {self.unit or ''}".strip() + f" on {stamp}"
+        return f"{self.display} ({stamp})"
+
+
+@dataclass(frozen=True)
+class Chart:
+    """A whole bundle as plain facts: what the committed JSON says, and nothing derived from it."""
+
+    patient_id: str
+    birth_date: date | None
+    sex: str | None
+    deceased: date | None
+    deceased_undated: bool
+    facts: tuple[Fact, ...]
+
+    def age_at(self, as_of: date) -> int | None:
+        if self.birth_date is None:
+            return None
+        born = self.birth_date
+        return as_of.year - born.year - ((as_of.month, as_of.day) < (born.month, born.day))
+
+    def died_before(self, as_of: date) -> bool:
+        return self.deceased is not None and self.deceased <= as_of
+
+
+def _stamp(value: Any) -> date | None:
+    if not isinstance(value, str) or not value[:10]:
+        return None
+    try:
+        return date.fromisoformat(value[:10])
+    except ValueError:
+        return None
+
+
+def _codings(concept: Any) -> tuple[tuple[str, str], ...]:
+    if not isinstance(concept, dict):
+        return ()
+    out = []
+    for coding in concept.get("coding") or ():
+        system = _SYSTEMS.get(str(coding.get("system", "")))
+        code = coding.get("code")
+        if system and code:
+            out.append((system, str(code)))
+    return tuple(out)
+
+
+def _wording(concept: Any, codes: tuple[tuple[str, str], ...]) -> str:
+    if isinstance(concept, dict):
+        if concept.get("text"):
+            return str(concept["text"])
+        for coding in concept.get("coding") or ():
+            if coding.get("display"):
+                return str(coding["display"])
+    return ", ".join(f"{system} {code}" for system, code in codes)
+
+
+def _observation_facts(resource: dict[str, Any], when: date | None) -> list[Fact]:
+    """One fact per coded numeric result, with panel components counted as results themselves."""
+    parts: list[tuple[Any, Any]] = [(resource.get("code"), resource.get("valueQuantity"))]
+    parts += [
+        (component.get("code"), component.get("valueQuantity"))
+        for component in resource.get("component") or ()
+        if isinstance(component, dict)
+    ]
+    facts = []
+    for concept, quantity in parts:
+        codes = _codings(concept)
+        if not codes:
+            continue
+        value = quantity.get("value") if isinstance(quantity, dict) else None
+        unit = quantity.get("unit") if isinstance(quantity, dict) else None
+        facts.append(
+            Fact(
+                kind="observation",
+                codes=codes,
+                display=_wording(concept, codes),
+                value=float(value) if isinstance(value, int | float) else None,
+                unit=str(unit) if unit else None,
+                when=when,
+            )
+        )
+    return facts
+
+
+def read_chart(patient_id: str) -> Chart:
+    """Everything the refutation pass is allowed to know about a patient.
+
+    Deliberately its own reader. `caliper.fhir` is the code under evaluation; a key checked with it
+    could only ever agree with it, and a judge is entitled to see that this pass never touches it.
+    """
+    path = PATIENT_DIR / f"{patient_id}.json"
+    if not path.is_file():
+        raise BuildError(f"no committed bundle for patient {patient_id}: {path} is missing")
+    bundle = json.loads(path.read_text(encoding="utf-8"))
+
+    birth_date: date | None = None
+    sex: str | None = None
+    deceased: date | None = None
+    deceased_undated = False
+    facts: list[Fact] = []
+
+    for entry in bundle.get("entry") or ():
+        resource = entry.get("resource") if isinstance(entry, dict) else None
+        if not isinstance(resource, dict):
+            continue
+        kind = resource.get("resourceType")
+
+        if kind == "Patient":
+            birth_date = _stamp(resource.get("birthDate"))
+            sex = resource.get("gender")
+            deceased = _stamp(resource.get("deceasedDateTime"))
+            deceased_undated = deceased is None and bool(resource.get("deceasedBoolean"))
+        elif kind == "Condition":
+            codes = _codings(resource.get("code"))
+            if codes:
+                coded_status = (resource.get("clinicalStatus") or {}).get("coding") or [{}]
+                facts.append(
+                    Fact(
+                        kind="condition",
+                        codes=codes,
+                        display=_wording(resource.get("code"), codes),
+                        when=_stamp(resource.get("onsetDateTime")),
+                        status=str(coded_status[0].get("code") or "") or None,
+                    )
+                )
+        elif kind == "Observation":
+            facts += _observation_facts(resource, _stamp(resource.get("effectiveDateTime")))
+        elif kind in _MEDICATION_TYPES:
+            codes = _codings(resource.get("medicationCodeableConcept"))
+            if codes:
+                facts.append(
+                    Fact(
+                        kind="medication",
+                        codes=codes,
+                        display=_wording(resource.get("medicationCodeableConcept"), codes),
+                        when=_stamp(
+                            resource.get("authoredOn") or resource.get("effectiveDateTime")
+                        ),
+                    )
+                )
+
+    return Chart(
+        patient_id=patient_id,
+        birth_date=birth_date,
+        sex=sex,
+        deceased=deceased,
+        deceased_undated=deceased_undated,
+        facts=tuple(facts),
+    )
+
+
+def _snapshot_fact(snapshot: dict[str, Any]) -> Fact:
+    """One published perturbation row, read as a fact so it can be looked for like any other."""
+    return Fact(
+        kind=str(snapshot.get("kind", "")),
+        codes=tuple(
+            (str(c["system"]), str(c["code"])) for c in snapshot.get("codes") or () if c.get("code")
+        ),
+        display=str(snapshot.get("display", "")),
+        value=snapshot.get("value"),
+        unit=snapshot.get("unit"),
+        when=_stamp(snapshot.get("date")),
+        status="active",
+    )
+
+
+def as_built(chart: Chart, case: Case) -> Chart:
+    """The chart a case is actually about, at the level of plain facts.
+
+    This is not a second `rebuild_patient`: it produces no `PatientIndex`, and it exists so the
+    refutation pass can say *which* of two different things is true of a flagged label — that the
+    record does not support it at all, or that the case's own published edits supply it. Both
+    answers are needed, and both have to be reached without the system's matching code.
+    """
+    if not case.perturbations:
+        return chart
+    facts = list(chart.facts)
+    for record in case.perturbations:
+        for snapshot in record.get("before") or ():
+            wanted = _snapshot_fact(snapshot)
+            matched = [
+                fact
+                for fact in facts
+                if fact.kind == wanted.kind
+                and fact.value == wanted.value
+                and fact.unit == wanted.unit
+                and fact.when == wanted.when
+                and set(wanted.codes) <= set(fact.codes)
+            ]
+            if len(matched) != 1:
+                raise BuildError(
+                    f"case {case.id}: the recorded {record.get('kind')} removes "
+                    f"{wanted.cited}, which the committed bundle carries {len(matched)} times"
+                )
+            facts.remove(matched[0])
+        facts += [_snapshot_fact(snapshot) for snapshot in record.get("after") or ()]
+    return replace(chart, facts=tuple(facts))
+
+
+# ------------------------------------------------------------------------------------------------
+# The refutation pass
+# ------------------------------------------------------------------------------------------------
+
+# What a probe can fail on. `supplied` is not an error: it says the committed bundle does not carry
+# the fact and the case's own perturbation record does, which is the definition of a constructed
+# case. `refuted` says nothing anywhere supports the label.
+REFUTED, SUPPLIED = "refuted", "supplied"
+
+
+@dataclass(frozen=True)
+class Flag:
+    """One `met` label the raw chart will not support, and the value or absence that says so."""
+
+    case_id: str
+    criterion_id: str
+    provenance: str
+    status: str
+    finding: str
+
+
+def _numbers(chart: Chart, loinc: tuple[str, ...], as_of: date) -> list[Fact]:
+    rows = [
+        fact
+        for fact in chart.facts
+        if fact.kind == "observation"
+        and fact.value is not None
+        and fact.has("LOINC", loinc)
+        and (fact.when is None or fact.when <= as_of)
+    ]
+    return sorted(rows, key=lambda f: (f.when is not None, f.when or date.min))
+
+
+def _within(value: float, term: dict[str, Any]) -> bool:
+    if "at_least" in term and value < term["at_least"]:
+        return False
+    if "at_most" in term and value > term["at_most"]:
+        return False
+    if "above" in term and value <= term["above"]:
+        return False
+    return not ("below" in term and value >= term["below"])
+
+
+def _bound_text(term: dict[str, Any]) -> str:
+    words = {"at_least": ">=", "at_most": "<=", "above": ">", "below": "<"}
+    return " and ".join(f"{words[k]} {term[k]}" for k in words if k in term) or "any value"
+
+
+def _conditions(chart: Chart, term: dict[str, Any]) -> list[Fact]:
+    system, codes = str(term["system"]), tuple(str(c) for c in term["codes"])
+    rows = [fact for fact in chart.facts if fact.kind == "condition" and fact.has(system, codes)]
+    if term.get("status"):
+        rows = [fact for fact in rows if fact.status == term["status"]]
+    onset = _stamp(term.get("onset_on_or_before"))
+    if onset is not None:
+        rows = [fact for fact in rows if fact.when is not None and fact.when <= onset]
+    return rows
+
+
+def _check(term: Any, chart: Chart, as_of: date, where: str) -> str | None:
+    """None if the chart could support this term, otherwise what refutes it, in words."""
+    if not isinstance(term, dict) or len(term) != 1:
+        raise BuildError(f"{where}: a probe term must be a single-key object, got {term!r}")
+    (name, body), = term.items()
+
+    if name == "all_of":
+        failures = [_check(sub, chart, as_of, where) for sub in body]
+        found = [f for f in failures if f]
+        return "; ".join(found) if found else None
+
+    if name == "any_of":
+        failures = [_check(sub, chart, as_of, where) for sub in body]
+        if any(f is None for f in failures):
+            return None
+        return "no branch holds: " + " / ".join(f for f in failures if f)
+
+    if name == "age":
+        age = chart.age_at(as_of)
+        if age is None:
+            return "the bundle records no date of birth"
+        if _within(float(age), body):
+            return None
+        return f"the patient is {age} at screening, and the criterion asks for {_bound_text(body)}"
+
+    if name == "sex":
+        if chart.sex in tuple(body):
+            return None
+        return (
+            f"the bundle records sex {chart.sex!r}, and the criterion asks "
+            f"for one of {list(body)}"
+        )
+
+    if name == "condition":
+        if _conditions(chart, body):
+            return None
+        system = str(body["system"])
+        wanted = f"{system} {'/'.join(str(c) for c in body['codes'])}"
+        near = tuple(str(c) for c in body.get("near") or ())
+        found = sorted(
+            {
+                f"{fact.display} ({system} {fact.codes[0][1]})"
+                for fact in chart.facts
+                if fact.kind == "condition" and near and fact.has(system, near)
+            }
+        )
+        instead = f"; what the chart records instead is {', '.join(found)}" if found else ""
+        qualifier = " and active" if body.get("status") == "active" else ""
+        return f"no condition coded {wanted}{qualifier} is on the chart{instead}"
+
+    if name == "absent_condition":
+        rows = _conditions(chart, body)
+        if not rows:
+            return None
+        return "the chart does carry " + ", ".join(sorted({f.display for f in rows}))
+
+    if name == "medication":
+        system, codes = str(body["system"]), tuple(str(c) for c in body["codes"])
+        if any(fact.kind == "medication" and fact.has(system, codes) for fact in chart.facts):
+            return None
+        return f"no medication coded {system} {'/'.join(codes)} is on the chart"
+
+    if name == "observation":
+        loinc = tuple(str(c) for c in body["loinc"])
+        rows = _numbers(chart, loinc, as_of)
+        if any(_within(float(fact.value or 0.0), body) for fact in rows):
+            return None
+        listed = "/".join(loinc)
+        if not rows:
+            return f"no result coded LOINC {listed} has ever been recorded"
+        return (
+            f"the criterion asks for {_bound_text(body)} and the chart's "
+            f"{len(rows)} results for LOINC {listed} do not reach it; "
+            f"the most recent is {rows[-1].cited}"
+        )
+
+    raise BuildError(f"{where}: unknown probe term {name!r}")
+
+
+def refute(
+    cases: list[Case],
+    index: dict[str, dict[str, Any]],
+    probes: dict[str, dict[str, Any]],
+    as_of: date,
+) -> list[Flag]:
+    """Try to contradict every `met` label in the key against the committed bundles.
+
+    Reads the raw JSON and nothing else. A criterion carrying a `met` label anywhere in the key must
+    have an entry in `refutation.json`, even if that entry declares the criterion unrefutable and
+    says why, so that a new `met` label cannot arrive without somebody deciding whether it is
+    checkable.
+    """
+    by_quote = {(entry["nct_id"], entry["quote"]): cid for cid, entry in index.items()}
+    charts: dict[str, Chart] = {}
+    flags: list[Flag] = []
+
+    for case in cases:
+        for label in case.criterion_labels:
+            if label.expected is not Verdict.MET:
+                continue
+            criterion_id = by_quote[(case.nct_id, label.quote)]
+            if criterion_id not in probes:
+                raise BuildError(
+                    f"case {case.id}: {criterion_id} carries a met label and "
+                    f"refutation.json declares no probe for it"
+                )
+            probe = probes[criterion_id].get("probe")
+            if probe is None:
+                continue
+            if case.patient_id not in charts:
+                charts[case.patient_id] = read_chart(case.patient_id)
+            observed = charts[case.patient_id]
+            where = f"{case.id} {criterion_id}"
+            finding = _check(probe, observed, as_of, where)
+            if finding is None:
+                continue
+            rebuilt = case.perturbations and _check(
+                probe, as_built(observed, case), as_of, where
+            )
+            flags.append(
+                Flag(
+                    case_id=case.id,
+                    criterion_id=criterion_id,
+                    provenance=case.provenance,
+                    status=SUPPLIED if case.perturbations and rebuilt is None else REFUTED,
+                    finding=finding,
+                )
+            )
+    return flags
+
+
+def audit_flags(
+    flags: list[Flag], accepted: list[dict[str, Any]], closes: dict[str, set[str]]
+) -> None:
+    """Refuse to build while anything the check raised is unaccounted for.
+
+    A `refuted` flag has to be answered in `refutation.json`, by correcting the label or by writing
+    down why the check is wrong. A `supplied` flag has to be one the constructed case declared it
+    was closing: a `met` label the committed chart does not support and the case does not admit to
+    supplying is a label nobody has taken responsibility for.
+    """
+    waived = {(row["case_id"], row["criterion_id"]): row for row in accepted}
+    for row in accepted:
+        if not str(row.get("reason", "")).strip():
+            raise BuildError(
+                f"refutation.json accepts {row['case_id']} {row['criterion_id']} with no reason"
+            )
+
+    outstanding = [
+        flag
+        for flag in flags
+        if flag.status == REFUTED and (flag.case_id, flag.criterion_id) not in waived
+    ]
+    if outstanding:
+        lines = "\n".join(
+            f"  {flag.case_id} {flag.criterion_id}: {flag.finding}" for flag in outstanding
+        )
+        raise BuildError(
+            "the refutation pass contradicts these met labels and refutation.json does not "
+            f"answer for them:\n{lines}"
+        )
+
+    raised = {(flag.case_id, flag.criterion_id) for flag in flags if flag.status == REFUTED}
+    stale = sorted(set(waived) - raised)
+    if stale:
+        raise BuildError(
+            "refutation.json accepts flags the check no longer raises, so nobody has re-read "
+            f"them: {stale}"
+        )
+
+    undeclared = [
+        flag
+        for flag in flags
+        if flag.status == SUPPLIED and flag.criterion_id not in closes.get(flag.case_id, set())
+    ]
+    if undeclared:
+        lines = "\n".join(
+            f"  {flag.case_id} {flag.criterion_id}: {flag.finding}" for flag in undeclared
+        )
+        raise BuildError(
+            "these met labels rest on a chart edit the constructed case does not declare it "
+            f"made:\n{lines}"
+        )
+
+
 def build_constructed_cases(
     spec: list[dict[str, Any]],
     pairs: dict[str, dict[str, str]],
     index: dict[str, dict[str, Any]],
     resolved: dict[str, dict[str, str]],
+    charts: dict[str, Chart],
 ) -> list[Case]:
     """One case per constructed entry, with the chart actually built and read back."""
     cases: list[Case] = []
@@ -332,27 +825,17 @@ def build_constructed_cases(
                 raise BuildError(f"{case_id}: {criterion_id} override carries no reason")
             labels[criterion_id] = close["verdict"]
 
-        verdicts = [
-            CriterionVerdict(
-                criterion_id=criterion_id,
-                kind=index[criterion_id]["kind"],
-                verdict=Verdict(labels[criterion_id]),
-            )
-            for criterion_id in ordered
-        ]
-        rollup = roll_up(verdicts)
+        derived = derive(ordered, labels, index, charts[base["patient_id"]])
         carried = len(ordered) - len(entry["closes"])
-        sentence = _derived_sentence(
-            rollup.decision,
-            rollup.deciding_criterion_ids,
-            rollup.unresolved_criterion_ids,
-            index,
-            len(ordered),
-        )
         provenance = (
-            f"Constructed from {base_id} by {len(current.perturbations)} recorded edits; "
-            f"{carried} criterion labels are carried forward unchanged from the two annotation "
-            f"passes and {len(entry['closes'])} are overridden by those edits."
+            f"Constructed from {base_id} by {len(current.perturbations)} recorded edits, "
+            "which the case publishes in full."
+            if derived.by_vital_status
+            else (
+                f"Constructed from {base_id} by {len(current.perturbations)} recorded edits; "
+                f"{carried} criterion labels are carried forward unchanged from the two annotation "
+                f"passes and {len(entry['closes'])} are overridden by those edits."
+            )
         )
         cases.append(
             Case(
@@ -360,23 +843,91 @@ def build_constructed_cases(
                 patient_id=base["patient_id"],
                 nct_id=nct_id,
                 screening_date=SCREENING_DATE,
-                expected=rollup.decision,
+                expected=derived.outcome,
                 provenance="constructed",
                 trap=entry["trap"],
-                rationale=f"{entry['note'].strip()} {provenance} {sentence}",
-                criterion_labels=tuple(
-                    CriterionLabel(
-                        quote=index[criterion_id]["quote"],
-                        expected=Verdict(labels[criterion_id]),
-                    )
-                    for criterion_id in ordered
-                ),
+                rationale=f"{entry['note'].strip()} {provenance} {derived.sentence}",
+                criterion_labels=derived.labels,
                 perturbations=tuple(record.to_dict() for record in current.perturbations),
                 annotators=ANNOTATORS,
                 adjudicated_by=ADJUDICATOR,
             )
         )
     return cases
+
+
+@dataclass(frozen=True)
+class Derivation:
+    """A case's outcome and criterion labels, and the sentence saying how they were reached."""
+
+    outcome: ScreeningOutcome
+    labels: tuple[CriterionLabel, ...]
+    sentence: str
+
+    @property
+    def by_vital_status(self) -> bool:
+        return not self.labels
+
+
+def derive(
+    ordered: list[str],
+    labels: dict[str, str],
+    index: dict[str, dict[str, Any]],
+    chart: Chart,
+) -> Derivation:
+    """The outcome, by the same precedence the system screens with.
+
+    Vital status comes first and is not a criterion. No protocol writes "the patient must be alive",
+    so nothing in the criterion decomposition can carry it, and a key that leaves it out labels a
+    patient who died four weeks before the screening date as one a coordinator should look at again.
+    `caliper.screen` short-circuits on exactly this fact and reports no criterion table; a case
+    derived here does the same, and carries no criterion labels, because none was evaluated.
+
+    Everything else is `roll_up` over the adjudicated labels, unchanged.
+    """
+    if chart.died_before(SCREENING_DATE) or chart.deceased_undated:
+        died = (
+            f"death on {chart.deceased.isoformat()}"
+            if chart.deceased is not None
+            else "that the patient has died, without giving a date"
+        )
+        return Derivation(
+            outcome=ScreeningOutcome.INELIGIBLE,
+            labels=(),
+            sentence=(
+                "Derived ineligible by the vital-status rule of protocol.md section 12, which "
+                f"precedes every criterion: the committed bundle records {died}, before the "
+                f"{SCREENING_DATE.isoformat()} screening date. No criterion was evaluated, so the "
+                "case carries no criterion labels, and the criterion-level reading in the note "
+                "above describes the chart rather than the outcome."
+            ),
+        )
+
+    verdicts = [
+        CriterionVerdict(
+            criterion_id=criterion_id,
+            kind=index[criterion_id]["kind"],
+            verdict=Verdict(labels[criterion_id]),
+        )
+        for criterion_id in ordered
+    ]
+    rollup = roll_up(verdicts)
+    return Derivation(
+        outcome=rollup.decision,
+        labels=tuple(
+            CriterionLabel(
+                quote=index[criterion_id]["quote"], expected=Verdict(labels[criterion_id])
+            )
+            for criterion_id in ordered
+        ),
+        sentence=_derived_sentence(
+            rollup.decision,
+            rollup.deciding_criterion_ids,
+            rollup.unresolved_criterion_ids,
+            index,
+            len(ordered),
+        ),
+    )
 
 
 def _derived_sentence(
@@ -416,6 +967,7 @@ def build_cases(
     index: dict[str, dict[str, Any]],
     resolved: dict[str, dict[str, str]],
     meta: dict[str, dict[str, str]],
+    charts: dict[str, Chart],
 ) -> list[Case]:
     cases: list[Case] = []
     for pair in pairs:
@@ -423,39 +975,18 @@ def build_cases(
         if case_id not in meta:
             raise BuildError(f"cases.json has no trap and note for {case_id}")
         ordered = _expected_criteria(nct_id, index)
-        verdicts = [
-            CriterionVerdict(
-                criterion_id=criterion_id,
-                kind=index[criterion_id]["kind"],
-                verdict=Verdict(resolved[case_id][criterion_id]),
-            )
-            for criterion_id in ordered
-        ]
-        rollup = roll_up(verdicts)
-        sentence = _derived_sentence(
-            rollup.decision,
-            rollup.deciding_criterion_ids,
-            rollup.unresolved_criterion_ids,
-            index,
-            len(ordered),
-        )
+        derived = derive(ordered, resolved[case_id], index, charts[pair["patient_id"]])
         cases.append(
             Case(
                 id=case_id,
                 patient_id=pair["patient_id"],
                 nct_id=nct_id,
                 screening_date=SCREENING_DATE,
-                expected=rollup.decision,
+                expected=derived.outcome,
                 provenance="annotated",
                 trap=meta[case_id]["trap"],
-                rationale=f"{meta[case_id]['note'].strip()} {sentence}",
-                criterion_labels=tuple(
-                    CriterionLabel(
-                        quote=index[criterion_id]["quote"],
-                        expected=Verdict(resolved[case_id][criterion_id]),
-                    )
-                    for criterion_id in ordered
-                ),
+                rationale=f"{meta[case_id]['note'].strip()} {derived.sentence}",
+                criterion_labels=derived.labels,
                 annotators=ANNOTATORS,
                 adjudicated_by=ADJUDICATOR,
             )
@@ -549,6 +1080,40 @@ def _render(console: Console, cases: list[Case], kappa: float, observed: float, 
     console.print(agreement)
 
 
+def _render_refutation(console: Console, cases: list[Case], flags: list[Flag]) -> None:
+    checked = sum(
+        1
+        for case in cases
+        for label in case.criterion_labels
+        if label.expected is Verdict.MET
+    )
+    dead = [case for case in cases if not case.criterion_labels]
+
+    summary = Table(title="Refutation pass, against the raw committed FHIR")
+    summary.add_column("measure")
+    summary.add_column("count", justify="right")
+    summary.add_row("met labels in the key", str(checked))
+    summary.add_row("refuted by the chart", str(sum(1 for f in flags if f.status == REFUTED)))
+    supplied = sum(1 for f in flags if f.status == SUPPLIED)
+    summary.add_row("supplied by a recorded edit", str(supplied))
+    summary.add_row("cases decided by vital status", str(len(dead)))
+    console.print(summary)
+
+    if not flags:
+        return
+    detail = Table(title="Every met label the committed bundle does not carry")
+    detail.add_column("case")
+    detail.add_column("criterion")
+    detail.add_column("provenance")
+    detail.add_column("status")
+    detail.add_column("what the chart says")
+    for flag in flags:
+        detail.add_row(
+            flag.case_id, flag.criterion_id, flag.provenance, flag.status, flag.finding
+        )
+    console.print(detail)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -568,16 +1133,31 @@ def main() -> int:
     }
     meta = {row["case_id"]: row for row in _read("cases.json")["cases"]}
 
+    constructed = _read("constructed.json")["cases"]
+    refutation = _read("refutation.json")
+    charts = {pair["patient_id"]: read_chart(pair["patient_id"]) for pair in pairs}
+
     resolved, disagreed = adjudicate(pairs, index, pass1, pass2, decisions)
-    annotated_cases = build_cases(pairs, index, resolved, meta)
+    annotated_cases = build_cases(pairs, index, resolved, meta, charts)
     constructed_cases = build_constructed_cases(
-        _read("constructed.json")["cases"],
+        constructed,
         {pair["case_id"]: pair for pair in pairs},
         index,
         resolved,
+        charts,
     )
     cases = [*annotated_cases, *constructed_cases]
     kappa, observed, _expected, total, _table = cohen_kappa(pairs, index, pass1, pass2)
+
+    flags = refute(cases, index, refutation["probes"], SCREENING_DATE)
+    audit_flags(
+        flags,
+        refutation["accepted"]["entries"],
+        {
+            entry["case_id"]: {close["criterion_id"] for close in entry["closes"]}
+            for entry in constructed
+        },
+    )
 
     key = AnswerKey(
         version=_read("cases.json")["version"],
@@ -587,15 +1167,21 @@ def main() -> int:
     )
 
     _render(console, cases, kappa, observed, total)
+    _render_refutation(console, cases, flags)
     console.print(
         f"{len(disagreed)} of {total} criterion labels differed between the passes "
         f"and were adjudicated by {ADJUDICATOR}."
     )
     edits = sum(len(case.perturbations) for case in constructed_cases)
-    bases = {entry["base_case_id"] for entry in _read("constructed.json")["cases"]}
+    bases = {entry["base_case_id"] for entry in constructed}
     console.print(
         f"{len(constructed_cases)} constructed cases were built from {len(bases)} annotated bases "
         f"by {edits} recorded chart edits, each read back off the finished chart."
+    )
+    deceased = sorted({case.patient_id for case in cases if not case.criterion_labels})
+    console.print(
+        f"{sum(1 for case in cases if not case.criterion_labels)} cases on {len(deceased)} "
+        "patients were decided by vital status before any criterion was evaluated."
     )
 
     if args.dry_run:
