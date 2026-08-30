@@ -146,6 +146,29 @@ system did not abstain on. It counted a little more than that until an audit of 
 eight points and gave `always_needs_review`, an arm that decides nothing, a coverage of 8%. It now
 reads 0%, which is the number that makes the arm useful.
 
+### What actually improved, and what did not
+
+The improvement worth naming is not in the ablation table. Before the compiler distinguished a gap
+in the record from a question the record was never asked, Caliper returned "needs review" on **51 of
+51** cases — a system that never says anything. It now abstains on 18. That is the project, and it
+is one change, entry 12 in [`CHANGELOG.md`](CHANGELOG.md).
+
+Two of the three design choices that do have an ablation came out flat or negative, and both are
+reported as such rather than narrated away:
+
+- **Removing the critic improved accuracy**, 73% to 80%, and coverage, 65% to 73%, with no unsafe
+  errors either way. It is kept because the failure it guards against — a plausible wrong threshold,
+  rendered into a sentence that reads correctly — is not one this answer key contains.
+- **Per-span compilation is refuted by its own evidence.** The argument was that compiling the whole
+  protocol at once silently drops criteria, which accuracy cannot see; the `Protocol claimed` column
+  exists to see it, and both arms claim 100% of the spans in all eight protocols.
+
+The one that held is how absence is read. Open-world — abstain on every absence — sends 38% of
+decidable cases to a human against coverage-gated's 30%, and is less accurate for it, 65% against
+73%. Closed-world went the other way and produced decisions identical to coverage-gated on all 51
+cases, which means this corpus cannot tell those two apart at all; that is its own finding and
+[`LIMITS.md`](LIMITS.md) says so where the assumption is described.
+
 Read the accuracy column with suspicion too. The key expects `ineligible` for 41 of its 51 cases, because
 most patients do not qualify for most trials, so an arm that answers "not eligible" to everything
 scores **80%** and knows nothing. That arm is in the table. Balanced accuracy takes the base rate
