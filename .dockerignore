@@ -1,0 +1,14 @@
+.venv/
+.git/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+**/__pycache__/
+.cache/
+.caliper/
+.env
+web/data/
+runs/
+*.md
+!README.md
+.playwright-mcp/

@@ -22,6 +22,7 @@ COPY data ./data
 COPY eval ./eval
 COPY tests ./tests
 COPY scripts ./scripts
+COPY web ./web
 COPY Makefile ./
 
 RUN python -m caliper.cli data verify
