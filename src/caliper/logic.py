@@ -37,6 +37,13 @@ class CriterionVerdict:
     criterion_id: str
     kind: CriterionKind
     verdict: Verdict
+    blocking: bool = True
+    """Whether an unresolved verdict here should stop a decision.
+
+    False only for criteria the record was never going to answer — consent, a planned procedure,
+    the investigator's judgement at the visit. Those are confirmed when the patient comes in, and
+    holding a whole screening for them means never deciding anything.
+    """
 
     def __post_init__(self) -> None:
         if self.kind not in _KINDS:
@@ -55,6 +62,8 @@ class Rollup:
     decision: ScreeningOutcome
     deciding_criterion_ids: list[str] = field(default_factory=list)
     unresolved_criterion_ids: list[str] = field(default_factory=list)
+    deferred_criterion_ids: list[str] = field(default_factory=list)
+    """Unresolved, but not held against the patient: to be confirmed at the screening visit."""
 
 
 def roll_up(verdicts: list[CriterionVerdict]) -> Rollup:
@@ -74,10 +83,17 @@ def roll_up(verdicts: list[CriterionVerdict]) -> Rollup:
     if deciding:
         return Rollup(decision=ScreeningOutcome.INELIGIBLE, deciding_criterion_ids=deciding)
 
-    unresolved = [v.criterion_id for v in verdicts if v.verdict is Verdict.UNKNOWN]
-    if unresolved or not verdicts:
+    unknown = [v for v in verdicts if v.verdict is Verdict.UNKNOWN]
+    unresolved = [v.criterion_id for v in unknown if v.blocking]
+    deferred = [v.criterion_id for v in unknown if not v.blocking]
+
+    # A protocol of nothing but visit criteria establishes nothing about the patient, so silence
+    # there is not a clean bill of health either.
+    if unresolved or not verdicts or not any(v.blocking for v in verdicts):
         return Rollup(
-            decision=ScreeningOutcome.NEEDS_REVIEW, unresolved_criterion_ids=unresolved
+            decision=ScreeningOutcome.NEEDS_REVIEW,
+            unresolved_criterion_ids=unresolved,
+            deferred_criterion_ids=deferred,
         )
 
-    return Rollup(decision=ScreeningOutcome.ELIGIBLE)
+    return Rollup(decision=ScreeningOutcome.ELIGIBLE, deferred_criterion_ids=deferred)

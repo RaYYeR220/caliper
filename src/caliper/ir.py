@@ -121,10 +121,25 @@ class DemographicPredicate(_Frozen):
 
 
 class UnsupportedPredicate(_Frozen):
-    """A criterion that cannot be honestly formalised. It stays unresolved forever, by design."""
+    """A criterion that cannot be honestly formalised. It stays unresolved forever, by design.
+
+    `settlement` says *why* no chart can answer it, and the difference is load-bearing.
+
+    A criterion settled `from_data` was a question about the patient's record that we failed to
+    formalise — a threshold with no number, an open category. It is a gap, and it blocks a verdict.
+
+    A criterion settled `at_visit` is not a gap at all. Signed informed consent, a procedure planned
+    after randomisation, the investigator's own judgement of the patient in person: these have the
+    same answer for every chart ever written, because they are settled when the patient comes in.
+    Treating them as unresolved data made ELIGIBLE unreachable for every real protocol we hold — one
+    consent criterion and the screening abstains, which is not caution but paralysis.
+
+    The default is `from_data`, so a compiler that says nothing cannot thereby unblock a verdict.
+    """
 
     type: Literal["unsupported"] = "unsupported"
     reason: str = Field(min_length=1)
+    settlement: Literal["from_data", "at_visit"] = "from_data"
 
 
 class CompositePredicate(_Frozen):

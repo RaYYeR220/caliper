@@ -46,11 +46,22 @@ class ScreeningResult:
 
     @property
     def criteria_total(self) -> int:
-        return len(self.criteria)
+        return len(self.criteria_the_record_should_settle)
+
+    @property
+    def to_confirm_at_visit(self) -> tuple[CriterionResult, ...]:
+        """Criteria no chart could answer. The coordinator settles them at the visit."""
+        return tuple(c for c in self.criteria if c.verdict is Verdict.UNKNOWN and not c.blocking)
+
+    @property
+    def criteria_the_record_should_settle(self) -> tuple[CriterionResult, ...]:
+        """Everything coverage is measured over: what the record was actually asked to decide."""
+        return tuple(c for c in self.criteria if c.blocking)
 
     @property
     def criteria_resolved(self) -> int:
-        return sum(1 for c in self.criteria if c.verdict is not Verdict.UNKNOWN)
+        settled = self.criteria_the_record_should_settle
+        return sum(1 for c in settled if c.verdict is not Verdict.UNKNOWN)
 
     @property
     def coverage(self) -> float:
@@ -63,7 +74,7 @@ class ScreeningResult:
         """
         if self.blocked_by is not None:
             return 1.0
-        if not self.criteria:
+        if not self.criteria_total:
             return 0.0
         return self.criteria_resolved / self.criteria_total
 
@@ -111,9 +122,13 @@ def screen(
         evaluate_criterion(criterion, patient, as_of, policy) for criterion in criteria_set.criteria
     )
     rollup = roll_up(
-        [CriterionVerdict(r.criterion_id, r.kind, r.verdict) for r in results]
+        [CriterionVerdict(r.criterion_id, r.kind, r.verdict, r.blocking) for r in results]
     )
-    worklist = tuple(r.resolution_hint for r in results if r.resolution_hint is not None)
+    # The worklist is for gaps a query could close. A criterion settled at the visit is on the
+    # packet too, but under its own heading, because no query closes it.
+    worklist = tuple(
+        r.resolution_hint for r in results if r.resolution_hint is not None and r.blocking
+    )
 
     return ScreeningResult(
         nct_id=criteria_set.nct_id,

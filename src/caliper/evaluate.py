@@ -67,6 +67,14 @@ class CriterionResult:
     approximations: tuple[str, ...] = ()
     """Places where the verdict rests on something we could not evaluate exactly."""
 
+    blocking: bool = True
+    """Whether being unresolved here should stop a screening.
+
+    False for a criterion the record was never going to answer — consent, a procedure planned after
+    randomisation, the investigator's judgement at the visit. Those are confirmed when the patient
+    comes in; holding the whole screening for them decides nothing about anybody.
+    """
+
 
 _COMPARISONS = {
     "<": operator.lt,
@@ -121,6 +129,7 @@ def _unresolved(
     rationale: str,
     evidence: tuple[Evidence, ...] = (),
     approximations: tuple[str, ...] = (),
+    blocking: bool = True,
 ) -> CriterionResult:
     return CriterionResult(
         criterion_id=criterion.id,
@@ -129,6 +138,7 @@ def _unresolved(
         rationale=rationale,
         evidence=evidence,
         approximations=approximations,
+        blocking=blocking,
         resolution_hint=ResolutionHint(
             missing=missing,
             where_to_look=where,
@@ -360,6 +370,9 @@ def _evaluate_composite(
             evidence=tuple(e for m in members for e in m.evidence),
             resolution_hint=unresolved[0].resolution_hint,
             approximations=tuple(a for m in members for a in m.approximations),
+            # A composite is only deferrable if every unresolved member is: one real data gap
+            # inside it is still a data gap.
+            blocking=any(m.blocking for m in unresolved),
         )
 
     return CriterionResult(
@@ -407,12 +420,24 @@ def _dispatch(
         return _evaluate_composite(criterion, predicate, index, as_of, policy)
 
     if isinstance(predicate, UnsupportedPredicate):
+        at_visit = predicate.settlement == "at_visit"
         return _unresolved(
             criterion,
-            missing=f"human judgement: {predicate.reason}",
-            where="the protocol and the investigator",
+            missing=(
+                f"confirmation at the screening visit: {predicate.reason}"
+                if at_visit
+                else f"human judgement: {predicate.reason}"
+            ),
+            where=(
+                "the screening visit itself" if at_visit else "the protocol and the investigator"
+            ),
             query="",
-            rationale="this criterion was not formalised because it cannot be decided from data",
+            rationale=(
+                "this criterion is settled at the screening visit, not from the record"
+                if at_visit
+                else "this criterion was not formalised because it cannot be decided from data"
+            ),
+            blocking=not at_visit,
         )
     if isinstance(predicate, ObservationPredicate):
         return _evaluate_observation(criterion, predicate, index, as_of)

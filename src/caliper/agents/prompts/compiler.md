@@ -32,6 +32,41 @@ Use `unsupported` when the span:
   the protocol does not enumerate members;
 - nests more deeply than the schema allows.
 
+### Which kind of unsupported
+
+Every `unsupported` criterion also carries a `settlement`, and the choice matters more than it
+looks. It decides whether one criterion holds up the whole screening.
+
+**`at_visit`** — the criterion is settled when the patient comes in, and would be settled the same
+way for every patient in the world. No chart that has ever been written could answer it, so its
+being unanswered here says nothing about *this* patient. A coordinator confirms it at the screening
+visit, and the packet lists it for them.
+
+> Signed written informed consent.
+> Willing and able to comply with the study schedule.
+> Planned coronary procedure or surgery after randomization.
+> Planning to start an SGLT2 inhibitor during the study.
+> In the investigator's opinion, unsuitable for the study.
+> Women of childbearing potential must agree to use contraception during the trial.
+
+**`from_data`** — the criterion asks about the patient's recorded history or state, and we simply
+could not formalise the question. That is a gap in what we know about this patient, and it does hold
+up the screening.
+
+> Adequate organ function. *(about the record; no threshold stated)*
+> Any clinically significant abnormality on screening laboratory tests. *(about the record)*
+> Lower extremity complications such as skin ulcer, infection, osteomyelitis and gangrene.
+> *(about the record; an open list this schema cannot enumerate)*
+> Alanine aminotransferase above the upper limit of normal. *(about the record; the range is
+> laboratory-specific and not in it)*
+
+The test to apply, in one sentence: **would a complete and perfect medical record answer this?** If
+yes, and we merely failed to express it, that is `from_data`. If even a perfect record could not,
+because the answer does not exist until the patient is in the room, that is `at_visit`.
+
+When you are unsure, choose `from_data`. It is the cautious answer: it sends the criterion to a
+human either way, and it does not let a verdict through on a criterion that should have stopped it.
+
 ## Vocabulary
 
 **`observation`** — a numeric comparison against a measurement: laboratory values, vital signs,
